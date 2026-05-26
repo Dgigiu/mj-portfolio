@@ -1,34 +1,147 @@
 ---
 title: "MyFoodways"
-summary: "A mobile app that helps home cooks plan meals around what they already have, with a bias toward sustainable, low-waste recipes."
-role: "Lead product designer"
-period: "2021 to 2023"
-client: "MyFoodways"
+summary: "Sustainable habits through everyday cooking. A mobile app that helped Swiss households cook with what was already in the fridge, turning sustainability into a small daily choice rather than a lifestyle overhaul."
+role: "Sole UX/UI designer"
+period: "2018 to 2020"
+client: "Foodways"
 domain: "Consumer mobile, sustainability"
+cover: "../../assets/case-studies/myfoodways/MFW-01-hero-cover.png"
 order: 2
 draft: false
 ---
 
 import Figure from "../../components/Figure.astro";
 import CompareImages from "../../components/CompareImages.astro";
-import Quote from "../../components/Quote.astro";
 
-## The problem
+import hero from "../../assets/case-studies/myfoodways/MFW-01-hero.png";
+import problem from "../../assets/case-studies/myfoodways/MFW-02-problem-A.png";
+import solution from "../../assets/case-studies/myfoodways/MFW-03-solution.png";
+import personalization from "../../assets/case-studies/myfoodways/MFW-04-Personalization.png";
+import recipeA from "../../assets/case-studies/myfoodways/MFW-05-flexible-recipe.png";
+import recipeB from "../../assets/case-studies/myfoodways/MFW-05-flexible-recipe2.png";
+import challenges from "../../assets/case-studies/myfoodways/MFW-06-challenges.png";
 
-Most recipe apps push the same dishes everyone else cooks. MyFoodways flipped the model: start from what's in the fridge, then suggest recipes that use those ingredients before they go to waste.
+## Product
 
-## What I owned
+MyFoodways was a sustainable recipes app for iOS and Android designed to help people cook healthy, practical meals with the ingredients they already had in the fridge. The core scenario: it's 7 PM on a weekday, fatigue sets in, and people default to familiar meals. MyFoodways suggested recipes based on what was on hand, removing the need for an extra shop or tricky substitutions. The aim was to make sustainable cooking feel like a small choice in an everyday routine.
 
-End-to-end product design across iOS and Android. Onboarding flow, ingredient capture, recipe browsing, weekly planning, and the visual system. I also worked with a small content team on recipe taxonomy.
+<Figure
+  src={hero}
+  alt="MyFoodways home screen showing a 'What's in your fridge?' search with example results."
+  caption="Ingredient-led discovery using what users already have."
+/>
 
-## Key decisions
+## Company
 
-- **No login required to try the app.** Friction kills curiosity. Account creation came later, only when there was something to save.
-- **Ingredient capture in three taps.** Most people gave up if it took longer.
-- **Recipes ranked by what you have, not by what we're promoting.** A small product principle that shaped a lot of the UI.
+Foodways is a Swiss company focused on food sustainability, partnering with the food industry and households to reduce waste and align with the UN Sustainable Development Goals for 2030. The app was created as both a public service and a behavior-change experiment.
 
-## Outcome
+## Role
 
-The app reached a healthy active-user base and a 4.6 average rating before pivoting. Several patterns from this work, especially the ingredient-first browsing model, ended up in later projects.
+I was the sole UX/UI designer from 2018 through 2020, joining after the initial prototype and visual style were established. I handled user flows, interface design, and developer handoff, working closely with PM Laura Robinson in Switzerland, the local Foodways team, and the external engineering team in Lisbon.
 
-> Placeholder content. Real case study lands when source files are imported.
+## Problem and context
+
+Swiss authorities commissioned MyFoodways to help households reduce food waste with a mobile-first experience. The real challenge: people wanted to cook sustainably but faced decision fatigue at the end of the day, and most recipes didn't fit their lives. Hard-to-find ingredients, large portions, tricky substitutions.
+
+From the start we worked under tight constraints: a fixed visual identity from an external agency, an outsourced dev team across time zones, and a strict 2019 public launch. Our goal was to make sustainable cooking a minor adjustment, not a lifestyle overhaul.
+
+<CompareImages
+  left={problem}
+  leftAlt="A generic rigid recipe screen demanding four servings and unavailable ingredients."
+  leftCaption="The problem: recipes that don't fit real life."
+  right={solution}
+  rightAlt="The MyFoodways search results showing recipes matched to ingredients on hand."
+  rightCaption="The fix: instant recipes from what's already in the fridge."
+/>
+
+## Research insights
+
+User research and early focus groups confirmed the problem. People loved the sustainability mission but needed practicality. Key findings:
+
+- People wanted easy recipes using what was in their fridge right now
+- Portion scaling and ingredient swaps were essential for small households and flexible cooking
+- Sustainable options had to feel familiar, with small tweaks to everyday meals rather than radical changes
+
+These shaped the app: ingredient-led discovery first, flexible recipes second, lightweight planning third.
+
+## Solution strategy
+
+When I joined, Foodways had a clear "fridge-first" vision and chef-curated recipes. What was needed were behavioral enablers: intuitive ingredient swapping and portion scaling. My strategy:
+
+- Ingredient-led discovery as the primary entry point ("What's in your fridge?")
+- Flexible recipes that adapt to household size and available ingredients
+- Lightweight planning so users could save and reuse their sustainable go-to meals
+
+The approach embedded sustainability into routines, framing behavior change as user-driven and low-barrier. We avoided didactic messages and focused on tools that nudged choices in a sustainable direction.
+
+## Key features designed
+
+### 1. Ingredient-focused search
+
+Search started with "What's in your fridge?" Users entered ingredients (spinach, feta, pesto) and received recipe combinations instantly. Seasonal, quick-meal, and dietary filters narrowed options. Advanced filters stayed tucked away to avoid overwhelming beginners.
+
+### 2. Profile personalization
+
+Onboarding captured dietary style, cooking motivations, and pantry staples, which were used to personalize search results, recommendations, and recipe defaults. The profile tab let people manage "My no-gos", a post-launch change from "food allergies." User feedback showed "allergies" felt too medical and exclusive; "My no-gos" worked across a wider range of reasons.
+
+<Figure
+  src={personalization}
+  alt="Profile screen showing 'My no-gos' personalization."
+  caption='"My no-gos" replaced "food allergies", making the profile accessible to everyone, not only medical contexts.'
+/>
+
+### 3. Flexible recipe flow
+
+Every recipe loaded with smart defaults from the user's profile:
+
+- **Portion scaling** automatically adjusted to household size (for example "2 adults, 0 kids") with instant recalculation
+- **Ingredient swaps** appeared via yellow chevrons (spinach → chard → kale), always suggesting sustainable alternatives that reduced food waste and increased accessibility
+- **"Let's cook"** generated final cooking steps with the reviewed ingredients and quantities, plus leftover suggestions and storage tips to encourage sustainable habits
+
+The "Let's cook" button was a pragmatic MVP decision. Live, step-by-step cooking updates weren't technically feasible for v1, so we consolidated everything into a single server call. This gave users a quick path from ingredient review to cooking and avoided confusion in the kitchen.
+
+<CompareImages
+  left={recipeA}
+  leftAlt="Recipe view with household-size portion scaling and yellow chevrons indicating ingredient swaps."
+  leftCaption="Adapts to household size, suggests sustainable swaps."
+  right={recipeB}
+  rightAlt="The 'Let's cook' final screen with leftover and storage tips."
+  rightCaption="A single action from ingredients to cooking."
+/>
+
+### 4. Challenges feature (2020)
+
+Post-launch, I designed progressive challenges to build habits: "No challenge" → pick one → daily check-in → simple celebration. Users stayed engaged, tried new sustainable recipes, and gradually integrated sustainable practices into their daily routines.
+
+<Figure
+  src={challenges}
+  alt="Challenges screen showing a progress bar and selectable sustainability challenges."
+  caption="Progressive habits, not overwhelming asks."
+/>
+
+## Collaboration and delivery
+
+I worked mostly asynchronously with PM Laura Robinson, switching to formal syncs for key milestones with the Lisbon team and developers. Autonomy continued even when Laura was away, supported by clear documentation. Handoffs used annotated Sketch files and Laura's written specs for amendments.
+
+We scoped pragmatically. "Let's cook" was the simple solution that shipped; a "favorites cookbook" was deferred until after launch. Post-launch changes such as the inclusive language work were driven by user feedback.
+
+## Impact and reflections
+
+The app established a strong Swiss user base with positive ratings during active operations. Engagement decreased over time as sourcing chef content became unsustainable, and after public funding concluded the app moved into maintenance mode.
+
+**UX design learnings**
+
+- **Inclusive language.** "Food allergies" → "My no-gos" made profiles accessible beyond medical contexts.
+- **MVP pragmatism.** A single "Let's cook" button beat complex live updates.
+- **Accessibility advocacy.** Push for WCAG contrast earlier against brand constraints.
+- **Progressive engagement.** Small challenges built better habits than big features.
+
+**Business context**
+
+- Sustainability needs viable business models
+- Public funding blocked revenue options
+- Mastered remote, async collaboration across time zones
+
+**Personal growth**
+
+Deepened sustainability knowledge, gained kitchen confidence from realistic recipes, and became fluent in remote, async work.

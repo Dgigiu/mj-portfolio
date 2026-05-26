@@ -1,35 +1,126 @@
 ---
 title: "Food Save"
-summary: "A tool for professional kitchens to track and cut food waste. Used in hotels, canteens, and restaurant groups to turn waste data into daily decisions."
-role: "Product designer"
-period: "2022 to 2024"
-client: "Food Save"
-domain: "B2B SaaS, hospitality"
+summary: "Reducing food waste in professional kitchens. A mobile tool that gave head chefs and kitchen managers a curated library of concrete, ready-to-use measures, plus a lightweight checklist to actually put them in place."
+role: "Sole UX/UI designer"
+period: "2018 to 2019"
+client: "Foodways, for United Against Waste"
+domain: "B2B mobile, hospitality"
+cover: "../../assets/case-studies/food-save/FS-01-hero-cover.png"
 order: 3
 draft: false
 ---
 
 import Figure from "../../components/Figure.astro";
 import CompareImages from "../../components/CompareImages.astro";
-import Quote from "../../components/Quote.astro";
-import Stat from "../../components/Stat.astro";
 
-## The problem
+import home from "../../assets/case-studies/food-save/FS-04-home.png";
+import hero from "../../assets/case-studies/food-save/FS-01-hero.png";
+import library from "../../assets/case-studies/food-save/FS-02-library.png";
+import measureDetail from "../../assets/case-studies/food-save/FS-03-measure-detail.png";
+import tasklist from "../../assets/case-studies/food-save/FS-03-tasklist.png";
 
-Commercial kitchens throw away a quarter of what they buy. Most of that loss is invisible because no one has time to track it during a shift. Food Save gave kitchens a fast way to log waste, see patterns, and act on them.
+## Product
 
-## What I owned
+The Food Save app is a mobile tool designed to help professional kitchens reduce food waste with concrete, ready-to-use measures. Instead of abstract sustainability advice, it gives head chefs and kitchen managers a curated library of actions they can implement step by step. The focus is on practicality: busy teams quickly find measures that fit their context and integrate them into daily work.
 
-The kitchen-side capture app, the operator dashboard, and the reporting view chefs and managers use in weekly huddles. I worked closely with chefs in their kitchens to make sure the capture flow took under ten seconds per entry.
+<Figure
+  src={hero}
+  alt="Food Save mobile app home screen with the measure library as the entry point."
+  caption="Mobile tool bringing concrete Food Save measures into professional kitchens."
+/>
 
-## Key decisions
+## Company
 
-- **Speed first, accuracy second.** A rough log entered today is more valuable than a perfect one entered next week.
-- **Photos as a fallback.** When typing was slow, a photo plus a weight was good enough.
-- **One number on the home screen.** Cost of waste this week. Everything else is one tap away.
+The app was developed at Foodways, a Swiss company focused on food sustainability, in collaboration with the "United Against Waste" foundation. Foodways works with industry and individual businesses to reduce food waste, and the app extended this work into a simple, accessible tool for gastronomy companies.
 
-## Outcome
+## Role
 
-Rolled out across hotel and restaurant groups in Europe. Operators reported double-digit reductions in food waste within the first three months of use.
+I was the sole UX/UI designer from 2018 to 2019. I defined user flows, designed the interface, and prepared handoffs for development. I reported to Moritz and Mark on the Swiss Foodways team (United Against Waste side) and collaborated with PM João Almeida in Lisbon.
 
-> Placeholder content. Real case study lands when source files are imported.
+## Problem and context
+
+Food waste is an environmental, ethical, and economic problem. Wasted resources, time, and money. United Against Waste works with companies to fight it, and Foodways was commissioned to create a mobile tool that brings actionable measures directly to professional kitchens.
+
+Kitchen managers knew they should reduce waste but didn't know how to do it practically. Busy schedules made environmental motivation insufficient on its own. They needed concrete, implementable ideas for their fast-paced reality.
+
+Constraints: a fixed UAW visual identity, an external dev team across time zones, and a tight pre-approved budget. Designs had to be focused and realistic to build.
+
+## Research and insights
+
+The primary users were head chefs and kitchen managers. They decided which measures to adopt and communicated them to their teams. The goal was not to put another app in every cook's hand. It was to support decision-makers with clear, usable guidance they could translate into procedures.
+
+In interviews and informal conversations a few patterns stood out:
+
+- Many managers felt they were probably wasting more than they should, but didn't have a clear overview or plan
+- They were not interested in social features or competition. They cared about simple measures they could realistically introduce
+- Any solution had to be fast to consult and easy to revisit. They didn't have the time or mental space for complex interfaces
+
+These conclusions reinforced the need for clarity and action over gamified competition or social ranking.
+
+## Strategy and concept shift
+
+Early on, the idea was a competition between kitchens, with teams implementing measures and publicly sharing results. On paper this sounded engaging. In practice, feedback from kitchen managers suggested the opposite. They did not see themselves using a competitive app or spending time publishing results. They wanted knowledge and concrete suggestions, not a social layer.
+
+Given the limited budget, investing in social and competitive features would have meant less time and money for the core experience. I shared these insights with the Swiss team, and together we shifted the concept from a "food challenge" app to a Food Save app focused on:
+
+- Providing a library of concrete waste-reducing measures
+- Helping managers choose measures that fit their reality
+- Supporting implementation with a simple, focused workflow
+
+The shift kept the app simple and practical while spending limited resources where they mattered most.
+
+<Figure
+  src={home}
+  alt="Food Save home view showing the entry to the measure library."
+  caption="A calm home view that puts the measure library one tap away."
+/>
+
+## Design execution
+
+### Measure library
+
+The Swiss team provided the content: a structured set of measures and categories grounded in their expertise and the Food Save methodology. My role was to design how this information would work on a phone in a busy work context. I built the library to follow familiar mobile patterns so it would feel natural on both iOS and Android from a single shared build. Users could browse by category and quickly see which measures might be relevant to their kitchen type. Each measure was presented in a compact, scannable way, focusing on what to do, how to do it, and where relevant, extra details such as examples or recipe ideas to use up specific ingredients.
+
+<CompareImages
+  left={library}
+  leftAlt="Measure library list view organized by category."
+  leftCaption="Curated library of waste-reducing measures, organized for busy head chefs and managers."
+  right={measureDetail}
+  rightAlt="A single measure opened, showing what to do, how to do it, and extra detail."
+  rightCaption="Each measure focuses on what to do, how to do it, and concrete examples."
+/>
+
+### To-do list for implementation
+
+Once we dropped the competition and social features, we had some development budget left. I proposed using it to support implementation directly with a checklist. Instead of just reading measures and hoping to remember them, kitchen managers could:
+
+- Select measures they wanted to implement
+- Store them in a simple to-do list inside the app
+- Mark them as completed once they had been introduced in the kitchen
+
+This small addition turned the app from a static library into a light planning tool. It fit the way managers work: collect ideas, prioritize them, and return when there was time to act.
+
+<Figure
+  src={tasklist}
+  alt="To-do list view inside Food Save, showing selected and completed measures."
+  caption="The checklist turns the library into a light planning tool for implementation."
+/>
+
+### Branding and UI
+
+I followed United Against Waste's branding (the primary color, the presence of their logo, the image style). Beyond that, the app's visual system, including the logo, layout, and detailed screen designs, was created by me, balancing consistency with clarity and readability across both platforms.
+
+## Collaboration and delivery
+
+I collaborated asynchronously with the Swiss team (Moritz and Mark on the UAW side) and João, the Lisbon PM. During João's paternity leave, I took on PM responsibilities: sourced dev quotes, selected the MyFoodways dev team, and controlled budget and scope. Handoffs used annotated Sketch files and written specs. Dropping social features kept us comfortably inside the budget.
+
+## Impact and reflections
+
+The app launched and is still active. Users appreciated its simplicity and actionable content, offering managers concrete steps rather than vague goals.
+
+**UX design learnings**
+
+- **User research reshapes concepts.** Kitchen managers rejected competition, which led to a more practical product.
+- **Simple features have impact.** The checklist turned a library into an actionable planning tool.
+- **Budget constraints improve focus.** Limited resources forced prioritization of what really mattered to users.
+- **Cross-role flexibility.** Balancing design plus temporary PM responsibilities strengthened project ownership.
