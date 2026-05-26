@@ -1,0 +1,82 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HeroGradient from "../components/HeroGradient.astro";
+---
+
+<BaseLayout title="Contact" description="Email and LinkedIn.">
+  <HeroGradient compact>
+    <p class="eyebrow eyebrow-light">Contact</p>
+    <h1>Say hello.</h1>
+  </HeroGradient>
+
+  <section class="container contact">
+    <div class="prose">
+      <p>
+        The fastest way to reach me is email. I read everything and reply to most.
+      </p>
+
+      <ul class="channels">
+        <li>
+          <span class="label">Email</span>
+          <a href="mailto:hello@migueljss.com">hello@migueljss.com</a>
+        </li>
+        <li>
+          <span class="label">LinkedIn</span>
+          <a href="https://www.linkedin.com/in/migueljss/" rel="me noopener">linkedin.com/in/migueljss</a>
+        </li>
+      </ul>
+
+      <p class="note">
+        Based in Porto. Open to remote, hybrid, or relocation for the right senior in-house product design role.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact {
+    padding: var(--space-8) 0;
+  }
+
+  .eyebrow-light {
+    color: rgba(240, 240, 240, 0.7);
+  }
+
+  .channels {
+    list-style: none;
+    margin: var(--space-6) 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .channels li {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: var(--space-4);
+    padding: var(--space-4) 0;
+    border-top: 1px solid var(--border);
+    align-items: baseline;
+  }
+
+  .channels li:last-child {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .channels .label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+
+  .channels a {
+    font-size: var(--text-md);
+  }
+
+  .note {
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+  }
+</style>

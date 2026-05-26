@@ -1,0 +1,58 @@
+---
+interface Props {
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+---
+
+<section class:list={["hero", { compact }]}>
+  <div class="container hero-inner">
+    <slot />
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+</section>
+
+<style>
+  .hero {
+    background: linear-gradient(180deg, var(--blue-deep) 0%, var(--blue-bright) 100%);
+    color: #f0f0f0;
+    padding: clamp(var(--space-8), 14vw, var(--space-10)) 0;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .hero.compact {
+    padding: clamp(var(--space-7), 10vw, var(--space-9)) 0;
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero :global(h1) {
+    color: #f0f0f0;
+    max-width: 16ch;
+  }
+
+  .hero :global(h2) {
+    color: #f0f0f0;
+  }
+
+  .hero :global(p) {
+    color: rgba(240, 240, 240, 0.85);
+  }
+
+  .grain {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.06;
+    mix-blend-mode: overlay;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.7) 0.6px, transparent 0.6px);
+    background-size: 3px 3px;
+  }
+</style>

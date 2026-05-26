@@ -1,0 +1,103 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import HeroGradient from "../components/HeroGradient.astro";
+
+interface Props {
+  title: string;
+  summary: string;
+  role: string;
+  period: string;
+  client: string;
+  domain: string;
+}
+
+const { title, summary, role, period, client, domain } = Astro.props;
+---
+
+<BaseLayout title={title} description={summary}>
+  <HeroGradient>
+    <p class="eyebrow eyebrow-light">Case study</p>
+    <h1>{title}</h1>
+    <p class="summary">{summary}</p>
+  </HeroGradient>
+
+  <section class="case-meta container">
+    <dl>
+      <div>
+        <dt>Role</dt>
+        <dd>{role}</dd>
+      </div>
+      <div>
+        <dt>Period</dt>
+        <dd>{period}</dd>
+      </div>
+      <div>
+        <dt>Client</dt>
+        <dd>{client}</dd>
+      </div>
+      <div>
+        <dt>Domain</dt>
+        <dd>{domain}</dd>
+      </div>
+    </dl>
+  </section>
+
+  <article class="case-body container">
+    <div class="prose">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .summary {
+    color: rgba(240, 240, 240, 0.82);
+    font-size: var(--text-lg);
+    margin-top: var(--space-4);
+    max-width: 52ch;
+  }
+
+  .eyebrow-light {
+    color: rgba(240, 240, 240, 0.7);
+  }
+
+  .case-meta {
+    margin-top: var(--space-7);
+    margin-bottom: var(--space-7);
+  }
+
+  .case-meta dl {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--space-5);
+    margin: 0;
+    padding: var(--space-5) 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .case-meta div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .case-meta dt {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .case-meta dd {
+    margin: 0;
+    font-size: var(--text-md);
+    color: var(--text);
+  }
+
+  .case-body {
+    padding-bottom: var(--space-9);
+  }
+</style>

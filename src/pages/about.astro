@@ -1,0 +1,51 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HeroGradient from "../components/HeroGradient.astro";
+---
+
+<BaseLayout title="About" description="Background, approach, and current focus.">
+  <HeroGradient compact>
+    <p class="eyebrow eyebrow-light">About</p>
+    <h1>Twenty years of designing for the work itself, not the demo.</h1>
+  </HeroGradient>
+
+  <article class="container about">
+    <div class="prose">
+      <h2>Background</h2>
+      <p>
+        I started designing for the web in the early 2000s, moved into mobile when smartphones became the place where work happens, and have spent the last decade on B2B SaaS. Most of that has been with small teams where being the only designer means owning the work end to end: research, system, interaction, the bits that show up on the screen.
+      </p>
+
+      <h2>Approach</h2>
+      <p>
+        I try to design products that respect the user's time. That usually means stripping away anything that isn't doing real work, keeping a clear point of view about what matters, and making the path from "I want to do X" to "I did X" as short as the constraints allow. Calm in the static state, expressive when the user does something.
+      </p>
+      <p>
+        I think in systems. I prefer a small set of components used well over a large library used inconsistently. I document as I go, because the next person on the team shouldn't need to read my mind.
+      </p>
+
+      <h2>Working with AI</h2>
+      <p>
+        Over the past two years I've folded AI tools into how I work, mostly Claude. I use them to move faster through the parts of design that benefit from a second brain: pulling structure out of research notes, drafting copy, talking through tradeoffs before a decision lands, generating quick variants to compare. The judgment stays mine, but the pace is different.
+      </p>
+      <p>
+        This site was built with Claude Code. The case studies and visual direction were shaped in conversation, then implemented as plain Astro and CSS.
+      </p>
+
+      <h2>Currently</h2>
+      <p>
+        Based in Porto. Looking for a senior in-house product design role at a company that takes both craft and clarity seriously. Remote or hybrid is good. Happy to talk.
+      </p>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .about {
+    padding: var(--space-8) 0;
+  }
+
+  .eyebrow-light {
+    color: rgba(240, 240, 240, 0.7);
+  }
+</style>

@@ -1,0 +1,70 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  left: ImageMetadata;
+  leftAlt: string;
+  leftCaption?: string;
+  right: ImageMetadata;
+  rightAlt: string;
+  rightCaption?: string;
+}
+
+const { left, leftAlt, leftCaption, right, rightAlt, rightCaption } = Astro.props;
+---
+
+<div class="compare">
+  <figure>
+    <div class="frame">
+      <Image src={left} alt={leftAlt} widths={[400, 800]} sizes="(min-width: 720px) 50vw, 100vw" loading="lazy" />
+    </div>
+    {leftCaption && <figcaption>{leftCaption}</figcaption>}
+  </figure>
+  <figure>
+    <div class="frame">
+      <Image src={right} alt={rightAlt} widths={[400, 800]} sizes="(min-width: 720px) 50vw, 100vw" loading="lazy" />
+    </div>
+    {rightCaption && <figcaption>{rightCaption}</figcaption>}
+  </figure>
+</div>
+
+<style>
+  .compare {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-5);
+    margin: var(--space-6) 0;
+  }
+
+  figure {
+    margin: 0;
+  }
+
+  .frame {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .frame :global(img) {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  figcaption {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    margin-top: var(--space-3);
+    line-height: var(--leading-snug);
+  }
+
+  @media (max-width: 640px) {
+    .compare {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

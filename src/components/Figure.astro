@@ -1,0 +1,60 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  caption?: string;
+  widths?: number[];
+  sizes?: string;
+  bleed?: boolean;
+}
+
+const {
+  src,
+  alt,
+  caption,
+  widths = [480, 800, 1200, 1600],
+  sizes = "(min-width: 800px) 800px, 100vw",
+  bleed = false,
+} = Astro.props;
+---
+
+<figure class:list={["figure", { bleed }]}>
+  <div class="frame">
+    <Image src={src} alt={alt} widths={widths} sizes={sizes} loading="lazy" decoding="async" />
+  </div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .figure {
+    margin: var(--space-6) 0;
+  }
+
+  .figure.bleed {
+    margin-inline: calc(var(--container-pad) * -1);
+  }
+
+  .frame {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .frame :global(img) {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  figcaption {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    margin-top: var(--space-3);
+    line-height: var(--leading-snug);
+  }
+</style>

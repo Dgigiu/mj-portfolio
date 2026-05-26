@@ -1,0 +1,185 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  href: string;
+  title: string;
+  summary: string;
+  client?: string;
+  domain?: string;
+  period?: string;
+  cover?: ImageMetadata;
+}
+
+const { href, title, summary, client, domain, period, cover } = Astro.props;
+---
+
+<a href={href} class="card">
+  <div class="card-media">
+    {
+      cover ? (
+        <Image src={cover} alt="" widths={[480, 800, 1200]} sizes="(min-width: 720px) 50vw, 100vw" />
+      ) : (
+        <div class="card-placeholder" aria-hidden="true">
+          <div class="ph-inner">{title}</div>
+        </div>
+      )
+    }
+    <span class="hover-wash" aria-hidden="true"></span>
+  </div>
+  <div class="card-body">
+    <div class="card-meta">
+      {client && <span>{client}</span>}
+      {domain && <span>{domain}</span>}
+      {period && <span>{period}</span>}
+    </div>
+    <h3 class="card-title">{title}</h3>
+    <p class="card-summary">{summary}</p>
+    <span class="card-cta" aria-hidden="true">Read the case study →</span>
+  </div>
+</a>
+
+<style>
+  .card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-6);
+    align-items: stretch;
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: var(--bg);
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color var(--transition-base), transform var(--transition-base);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card:hover {
+    border-color: var(--blue-hover);
+  }
+
+  .card:hover .hover-wash {
+    opacity: 1;
+  }
+
+  .card:hover .card-cta {
+    color: var(--bg);
+  }
+
+  .card:hover .card-title,
+  .card:hover .card-summary,
+  .card:hover .card-meta {
+    color: var(--bg);
+  }
+
+  .card:focus-visible {
+    outline: 3px solid var(--blue-bright);
+    outline-offset: 4px;
+  }
+
+  .card-media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: linear-gradient(160deg, var(--blue-deep) 0%, var(--blue-bright) 100%);
+    box-shadow: var(--shadow-md);
+  }
+
+  .card-media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .card-placeholder {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    color: rgba(240, 240, 240, 0.85);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-2xl);
+    letter-spacing: -0.02em;
+    padding: var(--space-5);
+    text-align: center;
+  }
+
+  .ph-inner {
+    max-width: 12ch;
+    line-height: 1.05;
+  }
+
+  .hover-wash {
+    position: absolute;
+    inset: 0;
+    background: var(--blue-hover);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    pointer-events: none;
+    mix-blend-mode: multiply;
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-3);
+    transition: color var(--transition-base);
+  }
+
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    transition: color var(--transition-base);
+  }
+
+  .card-title {
+    font-size: clamp(var(--text-xl), 3vw, var(--text-2xl));
+    color: var(--text);
+    transition: color var(--transition-base);
+  }
+
+  .card-summary {
+    color: var(--text-soft);
+    font-size: var(--text-md);
+    line-height: var(--leading-snug);
+    transition: color var(--transition-base);
+  }
+
+  .card-cta {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    margin-top: var(--space-2);
+    color: var(--blue-link);
+    transition: color var(--transition-base);
+  }
+
+  @media (max-width: 720px) {
+    .card {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card,
+    .card-body,
+    .card-title,
+    .card-summary,
+    .card-meta,
+    .card-cta,
+    .hover-wash {
+      transition: none;
+    }
+  }
+</style>

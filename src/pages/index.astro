@@ -1,0 +1,102 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HeroGradient from "../components/HeroGradient.astro";
+import CaseStudyCard from "../components/CaseStudyCard.astro";
+
+const studies = (await getCollection("case-studies", ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<BaseLayout title="Miguel Jesus" description="Senior Product Designer in Porto. Case studies across B2B SaaS and mobile products.">
+  <HeroGradient>
+    <p class="eyebrow eyebrow-light">Senior Product Designer · Porto</p>
+    <h1>Calm products for complex work.</h1>
+    <p class="intro">
+      I'm Miguel. For 20+ years I've designed SaaS and mobile products with small teams, often as the only designer in the room. Below are a few case studies. Each is a story about taking something messy and making it usable.
+    </p>
+  </HeroGradient>
+
+  <section class="container work-section">
+    <header class="section-head">
+      <h2>Selected work</h2>
+      <p>{studies.length} case {studies.length === 1 ? "study" : "studies"}</p>
+    </header>
+    <ul class="card-list">
+      {
+        studies.map((s) => (
+          <li>
+            <CaseStudyCard
+              href={`/work/${s.slug}/`}
+              title={s.data.title}
+              summary={s.data.summary}
+              client={s.data.client}
+              domain={s.data.domain}
+              period={s.data.period}
+              cover={s.data.cover}
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="container outro">
+    <div class="prose">
+      <h2>Get in touch</h2>
+      <p>
+        I'm open to senior in-house product design roles. The fastest way to reach me is{" "}
+        <a href="mailto:hello@migueljss.com">hello@migueljss.com</a>, or find me on{" "}
+        <a href="https://www.linkedin.com/in/migueljss/" rel="me noopener">LinkedIn</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro {
+    color: rgba(240, 240, 240, 0.82);
+    font-size: var(--text-lg);
+    max-width: 52ch;
+    margin-top: var(--space-4);
+  }
+
+  .eyebrow-light {
+    color: rgba(240, 240, 240, 0.7);
+  }
+
+  .work-section {
+    padding: var(--space-9) 0 var(--space-7);
+  }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-5);
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-head p {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+  }
+
+  .card-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .outro {
+    padding: var(--space-7) 0 var(--space-8);
+  }
+</style>
