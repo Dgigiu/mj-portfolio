@@ -1,6 +1,8 @@
 ---
+import { getCollection } from "astro:content";
 import BaseLayout from "./BaseLayout.astro";
 import HeroGradient from "../components/HeroGradient.astro";
+import CaseStudyCard from "../components/CaseStudyCard.astro";
 
 interface Props {
   title: string;
@@ -12,6 +14,14 @@ interface Props {
 }
 
 const { title, summary, role, period, client, domain } = Astro.props;
+
+const currentSlug = Astro.url.pathname.replace(/^\/work\//, "").replace(/\/$/, "");
+
+const more = (
+  await getCollection("case-studies", ({ data }) => !data.draft)
+)
+  .filter((entry) => entry.slug !== currentSlug)
+  .sort((a, b) => a.data.order - b.data.order);
 ---
 
 <BaseLayout title={title} description={summary}>
@@ -47,6 +57,33 @@ const { title, summary, role, period, client, domain } = Astro.props;
       <slot />
     </div>
   </article>
+
+  {
+    more.length > 0 && (
+      <section class="more container">
+        <header class="more-head">
+          <h2>More case studies</h2>
+          <p>{more.length === 1 ? "1 other" : `${more.length} others`}</p>
+        </header>
+        <ul class="more-list">
+          {more.map((s) => (
+            <li>
+              <CaseStudyCard
+                href={`/work/${s.slug}/`}
+                title={s.data.title}
+                summary={s.data.summary}
+                client={s.data.client}
+                domain={s.data.domain}
+                period={s.data.period}
+                cover={s.data.cover}
+                compact
+              />
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
 </BaseLayout>
 
 <style>
@@ -98,6 +135,38 @@ const { title, summary, role, period, client, domain } = Astro.props;
   }
 
   .case-body {
-    padding-bottom: var(--space-9);
+    padding-bottom: var(--space-7);
+  }
+
+  .more {
+    padding: var(--space-8) 0 var(--space-7);
+  }
+
+  .more-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-5);
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-4);
+    border-top: 1px solid var(--border);
+    padding-top: var(--space-7);
+  }
+
+  .more-head p {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+  }
+
+  .more-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-5);
   }
 </style>

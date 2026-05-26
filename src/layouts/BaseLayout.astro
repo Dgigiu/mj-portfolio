@@ -53,5 +53,215 @@ const fullTitle = title === "Miguel Jesus" ? title : `${title} · Miguel Jesus`;
       <slot />
     </main>
     <Footer />
+
+    <dialog id="zoom-dialog" class="zoom-dialog" aria-label="Image zoom">
+      <button type="button" class="zoom-close" aria-label="Close">×</button>
+      <img class="zoom-image" alt="" />
+      <p class="zoom-caption"></p>
+    </dialog>
+
+    <script>
+      const host = window.location.host;
+      document.querySelectorAll<HTMLAnchorElement>('a[href^="http"]').forEach((a) => {
+        try {
+          if (new URL(a.href).host !== host) {
+            a.target = "_blank";
+            const rel = new Set((a.rel || "").split(/\s+/).filter(Boolean));
+            rel.add("noopener");
+            rel.add("noreferrer");
+            a.rel = Array.from(rel).join(" ");
+          }
+        } catch {}
+      });
+
+      const dialog = document.getElementById("zoom-dialog") as HTMLDialogElement | null;
+      const dialogImg = dialog?.querySelector<HTMLImageElement>(".zoom-image");
+      const dialogCaption = dialog?.querySelector<HTMLParagraphElement>(".zoom-caption");
+      const dialogClose = dialog?.querySelector<HTMLButtonElement>(".zoom-close");
+      let lastTrigger: HTMLElement | null = null;
+
+      const closeDialog = () => {
+        if (!dialog) return;
+        if (dialog.classList.contains("is-closing")) return;
+        dialog.classList.add("is-closing");
+
+        const cleanup = () => {
+          dialog.classList.remove("is-closing");
+          dialog.close();
+          if (dialogImg) dialogImg.src = "";
+          lastTrigger?.focus();
+          lastTrigger = null;
+        };
+
+        const onEnd = (e: TransitionEvent) => {
+          if (e.propertyName !== "opacity") return;
+          dialog.removeEventListener("transitionend", onEnd);
+          clearTimeout(fallback);
+          cleanup();
+        };
+
+        const fallback = window.setTimeout(() => {
+          dialog.removeEventListener("transitionend", onEnd);
+          cleanup();
+        }, 300);
+
+        dialog.addEventListener("transitionend", onEnd);
+      };
+
+      document.querySelectorAll<HTMLButtonElement>(".zoomable").forEach((trigger) => {
+        trigger.addEventListener("click", () => {
+          if (!dialog || !dialogImg || !dialogCaption) return;
+          const src = trigger.dataset.zoomSrc;
+          const alt = trigger.dataset.zoomAlt ?? "";
+          const caption = trigger.dataset.zoomCaption ?? "";
+          if (!src) return;
+          dialogImg.src = src;
+          dialogImg.alt = alt;
+          dialogCaption.textContent = caption;
+          dialogCaption.hidden = caption.length === 0;
+          lastTrigger = trigger;
+          dialog.showModal();
+        });
+      });
+
+      dialogClose?.addEventListener("click", closeDialog);
+
+      dialog?.addEventListener("click", (e) => {
+        if (e.target === dialog) closeDialog();
+      });
+
+      dialog?.addEventListener("cancel", (e) => {
+        e.preventDefault();
+        closeDialog();
+      });
+    </script>
+
+    <style is:global>
+      .zoom-dialog {
+        max-width: min(92vw, 1400px);
+        max-height: 92vh;
+        width: fit-content;
+        height: fit-content;
+        padding: var(--space-5);
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        color: var(--text);
+        overflow: visible;
+        opacity: 0;
+        transition:
+          opacity 200ms ease,
+          overlay 200ms ease allow-discrete,
+          display 200ms ease allow-discrete;
+      }
+
+      .zoom-dialog[open] {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-3);
+        opacity: 1;
+        transition:
+          opacity 400ms ease,
+          overlay 400ms ease allow-discrete,
+          display 400ms ease allow-discrete;
+      }
+
+      @starting-style {
+        .zoom-dialog[open] {
+          opacity: 0;
+        }
+      }
+
+      .zoom-dialog::backdrop {
+        background: rgba(14, 14, 16, 0.78);
+        backdrop-filter: blur(4px);
+        opacity: 0;
+        transition:
+          opacity 200ms ease,
+          overlay 200ms ease allow-discrete,
+          display 200ms ease allow-discrete;
+      }
+
+      .zoom-dialog[open]::backdrop {
+        opacity: 1;
+        transition:
+          opacity 400ms ease,
+          overlay 400ms ease allow-discrete,
+          display 400ms ease allow-discrete;
+      }
+
+      .zoom-dialog[open].is-closing {
+        opacity: 0;
+        transition: opacity 200ms ease;
+      }
+
+      .zoom-dialog[open].is-closing::backdrop {
+        opacity: 0;
+        transition: opacity 200ms ease;
+      }
+
+      @starting-style {
+        .zoom-dialog[open]::backdrop {
+          opacity: 0;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .zoom-dialog,
+        .zoom-dialog::backdrop {
+          transition: none;
+        }
+      }
+
+      .zoom-image {
+        display: block;
+        max-width: 100%;
+        max-height: calc(92vh - var(--space-7) - var(--space-6));
+        width: auto;
+        height: auto;
+        margin: 0;
+        border-radius: var(--radius-sm);
+      }
+
+      .zoom-caption {
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: var(--text-muted);
+        margin: 0;
+        text-align: center;
+        line-height: var(--leading-snug);
+      }
+
+      .zoom-caption[hidden] {
+        display: none;
+      }
+
+      .zoom-close {
+        position: absolute;
+        top: calc(var(--space-3) * -1);
+        right: calc(var(--space-3) * -1);
+        width: 36px;
+        height: 36px;
+        font-size: 24px;
+        line-height: 1;
+        background: var(--text);
+        color: var(--bg);
+        border-radius: var(--radius-pill);
+        cursor: pointer;
+        box-shadow: var(--shadow-md);
+        display: grid;
+        place-items: center;
+      }
+
+      .zoom-close:hover {
+        background: var(--blue-bright);
+      }
+
+      .zoom-close:focus-visible {
+        outline: 2px solid var(--blue-bright);
+        outline-offset: 3px;
+      }
+    </style>
   </body>
 </html>

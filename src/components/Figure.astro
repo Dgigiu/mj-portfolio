@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 
 interface Props {
   src: ImageMetadata;
@@ -18,12 +18,21 @@ const {
   sizes = "(min-width: 800px) 800px, 100vw",
   bleed = false,
 } = Astro.props;
+
+const zoomed = await getImage({ src, format: "webp" });
 ---
 
 <figure class:list={["figure", { bleed }]}>
-  <div class="frame">
+  <button
+    type="button"
+    class="frame zoomable"
+    data-zoom-src={zoomed.src}
+    data-zoom-alt={alt}
+    data-zoom-caption={caption ?? ""}
+    aria-label={`Zoom image${alt ? ": " + alt : ""}`}
+  >
     <Image src={src} alt={alt} widths={widths} sizes={sizes} loading="lazy" decoding="async" />
-  </div>
+  </button>
   {caption && <figcaption>{caption}</figcaption>}
 </figure>
 
@@ -44,6 +53,25 @@ const {
     box-shadow: var(--shadow-sm);
   }
 
+  .frame.zoomable {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    color: inherit;
+    cursor: zoom-in;
+    transition: box-shadow var(--transition-base);
+  }
+
+  .frame.zoomable:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  .frame.zoomable:focus-visible {
+    outline: 2px solid var(--blue-bright);
+    outline-offset: 4px;
+  }
+
   .frame :global(img) {
     width: 100%;
     height: auto;
@@ -57,4 +85,5 @@ const {
     margin-top: var(--space-3);
     line-height: var(--leading-snug);
   }
+
 </style>

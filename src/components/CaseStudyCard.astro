@@ -9,16 +9,17 @@ interface Props {
   domain?: string;
   period?: string;
   cover?: ImageMetadata;
+  compact?: boolean;
 }
 
-const { href, title, summary, client, domain, period, cover } = Astro.props;
+const { href, title, summary, client, domain, period, cover, compact = false } = Astro.props;
 ---
 
-<a href={href} class="card">
+<a href={href} class:list={["card", { compact }]}>
   <div class="card-media">
     {
       cover ? (
-        <Image src={cover} alt="" widths={[480, 800, 1200]} sizes="(min-width: 720px) 50vw, 100vw" />
+        <Image src={cover} alt="" widths={[480, 800, 1200]} sizes={compact ? "(min-width: 720px) 50vw, 100vw" : "(min-width: 720px) 50vw, 100vw"} />
       ) : (
         <div class="card-placeholder" aria-hidden="true">
           <div class="ph-inner">{title}</div>
@@ -30,12 +31,12 @@ const { href, title, summary, client, domain, period, cover } = Astro.props;
   <div class="card-body">
     <div class="card-meta">
       {client && <span>{client}</span>}
-      {domain && <span>{domain}</span>}
-      {period && <span>{period}</span>}
+      {!compact && domain && <span>{domain}</span>}
+      {!compact && period && <span>{period}</span>}
     </div>
     <h3 class="card-title">{title}</h3>
-    <p class="card-summary">{summary}</p>
-    <span class="card-cta" aria-hidden="true">Read the case study →</span>
+    {!compact && <p class="card-summary">{summary}</p>}
+    {!compact && <span class="card-cta" aria-hidden="true">Read the case study →</span>}
   </div>
 </a>
 
@@ -57,21 +58,23 @@ const { href, title, summary, client, domain, period, cover } = Astro.props;
   }
 
   .card:hover {
+    background: var(--blue-hover);
     border-color: var(--blue-hover);
+    color: var(--bg);
   }
 
   .card:hover .hover-wash {
     opacity: 1;
   }
 
-  .card:hover .card-cta {
+  .card:hover .card-cta,
+  .card:hover .card-title,
+  .card:hover .card-summary {
     color: var(--bg);
   }
 
-  .card:hover .card-title,
-  .card:hover .card-summary,
   .card:hover .card-meta {
-    color: var(--bg);
+    color: rgba(240, 240, 240, 0.7);
   }
 
   .card:focus-visible {
@@ -169,6 +172,29 @@ const { href, title, summary, client, domain, period, cover } = Astro.props;
     .card {
       grid-template-columns: 1fr;
     }
+  }
+
+  .card.compact {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    padding: var(--space-4);
+  }
+
+  .card.compact .card-media {
+    aspect-ratio: 16 / 10;
+  }
+
+  .card.compact .card-body {
+    justify-content: flex-start;
+    gap: var(--space-2);
+  }
+
+  .card.compact .card-title {
+    font-size: var(--text-lg);
+  }
+
+  .card.compact .card-meta {
+    font-size: var(--text-xs);
   }
 
   @media (prefers-reduced-motion: reduce) {

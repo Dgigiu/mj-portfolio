@@ -48,6 +48,13 @@ const links = [
     -webkit-backdrop-filter: saturate(140%) blur(8px);
     z-index: 10;
     border-bottom: 1px solid transparent;
+    box-shadow: 0 0 0 rgba(14, 14, 16, 0);
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  }
+
+  .nav.is-scrolled {
+    border-bottom-color: var(--border);
+    box-shadow: 0 6px 16px rgba(14, 14, 16, 0.04);
   }
 
   .nav-inner {
@@ -127,3 +134,14 @@ const links = [
     }
   }
 </style>
+
+<script>
+  const nav = document.querySelector(".nav");
+  if (nav) {
+    const update = () => {
+      nav.classList.toggle("is-scrolled", window.scrollY > 4);
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+  }
+</script>

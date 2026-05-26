@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 
 interface Props {
   left: ImageMetadata;
@@ -11,19 +11,36 @@ interface Props {
 }
 
 const { left, leftAlt, leftCaption, right, rightAlt, rightCaption } = Astro.props;
+
+const leftZoom = await getImage({ src: left, format: "webp" });
+const rightZoom = await getImage({ src: right, format: "webp" });
 ---
 
 <div class="compare">
   <figure>
-    <div class="frame">
+    <button
+      type="button"
+      class="frame zoomable"
+      data-zoom-src={leftZoom.src}
+      data-zoom-alt={leftAlt}
+      data-zoom-caption={leftCaption ?? ""}
+      aria-label={`Zoom image${leftAlt ? ": " + leftAlt : ""}`}
+    >
       <Image src={left} alt={leftAlt} widths={[400, 800]} sizes="(min-width: 720px) 50vw, 100vw" loading="lazy" />
-    </div>
+    </button>
     {leftCaption && <figcaption>{leftCaption}</figcaption>}
   </figure>
   <figure>
-    <div class="frame">
+    <button
+      type="button"
+      class="frame zoomable"
+      data-zoom-src={rightZoom.src}
+      data-zoom-alt={rightAlt}
+      data-zoom-caption={rightCaption ?? ""}
+      aria-label={`Zoom image${rightAlt ? ": " + rightAlt : ""}`}
+    >
       <Image src={right} alt={rightAlt} widths={[400, 800]} sizes="(min-width: 720px) 50vw, 100vw" loading="lazy" />
-    </div>
+    </button>
     {rightCaption && <figcaption>{rightCaption}</figcaption>}
   </figure>
 </div>
@@ -48,6 +65,25 @@ const { left, leftAlt, leftCaption, right, rightAlt, rightCaption } = Astro.prop
     box-shadow: var(--shadow-sm);
   }
 
+  .frame.zoomable {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    color: inherit;
+    cursor: zoom-in;
+    transition: box-shadow var(--transition-base);
+  }
+
+  .frame.zoomable:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  .frame.zoomable:focus-visible {
+    outline: 2px solid var(--blue-bright);
+    outline-offset: 4px;
+  }
+
   .frame :global(img) {
     width: 100%;
     height: auto;
@@ -67,4 +103,5 @@ const { left, leftAlt, leftCaption, right, rightAlt, rightCaption } = Astro.prop
       grid-template-columns: 1fr;
     }
   }
+
 </style>
