@@ -29,5 +29,8 @@ pnpm-debug.log*
 # Claude Code local state
 .claude/settings.local.json
 
+# Case study source materials (working folder, not shipped)
+docs/Case Studies/
+
 # Misc
 *.tsbuildinfo
