@@ -1,6 +1,6 @@
 # Handoff
 
-Last updated: 2026-05-27 (workflow action bump)
+Last updated: 2026-05-27
 
 ## Where we are
 
@@ -20,7 +20,7 @@ What's live in the codebase:
 - **Layouts**: BaseLayout (head, OG meta, font preload, global scripts, zoom dialog), CaseStudyLayout (hero gradient + meta block + body + "More case studies" footer section)
 - **Deploy**: GitHub Actions workflow at [.github/workflows/deploy.yml](.github/workflows/deploy.yml), `public/CNAME` set to `migueljss.com`. First push to `main` will trigger Pages deploy once the remote is hooked up and Pages is enabled.
 
-## Polish that landed this session
+## Recent polish in the codebase
 
 - **Nav**: sticky with on-scroll shadow + hairline border (toggled via small inline script)
 - **Card hover**: whole card flips to `--blue-hover` with off-white text. Loud but accessible. See "Open items" below.
@@ -30,6 +30,14 @@ What's live in the codebase:
 - **External links**: auto-promoted to `target="_blank"` via a script in BaseLayout (also handles MDX-generated links). Three known LinkedIn anchors also have explicit `target` + `rel` so they work without JS.
 - **Email**: `miguel.jss@gmail.com` everywhere; subject prefilled with `Hello from migueljss.com` for Gmail filtering.
 - **Copy tweaks**: dropped "Built with Astro" from footer; removed "I read everything and reply to most" on contact; removed "or relocation" from contact (see memory `feedback-location-preference`).
+
+## This session (2026-05-27)
+
+Quiet maintenance pass while waiting on the revised design system from Claude Design:
+
+- Bumped deploy workflow actions to their Node 24 majors: `checkout@v6`, `setup-node@v6`, `upload-pages-artifact@v5`, `deploy-pages@v5`. Clears the Node 20 deprecation warning ahead of GitHub's June 2026 cutoff. Deploy succeeded and site is live.
+
+Holding on substantive work (About copy, OG images, cover review, Lighthouse, content pass) until the new design system lands so we're not redoing it.
 
 ## Open items / look at these next
 
