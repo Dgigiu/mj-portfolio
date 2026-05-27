@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://migueljss.com/sitemap-index.xml
+Sitemap: https://dgigiu.github.io/mj-portfolio/sitemap-index.xml

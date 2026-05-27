@@ -3,7 +3,8 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://migueljss.com',
+  site: 'https://dgigiu.github.io',
+  base: '/mj-portfolio',
   integrations: [mdx(), sitemap()],
   build: {
     format: 'directory',

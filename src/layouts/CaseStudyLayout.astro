@@ -15,7 +15,10 @@ interface Props {
 
 const { title, summary, role, period, client, domain } = Astro.props;
 
-const currentSlug = Astro.url.pathname.replace(/^\/work\//, "").replace(/\/$/, "");
+const base = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
+const currentSlug = Astro.url.pathname
+  .replace(new RegExp(`^${base}work/`), "")
+  .replace(/\/$/, "");
 
 const more = (
   await getCollection("case-studies", ({ data }) => !data.draft)
@@ -69,7 +72,7 @@ const more = (
           {more.map((s) => (
             <li>
               <CaseStudyCard
-                href={`/work/${s.slug}/`}
+                href={`${base}work/${s.slug}/`}
                 title={s.data.title}
                 summary={s.data.summary}
                 client={s.data.client}
