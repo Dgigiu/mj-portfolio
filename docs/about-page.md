@@ -1,0 +1,41 @@
+# About
+
+I'm Miguel Jesus, a Senior Product Designer based in Porto. I've been designing for over 20 years, starting in graphic and web design and focusing the last decade on UX/UI for SaaS and mobile products. The early years gave me a feel for typography, composition, and craft. The recent years have been about systems, flows, and shipping work that holds up over time inside complex products.
+
+## How I got here
+
+I trained as a designer at Universidade de Aveiro and started out in print and web. In 2013 I joined Doist, where product design properly clicked for me. I worked on Todoist's visual scheduler and onboarding, and rebranded Doist itself. In 2014 I co-founded TOPDOX, a document collaboration tool that went through the Rockstart accelerator in Amsterdam, raised €1M in venture funding, and grew to a team of twenty. In 2018 I co-founded ikuTeam and led design on Team Files, a file management app for Jira and Confluence that reached around 10,000 companies before I left in 2025. Along the way I designed MyFoodways (a sustainable recipes app encouraging people to eat better, with more plants and less meat) and Food Save for Foodways, two apps focused on reducing food waste at home and in professional kitchens.
+
+## How I work
+
+I think in systems and in narratives at the same time. A good product needs both: components that hold up under reuse, and flows that make sense when a real person uses the product. I start with the problem, talk to users when I can, sketch early, and stay close to engineering throughout. I lean iterative: ship the core functionality that helps users reach their goals, then make it better.
+
+Most of my career has been as the sole designer on small teams. That taught me to take ownership end to end: research, strategy, UX, UI, copy, documentation, and the trade-offs in between. I care about long-term ownership, clear product thinking, and work that actually helps people get things done.
+
+## Working with AI
+
+Over the last couple of years, AI tools have become a real part of how I work. I use Claude, Perplexity, and Figma's AI features (including Make) for ideation, UX writing, early prototyping, and design critique. I'm not interested in AI as a novelty. I'm interested in shipping faster, with more consistent results, and using the time it gives back to think harder about the harder problems.
+
+To stay sharp on what these tools can and can't do, I also build my own things. The working prototype of an app that aggregates my friends' BoardGameGeek collections and recommends the best games for whoever's around the table came together with Claude Code, as a way to explore agentic AI on a problem my friend group actually has. I've also been using Claude Design to work through the system for this very site. Honestly, I'm having fun tinkering. And I doubt I'll go back to static Figma prototypes when Make and Code can give me something real to put in front of users.
+
+The craft still belongs to the designer. The tools just remove the friction around it.
+
+## Strategy and planning
+
+A lot of my work has happened upstream of the screen. As a founder I helped shape product direction, roadmaps, and positioning. As the sole designer on small teams, I prioritized what to build next based on user feedback, usage data, and engineering reality. I've negotiated trade-offs with product managers and engineers, scoped features down to what could realistically ship, and made hard calls about where design effort would have the most leverage. Strategy and planning aren't separate from design for me. They're part of doing the job well.
+
+## Outside of work
+
+Last year my life shifted in ways that asked me to slow down and find my voice again. What's followed has been a year of reconnecting with community, self-care, and craft outside of work.
+
+I volunteer with a local food rescue organization that collects surplus produce from supermarkets and redistributes it to people in need. The link to my Foodways work isn't lost on me, but more importantly it keeps me close to the community and to the problems I care about.
+
+I'm part of a self-defense class within Porto's queer community, which has given me practical skills and a sense of belonging. Alongside that, I'm focused on my own health: gym regularly, eating seasonally, building strength for the years ahead. At home, two rescue cats named Zelda and Link have brought joy, routine, and steady damage to my houseplants. Zelda also has an unexplained thing for onions. The LEGO collection, fortunately, has fared better than the plants.
+
+Friends are the unifying thread in most of the rest. We go out for movie nights, get together to play board games (things can get really competitive, and at the end of the day, my favorite games? The ones I win), and go out to try new food. From time to time, I host the game session and cook or bake for them.
+
+Nowadays I cook a lot more, striking a balance between health and experimentation, and with so many sources of inspiration, I had to get things in order. The recipes I find online go into a small personal system, with AI handling ingestion, macros, and unit conversions. The same systems thinking that runs through my work runs through all of this.
+
+## Get in touch
+
+If any of this resonates and you'd like to talk, my email is miguel.jss@gmail.com and you can find me on LinkedIn at linkedin.com/in/migueljss.

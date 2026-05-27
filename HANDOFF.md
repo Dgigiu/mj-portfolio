@@ -36,8 +36,9 @@ What's live in the codebase:
 Quiet maintenance pass while waiting on the revised design system from Claude Design:
 
 - Bumped deploy workflow actions to their Node 24 majors: `checkout@v6`, `setup-node@v6`, `upload-pages-artifact@v5`, `deploy-pages@v5`. Clears the Node 20 deprecation warning ahead of GitHub's June 2026 cutoff. Deploy succeeded and site is live.
+- **About page rewritten** with Miguel's revised draft (source at [docs/about-page.md](docs/about-page.md)). New structure: lede paragraph → How I got here → How I work → Working with AI → Strategy and planning → Outside of work → Get in touch. Hero `h1` replaced with "Twenty years of designing clear experiences for complex products." Added a scoped `.lede` style in [about.astro](src/pages/about.astro) (uses `--text-lg` / `--text` / `--space-6`, all tokenized). Email + LinkedIn in the new "Get in touch" section are real anchors (mailto with prefilled subject matching contact page; LinkedIn marked `target="_blank"`). Build clean.
 
-Holding on substantive work (About copy, OG images, cover review, Lighthouse, content pass) until the new design system lands so we're not redoing it.
+Still holding on the rest of the substantive work (OG images, cover review, Lighthouse, MDX content pass) until the new design system lands so we're not redoing it.
 
 ## Open items / look at these next
 
@@ -45,7 +46,6 @@ Holding on substantive work (About copy, OG images, cover review, Lighthouse, co
 
 - **Revised design system from Claude Design.** When it arrives, the card hover treatment is the first thing to revisit — current whole-card blue wash is accessible but Miguel said it's too loud. See memory `portfolio-card-hover-state`. Likely a softer treatment: wash only the media side, title color shift, or a different interaction altogether. Also expect to retune tokens (color, type scale, spacing) and possibly swap fonts in if licensed Aeonik / PP Neue Machina arrives.
 - **Content pass on case studies.** Migrated content reads well but Miguel hasn't done a full review in MDX form. May want a copy pass on each `.mdx` once final voice/tone is locked.
-- **About page copy.** Currently placeholder in Miguel's voice — needs his eyes on it.
 - **Cover images.** Home page cards use the `*-hero-cover.png` files. Worth confirming those are the right thumbnails (vs e.g. a cleaner non-hero image).
 
 ### Lower priority / still to do
