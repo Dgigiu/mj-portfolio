@@ -1,10 +1,12 @@
 # Handoff
 
-Last updated: 2026-05-26
+Last updated: 2026-05-27
 
 ## Where we are
 
-The portfolio site at `migueljss.com` is scaffolded end-to-end with real case study content. Build is clean (`npm run build` → 0 errors / 0 warnings), dev server runs on `http://localhost:4321/`, and git history has the work in three commits on `main`. No GitHub remote yet — Miguel will add it when he's ready.
+The portfolio site at `migueljss.com` is scaffolded end-to-end with real case study content, pushed to GitHub at **https://github.com/Dgigiu/mj-portfolio**, and deployed via GitHub Actions to GitHub Pages. Custom domain `migueljss.com` is registered with Pages and waiting on DNS — once Miguel points the apex A records at GitHub's IPs and the Let's Encrypt cert provisions, the site will be live at `https://migueljss.com`. The temp URL `https://dgigiu.github.io/mj-portfolio/` will load but assets will be broken there (Astro built with `site: 'https://migueljss.com'` and no base path, so it assumes root-level deployment). No code change needed — just DNS.
+
+Build is clean (`npm run build` → 0 errors / 0 warnings).
 
 What's live in the codebase:
 
@@ -41,7 +43,8 @@ What's live in the codebase:
 - **OG images.** [BaseLayout](src/layouts/BaseLayout.astro) references `/og/default.png` which doesn't exist. Need a default 1200×630 share image and per-case-study versions when content stabilizes.
 - **Favicon.** Currently a hand-written SVG with "MJ" text. Probably fine for now, may want a more refined mark.
 - **Lighthouse audit.** Brief targets 95+ on mobile. Not yet run on a real preview build — worth running once content is final and OG images are in.
-- **GitHub remote + Pages.** Repo is local. When Miguel creates the remote and enables Pages (source: GitHub Actions), the deploy workflow will run on first push.
+- **DNS for migueljss.com.** Repo is on GitHub, Pages is configured with custom domain `migueljss.com`. Waiting for Miguel to add A records at his registrar: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153` (apex `@`). Optional IPv6 AAAA: `2606:50c0:8000::153` through `...8003::153`. After DNS resolves, tick "Enforce HTTPS" in repo Settings → Pages.
+- **Workflow Node version.** Latest deploy run flagged Node.js 20 deprecation on `actions/checkout@v4`, `actions/setup-node@v4`, `actions/upload-artifact@v4`, `actions/deploy-pages@v4`. Still works; GitHub forces Node 24 by June 2026. Update the workflow when convenient.
 - **Updates to case studies.** [docs/Case Studies/](docs/Case%20Studies/) is gitignored and used as the working folder. Drop updated `.docx` or images there and Claude can refold into the MDX.
 
 ## Quick reference
