@@ -37,6 +37,8 @@ Quiet maintenance pass while waiting on the revised design system from Claude De
 
 - Bumped deploy workflow actions to their Node 24 majors: `checkout@v6`, `setup-node@v6`, `upload-pages-artifact@v5`, `deploy-pages@v5`. Clears the Node 20 deprecation warning ahead of GitHub's June 2026 cutoff. Deploy succeeded and site is live.
 - **About page rewritten** with Miguel's revised draft (source at [docs/about-page.md](docs/about-page.md)). New structure: lede paragraph → How I got here → How I work → Working with AI → Strategy and planning → Outside of work → Get in touch. Hero `h1` replaced with "Twenty years of designing clear experiences for complex products." Added a scoped `.lede` style in [about.astro](src/pages/about.astro) (uses `--text-lg` / `--text` / `--space-6`, all tokenized). Email + LinkedIn in the new "Get in touch" section are real anchors (mailto with prefilled subject matching contact page; LinkedIn marked `target="_blank"`). Build clean.
+- **Footer tagline added.** "Designing with clarity and calm purpose since 2005." appended to the `© {year} Miguel Jesus` line in [Footer.astro](src/components/Footer.astro), separated by a middle dot, same `--text-muted` styling as the copyright.
+- **Pushed to `main`** (commits `18a8758` and `c7e1f53`); GitHub Actions deploy ran. Miguel will eyeball the live site later.
 
 Still holding on the rest of the substantive work (OG images, cover review, Lighthouse, MDX content pass) until the new design system lands so we're not redoing it.
 
