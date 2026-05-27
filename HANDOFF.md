@@ -1,6 +1,6 @@
 # Handoff
 
-Last updated: 2026-05-27
+Last updated: 2026-05-27 (workflow action bump)
 
 ## Where we are
 
@@ -46,7 +46,6 @@ What's live in the codebase:
 - **Favicon.** Currently a hand-written SVG with "MJ" text. Probably fine for now, may want a more refined mark.
 - **Lighthouse audit.** Brief targets 95+ on mobile. Not yet run on a real preview build — worth running once content is final and OG images are in.
 - **Switching to migueljss.com later.** When ready: in `astro.config.mjs` set `site: 'https://migueljss.com'` and delete the `base` line; restore `public/CNAME` with `migueljss.com`; on GitHub set the custom domain back via `gh api -X PUT repos/Dgigiu/mj-portfolio/pages -f cname=migueljss.com`; add apex A records at the registrar (`185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`) and optional AAAA (`2606:50c0:8000::153` through `...8003::153`); after DNS resolves, tick "Enforce HTTPS" in repo Settings → Pages.
-- **Workflow Node version.** Latest deploy run flagged Node.js 20 deprecation on `actions/checkout@v4`, `actions/setup-node@v4`, `actions/upload-artifact@v4`, `actions/deploy-pages@v4`. Still works; GitHub forces Node 24 by June 2026. Update the workflow when convenient.
 - **Updates to case studies.** [docs/Case Studies/](docs/Case%20Studies/) is gitignored and used as the working folder. Drop updated `.docx` or images there and Claude can refold into the MDX.
 
 ## Quick reference
