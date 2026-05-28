@@ -19,25 +19,27 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
       aria-hidden="true"
       class="hero-portrait"
       loading="eager"
-      widths={[600, 900, 1200, 1600]}
-      sizes="(max-width: 720px) 80vw, 62vw"
+      widths={[900, 1200, 1600, 2000]}
+      sizes="min(100vw, 1600px)"
     />
     <div class="hero-vignette" aria-hidden="true"></div>
     <div class="hero-hairline" aria-hidden="true"></div>
 
     <div class="container hero-inner">
-      <p class="hero-eyebrow">Portfolio · 2026</p>
-      <h1 id="hero-title">Calm products for complex work.</h1>
-      <p class="hero-subtitle">
-        I'm Miguel. For 20+ years I've designed SaaS and mobile products with small teams, often as the only designer in the room. The case studies below are stories about taking something messy and making it usable.
-      </p>
-      <p class="hero-meta">
-        <span>Porto</span>
-        <span aria-hidden="true">·</span>
-        <span>Open to senior in-house roles, remote or hybrid</span>
-        <span aria-hidden="true">·</span>
-        <a href="mailto:miguel.jss@gmail.com?subject=Hello%20from%20migueljss.com">miguel.jss@gmail.com</a>
-      </p>
+      <div class="hero-content">
+        <p class="hero-eyebrow">Portfolio · 2026</p>
+        <h1 id="hero-title">Calm products for complex work.</h1>
+        <p class="hero-subtitle">
+          I'm Miguel. For 20+ years I've designed SaaS and mobile products with small teams, often as the only designer in the room. The case studies below are stories about taking something messy and making it usable.
+        </p>
+        <p class="hero-meta">
+          <span>Porto</span>
+          <span aria-hidden="true">·</span>
+          <span>Open to senior in-house roles, remote or hybrid</span>
+          <span aria-hidden="true">·</span>
+          <a href="mailto:miguel.jss@gmail.com?subject=Hello%20from%20migueljss.com">miguel.jss@gmail.com</a>
+        </p>
+      </div>
     </div>
 
     <a href="#work" class="hero-scroll" aria-label="Jump to selected work">
@@ -97,14 +99,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
     align-items: center;
   }
 
+  /* Source is a landscape frame (3618×2184) with Miguel on the right and
+     a wide black expanse on the left, designed so the empty-left blends
+     into cobalt via luminosity. So no object-fit crop — let the image
+     render at its natural aspect, anchored bottom-right. On viewports
+     narrower than the natural width, the empty-left overflows past the
+     section and gets clipped by overflow: hidden. */
   .hero-portrait {
     position: absolute;
     right: 0;
     bottom: 0;
     height: 100%;
-    width: min(62%, 980px);
-    object-fit: cover;
-    object-position: center right;
+    width: auto;
+    max-width: none;
     mix-blend-mode: luminosity;
     filter: contrast(1.05);
     z-index: 1;
@@ -116,10 +123,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
     position: absolute;
     inset: 0;
     background: radial-gradient(
-      120% 90% at 0% 0%,
-      rgba(8, 14, 32, 0.85) 0%,
-      rgba(8, 14, 32, 0.55) 28%,
-      rgba(8, 14, 32, 0) 60%
+      130% 100% at 0% 0%,
+      rgba(8, 14, 32, 0.88) 0%,
+      rgba(8, 14, 32, 0.6) 38%,
+      rgba(8, 14, 32, 0) 70%
     );
     z-index: 2;
     pointer-events: none;
@@ -143,6 +150,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
     max-width: var(--content-page);
   }
 
+  /* Hard cap on the text column so it never bleeds into the portrait area. */
+  .hero-content {
+    max-width: 560px;
+  }
+
   .hero-eyebrow {
     font-family: var(--font-sans);
     font-size: var(--text-xs);
@@ -157,12 +169,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
   .hero h1 {
     font-family: var(--font-sans);
     font-weight: var(--weight-bold);
-    font-size: clamp(48px, 7.2vw, 96px);
-    line-height: 0.98;
+    font-size: clamp(44px, 6vw, 80px);
+    line-height: 1;
     letter-spacing: -0.035em;
     color: #fff;
     text-wrap: balance;
-    max-width: 14ch;
     margin: 0 0 var(--space-6);
   }
 
@@ -223,22 +234,40 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
     color: #fff;
   }
 
+  /* Laptop / tablet: extend the vignette so the text column stays legible
+     where it overlaps the photo's left fade. */
+  @media (max-width: 1100px) {
+    .hero-vignette {
+      background: radial-gradient(
+        150% 110% at 0% 0%,
+        rgba(8, 14, 32, 0.9) 0%,
+        rgba(8, 14, 32, 0.7) 42%,
+        rgba(8, 14, 32, 0.25) 75%,
+        rgba(8, 14, 32, 0) 100%
+      );
+    }
+
+    .hero-inner {
+      padding-top: var(--space-20);
+    }
+  }
+
   @media (max-width: 720px) {
     .hero {
       min-height: 600px;
     }
 
     .hero-portrait {
-      width: min(80%, 600px);
-      opacity: 0.7;
+      opacity: 0.55;
     }
 
     .hero-vignette {
       background: radial-gradient(
-        140% 100% at 0% 0%,
-        rgba(8, 14, 32, 0.9) 0%,
-        rgba(8, 14, 32, 0.6) 36%,
-        rgba(8, 14, 32, 0) 72%
+        160% 130% at 0% 0%,
+        rgba(8, 14, 32, 0.92) 0%,
+        rgba(8, 14, 32, 0.78) 50%,
+        rgba(8, 14, 32, 0.35) 85%,
+        rgba(8, 14, 32, 0) 100%
       );
     }
 
