@@ -98,6 +98,60 @@ blockquote {
   color: var(--fg-primary);
 }
 
+/* Prose lists — en-dash marker in accent, Geist semi.
+   Center-dot (·) is still the inline metadata separator. */
+.prose ul,
+.prose ol {
+  margin: 0;
+  padding-left: 1.4em;
+}
+
+.prose ul li,
+.prose ol li {
+  padding-left: 0.25em;
+  margin: 0;
+}
+
+.prose ul li::marker {
+  content: "– ";
+  color: var(--accent);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-semi);
+}
+
+.prose ol li::marker {
+  color: var(--accent);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-semi);
+}
+
+.prose li + li {
+  margin-top: var(--space-2);
+}
+
+/* Explicit bullet pattern from the design system spec — for places
+   where a custom list (not from MDX) needs the same marker. */
+.bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.bullets li {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 6px;
+  padding: 3px 0;
+  font-family: var(--font-serif);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+}
+.bullets .marker {
+  color: var(--accent);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-semi);
+  line-height: 1.5;
+}
+
 /* ── Utility classes from the design system ─────────────── */
 
 .mj-display-xl {

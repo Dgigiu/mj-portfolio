@@ -1,7 +1,9 @@
 ---
 import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import CaseStudyCard from "../components/CaseStudyCard.astro";
+import portrait from "../assets/brand/miguel-portrait.png";
 
 const studies = (await getCollection("case-studies", ({ data }) => !data.draft)).sort(
   (a, b) => a.data.order - b.data.order
@@ -10,19 +12,43 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
 ---
 
 <BaseLayout title="Miguel Jesus" description="Senior Product Designer in Porto. Case studies across B2B SaaS and mobile products.">
-  <section class="hero">
-    <div class="container">
-      <div class="hero-inner">
-        <p class="mj-eyebrow">SENIOR PRODUCT DESIGNER · PORTO</p>
-        <h1>Calm products for complex work.</h1>
-        <p class="intro">
-          I'm Miguel. For 20+ years I've designed SaaS and mobile products with small teams, often as the only designer in the room. Below are a few case studies. Each is a story about taking something messy and making it usable.
-        </p>
-      </div>
+  <section class="hero" aria-labelledby="hero-title">
+    <Image
+      src={portrait}
+      alt=""
+      aria-hidden="true"
+      class="hero-portrait"
+      loading="eager"
+      widths={[600, 900, 1200, 1600]}
+      sizes="(max-width: 720px) 80vw, 62vw"
+    />
+    <div class="hero-vignette" aria-hidden="true"></div>
+    <div class="hero-hairline" aria-hidden="true"></div>
+
+    <div class="container hero-inner">
+      <p class="hero-eyebrow">Portfolio · 2026</p>
+      <h1 id="hero-title">Calm products for complex work.</h1>
+      <p class="hero-subtitle">
+        I'm Miguel. For 20+ years I've designed SaaS and mobile products with small teams, often as the only designer in the room. The case studies below are stories about taking something messy and making it usable.
+      </p>
+      <p class="hero-meta">
+        <span>Porto</span>
+        <span aria-hidden="true">·</span>
+        <span>Open to senior in-house roles, remote or hybrid</span>
+        <span aria-hidden="true">·</span>
+        <a href="mailto:miguel.jss@gmail.com?subject=Hello%20from%20migueljss.com">miguel.jss@gmail.com</a>
+      </p>
     </div>
+
+    <a href="#work" class="hero-scroll" aria-label="Jump to selected work">
+      <span>Selected work</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+        <path d="M6 9l6 6 6-6" />
+      </svg>
+    </a>
   </section>
 
-  <section class="work container">
+  <section id="work" class="work container">
     <header class="work-head">
       <h2>Selected work</h2>
       <span class="work-count mj-caption">{studies.length} case {studies.length === 1 ? "study" : "studies"}</span>
@@ -60,29 +86,172 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
 
 <style>
   .hero {
-    padding: var(--space-24) 0 var(--space-16);
+    position: relative;
+    width: 100%;
+    min-height: min(720px, 88vh);
+    background: var(--accent);
+    color: #fff;
+    overflow: hidden;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+  }
+
+  .hero-portrait {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    width: min(62%, 980px);
+    object-fit: cover;
+    object-position: center right;
+    mix-blend-mode: luminosity;
+    filter: contrast(1.05);
+    z-index: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .hero-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      120% 90% at 0% 0%,
+      rgba(8, 14, 32, 0.85) 0%,
+      rgba(8, 14, 32, 0.55) 28%,
+      rgba(8, 14, 32, 0) 60%
+    );
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .hero-hairline {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.18);
+    z-index: 3;
   }
 
   .hero-inner {
-    max-width: var(--content-narrow);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
+    position: relative;
+    z-index: 4;
+    padding-top: var(--space-24);
+    padding-bottom: var(--space-20);
+    max-width: var(--content-page);
   }
 
-  .hero-inner h1 {
-    font-size: clamp(var(--text-3xl), 5vw, var(--text-4xl));
+  .hero-eyebrow {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    font-weight: var(--weight-medium);
+    color: rgba(255, 255, 255, 0.78);
+    margin: 0 0 var(--space-6);
   }
 
-  .intro {
+  .hero h1 {
+    font-family: var(--font-sans);
+    font-weight: var(--weight-bold);
+    font-size: clamp(48px, 7.2vw, 96px);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    color: #fff;
+    text-wrap: balance;
+    max-width: 14ch;
+    margin: 0 0 var(--space-6);
+  }
+
+  .hero-subtitle {
     font-family: var(--font-serif);
     font-size: var(--text-lg);
-    line-height: var(--leading-relaxed);
-    color: var(--fg-secondary);
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.92);
+    max-width: 520px;
+    margin: 0 0 var(--space-8);
+  }
+
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 12px;
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    letter-spacing: 0.01em;
+    color: rgba(255, 255, 255, 0.78);
     margin: 0;
   }
 
+  .hero-meta a {
+    color: #fff;
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.55);
+    text-underline-offset: 3px;
+    transition: text-decoration-color var(--duration-fast) var(--ease-out);
+  }
+
+  .hero-meta a:hover {
+    text-decoration-color: #fff;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    left: 50%;
+    bottom: var(--space-6);
+    transform: translateX(-50%);
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    color: rgba(255, 255, 255, 0.85);
+    font-family: var(--font-sans);
+    font-size: var(--text-2xs);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: var(--radius-xs);
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .hero-scroll:hover {
+    color: #fff;
+  }
+
+  @media (max-width: 720px) {
+    .hero {
+      min-height: 600px;
+    }
+
+    .hero-portrait {
+      width: min(80%, 600px);
+      opacity: 0.7;
+    }
+
+    .hero-vignette {
+      background: radial-gradient(
+        140% 100% at 0% 0%,
+        rgba(8, 14, 32, 0.9) 0%,
+        rgba(8, 14, 32, 0.6) 36%,
+        rgba(8, 14, 32, 0) 72%
+      );
+    }
+
+    .hero-inner {
+      padding-top: var(--space-16);
+      padding-bottom: var(--space-16);
+    }
+  }
+
+  /* Work index */
   .work {
+    scroll-margin-top: var(--space-6);
+    padding-top: var(--space-20);
     padding-bottom: var(--space-16);
   }
 
@@ -114,6 +283,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
     gap: var(--space-16);
   }
 
+  /* Outro */
   .outro {
     padding-bottom: var(--space-16);
   }
