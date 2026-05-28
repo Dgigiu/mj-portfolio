@@ -4,73 +4,67 @@ const year = new Date().getFullYear();
 
 <footer class="footer">
   <div class="container footer-inner">
-    <div class="block">
-      <p class="name">Miguel Jesus</p>
-      <p class="role">Senior Product Designer, Porto</p>
+    <p class="meta">© {year} Miguel Jesus · Designing with clarity and calm purpose since 2005.</p>
+    <div class="social">
+      <a
+        href="https://www.linkedin.com/in/migueljss/"
+        target="_blank"
+        rel="me noopener noreferrer"
+        class="social-link"
+      >LinkedIn</a>
+      <a
+        href="mailto:miguel.jss@gmail.com?subject=Hello%20from%20migueljss.com"
+        class="social-link"
+      >Email</a>
     </div>
-    <ul class="links">
-      <li><a href="mailto:miguel.jss@gmail.com?subject=Hello%20from%20migueljss.com">miguel.jss@gmail.com</a></li>
-      <li><a href="https://www.linkedin.com/in/migueljss/" target="_blank" rel="me noopener noreferrer">LinkedIn</a></li>
-    </ul>
-  </div>
-  <div class="container footer-meta">
-    <small>© {year} Miguel Jesus · Designing with clarity and calm purpose since 2005.</small>
   </div>
 </footer>
 
 <style>
   .footer {
-    padding: var(--space-8) 0 var(--space-6);
-    border-top: 1px solid var(--border);
-    margin-top: var(--space-9);
+    border-top: var(--hairline) solid var(--border-subtle);
+    margin-top: var(--space-24);
+    padding: var(--space-8) 0;
   }
 
   .footer-inner {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-5);
+    gap: var(--space-4);
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
   }
 
-  .name {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: var(--text-lg);
-    color: var(--text);
-  }
-
-  .role {
-    color: var(--text-muted);
-    font-size: var(--text-sm);
-    margin-top: var(--space-1);
-  }
-
-  .links {
-    list-style: none;
+  .meta {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    line-height: var(--leading-normal);
+    color: var(--fg-tertiary);
     margin: 0;
-    padding: 0;
+  }
+
+  .social {
     display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-    text-align: right;
+    gap: var(--space-4);
   }
 
-  .links a {
-    font-size: var(--text-sm);
+  .social-link {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    color: var(--fg-tertiary);
+    text-decoration: none;
+    transition: color var(--duration-fast) var(--ease-out);
   }
 
-  .footer-meta {
-    margin-top: var(--space-6);
-  }
-
-  .footer-meta small {
-    color: var(--text-muted);
+  .social-link:hover {
+    color: var(--fg-primary);
   }
 
   @media (max-width: 480px) {
-    .links {
-      text-align: left;
+    .footer-inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-3);
     }
   }
 </style>

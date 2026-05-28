@@ -1,9 +1,4 @@
 ---
-import "@fontsource/inter/400.css";
-import "@fontsource/inter/500.css";
-import "@fontsource/inter/600.css";
-import "@fontsource/space-grotesk/500.css";
-import "@fontsource/space-grotesk/700.css";
 import "../styles/global.css";
 
 import Nav from "../components/Nav.astro";
@@ -46,7 +41,7 @@ const fullTitle = title === "Miguel Jesus" ? title : `${title} · Miguel Jesus`;
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
     <link rel="sitemap" href={`${base}sitemap-index.xml`} />
 
-    <meta name="theme-color" content="#f0f0f0" />
+    <meta name="theme-color" content="#fffdf7" />
   </head>
   <body>
     <a href="#main" class="visually-hidden">Skip to content</a>
@@ -145,10 +140,10 @@ const fullTitle = title === "Miguel Jesus" ? title : `${title} · Miguel Jesus`;
         width: fit-content;
         height: fit-content;
         padding: var(--space-5);
-        background: var(--bg);
-        border: 1px solid var(--border);
+        background: var(--bg-canvas);
+        border: var(--hairline) solid var(--border-subtle);
         border-radius: var(--radius-md);
-        color: var(--text);
+        color: var(--fg-primary);
         overflow: visible;
         opacity: 0;
         transition:
@@ -227,12 +222,12 @@ const fullTitle = title === "Miguel Jesus" ? title : `${title} · Miguel Jesus`;
       }
 
       .zoom-caption {
-        font-family: var(--font-mono);
+        font-family: var(--font-sans);
         font-size: var(--text-xs);
-        color: var(--text-muted);
+        color: var(--fg-tertiary);
         margin: 0;
         text-align: center;
-        line-height: var(--leading-snug);
+        line-height: var(--leading-normal);
       }
 
       .zoom-caption[hidden] {
@@ -247,8 +242,8 @@ const fullTitle = title === "Miguel Jesus" ? title : `${title} · Miguel Jesus`;
         height: 36px;
         font-size: 24px;
         line-height: 1;
-        background: var(--text);
-        color: var(--bg);
+        background: var(--fg-primary);
+        color: var(--bg-canvas);
         border-radius: var(--radius-pill);
         cursor: pointer;
         box-shadow: var(--shadow-md);
@@ -257,12 +252,12 @@ const fullTitle = title === "Miguel Jesus" ? title : `${title} · Miguel Jesus`;
       }
 
       .zoom-close:hover {
-        background: var(--blue-bright);
+        background: var(--accent);
       }
 
       .zoom-close:focus-visible {
-        outline: 2px solid var(--blue-bright);
-        outline-offset: 3px;
+        outline: none;
+        box-shadow: var(--shadow-focus);
       }
     </style>
   </body>

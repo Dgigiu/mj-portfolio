@@ -1,74 +1,76 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import HeroGradient from "../components/HeroGradient.astro";
 ---
 
 <BaseLayout title="Contact" description="Email and LinkedIn.">
-  <HeroGradient compact>
-    <p class="eyebrow eyebrow-light">Contact</p>
-    <h1>Say hello.</h1>
-  </HeroGradient>
-
-  <section class="container contact">
-    <div class="prose">
-      <p>
-        Email is the fastest way to reach me.
-      </p>
+  <section class="contact container">
+    <div class="contact-inner">
+      <h1>Say hello.</h1>
+      <p class="intro">Email is the fastest way to reach me.</p>
 
       <ul class="channels">
         <li>
-          <span class="label">Email</span>
+          <span class="channel-label">Email</span>
           <a href="mailto:miguel.jss@gmail.com?subject=Hello%20from%20migueljss.com">miguel.jss@gmail.com</a>
         </li>
         <li>
-          <span class="label">LinkedIn</span>
+          <span class="channel-label">LinkedIn</span>
           <a href="https://www.linkedin.com/in/migueljss/" target="_blank" rel="me noopener noreferrer">linkedin.com/in/migueljss</a>
         </li>
       </ul>
 
-      <p class="note">
-        Based in Porto. Open to remote or hybrid for the right senior in-house product design role.
-      </p>
+      <p class="note">Based in Porto. Open to remote or hybrid for the right senior in-house product design role.</p>
     </div>
   </section>
 </BaseLayout>
 
 <style>
   .contact {
-    padding: var(--space-8) 0;
+    padding: var(--space-16) 0 var(--space-24);
   }
 
-  .eyebrow-light {
-    color: rgba(240, 240, 240, 0.7);
+  .contact-inner {
+    max-width: var(--content-narrow);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .contact-inner h1 {
+    font-size: clamp(var(--text-3xl), 5vw, var(--text-4xl));
+  }
+
+  .intro {
+    color: var(--fg-secondary);
+    margin: 0;
   }
 
   .channels {
     list-style: none;
-    margin: var(--space-6) 0;
+    margin: 0;
     padding: 0;
-    display: grid;
-    gap: var(--space-4);
   }
 
   .channels li {
     display: grid;
     grid-template-columns: 100px 1fr;
-    gap: var(--space-4);
-    padding: var(--space-4) 0;
-    border-top: 1px solid var(--border);
+    gap: var(--space-6);
+    padding: var(--space-5) 0;
+    border-top: var(--hairline) solid var(--border-subtle);
     align-items: baseline;
   }
 
   .channels li:last-child {
-    border-bottom: 1px solid var(--border);
+    border-bottom: var(--hairline) solid var(--border-subtle);
   }
 
-  .channels .label {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
+  .channel-label {
+    font-family: var(--font-sans);
+    font-size: var(--text-2xs);
+    font-weight: var(--weight-medium);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--text-muted);
+    letter-spacing: var(--tracking-label);
+    color: var(--fg-muted);
   }
 
   .channels a {
@@ -76,7 +78,16 @@ import HeroGradient from "../components/HeroGradient.astro";
   }
 
   .note {
-    color: var(--text-muted);
+    font-family: var(--font-sans);
     font-size: var(--text-sm);
+    color: var(--fg-muted);
+    margin: 0;
+  }
+
+  @media (max-width: 480px) {
+    .channels li {
+      grid-template-columns: 1fr;
+      gap: var(--space-2);
+    }
   }
 </style>

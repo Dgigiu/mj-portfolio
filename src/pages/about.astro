@@ -1,20 +1,30 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import HeroGradient from "../components/HeroGradient.astro";
+import { Image } from "astro:assets";
+import portrait from "../assets/brand/miguel-portrait.png";
 ---
 
 <BaseLayout title="About" description="How I got here, how I work, and what I care about.">
-  <HeroGradient compact>
-    <p class="eyebrow eyebrow-light">About</p>
-    <h1>Twenty years of designing clear experiences for complex products.</h1>
-  </HeroGradient>
+  <article class="about container">
+    <div class="about-header">
+      <div class="portrait-wrap">
+        <Image
+          src={portrait}
+          alt="Miguel Jesus"
+          widths={[400, 800]}
+          sizes="(min-width: 900px) 320px, 100vw"
+          class="portrait"
+        />
+      </div>
+      <div class="about-intro">
+        <h1>Twenty years of designing clear experiences for complex products.</h1>
+        <p class="lede">
+          I'm Miguel Jesus, a Senior Product Designer based in Porto. I've been designing for over 20 years, starting in graphic and web design and focusing the last decade on UX/UI for SaaS and mobile products. The early years gave me a feel for typography, composition, and craft. The recent years have been about systems, flows, and shipping work that holds up over time inside complex products.
+        </p>
+      </div>
+    </div>
 
-  <article class="container about">
     <div class="prose">
-      <p class="lede">
-        I'm Miguel Jesus, a Senior Product Designer based in Porto. I've been designing for over 20 years, starting in graphic and web design and focusing the last decade on UX/UI for SaaS and mobile products. The early years gave me a feel for typography, composition, and craft. The recent years have been about systems, flows, and shipping work that holds up over time inside complex products.
-      </p>
-
       <h2>How I got here</h2>
       <p>
         I trained as a designer at Universidade de Aveiro and started out in print and web. In 2013 I joined Doist, where product design properly clicked for me. I worked on Todoist's visual scheduler and onboarding, and rebranded Doist itself. In 2014 I co-founded TOPDOX, a document collaboration tool that went through the Rockstart accelerator in Amsterdam, raised €1M in venture funding, and grew to a team of twenty. In 2018 I co-founded ikuTeam and led design on Team Files, a file management app for Jira and Confluence that reached around 10,000 companies before I left in 2025. Along the way I designed MyFoodways (a sustainable recipes app encouraging people to eat better, with more plants and less meat) and Food Save for Foodways, two apps focused on reducing food waste at home and in professional kitchens.
@@ -71,16 +81,66 @@ import HeroGradient from "../components/HeroGradient.astro";
 
 <style>
   .about {
-    padding: var(--space-8) 0;
+    padding: var(--space-16) 0 var(--space-24);
   }
 
-  .eyebrow-light {
-    color: rgba(240, 240, 240, 0.7);
+  .about-header {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--space-12);
+    align-items: start;
+    margin-bottom: var(--space-16);
+    padding-bottom: var(--space-16);
+    border-bottom: var(--hairline) solid var(--border-subtle);
   }
 
-  .prose .lede {
+  .portrait-wrap {
+    position: sticky;
+    top: calc(var(--space-6) * 2 + 1px); /* below nav */
+  }
+
+  .portrait {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    display: block;
+  }
+
+  .about-intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .about-intro h1 {
+    font-size: clamp(var(--text-2xl), 3.5vw, var(--text-3xl));
+    line-height: var(--leading-snug);
+  }
+
+  .lede {
+    font-family: var(--font-serif);
     font-size: var(--text-lg);
-    color: var(--text);
-    margin-bottom: var(--space-6);
+    line-height: var(--leading-relaxed);
+    color: var(--fg-secondary);
+    margin: 0;
+  }
+
+  .prose {
+    max-width: var(--content-narrow);
+  }
+
+  .prose > * + * {
+    margin-top: var(--space-6);
+  }
+
+  @media (max-width: 900px) {
+    .about-header {
+      grid-template-columns: 1fr;
+    }
+
+    .portrait-wrap {
+      position: static;
+      max-width: 240px;
+    }
   }
 </style>

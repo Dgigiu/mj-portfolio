@@ -13,27 +13,31 @@ interface Props {
 }
 
 const { href, title, summary, client, domain, period, cover, compact = false } = Astro.props;
+
+const metaParts = compact
+  ? [client].filter(Boolean)
+  : [client, domain, period].filter(Boolean);
 ---
 
 <a href={href} class:list={["card", { compact }]}>
   <div class="card-media">
     {
       cover ? (
-        <Image src={cover} alt="" widths={[480, 800, 1200]} sizes={compact ? "(min-width: 720px) 50vw, 100vw" : "(min-width: 720px) 50vw, 100vw"} />
+        <Image
+          src={cover}
+          alt=""
+          widths={[480, 800, 1200]}
+          sizes="(min-width: 720px) 50vw, 100vw"
+        />
       ) : (
         <div class="card-placeholder" aria-hidden="true">
-          <div class="ph-inner">{title}</div>
+          <span>{title}</span>
         </div>
       )
     }
-    <span class="hover-wash" aria-hidden="true"></span>
   </div>
   <div class="card-body">
-    <div class="card-meta">
-      {client && <span>{client}</span>}
-      {!compact && domain && <span>{domain}</span>}
-      {!compact && period && <span>{period}</span>}
-    </div>
+    {metaParts.length > 0 && <p class="card-meta">{metaParts.join(" · ")}</p>}
     <h3 class="card-title">{title}</h3>
     {!compact && <p class="card-summary">{summary}</p>}
     {!compact && <span class="card-cta" aria-hidden="true">Read the case study →</span>}
@@ -44,50 +48,28 @@ const { href, title, summary, client, domain, period, cover, compact = false } =
   .card {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: var(--space-6);
-    align-items: stretch;
-    padding: var(--space-5);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--border);
-    background: var(--bg);
+    gap: var(--space-8);
+    align-items: center;
     text-decoration: none;
-    color: var(--text);
-    transition: border-color var(--transition-base), transform var(--transition-base);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .card:hover {
-    background: var(--blue-hover);
-    border-color: var(--blue-hover);
-    color: var(--bg);
-  }
-
-  .card:hover .hover-wash {
-    opacity: 1;
-  }
-
-  .card:hover .card-cta,
-  .card:hover .card-title,
-  .card:hover .card-summary {
-    color: var(--bg);
-  }
-
-  .card:hover .card-meta {
-    color: rgba(240, 240, 240, 0.7);
+    color: var(--fg-primary);
   }
 
   .card:focus-visible {
-    outline: 3px solid var(--blue-bright);
-    outline-offset: 4px;
+    outline: none;
+    box-shadow: var(--shadow-focus);
+    border-radius: var(--radius-sm);
   }
 
   .card-media {
-    position: relative;
     aspect-ratio: 4 / 3;
     border-radius: var(--radius-md);
     overflow: hidden;
-    background: linear-gradient(160deg, var(--blue-deep) 0%, var(--blue-bright) 100%);
+    background: var(--bg-subtle);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--duration-normal) var(--ease-out);
+  }
+
+  .card:hover .card-media {
     box-shadow: var(--shadow-md);
   }
 
@@ -103,108 +85,78 @@ const { href, title, summary, client, domain, period, cover, compact = false } =
     height: 100%;
     display: grid;
     place-items: center;
-    color: rgba(240, 240, 240, 0.85);
-    font-family: var(--font-display);
-    font-weight: 700;
+    color: var(--fg-muted);
+    font-family: var(--font-sans);
+    font-weight: var(--weight-semi);
     font-size: var(--text-2xl);
-    letter-spacing: -0.02em;
+    letter-spacing: var(--tracking-snug);
     padding: var(--space-5);
     text-align: center;
-  }
-
-  .ph-inner {
-    max-width: 12ch;
-    line-height: 1.05;
-  }
-
-  .hover-wash {
-    position: absolute;
-    inset: 0;
-    background: var(--blue-hover);
-    opacity: 0;
-    transition: opacity var(--transition-base);
-    pointer-events: none;
-    mix-blend-mode: multiply;
   }
 
   .card-body {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     gap: var(--space-3);
-    transition: color var(--transition-base);
   }
 
   .card-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: var(--text-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--text-muted);
-    transition: color var(--transition-base);
+    line-height: var(--leading-normal);
+    color: var(--fg-muted);
+    margin: 0;
   }
 
   .card-title {
-    font-size: clamp(var(--text-xl), 3vw, var(--text-2xl));
-    color: var(--text);
-    transition: color var(--transition-base);
+    font-family: var(--font-sans);
+    font-weight: var(--weight-semi);
+    font-size: var(--text-2xl);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-snug);
+    color: var(--fg-primary);
+    margin: 0;
   }
 
   .card-summary {
-    color: var(--text-soft);
+    font-family: var(--font-serif);
     font-size: var(--text-md);
-    line-height: var(--leading-snug);
-    transition: color var(--transition-base);
+    line-height: var(--leading-relaxed);
+    color: var(--fg-secondary);
+    margin: 0;
   }
 
   .card-cta {
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: var(--text-sm);
+    color: var(--accent);
     margin-top: var(--space-2);
-    color: var(--blue-link);
-    transition: color var(--transition-base);
   }
 
-  @media (max-width: 720px) {
-    .card {
-      grid-template-columns: 1fr;
-    }
-  }
-
+  /* Compact (image-on-top, vertical) variant for "More case studies" */
   .card.compact {
     grid-template-columns: 1fr;
     gap: var(--space-4);
-    padding: var(--space-4);
+    align-items: start;
   }
 
   .card.compact .card-media {
     aspect-ratio: 16 / 10;
   }
 
-  .card.compact .card-body {
-    justify-content: flex-start;
-    gap: var(--space-2);
-  }
-
   .card.compact .card-title {
     font-size: var(--text-lg);
+    letter-spacing: var(--tracking-normal);
   }
 
-  .card.compact .card-meta {
-    font-size: var(--text-xs);
+  @media (max-width: 720px) {
+    .card:not(.compact) {
+      grid-template-columns: 1fr;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .card,
-    .card-body,
-    .card-title,
-    .card-summary,
-    .card-meta,
-    .card-cta,
-    .hover-wash {
+    .card-media {
       transition: none;
     }
   }

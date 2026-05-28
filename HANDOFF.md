@@ -31,6 +31,38 @@ What's live in the codebase:
 - **Email**: `miguel.jss@gmail.com` everywhere; subject prefilled with `Hello from migueljss.com` for Gmail filtering.
 - **Copy tweaks**: dropped "Built with Astro" from footer; removed "I read everything and reply to most" on contact; removed "or relocation" from contact (see memory `feedback-location-preference`).
 
+## This session (2026-05-28)
+
+Design system implementation. Phases 1–4 complete. Build is clean (0 errors / 0 warnings).
+
+### Phase 1 (completed by desktop app session)
+- `tokens.css` fully replaced with new paper/ink/single-accent system from the Claude Design bundle. Compat aliases in place so nothing broke mid-session.
+- Fonts: Aleo (body serif) + Geist (UI/display sans) + Geist Mono. Variable `.ttf` files self-hosted in `src/assets/fonts/`. Old `@fontsource/inter` and `@fontsource/space-grotesk` dropped.
+- `global.css` and `typography.css` rewritten: Aleo body, Geist headings, new focus ring (`--shadow-focus`), `::selection` on accent-soft, all `mj-*` utility classes added.
+- `BaseLayout.astro` theme-color updated to `#fffdf7`.
+
+### Phases 2–4 (completed this session)
+- **Nav**: cleaned to wordmark-only + sentence-case links + always-on hairline bottom border. Active route gets accent color + 2px accent underline. Removed frosted glass + on-scroll JS behavior.
+- **Footer**: simplified to single meta row (copyright + tagline) with LinkedIn + Email links on the right in `.mj-caption` tertiary color.
+- **CaseStudyCard**: blue hover wash removed entirely. Cards are now borderless with no background at rest. Hover lifts the image with `--shadow-md`. Meta uses `·` separators in Geist sans caption. Title in `.mj-h2`. Summary in Aleo serif secondary.
+- **Figure / CompareImages**: focus ring switched to `--shadow-focus`. Captions use Geist sans `--fg-tertiary`.
+- **Quote**: serif body (inherits Aleo), 2px `--accent` border-left. Attribution in Geist sans uppercase label.
+- **Stat**: Geist semi number, Geist sans uppercase label.
+- **HeroGradient.astro**: left in place but no longer imported anywhere. All three pages (home/about/contact) and CaseStudyLayout have been decoupled from it.
+- **CaseStudyLayout**: new header block at `--content-prose` (720px) — eyebrow + display-md title + Aleo summary + metadata row. Cover image at `--content-wide` (960px) with `--radius-md`. Cover passed through from `[slug].astro`. "More case studies" section retains compact card grid.
+- **index.astro**: new text-only hero at `--content-narrow` with eyebrow + h1 + Aleo intro. Cards in a vertical stack with `--space-16` gap.
+- **about.astro**: two-column header on desktop (portrait left, intro right), single-column prose below. Portrait copied from design bundle to `src/assets/brand/miguel-portrait.png`.
+- **contact.astro**: simple page header + channels list with hairline dividers, `.mj-label` row labels.
+- **BaseLayout zoom dialog**: token cleanup (bg-canvas, border-subtle, shadow-focus for close button).
+
+### Open items inherited
+- No em dashes in any prose (overrides design system's allowance).
+- Portrait on about: currently full-width on mobile — may want a max-width or aspect-ratio constraint on small screens. Fine-tune as needed.
+- Phase 5 (Lucide icons) not started — nav is text-only, footer is text-only. Add icons if Miguel wants them after reviewing.
+- OG images still missing (`public/og/default.png` referenced but not present).
+- Lighthouse not yet run on preview build.
+- Case study content pass not yet done.
+
 ## This session (2026-05-27)
 
 Quiet maintenance pass while waiting on the revised design system from Claude Design:

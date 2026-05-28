@@ -68,8 +68,8 @@ const zoomed = await getImage({ src, format: "webp" });
   }
 
   .frame.zoomable:focus-visible {
-    outline: 2px solid var(--blue-bright);
-    outline-offset: 4px;
+    outline: none;
+    box-shadow: var(--shadow-focus);
   }
 
   .frame :global(img) {
@@ -79,11 +79,11 @@ const zoomed = await getImage({ src, format: "webp" });
   }
 
   figcaption {
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: var(--text-xs);
-    color: var(--text-muted);
+    color: var(--fg-tertiary);
     margin-top: var(--space-3);
-    line-height: var(--leading-snug);
+    line-height: var(--leading-normal);
   }
 
 </style>

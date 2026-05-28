@@ -21,11 +21,12 @@ body {
 }
 
 body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-body);
-  font-size: var(--text-base);
-  line-height: var(--leading-normal);
+  background: var(--bg-canvas);
+  color: var(--fg-primary);
+  font-family: var(--font-serif);
+  font-size: var(--text-md);
+  line-height: var(--leading-prose);
+  font-feature-settings: "kern", "liga", "calt";
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -44,15 +45,17 @@ video {
 }
 
 a {
-  color: var(--blue-link);
-  text-decoration-color: rgba(26, 95, 209, 0.35);
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-color: var(--accent-line);
+  text-decoration-thickness: 1px;
   text-underline-offset: 3px;
-  transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
+  transition: var(--transition-base);
 }
 
 a:hover {
-  color: var(--blue-bright);
-  text-decoration-color: var(--blue-bright);
+  color: var(--link-hover);
+  text-decoration-color: currentColor;
 }
 
 :focus {
@@ -60,9 +63,9 @@ a:hover {
 }
 
 :focus-visible {
-  outline: 2px solid var(--blue-bright);
-  outline-offset: 3px;
-  border-radius: 2px;
+  outline: none;
+  box-shadow: var(--shadow-focus);
+  border-radius: var(--radius-xs);
 }
 
 button {
@@ -76,33 +79,33 @@ button {
 
 hr {
   border: 0;
-  border-top: 1px solid var(--border);
-  margin: var(--space-7) 0;
+  border-top: var(--hairline) solid var(--border-subtle);
+  margin: var(--space-12) 0;
 }
 
 ::selection {
-  background: var(--blue-bright);
-  color: var(--bg);
+  background: var(--selection-bg);
+  color: var(--selection-fg);
 }
 
 .container {
-  max-width: var(--container-max);
+  max-width: var(--content-page);
   margin-inline: auto;
-  padding-inline: var(--container-pad);
+  padding-inline: clamp(20px, 4vw, 48px);
   width: 100%;
 }
 
 .prose {
-  max-width: var(--measure-prose);
+  max-width: var(--content-narrow);
   margin-inline: auto;
 }
 
 .prose > * + * {
-  margin-top: var(--space-5);
+  margin-top: var(--space-6);
 }
 
 .prose p {
-  line-height: var(--leading-relaxed);
+  line-height: var(--leading-prose);
 }
 
 .visually-hidden {

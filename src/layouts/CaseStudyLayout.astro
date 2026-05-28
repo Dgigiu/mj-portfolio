@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 import BaseLayout from "./BaseLayout.astro";
-import HeroGradient from "../components/HeroGradient.astro";
 import CaseStudyCard from "../components/CaseStudyCard.astro";
 
 interface Props {
@@ -11,9 +11,10 @@ interface Props {
   period: string;
   client: string;
   domain: string;
+  cover?: ImageMetadata;
 }
 
-const { title, summary, role, period, client, domain } = Astro.props;
+const { title, summary, role, period, client, domain, cover } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
 const currentSlug = Astro.url.pathname
@@ -28,32 +29,32 @@ const more = (
 ---
 
 <BaseLayout title={title} description={summary}>
-  <HeroGradient>
-    <p class="eyebrow eyebrow-light">Case study</p>
-    <h1>{title}</h1>
-    <p class="summary">{summary}</p>
-  </HeroGradient>
+  <header class="case-header">
+    <div class="container">
+      <div class="case-header-inner">
+        <p class="mj-eyebrow">CASE STUDY · {client}</p>
+        <h1 class="case-title">{title}</h1>
+        <p class="case-summary">{summary}</p>
+        <p class="case-meta">{role} · {period} · {domain}</p>
+      </div>
+    </div>
+  </header>
 
-  <section class="case-meta container">
-    <dl>
-      <div>
-        <dt>Role</dt>
-        <dd>{role}</dd>
+  {
+    cover && (
+      <div class="case-cover">
+        <div class="container">
+          <Image
+            src={cover}
+            alt={`${title} project cover`}
+            widths={[960, 1440, 1920]}
+            sizes="(min-width: 960px) 960px, 100vw"
+            class="cover-img"
+          />
+        </div>
       </div>
-      <div>
-        <dt>Period</dt>
-        <dd>{period}</dd>
-      </div>
-      <div>
-        <dt>Client</dt>
-        <dd>{client}</dd>
-      </div>
-      <div>
-        <dt>Domain</dt>
-        <dd>{domain}</dd>
-      </div>
-    </dl>
-  </section>
+    )
+  }
 
   <article class="case-body container">
     <div class="prose">
@@ -66,7 +67,6 @@ const more = (
       <section class="more container">
         <header class="more-head">
           <h2>More case studies</h2>
-          <p>{more.length === 1 ? "1 other" : `${more.length} others`}</p>
         </header>
         <ul class="more-list">
           {more.map((s) => (
@@ -90,78 +90,75 @@ const more = (
 </BaseLayout>
 
 <style>
-  .summary {
-    color: rgba(240, 240, 240, 0.82);
-    font-size: var(--text-lg);
-    margin-top: var(--space-4);
-    max-width: 52ch;
+  .case-header {
+    padding: var(--space-16) 0 var(--space-12);
   }
 
-  .eyebrow-light {
-    color: rgba(240, 240, 240, 0.7);
+  .case-header-inner {
+    max-width: var(--content-prose);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .case-title {
+    font-family: var(--font-sans);
+    font-weight: var(--weight-semi);
+    font-size: var(--text-4xl);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-snug);
+    color: var(--fg-primary);
+    margin: 0;
+  }
+
+  .case-summary {
+    font-family: var(--font-serif);
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: var(--fg-secondary);
+    margin: 0;
   }
 
   .case-meta {
-    margin-top: var(--space-7);
-    margin-bottom: var(--space-7);
-  }
-
-  .case-meta dl {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: var(--space-5);
-    margin: 0;
-    padding: var(--space-5) 0;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .case-meta div {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-  }
-
-  .case-meta dt {
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: var(--text-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--text-muted);
+    line-height: var(--leading-normal);
+    color: var(--fg-muted);
     margin: 0;
   }
 
-  .case-meta dd {
-    margin: 0;
-    font-size: var(--text-md);
-    color: var(--text);
+  .case-cover {
+    padding-bottom: var(--space-12);
+  }
+
+  .cover-img {
+    width: 100%;
+    max-width: var(--content-wide);
+    height: auto;
+    border-radius: var(--radius-md);
+    display: block;
   }
 
   .case-body {
-    padding-bottom: var(--space-7);
+    padding-bottom: var(--space-16);
   }
 
   .more {
-    padding: var(--space-8) 0 var(--space-7);
+    padding: var(--space-16) 0;
+    border-top: var(--hairline) solid var(--border-subtle);
   }
 
   .more-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-5);
-    margin-bottom: var(--space-6);
-    padding-bottom: var(--space-4);
-    border-top: 1px solid var(--border);
-    padding-top: var(--space-7);
+    margin-bottom: var(--space-8);
   }
 
-  .more-head p {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--text-muted);
+  .more-head h2 {
+    font-family: var(--font-sans);
+    font-weight: var(--weight-semi);
+    font-size: var(--text-xl);
+    letter-spacing: var(--tracking-snug);
+    color: var(--fg-primary);
+    margin: 0;
   }
 
   .more-list {
@@ -170,6 +167,12 @@ const more = (
     padding: 0;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: var(--space-5);
+    gap: var(--space-8);
+  }
+
+  @media (max-width: 640px) {
+    .case-title {
+      font-size: var(--text-3xl);
+    }
   }
 </style>

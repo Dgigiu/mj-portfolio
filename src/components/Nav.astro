@@ -17,10 +17,7 @@ const links = [
 
 <header class="nav">
   <div class="container nav-inner">
-    <a href={base} class="brand" aria-label="Miguel Jesus, home">
-      <span class="brand-mark">MJ</span>
-      <span class="brand-name">Miguel Jesus</span>
-    </a>
+    <a href={base} class="brand" aria-label="Miguel Jesus, home">Miguel Jesus</a>
     <nav aria-label="Primary">
       <ul>
         {
@@ -43,21 +40,12 @@ const links = [
 
 <style>
   .nav {
-    padding: var(--space-5) 0;
+    padding: var(--space-6) 0;
     position: sticky;
     top: 0;
-    background: rgba(240, 240, 240, 0.86);
-    backdrop-filter: saturate(140%) blur(8px);
-    -webkit-backdrop-filter: saturate(140%) blur(8px);
+    background: var(--bg-canvas);
     z-index: 10;
-    border-bottom: 1px solid transparent;
-    box-shadow: 0 0 0 rgba(14, 14, 16, 0);
-    transition: border-color var(--transition-base), box-shadow var(--transition-base);
-  }
-
-  .nav.is-scrolled {
-    border-bottom-color: var(--border);
-    box-shadow: 0 6px 16px rgba(14, 14, 16, 0.04);
+    border-bottom: var(--hairline) solid var(--border-subtle);
   }
 
   .nav-inner {
@@ -68,38 +56,12 @@ const links = [
   }
 
   .brand {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-3);
-    text-decoration: none;
-    color: var(--text);
-  }
-
-  .brand:hover,
-  .brand:focus-visible {
-    color: var(--text);
-  }
-
-  .brand-mark {
-    font-family: var(--font-display);
-    font-weight: 700;
+    font-family: var(--font-sans);
+    font-weight: var(--weight-semi);
     font-size: var(--text-md);
-    letter-spacing: -0.02em;
-    background: var(--text);
-    color: var(--bg);
-    width: 32px;
-    height: 32px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--radius-sm);
-  }
-
-  .brand-name {
-    font-family: var(--font-display);
-    font-weight: 500;
-    font-size: var(--text-base);
-    letter-spacing: -0.005em;
+    letter-spacing: var(--tracking-snug);
+    text-decoration: none;
+    color: var(--fg-primary);
   }
 
   nav ul {
@@ -113,38 +75,28 @@ const links = [
   }
 
   .nav-link {
-    color: var(--text-soft);
-    text-decoration: none;
+    font-family: var(--font-sans);
     font-size: var(--text-sm);
-    letter-spacing: 0.005em;
-    padding: var(--space-1) 0;
-    border-bottom: 1px solid transparent;
-    transition: color var(--transition-fast), border-color var(--transition-fast);
+    color: var(--fg-secondary);
+    text-decoration: none;
+    padding-bottom: 2px;
+    border-bottom: var(--rule-bold) solid transparent;
+    transition: color var(--duration-fast) var(--ease-out),
+                border-color var(--duration-fast) var(--ease-out);
   }
 
   .nav-link:hover {
-    color: var(--text);
-    border-bottom-color: var(--text);
+    color: var(--fg-primary);
   }
 
   .nav-link.is-active {
-    color: var(--text);
+    color: var(--accent);
+    border-bottom-color: var(--accent);
   }
 
   @media (max-width: 480px) {
-    .brand-name {
-      display: none;
+    nav ul {
+      gap: var(--space-4);
     }
   }
 </style>
-
-<script>
-  const nav = document.querySelector(".nav");
-  if (nav) {
-    const update = () => {
-      nav.classList.toggle("is-scrolled", window.scrollY > 4);
-    };
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-  }
-</script>

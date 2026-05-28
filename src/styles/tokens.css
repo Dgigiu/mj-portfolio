@@ -1,64 +1,278 @@
+/* ─────────────────────────────────────────────────────────────
+   Miguel Jesus Design System — Tokens
+   Source: docs/design_handoff_design_system/colors_and_type.css
+   A near-neutral, typography-driven system with one accent.
+   ───────────────────────────────────────────────────────────── */
+
+/* Aleo (body serif) */
+@font-face {
+  font-family: "Aleo";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../assets/fonts/Aleo-VariableFont_wght.ttf") format("truetype-variations"),
+       url("../assets/fonts/Aleo-VariableFont_wght.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Aleo";
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../assets/fonts/Aleo-Italic-VariableFont_wght.ttf") format("truetype-variations"),
+       url("../assets/fonts/Aleo-Italic-VariableFont_wght.ttf") format("truetype");
+}
+
+/* Geist (display + UI sans) */
+@font-face {
+  font-family: "Geist";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../assets/fonts/Geist-VariableFont_wght.ttf") format("truetype-variations"),
+       url("../assets/fonts/Geist-VariableFont_wght.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Geist";
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../assets/fonts/Geist-Italic-VariableFont_wght.ttf") format("truetype-variations"),
+       url("../assets/fonts/Geist-Italic-VariableFont_wght.ttf") format("truetype");
+}
+
+/* Geist Mono (code) */
+@font-face {
+  font-family: "Geist Mono";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../assets/fonts/GeistMono-VariableFont_wght.ttf") format("truetype-variations"),
+       url("../assets/fonts/GeistMono-VariableFont_wght.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Geist Mono";
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../assets/fonts/GeistMono-Italic-VariableFont_wght.ttf") format("truetype-variations"),
+       url("../assets/fonts/GeistMono-Italic-VariableFont_wght.ttf") format("truetype");
+}
+
 :root {
-  --bg: #f0f0f0;
-  --text: #0e0e10;
-  --text-muted: rgba(14, 14, 16, 0.62);
-  --text-soft: rgba(14, 14, 16, 0.78);
+  /* ── Color: paper (warm neutrals) ───────────────────────── */
+  --paper-50:  #fffefb;
+  --paper-100: #fffdf7;   /* canvas */
+  --paper-200: #faf7ef;
+  --paper-300: #f1ede2;
+  --paper-400: #e6e0d0;
 
-  --blue-deep: #0a1530;
-  --blue-bright: #2a7cff;
-  --blue-hover: #1f5fe0;
-  --blue-link: #1a5fd1;
+  /* ── Color: ink ─────────────────────────────────────────── */
+  --ink-900: #181818;     /* primary text */
+  --ink-700: #333333;
+  --ink-500: #555555;
+  --ink-400: #747474;
+  --ink-300: #8d8d8d;
+  --ink-200: #b8b8b8;
+  --ink-100: #e3e0d8;
 
-  --surface: #ffffff;
-  --border: rgba(14, 14, 16, 0.12);
-  --border-strong: rgba(14, 14, 16, 0.24);
+  /* ── Color: accent (the only chromatic note) ────────────── */
+  --accent:        #0088ff;
+  --accent-hover:  #006fd9;
+  --accent-press:  #0058b0;
+  --accent-soft:   #e5f2ff;
+  --accent-line:   #b8dcff;
 
-  --font-display: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace;
+  /* ── Color: status (kept quiet) ─────────────────────────── */
+  --positive:      #1f7a4d;
+  --positive-soft: #e6f3eb;
+  --warning:       #a86a00;
+  --warning-soft:  #fbf0db;
+  --critical:      #b3261e;
+  --critical-soft: #fbe9e7;
 
-  --text-xs: 0.78rem;
-  --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-md: 1.125rem;
-  --text-lg: 1.35rem;
-  --text-xl: 1.6rem;
-  --text-2xl: 2rem;
-  --text-3xl: 2.6rem;
-  --text-4xl: 3.4rem;
-  --text-5xl: 4.6rem;
+  /* ── Color: semantic ────────────────────────────────────── */
+  --bg-canvas:     var(--paper-100);
+  --bg-elevated:   var(--paper-50);
+  --bg-subtle:     var(--paper-200);
+  --bg-sunken:     var(--paper-300);
 
-  --leading-tight: 1.1;
-  --leading-snug: 1.25;
-  --leading-normal: 1.55;
-  --leading-relaxed: 1.7;
+  --fg-primary:    var(--ink-900);
+  --fg-secondary:  var(--ink-500);
+  --fg-tertiary:   var(--ink-400);
+  --fg-muted:      var(--ink-300);
+  --fg-disabled:   var(--ink-200);
+  --fg-on-accent:  #ffffff;
 
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 24px;
-  --space-6: 32px;
-  --space-7: 48px;
-  --space-8: 64px;
-  --space-9: 96px;
-  --space-10: 128px;
+  --border-subtle: var(--paper-400);
+  --border-strong: var(--ink-200);
+  --border-focus:  var(--accent);
 
-  --radius-sm: 4px;
-  --radius-md: 10px;
-  --radius-lg: 20px;
-  --radius-pill: 999px;
+  --link:          var(--accent);
+  --link-hover:    var(--accent-hover);
+  --link-visited:  #5a44a8;
 
-  --measure-prose: 68ch;
+  --selection-bg:  var(--accent-soft);
+  --selection-fg:  var(--ink-900);
+
+  /* ── Type: families ─────────────────────────────────────── */
+  --font-serif:   "Aleo", "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-sans:    "Geist", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:    "Geist Mono", "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* ── Type: scale (12 → 64, hard ceiling) ────────────────── */
+  --text-2xs:  12px;
+  --text-xs:   13px;
+  --text-sm:   14px;
+  --text-base: 16px;
+  --text-md:   17px;   /* prose default */
+  --text-lg:   19px;
+  --text-xl:   22px;
+  --text-2xl:  26px;
+  --text-3xl:  32px;
+  --text-4xl:  40px;
+  --text-5xl:  52px;
+  --text-6xl:  64px;
+
+  /* ── Type: leading ──────────────────────────────────────── */
+  --leading-tight:   1.1;
+  --leading-snug:    1.25;
+  --leading-normal:  1.45;
+  --leading-relaxed: 1.6;
+  --leading-prose:   1.7;
+  --leading-loose:   1.85;
+
+  /* ── Type: tracking ─────────────────────────────────────── */
+  --tracking-tight:  -0.02em;
+  --tracking-snug:   -0.01em;
+  --tracking-normal:  0em;
+  --tracking-wide:    0.02em;
+  --tracking-label:   0.08em;
+
+  /* ── Type: weight ───────────────────────────────────────── */
+  --weight-regular: 400;
+  --weight-medium:  500;
+  --weight-semi:    600;
+  --weight-bold:    700;
+
+  /* ── Spacing: 8pt grid ──────────────────────────────────── */
+  --space-0:   0px;
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   20px;
+  --space-6:   24px;
+  --space-8:   32px;
+  --space-10:  40px;
+  --space-12:  48px;
+  --space-16:  64px;
+  --space-20:  80px;
+  --space-24:  96px;
+  --space-32:  128px;
+  --space-40:  160px;
+
+  /* ── Layout ─────────────────────────────────────────────── */
+  --content-narrow: 640px;
+  --content-prose:  720px;
+  --content-wide:   960px;
+  --content-page:   1200px;
+  --gutter:         var(--space-8);
+  --gutter-tight:   var(--space-4);
+
+  /* ── Radii ──────────────────────────────────────────────── */
+  --radius-none:  0px;
+  --radius-xs:    2px;
+  --radius-sm:    4px;
+  --radius-md:    8px;
+  --radius-lg:    12px;
+  --radius-pill:  999px;
+
+  /* ── Borders ────────────────────────────────────────────── */
+  --hairline:  1px;
+  --rule:      1px;
+  --rule-bold: 2px;
+
+  /* ── Shadows (restrained) ───────────────────────────────── */
+  --shadow-none:  none;
+  --shadow-xs:    0 1px 2px rgba(24, 24, 24, 0.04);
+  --shadow-sm:    0 1px 2px rgba(24, 24, 24, 0.06), 0 1px 1px rgba(24, 24, 24, 0.03);
+  --shadow-md:    0 4px 14px rgba(24, 24, 24, 0.06), 0 1px 2px rgba(24, 24, 24, 0.04);
+  --shadow-lg:    0 12px 32px rgba(24, 24, 24, 0.08), 0 2px 4px rgba(24, 24, 24, 0.04);
+  --shadow-focus: 0 0 0 3px var(--accent-soft);
+
+  /* ── Motion ─────────────────────────────────────────────── */
+  --ease-out:        cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-in-out:     cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast:   120ms;
+  --duration-normal: 180ms;
+  --duration-slow:   220ms;
+  --transition-base: all var(--duration-normal) var(--ease-out);
+
+  /* ─────────────────────────────────────────────────────────
+     Compat aliases — keep existing components building during
+     Phase 1. Removed as components are rewritten in Phase 2.
+     ───────────────────────────────────────────────────────── */
+  --bg:           var(--bg-canvas);
+  --surface:      var(--bg-elevated);
+  --text:         var(--fg-primary);
+  --text-soft:    var(--fg-secondary);
+  --text-muted:   var(--fg-tertiary);
+  --border:       var(--border-subtle);
+
+  --blue-deep:    #0a1530;            /* HeroGradient legacy; retired in Phase 2 */
+  --blue-bright:  var(--accent);
+  --blue-hover:   var(--accent-hover);
+  --blue-link:    var(--accent);
+
+  --font-display: var(--font-sans);   /* Geist replaces Space Grotesk */
+  --font-body:    var(--font-serif);  /* Aleo replaces Inter (body flips to serif) */
+
+  /* Old spacing scale → 8pt grid */
+  --space-7:      var(--space-12);    /* was 48px → 48px */
+  --space-9:      var(--space-24);    /* was 96px → 96px */
+
+  --container-max: var(--content-page);
+  --container-pad: clamp(20px, 4vw, 48px);
+  --measure-prose:  var(--content-narrow);
   --measure-narrow: 56ch;
 
-  --container-max: 1180px;
-  --container-pad: clamp(20px, 4vw, 48px);
-
-  --shadow-sm: 0 1px 2px rgba(14, 14, 16, 0.06), 0 1px 1px rgba(14, 14, 16, 0.04);
-  --shadow-md: 0 4px 16px rgba(14, 14, 16, 0.08), 0 1px 2px rgba(14, 14, 16, 0.04);
-  --shadow-lg: 0 18px 40px rgba(14, 14, 16, 0.10), 0 4px 10px rgba(14, 14, 16, 0.05);
-
   --transition-fast: 120ms ease;
-  --transition-base: 200ms ease;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Dark variant — same skeleton, inverted neutrals, lifted accent.
+   Not wired to a toggle yet; reachable by setting data-theme="dark"
+   on <html> manually for testing.
+   ───────────────────────────────────────────────────────────── */
+:root[data-theme="dark"],
+.theme-dark {
+  --bg-canvas:     #0e0e0e;
+  --bg-elevated:   #161616;
+  --bg-subtle:     #1c1c1c;
+  --bg-sunken:     #0a0a0a;
+
+  --fg-primary:    #f5f3ec;
+  --fg-secondary:  #b8b4a8;
+  --fg-tertiary:   #8a867c;
+  --fg-muted:      #66635b;
+  --fg-disabled:   #3a3833;
+
+  --border-subtle: #262522;
+  --border-strong: #3a3833;
+
+  --accent:        #4fa8ff;
+  --accent-hover:  #74beff;
+  --accent-press:  #a4d5ff;
+  --accent-soft:   #11253b;
+  --accent-line:   #1f3f63;
+
+  --link:          var(--accent);
+  --link-hover:    var(--accent-hover);
+  --link-visited:  #b8a6e8;
+
+  --shadow-xs:    0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-sm:    0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md:    0 4px 14px rgba(0, 0, 0, 0.5);
+  --shadow-lg:    0 12px 32px rgba(0, 0, 0, 0.55);
+  --shadow-focus: 0 0 0 3px rgba(79, 168, 255, 0.25);
 }
