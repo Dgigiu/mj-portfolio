@@ -17,7 +17,7 @@ Build is clean (`npm run build` → 0 errors / 0 warnings).
 - **Design system**: Claude Design handoff v1 + v2 delta both applied. Paper/ink/single-accent (`#1a6bff` cobalt) palette. Aleo serif for prose, Geist sans for all UI/display. Tokens in [src/styles/tokens.css](src/styles/tokens.css).
 - **Components**: Nav, Footer, CaseStudyCard (`compact` variant), Figure, CompareImages, Quote, Stat. HeroGradient is preserved but decoupled — not used anywhere.
 - **Layouts**: BaseLayout (head, OG meta, font preloads, zoom dialog), CaseStudyLayout (header block + cover image + body + "More case studies")
-- **Pages**: Home (text-only hero + card stack), About (two-column portrait + intro on desktop, prose below), Contact (simple channels list)
+- **Pages**: Home (full-bleed cobalt hero with duotone portrait + card stack), About (two-column portrait + intro on desktop, prose below), Contact (simple channels list)
 - **Assets**: Portrait at `src/assets/brand/miguel-portrait.png`. Case study images under `src/assets/case-studies/`. Design system bundle at `docs/design_handoff_design_system/` (gitignored staging).
 
 ## What changed in this session (2026-05-28, session 2)
@@ -28,7 +28,9 @@ Applied the v2 delta bundle from Claude Design (`docs/design_handoff_design_syst
 - **Paper scale neutralised.** Less yellow, still warm. `--paper-100` (canvas) is now `#fbfaf6` (was `#fffdf7`). Other steps shifted accordingly.
 - **`--ink-100`** dropped from cream `#e3e0d8` to near-neutral `#dad7d0`.
 - **`theme-color` meta** in [BaseLayout.astro](src/layouts/BaseLayout.astro) updated to `#fbfaf6` to match new canvas.
-- **Home hero reworked** ([src/pages/index.astro](src/pages/index.astro)). Replaced the text-only hero with a full-bleed cobalt section: portrait absolutely positioned bottom-right with `mix-blend-mode: luminosity` + `contrast(1.05)` for a duotone effect; top-left navy radial vignette for text legibility; bottom hairline; big sans headline (`clamp(48px, 7.2vw, 96px)`); Aleo subtitle; meta strip (Porto · availability · email); centered "Selected work" scroll-down link to `#work`. Mobile reduces portrait opacity and deepens vignette. Headline kept Miguel's "Calm products for complex work." line — the spec defines treatment, not copy.
+- **Home hero reworked** ([src/pages/index.astro](src/pages/index.astro)). Replaced the text-only hero with a full-bleed cobalt section: portrait absolutely positioned bottom-right with `mix-blend-mode: luminosity` + `contrast(1.05)` for a duotone effect; top-left navy radial vignette for text legibility; bottom hairline; big sans headline; Aleo subtitle; meta strip (Porto · availability · email); centered "Selected work" scroll-down link to `#work`. Headline kept Miguel's "Calm products for complex work." line — the spec defines treatment, not copy.
+- **Hero text overlap fix.** Initial spec used `clamp(48px, 7.2vw, 96px)` headline sized for the spec's placeholder copy "Hi, I'm Miguel." (3 words). With Miguel's longer headline, text bled past the safe cobalt zone into the photo area at laptop widths. Wrapped the eyebrow/h1/subtitle/meta in `.hero-content` with `max-width: 560px`, lowered the headline ceiling to `clamp(44px, 6vw, 80px)`, deepened the base vignette, and added a 1100 px breakpoint that widens the vignette further.
+- **Hero portrait crop fix.** The source portrait (`miguel-portrait.png`) is a 3618×2184 *landscape* frame with Miguel on the right and an intentionally-empty black expanse on the left, designed so the empty-left blends into cobalt via the luminosity blend. The initial `object-fit: cover` + `object-position: center right` was cropping that black-left off and leaving a hard rectangular edge mid-frame. Dropped `object-fit` and explicit width — image now renders at its natural aspect (height-driven, `width: auto`), anchored bottom-right. On viewports narrower than the natural width, the empty-left overflows past the section and gets clipped by `overflow: hidden` (invisible since black blends to cobalt).
 - **En-dash list bullets** ([typography.css](src/styles/typography.css)). MDX `<ul>` lists in `.prose` now use `::marker` content `"– "` in `--accent`, Geist semi-bold. Center-dot (`·`) stays as inline metadata separator. Also exposed an explicit `.bullets` class matching the spec for custom lists.
 - Nav backdrop didn't need updating — it uses `var(--bg-canvas)` directly rather than an RGBA literal, so it picked up the new canvas color automatically.
 
@@ -60,8 +62,7 @@ Full design system implementation in two passes (desktop app ran Phase 1; Claude
 ## Open items / look at these next
 
 ### Fine-tuning (Miguel to drive after reviewing the live site)
-- **Hero portrait reads.** The duotone luminosity blend depends on the source portrait's luminance range. If the result feels muddy, the spec's `contrast(1.05)` filter can be nudged or the portrait can be re-cropped/re-exposed in the brand asset.
-- **Hero copy.** Headline kept Miguel's existing "Calm products for complex work." line. Spec showed "Hi, I'm Miguel." as placeholder. Easy to swap if Miguel prefers the more conversational opener now that the visual is more dramatic.
+- **Hero copy.** Headline kept Miguel's existing "Calm products for complex work." line. Spec showed "Hi, I'm Miguel." as placeholder. Easy to swap if the more conversational opener feels right now that the visual is more dramatic.
 - **Card hover feel**: shadow lift on the image is the current treatment. May want to add a title underline or other affordance if it feels too subtle in use.
 - **About portrait on mobile**: currently full-width at narrow viewports. May want a max-width constraint (e.g. 180px) or a different crop.
 - **HeroGradient**: file is preserved at [src/components/HeroGradient.astro](src/components/HeroGradient.astro) — now fully unused. Safe to delete in a future cleanup.
