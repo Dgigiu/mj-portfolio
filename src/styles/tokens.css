@@ -175,7 +175,7 @@
   --content-narrow: 640px;
   --content-prose:  720px;
   --content-wide:   960px;
-  --content-page:   1200px;
+  --content-page:   1040px;
   --gutter:         var(--space-8);
   --gutter-tight:   var(--space-4);
 

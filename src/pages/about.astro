@@ -11,8 +11,10 @@ import portrait from "../assets/brand/miguel-portrait.png";
         <Image
           src={portrait}
           alt="Miguel Jesus"
-          widths={[400, 800]}
-          sizes="(min-width: 900px) 320px, 100vw"
+          widths={[320, 640]}
+          sizes="(min-width: 720px) 320px, 100vw"
+          loading="eager"
+          fetchpriority="high"
           class="portrait"
         />
       </div>
@@ -81,22 +83,21 @@ import portrait from "../assets/brand/miguel-portrait.png";
 
 <style>
   .about {
-    padding: var(--space-16) 0 var(--space-24);
+    padding-block: var(--space-16) var(--space-24);
   }
 
   .about-header {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: var(--space-12);
-    align-items: start;
+    max-width: var(--content-prose);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
     margin-bottom: var(--space-16);
     padding-bottom: var(--space-16);
     border-bottom: var(--hairline) solid var(--border-subtle);
   }
 
   .portrait-wrap {
-    position: sticky;
-    top: calc(var(--space-6) * 2 + 1px); /* below nav */
+    max-width: 320px;
   }
 
   .portrait {
@@ -125,21 +126,14 @@ import portrait from "../assets/brand/miguel-portrait.png";
     margin: 0;
   }
 
+  /* Flush-left under the about header so the prose shares the page's
+     left edge with the portrait + intro above. */
   .prose {
-    max-width: var(--content-narrow);
+    margin-inline: 0;
   }
 
-  .prose > * + * {
-    margin-top: var(--space-6);
-  }
-
-  @media (max-width: 900px) {
-    .about-header {
-      grid-template-columns: 1fr;
-    }
-
+  @media (max-width: 720px) {
     .portrait-wrap {
-      position: static;
       max-width: 240px;
     }
   }

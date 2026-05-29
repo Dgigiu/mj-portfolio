@@ -96,7 +96,7 @@ hr {
 }
 
 .prose {
-  max-width: var(--content-narrow);
+  max-width: var(--content-prose);
   margin-inline: auto;
 }
 

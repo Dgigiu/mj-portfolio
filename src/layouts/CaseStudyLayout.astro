@@ -143,6 +143,12 @@ const more = (
     padding-bottom: var(--space-16);
   }
 
+  /* Flush-left: prose shares its left edge with the 720 header and the
+     960 cover above. Same spine, three widths. */
+  .case-body .prose {
+    margin-inline: 0;
+  }
+
   .more {
     padding: var(--space-16) 0;
     border-top: var(--hairline) solid var(--border-subtle);

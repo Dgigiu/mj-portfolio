@@ -17,16 +17,22 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           <span class="channel-label">LinkedIn</span>
           <a href="https://www.linkedin.com/in/migueljss/" target="_blank" rel="me noopener noreferrer">linkedin.com/in/migueljss</a>
         </li>
+        <li>
+          <span class="channel-label">Response</span>
+          <span class="channel-value">Within a couple of working days.</span>
+        </li>
+        <li>
+          <span class="channel-label">Open to</span>
+          <span class="channel-value">Senior in-house product design, remote or hybrid from Porto.</span>
+        </li>
       </ul>
-
-      <p class="note">Based in Porto. Open to remote or hybrid for the right senior in-house product design role.</p>
     </div>
   </section>
 </BaseLayout>
 
 <style>
   .contact {
-    padding: var(--space-16) 0 var(--space-24);
+    padding-block: var(--space-16) var(--space-24);
   }
 
   .contact-inner {
@@ -73,15 +79,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     color: var(--fg-muted);
   }
 
-  .channels a {
+  .channels a,
+  .channel-value {
     font-size: var(--text-md);
   }
 
-  .note {
-    font-family: var(--font-sans);
-    font-size: var(--text-sm);
-    color: var(--fg-muted);
-    margin: 0;
+  .channel-value {
+    color: var(--fg-secondary);
   }
 
   @media (max-width: 480px) {
