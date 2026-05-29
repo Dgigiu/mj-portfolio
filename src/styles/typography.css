@@ -103,23 +103,38 @@ blockquote {
 .prose ul,
 .prose ol {
   margin: 0;
-  padding-left: 1.4em;
+  padding-left: 0;
+  list-style: none;
 }
 
 .prose ul li,
 .prose ol li {
-  padding-left: 0.25em;
+  position: relative;
+  padding-left: 1.6em;
   margin: 0;
 }
 
-.prose ul li::marker {
-  content: "– ";
+.prose ul li::before {
+  content: "–";
+  position: absolute;
+  left: 0;
   color: var(--accent);
   font-family: var(--font-sans);
   font-weight: var(--weight-semi);
 }
 
-.prose ol li::marker {
+.prose ol {
+  counter-reset: prose-ol;
+}
+
+.prose ol li {
+  counter-increment: prose-ol;
+}
+
+.prose ol li::before {
+  content: counter(prose-ol) ".";
+  position: absolute;
+  left: 0;
   color: var(--accent);
   font-family: var(--font-sans);
   font-weight: var(--weight-semi);
