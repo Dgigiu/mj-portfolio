@@ -1,12 +1,14 @@
 # Handoff
 
-Last updated: 2026-05-29 (session 3)
+Last updated: 2026-05-29 (session 4)
 
 ## Where we are
 
 The portfolio is live at **https://dgigiu.github.io/mj-portfolio/**, deployed via GitHub Actions to GitHub Pages. Repo at **https://github.com/Dgigiu/mj-portfolio**. The custom domain `migueljss.com` is held for later — instructions in "Lower priority" below.
 
-v3 polish pass shipped to main on 2026-05-29 (`e6e39d0` + `c770e20`). Mobile visual verification still pending — see "Open items" below.
+Hero portrait rework shipped to main on 2026-05-29 (`c62d923` + `677c21f`) and deployed clean. Desktop is signed off; mobile verification is still pending — see "Open items" below.
+
+v3 polish pass shipped earlier on 2026-05-29 (`e6e39d0` + `c770e20`).
 
 Astro is configured with `site: 'https://dgigiu.github.io'` and `base: '/mj-portfolio'`. All internal links use a normalized `import.meta.env.BASE_URL` so paths resolve to `/mj-portfolio/...` correctly.
 
@@ -20,9 +22,21 @@ Build is clean (`npm run build` → 0 errors / 0 warnings).
 - **Components**: Nav, Footer, CaseStudyCard (`compact` variant), Figure, CompareImages, Quote, Stat. HeroGradient is preserved but decoupled — not used anywhere.
 - **Layouts**: BaseLayout (head, OG meta, font preloads, zoom dialog), CaseStudyLayout (header block + cover image + body + "More case studies")
 - **Pages**: Home (full-bleed cobalt hero with color portrait cutout + card stack), About (two-column portrait + intro on desktop, prose below), Contact (simple channels list)
-- **Assets**: Color portrait cutout at `src/assets/brand/miguel-portrait-color.png` (used on Home hero — transparent bg, portrait orientation 3072×3821). B&W landscape portrait at `src/assets/brand/miguel-portrait.png` (used on About). Case study images under `src/assets/case-studies/`. Design system bundle at `docs/design_handoff_design_system/` (gitignored staging).
+- **Assets**: Wide color portrait cutout at `src/assets/brand/miguel-portrait-color-wide.png` (used on Home hero — transparent bg, ~1.94 landscape, 4238×2184, figure on the right). B&W landscape portrait at `src/assets/brand/miguel-portrait.png` (used on About). The older near-square color cutout `src/assets/brand/miguel-portrait-color.png` is now unused (replaced by the wide one) — safe to delete in a future cleanup. Case study images under `src/assets/case-studies/`. Design system bundle at `docs/design_handoff_design_system/` (gitignored staging).
 
-## What changed in this session (2026-05-29, session 3)
+## What changed in this session (2026-05-29, session 4)
+
+Hero portrait rework. The previous near-square color cutout sat awkwardly behind the text and was hard to size and position. Rebuilt the hero as a layered, full-bleed composition and swapped in a purpose-composed wide cutout.
+
+- **New source image.** `src/assets/brand/miguel-portrait-color-wide.png` — transparent cutout, ~1.94 landscape (4238×2184), figure offset to the right with empty space on the left so the text column reads over the cobalt/vignette. Replaces `miguel-portrait-color.png` in the import. Optimized to a ~76 KB WebP at build.
+- **Layered structure** ([index.astro](src/pages/index.astro)). Portrait is an absolute layer sized by panel height (`height: 100%`, `width: auto`), so its scale is independent of the text column. A navy radial vignette layer darkens the top-left for text legibility and fades to reveal the figure bottom-right; a bottom hairline; text column capped at 560.
+- **Frozen ultrawide anchor.** `.hero-portrait` right anchor is `max(0px, calc((100% - 1440px) / 2))`. At ≤1440 it stays full-bleed-right as before; above 1440 it centers within a frozen 1440 band so the figure stops drifting toward the viewport edge on wide screens. (No width cap — capping width shrank the figure, which Miguel rejected.) Miguel signed off on this at desktop.
+- **Heavier vignette restored** (`rgba(8,14,32,0.88)` center, three responsive tiers) — this is the treatment Miguel confirmed read well: photo behind text, vignette obscures most of it, text stays highly legible. Mobile (≤720px) also dims the portrait to `opacity: 0.55`.
+- **Content unchanged on purpose.** No "Portfolio · 2026" eyebrow, no Porto/availability/email meta line (both deliberately removed in an earlier pass — do not restore). Scroll affordance is a left-aligned chevron only (the pill from session 3 is gone). Subtitle back to `rgba(255,255,255,0.92)`.
+- **Misc**: `scroll-behavior: smooth` added in [global.css](src/styles/global.css) for the chevron jump. Prose list markers reworked from `::marker` to absolutely-positioned `::before` with a CSS counter for ordered lists ([typography.css](src/styles/typography.css)) — shipped in the same push (`677c21f`).
+- **Verification**: `npm run build` clean (6 pages), deploy succeeded. Desktop verified via preview DOM measurements at 1440 and confirmed by Miguel. Mobile checked in the preview tool only — **real-device mobile pass still pending** (see Open items).
+
+## What changed in the previous session (2026-05-29, session 3)
 
 Full v3 polish pass driven by a structured design critique. Five phases, all landed.
 
@@ -102,7 +116,8 @@ Full design system implementation in two passes (desktop app ran Phase 1; Claude
 ## Open items / look at these next
 
 ### Verify on the live site
-- **Mobile pass at real device widths.** v3 was visually verified at 1568 desktop only. CSS breakpoints (hero, cards, contact, case title, about portrait) are in place and reason correctly, but a quick pass on iPhone + Android at 375–414px is the next thing to do before tagging v3 final.
+- **FIRST THING NEXT SESSION — ask Miguel about the hero on mobile.** Miguel is checking the new wide-cutout hero on a real device against the live site (https://dgigiu.github.io/mj-portfolio/). At the start of the next session, ask him how it looks before doing anything else. If the figure needs nudging on small screens, the knobs are the ≤720px `opacity` (currently 0.55), the mobile vignette tier, and the panel `min-height` (600px) in [index.astro](src/pages/index.astro). If it's good, this item is closed.
+- **Broader mobile pass at real device widths.** v3 was visually verified at 1568 desktop only. CSS breakpoints (hero, cards, contact, case title, about portrait) are in place and reason correctly, but a quick pass on iPhone + Android at 375–414px is the next thing to do before tagging v3 final.
 - **Lighthouse mobile audit.** Brief target is 95+. Phase 2 added eager-loading + fetchpriority to the about portrait, which was a likely LCP culprit. Worth running once the mobile pass is clean.
 
 ### Fine-tuning (Miguel to drive after reviewing the live site)
