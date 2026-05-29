@@ -6,6 +6,8 @@ Last updated: 2026-05-29 (session 3)
 
 The portfolio is live at **https://dgigiu.github.io/mj-portfolio/**, deployed via GitHub Actions to GitHub Pages. Repo at **https://github.com/Dgigiu/mj-portfolio**. The custom domain `migueljss.com` is held for later — instructions in "Lower priority" below.
 
+v3 polish pass shipped to main on 2026-05-29 (`e6e39d0` + `c770e20`). Mobile visual verification still pending — see "Open items" below.
+
 Astro is configured with `site: 'https://dgigiu.github.io'` and `base: '/mj-portfolio'`. All internal links use a normalized `import.meta.env.BASE_URL` so paths resolve to `/mj-portfolio/...` correctly.
 
 Build is clean (`npm run build` → 0 errors / 0 warnings).
@@ -99,12 +101,14 @@ Full design system implementation in two passes (desktop app ran Phase 1; Claude
 
 ## Open items / look at these next
 
+### Verify on the live site
+- **Mobile pass at real device widths.** v3 was visually verified at 1568 desktop only. CSS breakpoints (hero, cards, contact, case title, about portrait) are in place and reason correctly, but a quick pass on iPhone + Android at 375–414px is the next thing to do before tagging v3 final.
+- **Lighthouse mobile audit.** Brief target is 95+. Phase 2 added eager-loading + fetchpriority to the about portrait, which was a likely LCP culprit. Worth running once the mobile pass is clean.
+
 ### Fine-tuning (Miguel to drive after reviewing the live site)
-- **Hero vignette weight.** The top-left navy radial vignette was tuned when the hero portrait was a wide b&w that the text overlapped heavily. With the new narrower color cutout there's almost no overlap, so the vignette is now purely atmospheric. Could be softened (or removed) if the upper-left feels too heavy against a color portrait.
-- **Hero copy.** Headline kept Miguel's existing "Calm products for complex work." line. Spec showed "Hi, I'm Miguel." as placeholder. Easy to swap if the more conversational opener feels right now that the visual is more dramatic.
-- **Card hover feel**: shadow lift on the image is the current treatment. May want to add a title underline or other affordance if it feels too subtle in use.
-- **About portrait on mobile**: currently full-width at narrow viewports. May want a max-width constraint (e.g. 180px) or a different crop.
-- **HeroGradient**: file is preserved at [src/components/HeroGradient.astro](src/components/HeroGradient.astro) — now fully unused. Safe to delete in a future cleanup.
+- **Hero copy.** Headline still says "Calm products for complex work." Spec showed "Hi, I'm Miguel." as placeholder. Easy to swap if the more conversational opener feels right.
+- **Card hover feel**: shadow lift on the image is the current treatment. May want a title underline or other affordance if it feels too subtle.
+- **HeroGradient**: file is preserved at [src/components/HeroGradient.astro](src/components/HeroGradient.astro) — fully unused. Safe to delete in a future cleanup.
 
 ### Design system open questions (defaulted to spec — change cheaply if needed)
 - Geist as display/UI sans (substituting DIN Alternate from the Figma)
