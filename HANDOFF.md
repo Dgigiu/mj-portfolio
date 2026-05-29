@@ -1,6 +1,6 @@
 # Handoff
 
-Last updated: 2026-05-28 (session 2)
+Last updated: 2026-05-29 (session 3)
 
 ## Where we are
 
@@ -20,7 +20,44 @@ Build is clean (`npm run build` → 0 errors / 0 warnings).
 - **Pages**: Home (full-bleed cobalt hero with color portrait cutout + card stack), About (two-column portrait + intro on desktop, prose below), Contact (simple channels list)
 - **Assets**: Color portrait cutout at `src/assets/brand/miguel-portrait-color.png` (used on Home hero — transparent bg, portrait orientation 3072×3821). B&W landscape portrait at `src/assets/brand/miguel-portrait.png` (used on About). Case study images under `src/assets/case-studies/`. Design system bundle at `docs/design_handoff_design_system/` (gitignored staging).
 
-## What changed in this session (2026-05-28, session 2)
+## What changed in this session (2026-05-29, session 3)
+
+Full v3 polish pass driven by a structured design critique. Five phases, all landed.
+
+**Phase 1: tighten the content spine (Option A from the plan)**
+
+- **Page content max → 1040.** `--content-page` dropped from `1200` to `1040` in [tokens.css](src/styles/tokens.css). Every `.container` (home `.work` / `.outro`, about, case study layout) now caps at 1040 with deliberate negative space at wide viewports. Reads as an editorial spine rather than a layout that forgot to extend.
+- **Prose width → 720 (from 640).** Global `.prose` in [global.css](src/styles/global.css) now uses `--content-prose` (720) instead of `--content-narrow` (640). Aligns with the design-system token name and matches the case-study header width.
+- **Case-study spine unified.** Added `.case-body .prose { margin-inline: 0; }` in [CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro). Header (720), cover (944, capped by container), and prose (720) all share the same left edge. DOM-verified: all three measure `left: 488px` at a 1568 viewport.
+
+**Phase 2: about header rebalance + portrait perf**
+
+- **Portrait now inline above title** in a single 720 column ([about.astro](src/pages/about.astro)). Dropped the sticky 280+1fr grid. `.about-header` is `display: flex; flex-direction: column; max-width: var(--content-prose)`. Portrait wrap at `max-width: 320px`, shrinks to 240 below 720px viewports.
+- **Portrait perf**: added `loading="eager"` and `fetchpriority="high"` on the `<Image>`, plus tighter `widths={[320, 640]}` to match the new display target. Should resolve the late-LCP paint flagged in the critique.
+- **Fixed pre-existing padding bug**: `.about` and `.contact` used the `padding` shorthand which was clobbering `.container`'s `padding-inline`. Changed both to `padding-block` so the container's safe-zone inline padding is preserved (matters at narrow viewports).
+
+**Phase 3: hero refinements** ([index.astro](src/pages/index.astro))
+
+- **Vignette softened**: default cobalt-to-navy radial dropped from `rgba(8,14,32,0.88)` → `0.45` at the center, with the falloff curve adjusted to taper sooner. The heavier version still fires at `<=1100px` where the text column gets closer to the photo. Stops the upper-left from feeling like atmospheric noise.
+- **Portrait crown breathing room**: `height: 100%` → `height: calc(100% - var(--space-4))` on `.hero-portrait` so Miguel's hairline doesn't kiss the top edge of the cobalt block.
+- **Hero subtitle to full white**: was `rgba(255,255,255,0.92)` (~4.8:1 on cobalt — borderline AA). Now `#fff` for AA headroom.
+- **Selected work scroll affordance**: padding bumped to `var(--space-3) var(--space-5)`, added a 1px `rgba(255,255,255,0.24)` border and pill radius at rest, light background tint + brighter border on hover. Now reads as an obviously-clickable pill instead of a label floating on cobalt.
+
+**Phase 4: contact page substance** ([contact.astro](src/pages/contact.astro))
+
+- Replaced the trailing `.note` paragraph with two more rows in the channels list:
+  - `Response — Within a couple of working days.`
+  - `Open to — Senior in-house product design, remote or hybrid from Porto.`
+- Used `.channel-value` spans for the non-link values (paired styling with `.channels a`). Reduces the empty lower half without adding new components.
+
+**Phase 5: verification**
+
+- `npm run build` clean (0 errors / 0 warnings / 0 hints), 6 pages built.
+- Visual verification at 1568 desktop on `/`, `/about`, `/contact`, `/work/team-files` via Astro dev server + Chrome MCP screenshots.
+- DOM-measured left/width on all three case-study spine pieces and the about header + prose to confirm shared left edges.
+- Mobile breakpoints inherit cleanly from the unified container. No new media queries needed beyond what was already in place. Visual mobile-width screenshot pass not done (Chrome MCP `resize_window` wouldn't shrink the viewport in this environment) — worth a quick real-device pass before declaring v3 done.
+
+## What changed in the previous session (2026-05-28, session 2)
 
 Applied the v2 delta bundle from Claude Design (`docs/design_handoff_design_system_delta/`).
 
