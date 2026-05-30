@@ -1,14 +1,16 @@
 # Handoff
 
-Last updated: 2026-05-29 (session 4)
+Last updated: 2026-05-30 (session 5)
 
 ## Where we are
 
 The portfolio is live at **https://dgigiu.github.io/mj-portfolio/**, deployed via GitHub Actions to GitHub Pages. Repo at **https://github.com/Dgigiu/mj-portfolio**. The custom domain `migueljss.com` is held for later — instructions in "Lower priority" below.
 
-Hero portrait rework shipped to main on 2026-05-29 (`c62d923` + `677c21f`) and deployed clean. Desktop is signed off; mobile verification is still pending — see "Open items" below.
+Session 5 polish shipped to main on 2026-05-30 (`3138979` + `1af96d2` + `2b36e58`): mobile hero portrait anchored right, desktop portrait lifted above the vignette, dedicated `apple-touch-icon` + refreshed favicon, and WCAG AA contrast fixes for the accent and gray tokens. Miguel ran Lighthouse mobile against the live site mid-session and got **100 / 95 / 100 / 100** (Performance / A11y / Best Practices / SEO); the contrast fixes should push A11y to 100 on the next run.
 
-v3 polish pass shipped earlier on 2026-05-29 (`e6e39d0` + `c770e20`).
+Hero portrait rework shipped earlier on 2026-05-29 (`c62d923` + `677c21f`). Desktop signed off in session 4; mobile signed off in session 5.
+
+v3 polish pass shipped on 2026-05-29 (`e6e39d0` + `c770e20`).
 
 Astro is configured with `site: 'https://dgigiu.github.io'` and `base: '/mj-portfolio'`. All internal links use a normalized `import.meta.env.BASE_URL` so paths resolve to `/mj-portfolio/...` correctly.
 
@@ -24,7 +26,38 @@ Build is clean (`npm run build` → 0 errors / 0 warnings).
 - **Pages**: Home (full-bleed cobalt hero with color portrait cutout + card stack), About (two-column portrait + intro on desktop, prose below), Contact (simple channels list)
 - **Assets**: Wide color portrait cutout at `src/assets/brand/miguel-portrait-color-wide.png` (used on Home hero — transparent bg, ~1.94 landscape, 4238×2184, figure on the right). B&W landscape portrait at `src/assets/brand/miguel-portrait.png` (used on About). The older near-square color cutout `src/assets/brand/miguel-portrait-color.png` is now unused (replaced by the wide one) — safe to delete in a future cleanup. Case study images under `src/assets/case-studies/`. Design system bundle at `docs/design_handoff_design_system/` (gitignored staging).
 
-## What changed in this session (2026-05-29, session 4)
+## What changed in this session (2026-05-30, session 5)
+
+Hero polish on mobile and desktop, share-sheet icon, and a WCAG AA contrast pass driven by a Lighthouse run against the live site.
+
+**Hero polish** ([index.astro](src/pages/index.astro), `3138979`)
+- Mobile (`<=720px`): `.hero-portrait` gets `right: -220px` so the figure (which sits roughly centered in the source) lands in the right half of the viewport across 360–414 widths. Verified at 360/375/414/720. The image width is panel-height-driven (not viewport-driven), so a fixed-pixel shift keeps the framing consistent across phone widths in a way a `%` value would not.
+- Desktop (`>1100px`): swapped `.hero-portrait` (z:1→2) above `.hero-vignette` (z:2→1) so the figure keeps its full color. The portrait cutout is transparent in the text area, so the vignette still darkens the cobalt under the heading — text legibility is unchanged. At `<=1100px` the original stacking is restored inside the existing breakpoint so the figure recedes where text overlaps it.
+
+**App icon + favicon refresh** ([BaseLayout.astro](src/layouts/BaseLayout.astro), [public/](public/), [scripts/build-app-icon.mjs](scripts/build-app-icon.mjs), `1af96d2` + `2b36e58`)
+- iOS share sheet and home-screen shortcut were grabbing an auto-cropped page image (Miguel's portrait, badly framed) because no `apple-touch-icon` was set. Added 180×180 PNG at [public/apple-touch-icon.png](public/apple-touch-icon.png) — white "MJ" in Geist on cobalt, inset to survive the iOS rounded-square mask. Also 512×512 at [public/icon-512.png](public/icon-512.png) for future PWA manifest use.
+- `<link rel="apple-touch-icon">` added in [BaseLayout.astro](src/layouts/BaseLayout.astro).
+- Refreshed [public/favicon.svg](public/favicon.svg) — the old one still referenced Space Grotesk (removed back in session 1). Now uses Geist and the new accent on the same dark square.
+- One-shot generator at [scripts/build-app-icon.mjs](scripts/build-app-icon.mjs) that embeds the local Geist TTF and renders both PNGs via `sharp`. Re-run with `node scripts/build-app-icon.mjs` if the color or wordmark needs to change.
+- **Cache note for Miguel**: iOS aggressively caches `apple-touch-icon`. After deploy you may still see the old auto-generated thumbnail for a while. To force-refresh: close the Safari tab, force-quit Safari, or clear site data (Settings → Apps → Safari → Advanced → Website Data).
+
+**WCAG AA contrast fixes** ([tokens.css](src/styles/tokens.css) + 3 components, `2b36e58`)
+Lighthouse flagged three distinct contrast failures on the canvas (`#fbfaf6`):
+
+| Token | Before | After | Contrast |
+|---|---|---|---|
+| `--accent` | `#1a6bff` | `#155fe8` | 4.31:1 → 5.21:1 |
+| `--ink-400` (`--fg-tertiary`) | `#747474` | `#6f6f6f` | 4.44:1 → 4.96:1 |
+| Text uses of `--fg-muted` (`#8d8d8d`, 3.19:1) | — | switched to `--fg-tertiary` | All AA |
+
+`--fg-muted` itself is unchanged in [tokens.css](src/styles/tokens.css) so it stays available for decorative/non-text use; the failing text consumers ([CaseStudyCard.astro](src/components/CaseStudyCard.astro), [CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro), [contact.astro](src/pages/contact.astro)) now use `--fg-tertiary`. The accent shift is a brand-color touch and was confirmed with Miguel before applying. `--accent-hover` (`#0050e0`) and `--accent-press` (`#003db8`) were already darker and unchanged.
+
+**Verification**
+- `npm run build` clean (6 pages, 0 errors).
+- Hero changes DOM-measured at 360/375/414/720/1000/1440 viewports; computed colors verified for tokens.
+- Lighthouse mobile (mid-session, pre-contrast fix): **100 / 95 / 100 / 100**. LCP 1.2s, FCP 0.8s, TBT 0ms, CLS 0.013, Speed Index 0.8s. The 95 on Accessibility was driven entirely by the contrast issues fixed in `2b36e58` — expect 100 across the board on the next live-site run.
+
+## What changed in the previous session (2026-05-29, session 4)
 
 Hero portrait rework. The previous near-square color cutout sat awkwardly behind the text and was hard to size and position. Rebuilt the hero as a layered, full-bleed composition and swapped in a purpose-composed wide cutout.
 
@@ -115,28 +148,28 @@ Full design system implementation in two passes (desktop app ran Phase 1; Claude
 
 ## Open items / look at these next
 
-### Verify on the live site
-- **FIRST THING NEXT SESSION — ask Miguel about the hero on mobile.** Miguel is checking the new wide-cutout hero on a real device against the live site (https://dgigiu.github.io/mj-portfolio/). At the start of the next session, ask him how it looks before doing anything else. If the figure needs nudging on small screens, the knobs are the ≤720px `opacity` (currently 0.55), the mobile vignette tier, and the panel `min-height` (600px) in [index.astro](src/pages/index.astro). If it's good, this item is closed.
-- **Broader mobile pass at real device widths.** v3 was visually verified at 1568 desktop only. CSS breakpoints (hero, cards, contact, case title, about portrait) are in place and reason correctly, but a quick pass on iPhone + Android at 375–414px is the next thing to do before tagging v3 final.
-- **Lighthouse mobile audit.** Brief target is 95+. Phase 2 added eager-loading + fetchpriority to the about portrait, which was a likely LCP culprit. Worth running once the mobile pass is clean.
+### Re-verify on the live site after this push
+- **Lighthouse mobile re-run.** Pre-fix scores were 100 / 95 / 100 / 100. With the contrast fixes in `2b36e58`, A11y should hit 100. Re-run at https://pagespeed.web.dev once GitHub Actions deploys this push.
+- **Share-sheet icon on iOS.** Verify the new `apple-touch-icon` shows the MJ wordmark instead of an auto-cropped portrait. iOS caches the icon aggressively; if you still see the old one, force-quit Safari or clear site data (Settings → Apps → Safari → Advanced → Website Data).
 
-### Fine-tuning (Miguel to drive after reviewing the live site)
+### Fine-tuning (Miguel to drive)
 - **Hero copy.** Headline still says "Calm products for complex work." Spec showed "Hi, I'm Miguel." as placeholder. Easy to swap if the more conversational opener feels right.
-- **Card hover feel**: shadow lift on the image is the current treatment. May want a title underline or other affordance if it feels too subtle.
-- **HeroGradient**: file is preserved at [src/components/HeroGradient.astro](src/components/HeroGradient.astro) — fully unused. Safe to delete in a future cleanup.
+- **Card hover feel.** Shadow lift on the image is the current treatment. May want a title underline or other affordance if it feels too subtle.
 
-### Design system open questions (defaulted to spec — change cheaply if needed)
+### Cleanup (safe to delete in a future pass)
+- [src/components/HeroGradient.astro](src/components/HeroGradient.astro) — fully unused since session 2.
+- `src/assets/brand/miguel-portrait-color.png` — older near-square color cutout, unused since the wide one shipped in session 4.
+
+### Design system notes
 - Geist as display/UI sans (substituting DIN Alternate from the Figma)
 - Aleo as body serif
-- Accent `#1a6bff` cobalt (v2 delta — was electric `#0088ff`)
+- Accent `#155fe8` cobalt (darkened from `#1a6bff` in session 5 for WCAG AA; the v2 delta value of `#1a6bff` failed AA at 4.31:1)
 - No Lucide icons yet — nav and footer are text-only and work fine. v2 spec locks Lucide @ stroke 2.0 when added.
 
 ### Still to do
-- **OG images.** BaseLayout references `/og/default.png` which doesn't exist. Affects social share previews only — no visual impact on the site. Need a default 1200×630 and per-case-study versions when content is settled.
+- **OG images.** BaseLayout references `/og/default.png` which doesn't exist. Affects social share previews on Twitter/iMessage links only — no visual impact on the site itself. Need a default 1200×630 and per-case-study versions when content is settled. The icon generator at [scripts/build-app-icon.mjs](scripts/build-app-icon.mjs) is a useful starting pattern.
 - **Case study content pass.** The MDX files read well but Miguel hasn't reviewed them since initial migration. Worth a pass once the visual direction feels right.
 - **Cover images.** Home page cards use the `*-hero-cover.png` files. Worth confirming those are the right thumbnails.
-- **Lighthouse audit.** Brief target is 95+ mobile. Not yet run — do it once content and OG images are final.
-- **Favicon.** Hand-written SVG with "MJ" text. Fine for now; may want a more refined mark later.
 - **Switching to migueljss.com.** When ready: set `site: 'https://migueljss.com'` and remove `base` in `astro.config.mjs`; restore `public/CNAME` with `migueljss.com`; run `gh api -X PUT repos/Dgigiu/mj-portfolio/pages -f cname=migueljss.com`; add apex A records at the registrar (`185.199.108.153–.111.153`) and optional AAAA records; tick "Enforce HTTPS" in repo Settings → Pages.
 - **Case study updates.** `docs/Case Studies/` is gitignored — drop updated `.docx` or images there and Claude can refold into the MDX.
 
