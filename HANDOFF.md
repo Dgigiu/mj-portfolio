@@ -6,7 +6,7 @@ Last updated: 2026-05-30 (session 5)
 
 The portfolio is live at **https://dgigiu.github.io/mj-portfolio/**, deployed via GitHub Actions to GitHub Pages. Repo at **https://github.com/Dgigiu/mj-portfolio**. The custom domain `migueljss.com` is held for later — instructions in "Lower priority" below.
 
-Session 5 polish shipped to main on 2026-05-30 (`3138979` + `1af96d2` + `2b36e58`): mobile hero portrait anchored right, desktop portrait lifted above the vignette, dedicated `apple-touch-icon` + refreshed favicon, and WCAG AA contrast fixes for the accent and gray tokens. Miguel ran Lighthouse mobile against the live site mid-session and got **100 / 95 / 100 / 100** (Performance / A11y / Best Practices / SEO); the contrast fixes should push A11y to 100 on the next run.
+Session 5 polish shipped to main on 2026-05-30 (`3138979`, `1af96d2`, `2b36e58`, `6b7f2c3`): mobile hero portrait anchored right, desktop portrait lifted above the vignette, dedicated `apple-touch-icon` + refreshed favicon, WCAG AA contrast fixes for the accent and gray tokens, and a responsive preload for the hero portrait. Lighthouse mobile against the live site moved from **100 / 95 / 100 / 100** → **100 / 100 / 100 / 100** after the contrast fixes landed. LCP preload was added afterward to clear the remaining "LCP request discovery" diagnostic.
 
 Hero portrait rework shipped earlier on 2026-05-29 (`c62d923` + `677c21f`). Desktop signed off in session 4; mobile signed off in session 5.
 
@@ -52,10 +52,15 @@ Lighthouse flagged three distinct contrast failures on the canvas (`#fbfaf6`):
 
 `--fg-muted` itself is unchanged in [tokens.css](src/styles/tokens.css) so it stays available for decorative/non-text use; the failing text consumers ([CaseStudyCard.astro](src/components/CaseStudyCard.astro), [CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro), [contact.astro](src/pages/contact.astro)) now use `--fg-tertiary`. The accent shift is a brand-color touch and was confirmed with Miguel before applying. `--accent-hover` (`#0050e0`) and `--accent-press` (`#003db8`) were already darker and unchanged.
 
+**Hero LCP preload** ([BaseLayout.astro](src/layouts/BaseLayout.astro), [index.astro](src/pages/index.astro), `6b7f2c3`)
+- Lighthouse flagged "LCP request discovery" as a diagnostic insight (the preload scanner only found the hero portrait after parsing reached the `<img>` in the body). Added `<link rel="preload" as="image" imagesrcset=... imagesizes="1400px" fetchpriority="high">` in the head.
+- BaseLayout now exposes a named `head` slot so any page can inject head tags. [index.astro](src/pages/index.astro) calls `getImage()` with the same `widths` (`[720, 1080, 1440, 1920]`) and `format: "webp"` as its `<Image>` component below so the preload's `imagesrcset` URLs match the actual rendered image srcset — the browser reuses the preloaded response. Score stays at 100; this purely clears the diagnostic and shaves a small amount off LCP.
+
 **Verification**
 - `npm run build` clean (6 pages, 0 errors).
 - Hero changes DOM-measured at 360/375/414/720/1000/1440 viewports; computed colors verified for tokens.
-- Lighthouse mobile (mid-session, pre-contrast fix): **100 / 95 / 100 / 100**. LCP 1.2s, FCP 0.8s, TBT 0ms, CLS 0.013, Speed Index 0.8s. The 95 on Accessibility was driven entirely by the contrast issues fixed in `2b36e58` — expect 100 across the board on the next live-site run.
+- Lighthouse mobile (mid-session, pre-contrast fix): **100 / 95 / 100 / 100**. LCP 1.2s, FCP 0.8s, TBT 0ms, CLS 0.013, Speed Index 0.8s.
+- Lighthouse mobile (post-contrast fix, on live site): **100 / 100 / 100 / 100**. Contrast fixes in `2b36e58` cleared the only remaining sub-100.
 
 ## What changed in the previous session (2026-05-29, session 4)
 
@@ -148,9 +153,9 @@ Full design system implementation in two passes (desktop app ran Phase 1; Claude
 
 ## Open items / look at these next
 
-### Re-verify on the live site after this push
-- **Lighthouse mobile re-run.** Pre-fix scores were 100 / 95 / 100 / 100. With the contrast fixes in `2b36e58`, A11y should hit 100. Re-run at https://pagespeed.web.dev once GitHub Actions deploys this push.
+### Re-verify on the live site
 - **Share-sheet icon on iOS.** Verify the new `apple-touch-icon` shows the MJ wordmark instead of an auto-cropped portrait. iOS caches the icon aggressively; if you still see the old one, force-quit Safari or clear site data (Settings → Apps → Safari → Advanced → Website Data).
+- **One more Lighthouse pass** (optional) after the `6b7f2c3` deploy lands, just to confirm the "LCP request discovery" diagnostic clears. Score should stay 100 / 100 / 100 / 100.
 
 ### Fine-tuning (Miguel to drive)
 - **Hero copy.** Headline still says "Calm products for complex work." Spec showed "Hi, I'm Miguel." as placeholder. Easy to swap if the more conversational opener feels right.
