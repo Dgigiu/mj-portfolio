@@ -96,6 +96,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
      Right anchor freezes at 1440 (where the composition reads best) and
      centers beyond that, so the figure stops drifting toward the edge on
      wide screens instead of hugging the viewport's right side. */
+  /* On wide viewports the portrait sits ABOVE the vignette so the figure
+     keeps its full color. The portrait is a transparent cutout, so the
+     vignette still darkens the cobalt under the text column where the
+     image is transparent. At narrower widths the text overlaps the
+     figure body and that dim-the-figure behavior is restored below. */
   .hero-portrait {
     position: absolute;
     right: max(0px, calc((100% - 1440px) / 2));
@@ -103,7 +108,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
     height: 100%;
     width: auto;
     max-width: none;
-    z-index: 1;
+    z-index: 2;
     pointer-events: none;
     user-select: none;
   }
@@ -117,7 +122,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
       rgba(8, 14, 32, 0.6) 38%,
       rgba(8, 14, 32, 0) 70%
     );
-    z-index: 2;
+    z-index: 1;
     pointer-events: none;
   }
 
@@ -181,9 +186,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
   }
 
   /* Laptop / tablet: extend the vignette so the text column stays legible
-     where it overlaps the photo's left fade. */
+     where it overlaps the photo's left fade. Restore vignette-above-portrait
+     so the figure dims and recedes behind text at these widths. */
   @media (max-width: 1100px) {
+    .hero-portrait {
+      z-index: 1;
+    }
+
     .hero-vignette {
+      z-index: 2;
       background: radial-gradient(
         150% 110% at 0% 0%,
         rgba(8, 14, 32, 0.9) 0%,
@@ -203,7 +214,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
       min-height: 600px;
     }
 
+    /* Push the figure into the right half of the viewport on phones.
+       The source has the figure roughly centered, so a right:0 anchor
+       leaves the face sitting near horizontal center. A fixed-pixel
+       shift past the right edge keeps the figure consistently anchored
+       to the right across 360–414px phone widths (the image width is
+       driven by the panel height, not the viewport, so a % shift would
+       vary the framing). */
     .hero-portrait {
+      right: -220px;
       opacity: 0.55;
     }
 
