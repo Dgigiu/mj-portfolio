@@ -11,7 +11,7 @@ const root = resolve(here, "..");
 const ttfPath = resolve(root, "src/assets/fonts/Geist-VariableFont_wght.ttf");
 const ttf = readFileSync(ttfPath).toString("base64");
 
-const BG = "#1a6bff";
+const BG = "#155fe8";
 const FG = "#ffffff";
 
 const buildSvg = (size, fontSize, baselineY) => `
