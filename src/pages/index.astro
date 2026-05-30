@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import CaseStudyCard from "../components/CaseStudyCard.astro";
 import portrait from "../assets/brand/miguel-portrait-color-wide.png";
@@ -9,9 +9,29 @@ const studies = (await getCollection("case-studies", ({ data }) => !data.draft))
   (a, b) => a.data.order - b.data.order
 );
 const base = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
+
+// Generate a responsive preload for the hero portrait so the browser's
+// preload scanner starts fetching it before parsing the body. Widths and
+// format must match the <Image> below so the srcset URLs line up.
+const heroPortraitPreload = await getImage({
+  src: portrait,
+  widths: [720, 1080, 1440, 1920],
+  format: "webp",
+});
 ---
 
 <BaseLayout title="Miguel Jesus" description="Senior Product Designer in Porto. Case studies across B2B SaaS and mobile products.">
+  <Fragment slot="head">
+    <link
+      rel="preload"
+      as="image"
+      href={heroPortraitPreload.src}
+      imagesrcset={heroPortraitPreload.srcSet.attribute}
+      imagesizes="1400px"
+      fetchpriority="high"
+    />
+  </Fragment>
+
   <section class="hero" aria-labelledby="hero-title">
     <Image
       src={portrait}
