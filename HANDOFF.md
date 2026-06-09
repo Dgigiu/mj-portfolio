@@ -1,12 +1,14 @@
 # Handoff
 
-Last updated: 2026-06-09 (session 6)
+Last updated: 2026-06-09 (session 7)
 
 ## Where we are
 
 The portfolio is live at **https://dgigiu.github.io/mj-portfolio/**, deployed via GitHub Actions to GitHub Pages. Repo at **https://github.com/Dgigiu/mj-portfolio**. The custom domain `migueljss.com` is held for later — instructions in "Lower priority" below.
 
-Session 6 (2026-06-09) shipped a case study content refresh from updated source docs in `docs/Case Studies/`. Three commits: `25bc3fe` rewrites all three case studies, `e9e791c` re-optimizes an unused portrait file. Build stays clean (0/0/0). No visual or styling changes this session, content only.
+Session 7 (2026-06-09) shipped a small nav polish pass and a copy refresh across the hero, two case study summaries, the Team Files reach figure, and the about-page bio. Two commits: `9efcd69` adds snug tracking to nav links and a soft grey hover underline; `96040ef` rewrites the hero blurb, tightens the Team Files and Food Save summaries, and updates Team Files reach from "around 10,000" to "over 9,000 companies" everywhere it appears.
+
+Session 6 (2026-06-09) shipped a case study content refresh from updated source docs in `docs/Case Studies/`. Three commits: `25bc3fe` rewrites all three case studies, `e9e791c` re-optimizes an unused portrait file. Build stays clean (0/0/0). No visual or styling changes that session, content only.
 
 Session 5 polish shipped to main on 2026-05-30 (`3138979`, `1af96d2`, `2b36e58`, `6b7f2c3`): mobile hero portrait anchored right, desktop portrait lifted above the vignette, dedicated `apple-touch-icon` + refreshed favicon, WCAG AA contrast fixes for the accent and gray tokens, and a responsive preload for the hero portrait. Lighthouse mobile against the live site moved from **100 / 95 / 100 / 100** → **100 / 100 / 100 / 100** after the contrast fixes landed. LCP preload was added afterward to clear the remaining "LCP request discovery" diagnostic.
 
@@ -18,7 +20,40 @@ Astro is configured with `site: 'https://dgigiu.github.io'` and `base: '/mj-port
 
 Build is clean (`npm run build` → 0 errors / 0 warnings).
 
-## What changed in this session (2026-06-09, session 6)
+## What changed in this session (2026-06-09, session 7)
+
+Two scoped passes: a nav polish and a copy refresh. No layout, structure, or token changes.
+
+**Nav refinements** ([Nav.astro](src/components/Nav.astro), `9efcd69`)
+
+- `.nav-link` gains `letter-spacing: var(--tracking-snug)` (`-0.01em`) so the 17px Geist links sit optically with the 17px `.brand`, which already used snug.
+- `.nav-link:hover` gains `border-bottom-color: var(--fg-muted)` (#8d8d8d). The text still darkens to `--fg-primary`; the muted underline gives a visible affordance on hover without poaching the cobalt `--accent` underline reserved for the active state. We tried a few before landing here — full pill in `--bg-subtle` (too chunky), then accent on the underline (collided with active), then `--fg-primary`/`--fg-secondary` (too heavy). Muted reads as the lightest non-disabled fg step.
+
+**Copy refresh** ([index.astro](src/pages/index.astro), [about.astro](src/pages/about.astro), [team-files.mdx](src/content/case-studies/team-files.mdx), [food-save.mdx](src/content/case-studies/food-save.mdx), `96040ef`)
+
+- Home hero subtitle rewritten to lead with "sole designer alongside small engineering and product teams" and to frame the case studies as following products "from first sketch to launch and the years after."
+- [team-files.mdx](src/content/case-studies/team-files.mdx) `summary` tightened to "Connected files for Jira and Confluence. Replaced the download, edit, re-upload loop with a single source of truth for files, right inside Atlassian tools."
+- [food-save.mdx](src/content/case-studies/food-save.mdx) `summary` tail rewritten to "plus a checklist to turn them into daily practice" (was "lightweight checklist to actually put them in place").
+- [myfoodways.mdx](src/content/case-studies/myfoodways.mdx) unchanged — the requested text was byte-identical to what was already there.
+- **Team Files reach figure standardized.** [about.astro](src/pages/about.astro) "around 10,000 companies" → "over 9,000 companies" and [team-files.mdx](src/content/case-studies/team-files.mdx) Impact section "used by thousands of teams" → "used by over 9,000 companies." "Companies" is now the consistent term for the headline reach; "teams" stays where it means teams generically.
+
+**Single-source confirmation**
+
+The `summary` field in each case-study MDX frontmatter flows through three surfaces with no separate sources:
+
+- Homepage card body ([CaseStudyCard.astro](src/components/CaseStudyCard.astro), via `summary` prop wired in [index.astro](src/pages/index.astro))
+- Case-study page hero blurb ([CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro), `.case-summary`)
+- Case-study page `<meta name="description">` and `<meta property="og:description">` ([CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro) → `<BaseLayout description={summary}>`)
+
+DOM-verified all three for Team Files on the dev server. One MDX edit, three surfaces updated.
+
+**Verification**
+
+- Astro dev server spot-checked: home hero, /about bio paragraph, /work/team-files (card, hero blurb, meta description, og description, and Impact paragraph). All show the new copy.
+- Nav hover rule confirmed in the live stylesheet (`color: var(--fg-primary); border-bottom-color: var(--fg-muted)`); active state still cobalt-underlined.
+- Grep across `src/` confirmed no remaining instances of "10,000" or "thousands of teams."
+
+## What changed in the previous session (2026-06-09, session 6)
 
 Case study content refresh. Miguel updated the source markdown files in `docs/Case Studies/` and asked me to refold them into the MDX. No visual, layout, or design system changes. Two commits to main:
 
