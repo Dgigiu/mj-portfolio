@@ -1,10 +1,12 @@
 # Handoff
 
-Last updated: 2026-05-30 (session 5)
+Last updated: 2026-06-09 (session 6)
 
 ## Where we are
 
 The portfolio is live at **https://dgigiu.github.io/mj-portfolio/**, deployed via GitHub Actions to GitHub Pages. Repo at **https://github.com/Dgigiu/mj-portfolio**. The custom domain `migueljss.com` is held for later — instructions in "Lower priority" below.
+
+Session 6 (2026-06-09) shipped a case study content refresh from updated source docs in `docs/Case Studies/`. Three commits: `25bc3fe` rewrites all three case studies, `e9e791c` re-optimizes an unused portrait file. Build stays clean (0/0/0). No visual or styling changes this session, content only.
 
 Session 5 polish shipped to main on 2026-05-30 (`3138979`, `1af96d2`, `2b36e58`, `6b7f2c3`): mobile hero portrait anchored right, desktop portrait lifted above the vignette, dedicated `apple-touch-icon` + refreshed favicon, WCAG AA contrast fixes for the accent and gray tokens, and a responsive preload for the hero portrait. Lighthouse mobile against the live site moved from **100 / 95 / 100 / 100** → **100 / 100 / 100 / 100** after the contrast fixes landed. LCP preload was added afterward to clear the remaining "LCP request discovery" diagnostic.
 
@@ -15,6 +17,27 @@ v3 polish pass shipped on 2026-05-29 (`e6e39d0` + `c770e20`).
 Astro is configured with `site: 'https://dgigiu.github.io'` and `base: '/mj-portfolio'`. All internal links use a normalized `import.meta.env.BASE_URL` so paths resolve to `/mj-portfolio/...` correctly.
 
 Build is clean (`npm run build` → 0 errors / 0 warnings).
+
+## What changed in this session (2026-06-09, session 6)
+
+Case study content refresh. Miguel updated the source markdown files in `docs/Case Studies/` and asked me to refold them into the MDX. No visual, layout, or design system changes. Two commits to main:
+
+- **`25bc3fe`** rewrites all three published case studies from the updated source docs:
+  - **[Team Files](src/content/case-studies/team-files.mdx)**: added the TOPDOX origin story to Company; the 2023 NN/g UX heuristic review story (preview button, contextual help, error messages); the small "connect folder" redesign anecdote; a fuller take on removing mandatory authentication; a new "Beyond the product" section covering the Atlassian Marketplace listings, marketing site, and the Team '23 (Las Vegas) and Unleash 2023 (Amsterdam) events; the Frank Leclerc Marketplace review quote; and a closing reflection on what long tenure on one product taught him.
+  - **[MyFoodways](src/content/case-studies/myfoodways.mdx)**: restructured "Profile personalization" around the three-screen onboarding (diet, motivations, allergies) and the auto-swap no-gos logic; added a full "Accessibility inside a fixed brand" section telling the story of the white-on-yellow buttons (1.47:1), the early flag-and-overrule, the bolder-text mitigation, and the eventual win on Challenges with a gray label and yellow repurposed as a completion state; rewrote Challenges as the "Plant-based Rockstar" seven-day cohort one-shot; reframed Impact to lead with a five-star user review naming the fridge-first and ingredient-swap bets. Period corrected to **March 2018 to December 2020**; launch date fact-fixed from "2019" to mid-2018.
+  - **[Food Save](src/content/case-studies/food-save.mdx)**: added the Brief-studio / native-vs-unified build decision story under Collaboration; new **"Part of a pair"** section on the Waste Tracker companion app (kitchen-floor onboarding with printed A4 labels, mobile log + web reports, the Reto Mettler quote); Jens Jung "clear and easy to understand" quote in Impact; reframed reflections (the app launched then was discontinued with the program, not a pure positive).
+
+- **`e9e791c`** re-optimizes [src/assets/brand/miguel-portrait-color.png](src/assets/brand/miguel-portrait-color.png) from 9.4 MB to 4.0 MB. This file is the older near-square color cutout, unused since the wide hero portrait shipped in session 4, and still slated for deletion in a future cleanup pass. Compression came from outside this session; I just included the change.
+
+**Verification**
+
+- `npm run build` → 6 pages, 0 errors / 0 warnings / 0 hints.
+- Dev server spot-checked all three case study pages. Heading structure renders cleanly (new H3 "Accessibility inside a fixed brand," "Part of a pair," etc. all in place).
+- Full body-text scan: no em dashes, no en dashes leaked in across the three pages.
+
+**Held**
+
+Two new case studies sit unpublished in `docs/Case Studies/`: [cs-board-game-app.md](docs/Case Studies/cs-board-game-app.md) and [cs-office-editor.md](docs/Case Studies/cs-office-editor.md). Miguel asked to hold these for now. When greenlit they'll need cover images and any inline figures dropped under `src/assets/case-studies/<slug>/` first, plus a new MDX, plus an `order` value assigned in the frontmatter.
 
 ## What's live
 
@@ -163,7 +186,7 @@ Full design system implementation in two passes (desktop app ran Phase 1; Claude
 
 ### Cleanup (safe to delete in a future pass)
 - [src/components/HeroGradient.astro](src/components/HeroGradient.astro) — fully unused since session 2.
-- `src/assets/brand/miguel-portrait-color.png` — older near-square color cutout, unused since the wide one shipped in session 4.
+- `src/assets/brand/miguel-portrait-color.png` — older near-square color cutout, unused since the wide one shipped in session 4. Shrunk in session 6 (`e9e791c`) but still slated for outright removal.
 
 ### Design system notes
 - Geist as display/UI sans (substituting DIN Alternate from the Figma)
@@ -172,9 +195,9 @@ Full design system implementation in two passes (desktop app ran Phase 1; Claude
 - No Lucide icons yet — nav and footer are text-only and work fine. v2 spec locks Lucide @ stroke 2.0 when added.
 
 ### Still to do
-- **OG images.** BaseLayout references `/og/default.png` which doesn't exist. Affects social share previews on Twitter/iMessage links only — no visual impact on the site itself. Need a default 1200×630 and per-case-study versions when content is settled. The icon generator at [scripts/build-app-icon.mjs](scripts/build-app-icon.mjs) is a useful starting pattern.
-- **Case study content pass.** The MDX files read well but Miguel hasn't reviewed them since initial migration. Worth a pass once the visual direction feels right.
+- **OG images.** BaseLayout references `/og/default.png` which doesn't exist. Affects social share previews on Twitter/iMessage links only — no visual impact on the site itself. Need a default 1200×630 and per-case-study versions now that content has settled. The icon generator at [scripts/build-app-icon.mjs](scripts/build-app-icon.mjs) is a useful starting pattern.
 - **Cover images.** Home page cards use the `*-hero-cover.png` files. Worth confirming those are the right thumbnails.
+- **Two new case studies on hold.** `docs/Case Studies/cs-board-game-app.md` and `cs-office-editor.md` are written but not on the site. When ready, each needs cover/inline images under `src/assets/case-studies/<slug>/`, a new `.mdx` in `src/content/case-studies/`, and an `order` value in the frontmatter.
 - **Switching to migueljss.com.** When ready: set `site: 'https://migueljss.com'` and remove `base` in `astro.config.mjs`; restore `public/CNAME` with `migueljss.com`; run `gh api -X PUT repos/Dgigiu/mj-portfolio/pages -f cname=migueljss.com`; add apex A records at the registrar (`185.199.108.153–.111.153`) and optional AAAA records; tick "Enforce HTTPS" in repo Settings → Pages.
 - **Case study updates.** `docs/Case Studies/` is gitignored — drop updated `.docx` or images there and Claude can refold into the MDX.
 
