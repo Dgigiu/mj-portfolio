@@ -69,8 +69,8 @@ const more = (
           <h2>More case studies</h2>
         </header>
         <ul class="more-list">
-          {more.map((s) => (
-            <li>
+          {more.map((s, i) => (
+            <li data-reveal style={`--reveal-delay: ${i * 60}ms`}>
               <CaseStudyCard
                 href={`${base}work/${s.slug}/`}
                 title={s.data.title}

@@ -134,7 +134,7 @@ Keep the README current with these commands and a brief project overview.
 
 - Pure white backgrounds anywhere
 - Em dashes in any generated content
-- Carousels, parallax, scroll-jacking, hero animations
+- Carousels, scroll-jacking, autoplaying or looping motion (subtle transform/opacity motion is allowed per the Motion policy in `portfolio-brief-claude-design.md`)
 - Client-side framework islands unless truly needed
 - Analytics or tracking by default (add later if wanted, e.g., Plausible)
 - Default Bootstrap blues or generic AI-design aesthetics

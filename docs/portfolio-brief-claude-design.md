@@ -45,6 +45,17 @@ Structured grid, generous spacing, clear vertical rhythm. Case studies as long-f
 
 Keep minimal: text blocks, captioned figures, image containers with subtle borders or soft shadows to lift screenshots off the background, simple case study cards (with the blue hover wash), quiet nav, quiet footer.
 
+## Motion (policy updated June 2026)
+
+The original brief banned all parallax and hero animation. Miguel has since opted into a small set of quiet motion, within these rules:
+
+- Animate `transform` and `opacity` only. No layout shift, ever.
+- Everything under ~400ms, or scroll-driven. Nothing loops or autoplays.
+- Text never animates. Cards may reveal as whole blocks; the hero heading and subtitle stay static.
+- All motion respects `prefers-reduced-motion` and degrades to static without JS.
+
+Current set: hero portrait scroll parallax (lags at ~12%, capped) and a one-time scale settle on load; case study cards rise in once on first view; the image zoom dialog scales from 0.97 as it fades in.
+
 ## Writing tone
 
 Clear, grounded, practical. No marketing fluff, no superlatives, no buzzwords. Plain precise language that respects the reader's time. US English. No em dashes anywhere.
@@ -52,10 +63,10 @@ Clear, grounded, practical. No marketing fluff, no superlatives, no buzzwords. P
 ## What to avoid
 
 - Pure white backgrounds.
-- Carousels, parallax, scroll-jacking, hero animations.
+- Carousels, scroll-jacking, autoplaying or looping motion.
 - Marketing-site flourishes.
 - Generic AI-design aesthetics (gradients applied for their own sake, overdesigned cards, glassmorphism, default Bootstrap blues).
-- Decorative motion. Anything moves for a reason or it doesn't move.
+- Decorative motion outside the Motion policy above. Anything moves for a reason or it doesn't move.
 
 ## References
 

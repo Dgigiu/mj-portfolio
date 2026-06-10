@@ -1,12 +1,14 @@
 # Handoff
 
-Last updated: 2026-06-10 (session 8)
+Last updated: 2026-06-10 (session 9)
 
 ## Where we are
 
 The portfolio is live at **https://dgigiu.github.io/mj-portfolio/**, deployed via GitHub Actions to GitHub Pages. Repo at **https://github.com/Dgigiu/mj-portfolio**. The custom domain `migueljss.com` is held until content settles (Miguel is working on case study images); switch steps in "Still to do" below.
 
-Session 8 (2026-06-10) was a corrections pass from a code review: default OG image now exists, fonts converted to woff2 (~1MB → ~270KB), dead code deleted (HeroGradient, old portrait, compat aliases), type scale moved to rem, CLAUDE.md updated to match reality.
+Session 9 (2026-06-10) introduced subtle motion. Miguel explicitly relaxed the original "no parallax / no hero animation" brief rule; the new policy is written into both briefs and CLAUDE.md. Shipped: hero portrait scroll parallax + one-time settle, scroll reveals on case study cards, and a scale on the zoom dialog open/close.
+
+Session 8 (2026-06-10) was a corrections pass from a code review: default OG image now exists, fonts converted to woff2 (~1MB → ~270KB), dead code deleted (HeroGradient, old portrait, compat aliases), type scale moved to rem, CLAUDE.md updated to match reality. Also fixed the "More case studies" section ignoring container inline padding (Miguel caught it).
 
 Session 7 (2026-06-09) shipped a small nav polish pass and a copy refresh across the hero, two case study summaries, the Team Files reach figure, and the about-page bio. Two commits: `9efcd69` adds snug tracking to nav links and a soft grey hover underline; `96040ef` rewrites the hero blurb, tightens the Team Files and Food Save summaries, and updates Team Files reach from "around 10,000" to "over 9,000 companies" everywhere it appears.
 
@@ -22,7 +24,29 @@ Astro is configured with `site: 'https://dgigiu.github.io'` and `base: '/mj-port
 
 Build is clean (`npm run build` → 0 errors / 0 warnings).
 
-## What changed in this session (2026-06-10, session 8)
+## What changed in this session (2026-06-10, session 9)
+
+Subtle motion across the site. Miguel asked for ideas, picked the "starter set," and confirmed the brief's blanket motion ban should be relaxed. The policy now lives in [docs/portfolio-brief-claude-design.md](docs/portfolio-brief-claude-design.md) ("Motion" section), with pointers in the code brief and CLAUDE.md: transform/opacity only, under ~400ms or scroll-driven, text never animates, everything respects `prefers-reduced-motion` and works without JS.
+
+**Hero parallax + settle** ([index.astro](src/pages/index.astro))
+- `.hero-portrait` lags the scroll at 12% (capped at 48px) via a `--parallax-y` custom property fed by a ~20-line rAF-throttled scroll handler. Text stays static.
+- One-time settle on load: scale 1.015 → 1 over `--duration-settle` (1100ms). Scale only, no opacity, so the portrait's LCP measurement is unaffected.
+- The two effects use the individual `translate`/`scale` CSS properties so the animation and the parallax never fight over `transform`.
+
+**Scroll reveals** ([global.css](src/styles/global.css), [BaseLayout.astro](src/layouts/BaseLayout.astro), [index.astro](src/pages/index.astro), [CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro))
+- Generic `[data-reveal]` mechanism: opacity 0 + 12px rise → revealed once by an IntersectionObserver (threshold 0.1, -40px bottom margin), staggered 60ms per card via `--reveal-delay`. Applied to the home card list and the "More case studies" grid.
+- The hidden state is double-gated: `html.js` (set by an inline script in BaseLayout head, so no-JS users always see content) and `prefers-reduced-motion: no-preference` (reduced-motion users never get hidden content either).
+- New tokens: `--duration-reveal` (350ms), `--duration-settle` (1100ms).
+
+**Zoom dialog scale** ([BaseLayout.astro](src/layouts/BaseLayout.astro))
+- The existing fade (via `@starting-style` + `allow-discrete`) now pairs with `scale` 0.97 → 1 on open and back down on close, using the individual `scale` property. Same durations as the fade (400ms open, 200ms close); the existing reduced-motion override already covers it.
+
+**Verification**
+- `npm run build` clean (6 pages, 0 errors / 0 warnings).
+- Dev server DOM checks: `html.js` set; parallax measures 24px at scrollY 200 and caps at 48px at 1000; settle animation registered on the portrait; all three home cards reveal on scroll and settle at opacity 1 / translate none; the "More" grid has both reveal items; dialog opens to scale 1 / opacity 1 and closes cleanly through the `is-closing` path. No console errors.
+- Hero screenshot confirms no visual regression at rest.
+
+## What changed in the previous session (2026-06-10, session 8)
 
 Corrections pass driven by a "what would you have done differently" review. No copy or layout changes; visuals identical (all replaced tokens resolve to the same computed values).
 

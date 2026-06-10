@@ -44,6 +44,10 @@ const fullTitle = title === "Miguel Jesus" ? title : `${title} · Miguel Jesus`;
 
     <meta name="theme-color" content="#fbfaf6" />
 
+    <!-- Gates the [data-reveal] hidden state (global.css): must run before
+         first paint so content never flashes, and stays visible without JS. -->
+    <script is:inline>document.documentElement.classList.add("js");</script>
+
     <slot name="head" />
   </head>
   <body>
@@ -134,6 +138,26 @@ const fullTitle = title === "Miguel Jesus" ? title : `${title} · Miguel Jesus`;
         e.preventDefault();
         closeDialog();
       });
+
+      // Scroll reveals: flip [data-reveal] elements visible the first time
+      // they enter the viewport. The hidden state only exists under
+      // html.js + no reduced-motion (global.css), so this is purely additive.
+      const revealEls = document.querySelectorAll<HTMLElement>("[data-reveal]");
+      if ("IntersectionObserver" in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              entry.target.classList.add("is-revealed");
+              io.unobserve(entry.target);
+            }
+          },
+          { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+        );
+        revealEls.forEach((el) => io.observe(el));
+      } else {
+        revealEls.forEach((el) => el.classList.add("is-revealed"));
+      }
     </script>
 
     <style is:global>
@@ -149,8 +173,10 @@ const fullTitle = title === "Miguel Jesus" ? title : `${title} · Miguel Jesus`;
         color: var(--fg-primary);
         overflow: visible;
         opacity: 0;
+        scale: 0.97;
         transition:
           opacity 200ms ease,
+          scale 200ms ease,
           overlay 200ms ease allow-discrete,
           display 200ms ease allow-discrete;
       }
@@ -161,8 +187,10 @@ const fullTitle = title === "Miguel Jesus" ? title : `${title} · Miguel Jesus`;
         align-items: center;
         gap: var(--space-3);
         opacity: 1;
+        scale: 1;
         transition:
           opacity 400ms ease,
+          scale 400ms var(--ease-out),
           overlay 400ms ease allow-discrete,
           display 400ms ease allow-discrete;
       }
@@ -170,6 +198,7 @@ const fullTitle = title === "Miguel Jesus" ? title : `${title} · Miguel Jesus`;
       @starting-style {
         .zoom-dialog[open] {
           opacity: 0;
+          scale: 0.97;
         }
       }
 
@@ -193,7 +222,10 @@ const fullTitle = title === "Miguel Jesus" ? title : `${title} · Miguel Jesus`;
 
       .zoom-dialog[open].is-closing {
         opacity: 0;
-        transition: opacity 200ms ease;
+        scale: 0.97;
+        transition:
+          opacity 200ms ease,
+          scale 200ms ease;
       }
 
       .zoom-dialog[open].is-closing::backdrop {

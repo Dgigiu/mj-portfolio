@@ -194,6 +194,8 @@
   --duration-fast:   120ms;
   --duration-normal: 180ms;
   --duration-slow:   220ms;
+  --duration-reveal: 350ms;   /* scroll reveals and other entrances */
+  --duration-settle: 1100ms;  /* one-time hero settle on load */
   --transition-base: all var(--duration-normal) var(--ease-out);
 }
 

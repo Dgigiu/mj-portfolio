@@ -67,8 +67,8 @@ const heroPortraitPreload = await getImage({
     </header>
     <ul class="card-list">
       {
-        studies.map((s) => (
-          <li>
+        studies.map((s, i) => (
+          <li data-reveal style={`--reveal-delay: ${i * 60}ms`}>
             <CaseStudyCard
               href={`${base}work/${s.slug}/`}
               title={s.data.title}
@@ -131,6 +131,30 @@ const heroPortraitPreload = await getImage({
     z-index: 2;
     pointer-events: none;
     user-select: none;
+    /* Scroll parallax: the script below feeds --parallax-y so the figure
+       lags the scroll slightly and reads as a layer behind the text.
+       translate/scale are individual properties so the settle animation
+       and the parallax compose without fighting over transform. */
+    translate: 0 var(--parallax-y, 0px);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-portrait {
+      animation: hero-settle var(--duration-settle) var(--ease-out);
+      transform-origin: 50% 100%;
+      will-change: transform;
+    }
+
+    /* One-time settle on first paint: scale only (no opacity) so the
+       LCP measurement of the portrait is unaffected. */
+    @keyframes hero-settle {
+      from {
+        scale: 1.015;
+      }
+      to {
+        scale: 1;
+      }
+    }
   }
 
   .hero-vignette {
@@ -320,3 +344,30 @@ const heroPortraitPreload = await getImage({
     color: var(--fg-secondary);
   }
 </style>
+
+<script>
+  // Hero parallax: the portrait lags the scroll at ~12% so it reads as a
+  // layer behind the cobalt plane and the (static) text. Capped so the
+  // bottom crop never opens a gap once the hero is scrolled past.
+  const portrait = document.querySelector<HTMLElement>(".hero-portrait");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  if (portrait && !reduceMotion.matches) {
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const y = Math.min(window.scrollY * 0.12, 48);
+      portrait.style.setProperty("--parallax-y", `${y.toFixed(1)}px`);
+    };
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(update);
+      },
+      { passive: true }
+    );
+    update();
+  }
+</script>
