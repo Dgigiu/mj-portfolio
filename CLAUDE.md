@@ -1,6 +1,6 @@
 # Project instructions
 
-This is Miguel Jesus's personal portfolio site (`migueljss.com`). It's a small Astro site whose purpose is showcasing product case studies for a senior in-house design job search.
+This is Miguel Jesus's personal portfolio site. It's a small Astro site whose purpose is showcasing product case studies for a senior in-house design job search. It currently deploys to `https://dgigiu.github.io/mj-portfolio/`; the move to the final domain (`migueljss.com`) happens once content settles (steps in HANDOFF.md).
 
 ## Start every session by reading
 
@@ -13,9 +13,9 @@ When the work in the current session changes the state of the project meaningful
 ## Stack at a glance
 
 - Astro 5 + MDX + sitemap, TypeScript strict
-- Plain CSS with custom-property tokens — no Tailwind, no CSS-in-JS
-- Self-hosted fonts via `@fontsource`
-- GitHub Pages on push to `main`, custom domain via `public/CNAME`
+- Plain CSS with custom-property tokens: no Tailwind, no CSS-in-JS
+- Self-hosted variable fonts (Aleo, Geist, Geist Mono) as woff2 in `src/assets/fonts/`, declared in `tokens.css`
+- GitHub Pages on push to `main`, currently under the `/mj-portfolio` base path (no CNAME yet; final domain pending)
 
 ## Where things live
 
@@ -29,14 +29,15 @@ src/
     case-studies/*.mdx      case study source
   assets/case-studies/      images consumed by astro:assets
   styles/                   tokens.css, global.css, typography.css
-public/                     CNAME, favicon, robots, OG images
+public/                     favicon, app icons, robots, OG images
+scripts/                    one-shot generators (app icon, OG image, font conversion)
 docs/                       briefs; Case Studies/ folder is a gitignored
                             staging area for content updates
 ```
 
 ## Conventions
 
-- **No pure white.** `--bg` is `#f0f0f0`. Don't introduce `#fff` fallbacks.
+- **No pure white backgrounds.** The canvas is warm off-white `#fbfaf6` (`--bg-canvas`). Don't introduce `#fff` background fallbacks.
 - **No em dashes** in any prose.
 - **No client-side framework islands** unless an interaction genuinely needs one.
 - **Use tokens** in [src/styles/tokens.css](src/styles/tokens.css) — no magic numbers, no duplicated literal values.

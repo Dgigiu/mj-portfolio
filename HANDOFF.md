@@ -1,10 +1,12 @@
 # Handoff
 
-Last updated: 2026-06-09 (session 7)
+Last updated: 2026-06-10 (session 8)
 
 ## Where we are
 
-The portfolio is live at **https://dgigiu.github.io/mj-portfolio/**, deployed via GitHub Actions to GitHub Pages. Repo at **https://github.com/Dgigiu/mj-portfolio**. The custom domain `migueljss.com` is held for later — instructions in "Lower priority" below.
+The portfolio is live at **https://dgigiu.github.io/mj-portfolio/**, deployed via GitHub Actions to GitHub Pages. Repo at **https://github.com/Dgigiu/mj-portfolio**. The custom domain `migueljss.com` is held until content settles (Miguel is working on case study images); switch steps in "Still to do" below.
+
+Session 8 (2026-06-10) was a corrections pass from a code review: default OG image now exists, fonts converted to woff2 (~1MB → ~270KB), dead code deleted (HeroGradient, old portrait, compat aliases), type scale moved to rem, CLAUDE.md updated to match reality.
 
 Session 7 (2026-06-09) shipped a small nav polish pass and a copy refresh across the hero, two case study summaries, the Team Files reach figure, and the about-page bio. Two commits: `9efcd69` adds snug tracking to nav links and a soft grey hover underline; `96040ef` rewrites the hero blurb, tightens the Team Files and Food Save summaries, and updates Team Files reach from "around 10,000" to "over 9,000 companies" everywhere it appears.
 
@@ -20,7 +22,38 @@ Astro is configured with `site: 'https://dgigiu.github.io'` and `base: '/mj-port
 
 Build is clean (`npm run build` → 0 errors / 0 warnings).
 
-## What changed in this session (2026-06-09, session 7)
+## What changed in this session (2026-06-10, session 8)
+
+Corrections pass driven by a "what would you have done differently" review. No copy or layout changes; visuals identical (all replaced tokens resolve to the same computed values).
+
+**Default OG image** ([scripts/build-og-image.mjs](scripts/build-og-image.mjs), [public/og/default.png](public/og/default.png))
+- BaseLayout has referenced `og/default.png` since session 1 but the file never existed, so every social share (LinkedIn, iMessage, Slack) had a 404ing `og:image`. Now generated: 1200×630, cobalt + navy vignette echoing the hero, "Miguel Jesus" in Geist bold, "Senior Product Designer" in Aleo, hairline + "Product case studies · SaaS and mobile" meta line. Re-run with `node scripts/build-og-image.mjs`.
+- Per-case-study OG images still pending (waiting on final cover images; the script is the pattern to extend).
+
+**Fonts → woff2** ([src/assets/fonts/](src/assets/fonts/), [tokens.css](src/styles/tokens.css), [scripts/convert-fonts.mjs](scripts/convert-fonts.mjs))
+- Six raw variable TTFs (~1MB) replaced by four woff2 files (~270KB): Aleo, Aleo Italic, Geist, Geist Mono.
+- Geist Italic and Geist Mono Italic dropped entirely: nothing on the site uses italic sans or mono (prose italics are Aleo). If ever needed the browser synthesizes, or re-add the face.
+- `wawoff2` added as a devDependency; [scripts/convert-fonts.mjs](scripts/convert-fonts.mjs) converts any `.ttf` dropped in the fonts folder.
+- [scripts/build-app-icon.mjs](scripts/build-app-icon.mjs) updated to decompress the woff2 in memory (librsvg needs TTF for SVG text rendering). Both generator scripts re-verified working.
+
+**Dead code deleted**
+- [HeroGradient.astro] removed (unused since session 2).
+- `src/assets/brand/miguel-portrait-color.png` removed (unused since session 4; the 4MB file re-compressed in session 6 is gone for good).
+- The Phase 1 compat alias block in [tokens.css](src/styles/tokens.css) removed (~30 lines: `--bg`, `--surface`, `--text`, `--blue-*`, `--font-display/body`, `--space-7/9` remaps, `--container-max`, `--measure-*`, `--transition-fast`). Remaining consumers migrated first: [CompareImages.astro](src/components/CompareImages.astro) and [Figure.astro](src/components/Figure.astro) (`--border`→`--border-subtle`, `--surface`→`--bg-elevated`), [BaseLayout.astro](src/layouts/BaseLayout.astro) zoom dialog (`--space-7`→`--space-12`).
+- `--container-pad: clamp(20px, 4vw, 48px)` promoted to a real token in the Layout section (was a compat alias duplicating a literal in [global.css](src/styles/global.css); both `.container` and Figure's `.bleed` now use the token).
+
+**Type scale → rem** ([tokens.css](src/styles/tokens.css))
+- All `--text-*` tokens converted from px to rem (16px root) so type tracks the user's browser font-size preference, not just page zoom. Pixel-equivalent comments kept inline. Spacing stays px by design.
+
+**CLAUDE.md corrected**
+- Canvas color updated (`#f0f0f0` → `#fbfaf6` `--bg-canvas`), font claim fixed (`@fontsource` → self-hosted woff2 in `src/assets/fonts/`), deploy description fixed (no CNAME yet; staging base path documented), `scripts/` added to the layout map.
+
+**Verification**
+- `npm run build` → 6 pages, 0 errors / 0 warnings.
+- Dev server checks: Aleo/Geist load from woff2 (`document.fonts` confirms), prose at 17px (rem scale resolves), Figure/CompareImages frame border and background computed values identical to before (`#dcd9d0` / `#fdfcfa`), container padding from the new token, no console errors, no failed requests.
+- `og:image` in built HTML resolves to `https://dgigiu.github.io/mj-portfolio/og/default.png` and the file ships in `dist/og/`.
+
+## What changed in the previous session (2026-06-09, session 7)
 
 Two scoped passes: a nav polish and a copy refresh. No layout, structure, or token changes.
 
@@ -79,10 +112,10 @@ Two new case studies sit unpublished in `docs/Case Studies/`: [cs-board-game-app
 - **Stack**: Astro 5 + MDX + sitemap, TypeScript strict, plain CSS with design system tokens, self-hosted Aleo + Geist + Geist Mono (variable `.ttf` in `src/assets/fonts/`)
 - **Routes**: `/`, `/about`, `/contact`, `/work/team-files`, `/work/myfoodways`, `/work/food-save`
 - **Design system**: Claude Design handoff v1 + v2 delta both applied. Paper/ink/single-accent (`#1a6bff` cobalt) palette. Aleo serif for prose, Geist sans for all UI/display. Tokens in [src/styles/tokens.css](src/styles/tokens.css).
-- **Components**: Nav, Footer, CaseStudyCard (`compact` variant), Figure, CompareImages, Quote, Stat. HeroGradient is preserved but decoupled — not used anywhere.
+- **Components**: Nav, Footer, CaseStudyCard (`compact` variant), Figure, CompareImages, Quote, Stat. (HeroGradient deleted in session 8.)
 - **Layouts**: BaseLayout (head, OG meta, font preloads, zoom dialog), CaseStudyLayout (header block + cover image + body + "More case studies")
 - **Pages**: Home (full-bleed cobalt hero with color portrait cutout + card stack), About (two-column portrait + intro on desktop, prose below), Contact (simple channels list)
-- **Assets**: Wide color portrait cutout at `src/assets/brand/miguel-portrait-color-wide.png` (used on Home hero — transparent bg, ~1.94 landscape, 4238×2184, figure on the right). B&W landscape portrait at `src/assets/brand/miguel-portrait.png` (used on About). The older near-square color cutout `src/assets/brand/miguel-portrait-color.png` is now unused (replaced by the wide one) — safe to delete in a future cleanup. Case study images under `src/assets/case-studies/`. Design system bundle at `docs/design_handoff_design_system/` (gitignored staging).
+- **Assets**: Wide color portrait cutout at `src/assets/brand/miguel-portrait-color-wide.png` (used on Home hero — transparent bg, ~1.94 landscape, 4238×2184, figure on the right). B&W landscape portrait at `src/assets/brand/miguel-portrait.png` (used on About). Case study images under `src/assets/case-studies/`. Fonts as variable woff2 in `src/assets/fonts/`. Design system bundle at `docs/design_handoff_design_system/` (gitignored staging).
 
 ## What changed in this session (2026-05-30, session 5)
 
@@ -219,10 +252,6 @@ Full design system implementation in two passes (desktop app ran Phase 1; Claude
 - **Hero copy.** Headline still says "Calm products for complex work." Spec showed "Hi, I'm Miguel." as placeholder. Easy to swap if the more conversational opener feels right.
 - **Card hover feel.** Shadow lift on the image is the current treatment. May want a title underline or other affordance if it feels too subtle.
 
-### Cleanup (safe to delete in a future pass)
-- [src/components/HeroGradient.astro](src/components/HeroGradient.astro) — fully unused since session 2.
-- `src/assets/brand/miguel-portrait-color.png` — older near-square color cutout, unused since the wide one shipped in session 4. Shrunk in session 6 (`e9e791c`) but still slated for outright removal.
-
 ### Design system notes
 - Geist as display/UI sans (substituting DIN Alternate from the Figma)
 - Aleo as body serif
@@ -230,7 +259,7 @@ Full design system implementation in two passes (desktop app ran Phase 1; Claude
 - No Lucide icons yet — nav and footer are text-only and work fine. v2 spec locks Lucide @ stroke 2.0 when added.
 
 ### Still to do
-- **OG images.** BaseLayout references `/og/default.png` which doesn't exist. Affects social share previews on Twitter/iMessage links only — no visual impact on the site itself. Need a default 1200×630 and per-case-study versions now that content has settled. The icon generator at [scripts/build-app-icon.mjs](scripts/build-app-icon.mjs) is a useful starting pattern.
+- **Per-case-study OG images.** The default 1200×630 shipped in session 8 ([scripts/build-og-image.mjs](scripts/build-og-image.mjs)). Per-case-study versions wait on final cover images; extend the same script and pass `ogImage` through CaseStudyLayout → BaseLayout (the prop plumbing already exists).
 - **Cover images.** Home page cards use the `*-hero-cover.png` files. Worth confirming those are the right thumbnails.
 - **Two new case studies on hold.** `docs/Case Studies/cs-board-game-app.md` and `cs-office-editor.md` are written but not on the site. When ready, each needs cover/inline images under `src/assets/case-studies/<slug>/`, a new `.mdx` in `src/content/case-studies/`, and an `order` value in the frontmatter.
 - **Switching to migueljss.com.** When ready: set `site: 'https://migueljss.com'` and remove `base` in `astro.config.mjs`; restore `public/CNAME` with `migueljss.com`; run `gh api -X PUT repos/Dgigiu/mj-portfolio/pages -f cname=migueljss.com`; add apex A records at the registrar (`185.199.108.153–.111.153`) and optional AAAA records; tick "Enforce HTTPS" in repo Settings → Pages.
