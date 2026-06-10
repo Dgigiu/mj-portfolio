@@ -92,7 +92,7 @@ hr {
 .container {
   max-width: var(--content-page);
   margin-inline: auto;
-  padding-inline: clamp(20px, 4vw, 48px);
+  padding-inline: var(--container-pad);
   width: 100%;
 }
 
