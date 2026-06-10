@@ -42,7 +42,7 @@ docs/                       briefs; Case Studies/ folder is a gitignored
 - **No client-side framework islands** unless an interaction genuinely needs one.
 - **Use tokens** in [src/styles/tokens.css](src/styles/tokens.css) — no magic numbers, no duplicated literal values.
 - **One `h1` per page**, semantic landmarks, visible focus rings, respect `prefers-reduced-motion`.
-- **Motion is allowed but quiet** (policy in the design brief, updated June 2026): `transform`/`opacity` only, under ~400ms or scroll-driven, never animate text, no carousels or scroll-jacking. Current set: hero parallax, faint card reveals (never from alpha 0), zoom dialog scale. No entrance animations on the hero.
+- **Motion is allowed but quiet** (policy in the design brief, updated June 2026): `transform`/`opacity` only, under ~400ms or scroll-driven, never animate text, no carousels or scroll-jacking. Current set: hero parallax, faint card reveals (never from alpha 0), zoom dialog scale, card hover lift, nav underline ease-in. No entrance animations on the hero.
 - **Voice**: clear, grounded, US English, no marketing fluff, no superlatives.
 
 ## Working with case study content

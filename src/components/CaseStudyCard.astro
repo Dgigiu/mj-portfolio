@@ -60,17 +60,21 @@ const metaParts = compact
     border-radius: var(--radius-sm);
   }
 
+  /* Hover lift: shadow deepens, the frame rises 2px, and the image
+     scales a hair inside it. Media only; the card text stays put. */
   .card-media {
     aspect-ratio: 4 / 3;
     border-radius: var(--radius-md);
     overflow: hidden;
     background: var(--bg-subtle);
     box-shadow: var(--shadow-sm);
-    transition: box-shadow var(--duration-normal) var(--ease-out);
+    transition: box-shadow var(--duration-normal) var(--ease-out),
+                translate var(--duration-normal) var(--ease-out);
   }
 
   .card:hover .card-media {
     box-shadow: var(--shadow-md);
+    translate: 0 -2px;
   }
 
   .card-media :global(img) {
@@ -78,6 +82,11 @@ const metaParts = compact
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: scale var(--duration-normal) var(--ease-out);
+  }
+
+  .card:hover .card-media :global(img) {
+    scale: 1.01;
   }
 
   .card-placeholder {
@@ -156,8 +165,17 @@ const metaParts = compact
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .card-media {
+    .card-media,
+    .card-media :global(img) {
       transition: none;
+    }
+
+    .card:hover .card-media {
+      translate: none;
+    }
+
+    .card:hover .card-media :global(img) {
+      scale: none;
     }
   }
 </style>
