@@ -4,12 +4,14 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import sharp from "sharp";
+import wawoff2 from "wawoff2";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, "..");
 
-const ttfPath = resolve(root, "src/assets/fonts/Geist-VariableFont_wght.ttf");
-const ttf = readFileSync(ttfPath).toString("base64");
+// The repo only keeps woff2; librsvg needs TTF, so decompress in memory.
+const woff2Path = resolve(root, "src/assets/fonts/Geist-VariableFont_wght.woff2");
+const ttf = Buffer.from(await wawoff2.decompress(readFileSync(woff2Path))).toString("base64");
 
 const BG = "#155fe8";
 const FG = "#ffffff";
