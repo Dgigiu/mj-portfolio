@@ -38,7 +38,7 @@ Subtle motion across the site. Miguel asked for ideas, picked the "starter set,"
 
 **Micro-interactions** ([CaseStudyCard.astro](src/components/CaseStudyCard.astro), [Nav.astro](src/components/Nav.astro))
 - Card hover lift: the cover frame rises 2px alongside the existing shadow deepen, and the image scales to 1.01 inside it. Media only, card text never moves. Reduced-motion resets both.
-- Nav underline ease-in: the hover underline now grows from the left over `--duration-fast`. The `border-bottom` became a `::after` pseudo-element (same 2px, same position) since borders can't animate width; active state is unchanged visually (full accent underline), hover is the muted grey one.
+- Nav underline ease-in: the hover underline rises in from 3px below with a fade over `--duration-fast` (Miguel preferred bottom-up over the left-to-right grow shipped first). The `border-bottom` became a `::after` pseudo-element (same 2px, same position); active state is unchanged visually (full accent underline), hover is the muted grey one.
 - The pre-reveal state is double-gated: `html.js` (set by an inline script in BaseLayout head, so no-JS users always see content) and `prefers-reduced-motion: no-preference` (reduced-motion users never get dimmed content either).
 - New token: `--duration-reveal` (450ms).
 
