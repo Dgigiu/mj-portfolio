@@ -1,5 +1,7 @@
 # Portfolio website brief
 
+> **Status note (2026-06-10): partially superseded.** This is the original exploration brief. The shipped design system came out of the Claude Design handoff (`docs/design_handoff_design_system/` plus the v2 delta) and is implemented in `src/styles/tokens.css`: Aleo serif for body, Geist sans for display and UI, warm off-white canvas `#fbfaf6`, single cobalt accent `#155fe8`. Where the Color, Typography, or Components sections below disagree with the handoff or the tokens file, the shipped system wins. The Motion policy and Writing tone sections are current.
+
 ## Project
 
 A personal portfolio website for Miguel Jesus, Senior Product Designer with 20+ years of experience focused on SaaS and mobile product design. The site exists to showcase product case studies and help land senior in-house product design roles.

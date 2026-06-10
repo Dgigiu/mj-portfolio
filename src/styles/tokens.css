@@ -11,16 +11,14 @@
   font-style: normal;
   font-weight: 100 900;
   font-display: swap;
-  src: url("../assets/fonts/Aleo-VariableFont_wght.woff2") format("woff2-variations"),
-       url("../assets/fonts/Aleo-VariableFont_wght.woff2") format("woff2");
+  src: url("../assets/fonts/Aleo-VariableFont_wght.woff2") format("woff2");
 }
 @font-face {
   font-family: "Aleo";
   font-style: italic;
   font-weight: 100 900;
   font-display: swap;
-  src: url("../assets/fonts/Aleo-Italic-VariableFont_wght.woff2") format("woff2-variations"),
-       url("../assets/fonts/Aleo-Italic-VariableFont_wght.woff2") format("woff2");
+  src: url("../assets/fonts/Aleo-Italic-VariableFont_wght.woff2") format("woff2");
 }
 
 /* Geist (display + UI sans) */
@@ -29,8 +27,7 @@
   font-style: normal;
   font-weight: 100 900;
   font-display: swap;
-  src: url("../assets/fonts/Geist-VariableFont_wght.woff2") format("woff2-variations"),
-       url("../assets/fonts/Geist-VariableFont_wght.woff2") format("woff2");
+  src: url("../assets/fonts/Geist-VariableFont_wght.woff2") format("woff2");
 }
 
 /* Geist Mono (code) */
@@ -39,8 +36,7 @@
   font-style: normal;
   font-weight: 100 900;
   font-display: swap;
-  src: url("../assets/fonts/GeistMono-VariableFont_wght.woff2") format("woff2-variations"),
-       url("../assets/fonts/GeistMono-VariableFont_wght.woff2") format("woff2");
+  src: url("../assets/fonts/GeistMono-VariableFont_wght.woff2") format("woff2");
 }
 
 :root {

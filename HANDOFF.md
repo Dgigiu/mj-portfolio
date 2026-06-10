@@ -1,300 +1,120 @@
 # Handoff
 
-Last updated: 2026-06-10 (session 9)
+Last updated: 2026-06-10 (session 10)
 
 ## Where we are
 
 The portfolio is live at **https://dgigiu.github.io/mj-portfolio/**, deployed via GitHub Actions to GitHub Pages. Repo at **https://github.com/Dgigiu/mj-portfolio**. The custom domain `migueljss.com` is held until content settles (Miguel is working on case study images); switch steps in "Still to do" below.
 
-Session 9 (2026-06-10) introduced subtle motion. Miguel explicitly relaxed the original "no parallax / no hero animation" brief rule; the new policy is written into both briefs and CLAUDE.md. Shipped after review: hero portrait scroll parallax, faint scroll reveals on case study cards, and a scale on the zoom dialog open/close. A hero "settle" entrance was shipped, reviewed, and removed (Miguel: too theatrical); the first reveal version (alpha 0, 12px, staggered) was softened on review to opacity 0.6, 8px, no stagger.
+The staging deploy emits `<meta name="robots" content="noindex">` on every page (added session 10) so the temporary `/mj-portfolio/...` URLs never get indexed; the guard keys off the github.io host in `Astro.site` and clears automatically at the domain switch.
 
-Session 8 (2026-06-10) was a corrections pass from a code review: default OG image now exists, fonts converted to woff2 (~1MB → ~270KB), dead code deleted (HeroGradient, old portrait, compat aliases), type scale moved to rem, CLAUDE.md updated to match reality. Also fixed the "More case studies" section ignoring container inline padding (Miguel caught it).
+Astro is configured with `site: 'https://dgigiu.github.io'` and `base: '/mj-portfolio'`. All internal links use the normalized base exported from [src/lib/paths.ts](src/lib/paths.ts).
 
-Session 7 (2026-06-09) shipped a small nav polish pass and a copy refresh across the hero, two case study summaries, the Team Files reach figure, and the about-page bio. Two commits: `9efcd69` adds snug tracking to nav links and a soft grey hover underline; `96040ef` rewrites the hero blurb, tightens the Team Files and Food Save summaries, and updates Team Files reach from "around 10,000" to "over 9,000 companies" everywhere it appears.
+Build is clean (`npm run build` → 6 pages, 0 errors / 0 warnings).
 
-Session 6 (2026-06-09) shipped a case study content refresh from updated source docs in `docs/Case Studies/`. Three commits: `25bc3fe` rewrites all three case studies, `e9e791c` re-optimizes an unused portrait file. Build stays clean (0/0/0). No visual or styling changes that session, content only.
+## What changed in this session (2026-06-10, session 10)
 
-Session 5 polish shipped to main on 2026-05-30 (`3138979`, `1af96d2`, `2b36e58`, `6b7f2c3`): mobile hero portrait anchored right, desktop portrait lifted above the vignette, dedicated `apple-touch-icon` + refreshed favicon, WCAG AA contrast fixes for the accent and gray tokens, and a responsive preload for the hero portrait. Lighthouse mobile against the live site moved from **100 / 95 / 100 / 100** → **100 / 100 / 100 / 100** after the contrast fixes landed. LCP preload was added afterward to clear the remaining "LCP request discovery" diagnostic.
+Maintenance pass from a second "what would you have done differently" review. No visual or copy changes.
 
-Hero portrait rework shipped earlier on 2026-05-29 (`c62d923` + `677c21f`). Desktop signed off in session 4; mobile signed off in session 5.
+- **Staging noindex** ([BaseLayout.astro](src/layouts/BaseLayout.astro)). GitHub redirects the github.io host to the custom domain at switch time but keeps the path, so any indexed `/mj-portfolio/work/...` URL would 404 on `migueljss.com`. All pages now carry `noindex` while `site` is a github.io host; nothing to undo at switch time.
+- **Brief status banners.** Both briefs in `docs/` now open with a note that the shipped design system (handoff bundle + tokens.css) supersedes their visual sections. They had drifted badly (old `#F0F0F0` background, Aeonik/Inter type, HeroGradient, card blue hover wash) and CLAUDE.md tells every cold session to read them as authority.
+- **HANDOFF.md restructured** (this file). Sessions 1 to 8 compacted into a history section; durable review-driven decisions moved to "Decisions that must not regress." Fixed two stale claims: two sections both titled "this session," and fonts still described as variable `.ttf` after the session 8 woff2 conversion.
+- **gitignore**: now ignores all of `.claude/` (was only `settings.local.json`) and `.obsidian/` (Miguel opens the repo as an Obsidian vault; its workspace state was sitting untracked).
+- **Shared base helper** ([src/lib/paths.ts](src/lib/paths.ts)). The `BASE_URL` normalization was copy-pasted in four files (BaseLayout, Nav, index, CaseStudyLayout); now a single import, and one place to simplify when the base path goes away.
+- **Slug passed as a prop.** [src/pages/work/[slug].astro](src/pages/work/[slug].astro) passes `entry.slug` into CaseStudyLayout for the "More case studies" exclusion; the layout no longer reverse-engineers the slug from the pathname with a base-path regex.
+- **Card image `sizes`** ([CaseStudyCard.astro](src/components/CaseStudyCard.astro)): added `(min-width: 1040px) 456px`. The card media column never exceeds 456px inside the 1040 border-box container (minus padding and gap), so wide and retina screens stop requesting oversized sources.
+- **@font-face cleanup** ([tokens.css](src/styles/tokens.css)): each face listed the same woff2 URL twice (`woff2-variations` plus `woff2`); now a single `format("woff2")`.
 
-v3 polish pass shipped on 2026-05-29 (`e6e39d0` + `c770e20`).
+**Left alone on purpose**: the dark-theme token block in tokens.css stays as testing scaffolding (unreachable without `data-theme="dark"`).
 
-Astro is configured with `site: 'https://dgigiu.github.io'` and `base: '/mj-portfolio'`. All internal links use a normalized `import.meta.env.BASE_URL` so paths resolve to `/mj-portfolio/...` correctly.
+**Verification**: `npm run build` clean (6 pages, 0 errors / 0 warnings). Built HTML checked: `noindex` present on all six pages, new `sizes` attribute rendered, and the team-files page's "More" section links only to the other two studies.
 
-Build is clean (`npm run build` → 0 errors / 0 warnings).
+## What changed in the previous session (2026-06-10, session 9)
 
-## What changed in this session (2026-06-10, session 9)
-
-Subtle motion across the site. Miguel asked for ideas, picked the "starter set," and confirmed the brief's blanket motion ban should be relaxed. The policy now lives in [docs/portfolio-brief-claude-design.md](docs/portfolio-brief-claude-design.md) ("Motion" section), with pointers in the code brief and CLAUDE.md: transform/opacity only, under ~400ms or scroll-driven, text never animates, everything respects `prefers-reduced-motion` and works without JS.
+Subtle motion across the site. Miguel asked for ideas, picked the "starter set," and confirmed the brief's blanket motion ban should be relaxed. The policy lives in [docs/portfolio-brief-claude-design.md](docs/portfolio-brief-claude-design.md) ("Motion" section), with pointers in the code brief and CLAUDE.md: transform/opacity only, under ~400ms or scroll-driven, text never animates, everything respects `prefers-reduced-motion` and works without JS.
 
 **Hero parallax** ([index.astro](src/pages/index.astro))
-- `.hero-portrait` lags the scroll at 12% (capped at 48px) via a `--parallax-y` custom property fed by a ~20-line rAF-throttled scroll handler. Text stays static. Uses the individual `translate` CSS property.
-- A one-time scale "settle" on load shipped alongside it but Miguel rejected it on review (too theatrical); removed same session. Don't reintroduce hero entrance animations (noted in the design brief Motion section).
+- `.hero-portrait` lags the scroll at 12% (capped at 48px) via a `--parallax-y` custom property fed by a rAF-throttled scroll handler. Text stays static. Uses the individual `translate` CSS property.
+- A one-time scale "settle" on load shipped alongside it but Miguel rejected it on review (too theatrical); removed same session.
 
 **Scroll reveals** ([global.css](src/styles/global.css), [BaseLayout.astro](src/layouts/BaseLayout.astro), [index.astro](src/pages/index.astro), [CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro))
 - Generic `[data-reveal]` mechanism on the home card list and the "More case studies" grid, revealed once by an IntersectionObserver.
 - Tuned per Miguel's review: deliberately faint. Opacity starts at 0.75 (never alpha 0; Miguel raised it from 0.6 after seeing it live), travel is 8px (`--space-2`), 450ms ease-out, no stagger, observer fires at threshold 0 so the ease finishes before the card is far into view. First version (alpha 0, 12px, 60ms stagger, threshold 0.1) read as chunky.
+- The pre-reveal state is double-gated: `html.js` (set by an inline script in BaseLayout head, so no-JS users always see content) and `prefers-reduced-motion: no-preference` (reduced-motion users never get dimmed content either).
+- New token: `--duration-reveal` (450ms).
 
 **Micro-interactions** ([CaseStudyCard.astro](src/components/CaseStudyCard.astro), [Nav.astro](src/components/Nav.astro))
 - Card hover lift: the cover frame rises 2px alongside the existing shadow deepen, and the image scales to 1.01 inside it. Media only, card text never moves. Reduced-motion resets both.
 - Nav underline ease-in: the hover underline rises in from 3px below with a fade over `--duration-fast` (Miguel preferred bottom-up over the left-to-right grow shipped first). The `border-bottom` became a `::after` pseudo-element (same 2px, same position); active state is unchanged visually (full accent underline), hover is the muted grey one.
-- The pre-reveal state is double-gated: `html.js` (set by an inline script in BaseLayout head, so no-JS users always see content) and `prefers-reduced-motion: no-preference` (reduced-motion users never get dimmed content either).
-- New token: `--duration-reveal` (450ms).
 
 **Zoom dialog scale** ([BaseLayout.astro](src/layouts/BaseLayout.astro))
-- The existing fade (via `@starting-style` + `allow-discrete`) now pairs with `scale` 0.97 → 1 on open and back down on close, using the individual `scale` property. Same durations as the fade (400ms open, 200ms close); the existing reduced-motion override already covers it.
+- The existing fade (via `@starting-style` + `allow-discrete`) now pairs with `scale` 0.97 → 1 on open and back down on close. Same durations as the fade (400ms open, 200ms close); the existing reduced-motion override covers it.
 
-**Verification**
-- `npm run build` clean (6 pages, 0 errors / 0 warnings).
-- Dev server DOM checks: `html.js` set; parallax measures 24px at scrollY 200 and caps at 48px at 1000; settle animation registered on the portrait; all three home cards reveal on scroll and settle at opacity 1 / translate none; the "More" grid has both reveal items; dialog opens to scale 1 / opacity 1 and closes cleanly through the `is-closing` path. No console errors.
-- Hero screenshot confirms no visual regression at rest.
+**Verification**: build clean; DOM checks for parallax cap, reveal settle states, and dialog open/close path; hero screenshot confirmed no visual regression at rest.
 
-## What changed in the previous session (2026-06-10, session 8)
+## Decisions that must not regress
 
-Corrections pass driven by a "what would you have done differently" review. No copy or layout changes; visuals identical (all replaced tokens resolve to the same computed values).
+Review-driven calls from past sessions. Future sessions should not "fix" these back.
 
-**Default OG image** ([scripts/build-og-image.mjs](scripts/build-og-image.mjs), [public/og/default.png](public/og/default.png))
-- BaseLayout has referenced `og/default.png` since session 1 but the file never existed, so every social share (LinkedIn, iMessage, Slack) had a 404ing `og:image`. Now generated: 1200×630, cobalt + navy vignette echoing the hero, "Miguel Jesus" in Geist bold, "Senior Product Designer" in Aleo, hairline + "Product case studies · SaaS and mobile" meta line. Re-run with `node scripts/build-og-image.mjs`.
-- Per-case-study OG images still pending (waiting on final cover images; the script is the pattern to extend).
+- **No hero entrance animations.** A load-time settle was tried in session 9 and rejected as too theatrical.
+- **Reveals stay faint**: opacity from 0.75 (never alpha 0), 8px travel, no stagger, observer threshold 0.
+- **Hero content is deliberately minimal**: no "Portfolio · 2026" eyebrow, no Porto/availability/email meta line (both removed on purpose; do not restore). Scroll affordance is the left-aligned chevron only.
+- **Hero portrait has no width cap** (capping shrank the figure; Miguel rejected shrinking). The right anchor freezes at 1440 and centers beyond it. The mobile framing shift is a fixed-pixel `right: -220px` because the image width is panel-height-driven, so a percentage would vary the framing across phone widths.
+- **Accent is `#155fe8`**, darkened in session 5 from the v2 delta's `#1a6bff`, which failed WCAG AA at 4.31:1 on the canvas.
+- **`--fg-muted` (#8d8d8d) is decorative-only.** Text that needs to be readable uses `--fg-tertiary` or darker (session 5 contrast pass).
+- **On `.container` sections, use `padding-block`, never the `padding` shorthand.** The shorthand zeroes the container's safe-zone `padding-inline`. This bug shipped twice (about/contact fixed in session 3, "More case studies" in session 8).
+- **Team Files reach figure is "over 9,000 companies"** everywhere it appears (standardized in session 7).
+- **Geist italic faces are intentionally absent**: nothing uses italic sans or mono; browsers synthesize if ever needed.
+- **No em dashes anywhere** (design strings, docs, alt text, error messages). Use a period, colon, parentheses, or rewrite.
 
-**Fonts → woff2** ([src/assets/fonts/](src/assets/fonts/), [tokens.css](src/styles/tokens.css), [scripts/convert-fonts.mjs](scripts/convert-fonts.mjs))
-- Six raw variable TTFs (~1MB) replaced by four woff2 files (~270KB): Aleo, Aleo Italic, Geist, Geist Mono.
-- Geist Italic and Geist Mono Italic dropped entirely: nothing on the site uses italic sans or mono (prose italics are Aleo). If ever needed the browser synthesizes, or re-add the face.
-- `wawoff2` added as a devDependency; [scripts/convert-fonts.mjs](scripts/convert-fonts.mjs) converts any `.ttf` dropped in the fonts folder.
-- [scripts/build-app-icon.mjs](scripts/build-app-icon.mjs) updated to decompress the woff2 in memory (librsvg needs TTF for SVG text rendering). Both generator scripts re-verified working.
+## Session history (condensed)
 
-**Dead code deleted**
-- [HeroGradient.astro] removed (unused since session 2).
-- `src/assets/brand/miguel-portrait-color.png` removed (unused since session 4; the 4MB file re-compressed in session 6 is gone for good).
-- The Phase 1 compat alias block in [tokens.css](src/styles/tokens.css) removed (~30 lines: `--bg`, `--surface`, `--text`, `--blue-*`, `--font-display/body`, `--space-7/9` remaps, `--container-max`, `--measure-*`, `--transition-fast`). Remaining consumers migrated first: [CompareImages.astro](src/components/CompareImages.astro) and [Figure.astro](src/components/Figure.astro) (`--border`→`--border-subtle`, `--surface`→`--bg-elevated`), [BaseLayout.astro](src/layouts/BaseLayout.astro) zoom dialog (`--space-7`→`--space-12`).
-- `--container-pad: clamp(20px, 4vw, 48px)` promoted to a real token in the Layout section (was a compat alias duplicating a literal in [global.css](src/styles/global.css); both `.container` and Figure's `.bleed` now use the token).
+Per-session detail beyond this lives in the git log; commit messages carry the same narrative.
 
-**Type scale → rem** ([tokens.css](src/styles/tokens.css))
-- All `--text-*` tokens converted from px to rem (16px root) so type tracks the user's browser font-size preference, not just page zoom. Pixel-equivalent comments kept inline. Spacing stays px by design.
-
-**CLAUDE.md corrected**
-- Canvas color updated (`#f0f0f0` → `#fbfaf6` `--bg-canvas`), font claim fixed (`@fontsource` → self-hosted woff2 in `src/assets/fonts/`), deploy description fixed (no CNAME yet; staging base path documented), `scripts/` added to the layout map.
-
-**"More case studies" alignment fix** ([CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro))
-- Miguel spotted the section running full-bleed past the content spine on case study pages. Same bug session 3 fixed on `.about`/`.contact`: `.more` is a `.container`, and its `padding: var(--space-16) 0` shorthand zeroed the container's `padding-inline`. Now `padding-block`. DOM-verified: prose, section heading, and cards all share the 41px left edge at the test viewport.
-
-**Verification**
-- `npm run build` → 6 pages, 0 errors / 0 warnings.
-- Dev server checks: Aleo/Geist load from woff2 (`document.fonts` confirms), prose at 17px (rem scale resolves), Figure/CompareImages frame border and background computed values identical to before (`#dcd9d0` / `#fdfcfa`), container padding from the new token, no console errors, no failed requests.
-- `og:image` in built HTML resolves to `https://dgigiu.github.io/mj-portfolio/og/default.png` and the file ships in `dist/og/`.
-
-## What changed in the previous session (2026-06-09, session 7)
-
-Two scoped passes: a nav polish and a copy refresh. No layout, structure, or token changes.
-
-**Nav refinements** ([Nav.astro](src/components/Nav.astro), `9efcd69`)
-
-- `.nav-link` gains `letter-spacing: var(--tracking-snug)` (`-0.01em`) so the 17px Geist links sit optically with the 17px `.brand`, which already used snug.
-- `.nav-link:hover` gains `border-bottom-color: var(--fg-muted)` (#8d8d8d). The text still darkens to `--fg-primary`; the muted underline gives a visible affordance on hover without poaching the cobalt `--accent` underline reserved for the active state. We tried a few before landing here — full pill in `--bg-subtle` (too chunky), then accent on the underline (collided with active), then `--fg-primary`/`--fg-secondary` (too heavy). Muted reads as the lightest non-disabled fg step.
-
-**Copy refresh** ([index.astro](src/pages/index.astro), [about.astro](src/pages/about.astro), [team-files.mdx](src/content/case-studies/team-files.mdx), [food-save.mdx](src/content/case-studies/food-save.mdx), `96040ef`)
-
-- Home hero subtitle rewritten to lead with "sole designer alongside small engineering and product teams" and to frame the case studies as following products "from first sketch to launch and the years after."
-- [team-files.mdx](src/content/case-studies/team-files.mdx) `summary` tightened to "Connected files for Jira and Confluence. Replaced the download, edit, re-upload loop with a single source of truth for files, right inside Atlassian tools."
-- [food-save.mdx](src/content/case-studies/food-save.mdx) `summary` tail rewritten to "plus a checklist to turn them into daily practice" (was "lightweight checklist to actually put them in place").
-- [myfoodways.mdx](src/content/case-studies/myfoodways.mdx) unchanged — the requested text was byte-identical to what was already there.
-- **Team Files reach figure standardized.** [about.astro](src/pages/about.astro) "around 10,000 companies" → "over 9,000 companies" and [team-files.mdx](src/content/case-studies/team-files.mdx) Impact section "used by thousands of teams" → "used by over 9,000 companies." "Companies" is now the consistent term for the headline reach; "teams" stays where it means teams generically.
-
-**Single-source confirmation**
-
-The `summary` field in each case-study MDX frontmatter flows through three surfaces with no separate sources:
-
-- Homepage card body ([CaseStudyCard.astro](src/components/CaseStudyCard.astro), via `summary` prop wired in [index.astro](src/pages/index.astro))
-- Case-study page hero blurb ([CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro), `.case-summary`)
-- Case-study page `<meta name="description">` and `<meta property="og:description">` ([CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro) → `<BaseLayout description={summary}>`)
-
-DOM-verified all three for Team Files on the dev server. One MDX edit, three surfaces updated.
-
-**Verification**
-
-- Astro dev server spot-checked: home hero, /about bio paragraph, /work/team-files (card, hero blurb, meta description, og description, and Impact paragraph). All show the new copy.
-- Nav hover rule confirmed in the live stylesheet (`color: var(--fg-primary); border-bottom-color: var(--fg-muted)`); active state still cobalt-underlined.
-- Grep across `src/` confirmed no remaining instances of "10,000" or "thousands of teams."
-
-## What changed in the previous session (2026-06-09, session 6)
-
-Case study content refresh. Miguel updated the source markdown files in `docs/Case Studies/` and asked me to refold them into the MDX. No visual, layout, or design system changes. Two commits to main:
-
-- **`25bc3fe`** rewrites all three published case studies from the updated source docs:
-  - **[Team Files](src/content/case-studies/team-files.mdx)**: added the TOPDOX origin story to Company; the 2023 NN/g UX heuristic review story (preview button, contextual help, error messages); the small "connect folder" redesign anecdote; a fuller take on removing mandatory authentication; a new "Beyond the product" section covering the Atlassian Marketplace listings, marketing site, and the Team '23 (Las Vegas) and Unleash 2023 (Amsterdam) events; the Frank Leclerc Marketplace review quote; and a closing reflection on what long tenure on one product taught him.
-  - **[MyFoodways](src/content/case-studies/myfoodways.mdx)**: restructured "Profile personalization" around the three-screen onboarding (diet, motivations, allergies) and the auto-swap no-gos logic; added a full "Accessibility inside a fixed brand" section telling the story of the white-on-yellow buttons (1.47:1), the early flag-and-overrule, the bolder-text mitigation, and the eventual win on Challenges with a gray label and yellow repurposed as a completion state; rewrote Challenges as the "Plant-based Rockstar" seven-day cohort one-shot; reframed Impact to lead with a five-star user review naming the fridge-first and ingredient-swap bets. Period corrected to **March 2018 to December 2020**; launch date fact-fixed from "2019" to mid-2018.
-  - **[Food Save](src/content/case-studies/food-save.mdx)**: added the Brief-studio / native-vs-unified build decision story under Collaboration; new **"Part of a pair"** section on the Waste Tracker companion app (kitchen-floor onboarding with printed A4 labels, mobile log + web reports, the Reto Mettler quote); Jens Jung "clear and easy to understand" quote in Impact; reframed reflections (the app launched then was discontinued with the program, not a pure positive).
-
-- **`e9e791c`** re-optimizes [src/assets/brand/miguel-portrait-color.png](src/assets/brand/miguel-portrait-color.png) from 9.4 MB to 4.0 MB. This file is the older near-square color cutout, unused since the wide hero portrait shipped in session 4, and still slated for deletion in a future cleanup pass. Compression came from outside this session; I just included the change.
-
-**Verification**
-
-- `npm run build` → 6 pages, 0 errors / 0 warnings / 0 hints.
-- Dev server spot-checked all three case study pages. Heading structure renders cleanly (new H3 "Accessibility inside a fixed brand," "Part of a pair," etc. all in place).
-- Full body-text scan: no em dashes, no en dashes leaked in across the three pages.
-
-**Held**
-
-Two new case studies sit unpublished in `docs/Case Studies/`: [cs-board-game-app.md](docs/Case Studies/cs-board-game-app.md) and [cs-office-editor.md](docs/Case Studies/cs-office-editor.md). Miguel asked to hold these for now. When greenlit they'll need cover images and any inline figures dropped under `src/assets/case-studies/<slug>/` first, plus a new MDX, plus an `order` value assigned in the frontmatter.
+- **Session 8 (2026-06-10)**: corrections pass from the first "what would you have done differently" review. Default OG image generated ([scripts/build-og-image.mjs](scripts/build-og-image.mjs); it had 404ed since session 1). Fonts converted to woff2 (~1MB → ~270KB, [scripts/convert-fonts.mjs](scripts/convert-fonts.mjs)). Dead code deleted (HeroGradient, old square portrait, tokens compat aliases; `--container-pad` promoted to a real token). Type scale moved from px to rem. CLAUDE.md corrected to match reality. "More case studies" container padding fixed.
+- **Session 7 (2026-06-09)**: nav polish (snug tracking on links; muted grey hover underline after trying pill, accent, and heavier greys) and a copy refresh (hero blurb, Team Files and Food Save summaries, about bio). Confirmed the `summary` frontmatter single-sources three surfaces: homepage card, case page hero blurb, and meta/og description.
+- **Session 6 (2026-06-09)**: case study content refresh from updated source docs in `docs/Case Studies/`. All three rewritten: Team Files gained the TOPDOX origin story, NN/g heuristic review, "Beyond the product" section; MyFoodways gained the three-screen onboarding structure and the "Accessibility inside a fixed brand" white-on-yellow story, with the period corrected to March 2018 to December 2020; Food Save gained the Waste Tracker "Part of a pair" section and an honest discontinued-with-the-program reflection. Content only.
+- **Session 5 (2026-05-30)**: hero polish (mobile portrait anchored right; desktop portrait lifted above the vignette), `apple-touch-icon` + favicon refresh ([scripts/build-app-icon.mjs](scripts/build-app-icon.mjs)), WCAG AA contrast pass (accent and `--ink-400` darkened; text uses of `--fg-muted` moved to `--fg-tertiary`), responsive hero LCP preload via a named head slot. Lighthouse mobile reached 100/100/100/100 on the live site.
+- **Session 4 (2026-05-29)**: hero portrait rework. New wide transparent cutout (`miguel-portrait-color-wide.png`, figure offset right), layered full-bleed composition: portrait sized by panel height, navy radial vignette for text legibility, bottom hairline, text column capped at 560, frozen 1440 right anchor. Prose list markers moved from `::marker` to positioned `::before`.
+- **Session 3 (2026-05-29)**: v3 polish from a structured critique. Page container 1200 → 1040, prose 640 → 720, case-study spine unified on one left edge, about header rebuilt as a single 720 column with inline portrait, `padding-block` fix on `.about`/`.contact`, hero vignette softened at desktop, contact page expanded with response-time and open-to rows.
+- **Session 2 (2026-05-28)**: Claude Design v2 delta applied. Cobalt accent, neutralised paper scale (`#fbfaf6` canvas), full-bleed cobalt hero with the color portrait cutout (after fixing text overlap and crop issues with the b&w original), en-dash list bullets.
+- **Session 1 (2026-05-28)**: full design system implementation. Paper/ink/accent tokens, self-hosted Aleo + Geist + Geist Mono, all components and pages restyled (wordmark nav, borderless cards, case-study header block, zoom dialog token cleanup).
 
 ## What's live
 
-- **Stack**: Astro 5 + MDX + sitemap, TypeScript strict, plain CSS with design system tokens, self-hosted Aleo + Geist + Geist Mono (variable `.ttf` in `src/assets/fonts/`)
+- **Stack**: Astro 5 + MDX + sitemap, TypeScript strict, plain CSS with design system tokens, self-hosted Aleo + Geist + Geist Mono (variable woff2 in `src/assets/fonts/`)
 - **Routes**: `/`, `/about`, `/contact`, `/work/team-files`, `/work/myfoodways`, `/work/food-save`
-- **Design system**: Claude Design handoff v1 + v2 delta both applied. Paper/ink/single-accent (`#1a6bff` cobalt) palette. Aleo serif for prose, Geist sans for all UI/display. Tokens in [src/styles/tokens.css](src/styles/tokens.css).
-- **Components**: Nav, Footer, CaseStudyCard (`compact` variant), Figure, CompareImages, Quote, Stat. (HeroGradient deleted in session 8.)
-- **Layouts**: BaseLayout (head, OG meta, font preloads, zoom dialog), CaseStudyLayout (header block + cover image + body + "More case studies")
-- **Pages**: Home (full-bleed cobalt hero with color portrait cutout + card stack), About (two-column portrait + intro on desktop, prose below), Contact (simple channels list)
-- **Assets**: Wide color portrait cutout at `src/assets/brand/miguel-portrait-color-wide.png` (used on Home hero — transparent bg, ~1.94 landscape, 4238×2184, figure on the right). B&W landscape portrait at `src/assets/brand/miguel-portrait.png` (used on About). Case study images under `src/assets/case-studies/`. Fonts as variable woff2 in `src/assets/fonts/`. Design system bundle at `docs/design_handoff_design_system/` (gitignored staging).
-
-## What changed in this session (2026-05-30, session 5)
-
-Hero polish on mobile and desktop, share-sheet icon, and a WCAG AA contrast pass driven by a Lighthouse run against the live site.
-
-**Hero polish** ([index.astro](src/pages/index.astro), `3138979`)
-- Mobile (`<=720px`): `.hero-portrait` gets `right: -220px` so the figure (which sits roughly centered in the source) lands in the right half of the viewport across 360–414 widths. Verified at 360/375/414/720. The image width is panel-height-driven (not viewport-driven), so a fixed-pixel shift keeps the framing consistent across phone widths in a way a `%` value would not.
-- Desktop (`>1100px`): swapped `.hero-portrait` (z:1→2) above `.hero-vignette` (z:2→1) so the figure keeps its full color. The portrait cutout is transparent in the text area, so the vignette still darkens the cobalt under the heading — text legibility is unchanged. At `<=1100px` the original stacking is restored inside the existing breakpoint so the figure recedes where text overlaps it.
-
-**App icon + favicon refresh** ([BaseLayout.astro](src/layouts/BaseLayout.astro), [public/](public/), [scripts/build-app-icon.mjs](scripts/build-app-icon.mjs), `1af96d2` + `2b36e58`)
-- iOS share sheet and home-screen shortcut were grabbing an auto-cropped page image (Miguel's portrait, badly framed) because no `apple-touch-icon` was set. Added 180×180 PNG at [public/apple-touch-icon.png](public/apple-touch-icon.png) — white "MJ" in Geist on cobalt, inset to survive the iOS rounded-square mask. Also 512×512 at [public/icon-512.png](public/icon-512.png) for future PWA manifest use.
-- `<link rel="apple-touch-icon">` added in [BaseLayout.astro](src/layouts/BaseLayout.astro).
-- Refreshed [public/favicon.svg](public/favicon.svg) — the old one still referenced Space Grotesk (removed back in session 1). Now uses Geist and the new accent on the same dark square.
-- One-shot generator at [scripts/build-app-icon.mjs](scripts/build-app-icon.mjs) that embeds the local Geist TTF and renders both PNGs via `sharp`. Re-run with `node scripts/build-app-icon.mjs` if the color or wordmark needs to change.
-- **Cache note for Miguel**: iOS aggressively caches `apple-touch-icon`. After deploy you may still see the old auto-generated thumbnail for a while. To force-refresh: close the Safari tab, force-quit Safari, or clear site data (Settings → Apps → Safari → Advanced → Website Data).
-
-**WCAG AA contrast fixes** ([tokens.css](src/styles/tokens.css) + 3 components, `2b36e58`)
-Lighthouse flagged three distinct contrast failures on the canvas (`#fbfaf6`):
-
-| Token | Before | After | Contrast |
-|---|---|---|---|
-| `--accent` | `#1a6bff` | `#155fe8` | 4.31:1 → 5.21:1 |
-| `--ink-400` (`--fg-tertiary`) | `#747474` | `#6f6f6f` | 4.44:1 → 4.96:1 |
-| Text uses of `--fg-muted` (`#8d8d8d`, 3.19:1) | — | switched to `--fg-tertiary` | All AA |
-
-`--fg-muted` itself is unchanged in [tokens.css](src/styles/tokens.css) so it stays available for decorative/non-text use; the failing text consumers ([CaseStudyCard.astro](src/components/CaseStudyCard.astro), [CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro), [contact.astro](src/pages/contact.astro)) now use `--fg-tertiary`. The accent shift is a brand-color touch and was confirmed with Miguel before applying. `--accent-hover` (`#0050e0`) and `--accent-press` (`#003db8`) were already darker and unchanged.
-
-**Hero LCP preload** ([BaseLayout.astro](src/layouts/BaseLayout.astro), [index.astro](src/pages/index.astro), `6b7f2c3`)
-- Lighthouse flagged "LCP request discovery" as a diagnostic insight (the preload scanner only found the hero portrait after parsing reached the `<img>` in the body). Added `<link rel="preload" as="image" imagesrcset=... imagesizes="1400px" fetchpriority="high">` in the head.
-- BaseLayout now exposes a named `head` slot so any page can inject head tags. [index.astro](src/pages/index.astro) calls `getImage()` with the same `widths` (`[720, 1080, 1440, 1920]`) and `format: "webp"` as its `<Image>` component below so the preload's `imagesrcset` URLs match the actual rendered image srcset — the browser reuses the preloaded response. Score stays at 100; this purely clears the diagnostic and shaves a small amount off LCP.
-
-**Verification**
-- `npm run build` clean (6 pages, 0 errors).
-- Hero changes DOM-measured at 360/375/414/720/1000/1440 viewports; computed colors verified for tokens.
-- Lighthouse mobile (mid-session, pre-contrast fix): **100 / 95 / 100 / 100**. LCP 1.2s, FCP 0.8s, TBT 0ms, CLS 0.013, Speed Index 0.8s.
-- Lighthouse mobile (post-contrast fix, on live site): **100 / 100 / 100 / 100**. Contrast fixes in `2b36e58` cleared the only remaining sub-100.
-
-## What changed in the previous session (2026-05-29, session 4)
-
-Hero portrait rework. The previous near-square color cutout sat awkwardly behind the text and was hard to size and position. Rebuilt the hero as a layered, full-bleed composition and swapped in a purpose-composed wide cutout.
-
-- **New source image.** `src/assets/brand/miguel-portrait-color-wide.png` — transparent cutout, ~1.94 landscape (4238×2184), figure offset to the right with empty space on the left so the text column reads over the cobalt/vignette. Replaces `miguel-portrait-color.png` in the import. Optimized to a ~76 KB WebP at build.
-- **Layered structure** ([index.astro](src/pages/index.astro)). Portrait is an absolute layer sized by panel height (`height: 100%`, `width: auto`), so its scale is independent of the text column. A navy radial vignette layer darkens the top-left for text legibility and fades to reveal the figure bottom-right; a bottom hairline; text column capped at 560.
-- **Frozen ultrawide anchor.** `.hero-portrait` right anchor is `max(0px, calc((100% - 1440px) / 2))`. At ≤1440 it stays full-bleed-right as before; above 1440 it centers within a frozen 1440 band so the figure stops drifting toward the viewport edge on wide screens. (No width cap — capping width shrank the figure, which Miguel rejected.) Miguel signed off on this at desktop.
-- **Heavier vignette restored** (`rgba(8,14,32,0.88)` center, three responsive tiers) — this is the treatment Miguel confirmed read well: photo behind text, vignette obscures most of it, text stays highly legible. Mobile (≤720px) also dims the portrait to `opacity: 0.55`.
-- **Content unchanged on purpose.** No "Portfolio · 2026" eyebrow, no Porto/availability/email meta line (both deliberately removed in an earlier pass — do not restore). Scroll affordance is a left-aligned chevron only (the pill from session 3 is gone). Subtitle back to `rgba(255,255,255,0.92)`.
-- **Misc**: `scroll-behavior: smooth` added in [global.css](src/styles/global.css) for the chevron jump. Prose list markers reworked from `::marker` to absolutely-positioned `::before` with a CSS counter for ordered lists ([typography.css](src/styles/typography.css)) — shipped in the same push (`677c21f`).
-- **Verification**: `npm run build` clean (6 pages), deploy succeeded. Desktop verified via preview DOM measurements at 1440 and confirmed by Miguel. Mobile checked in the preview tool only — **real-device mobile pass still pending** (see Open items).
-
-## What changed in the previous session (2026-05-29, session 3)
-
-Full v3 polish pass driven by a structured design critique. Five phases, all landed.
-
-**Phase 1: tighten the content spine (Option A from the plan)**
-
-- **Page content max → 1040.** `--content-page` dropped from `1200` to `1040` in [tokens.css](src/styles/tokens.css). Every `.container` (home `.work` / `.outro`, about, case study layout) now caps at 1040 with deliberate negative space at wide viewports. Reads as an editorial spine rather than a layout that forgot to extend.
-- **Prose width → 720 (from 640).** Global `.prose` in [global.css](src/styles/global.css) now uses `--content-prose` (720) instead of `--content-narrow` (640). Aligns with the design-system token name and matches the case-study header width.
-- **Case-study spine unified.** Added `.case-body .prose { margin-inline: 0; }` in [CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro). Header (720), cover (944, capped by container), and prose (720) all share the same left edge. DOM-verified: all three measure `left: 488px` at a 1568 viewport.
-
-**Phase 2: about header rebalance + portrait perf**
-
-- **Portrait now inline above title** in a single 720 column ([about.astro](src/pages/about.astro)). Dropped the sticky 280+1fr grid. `.about-header` is `display: flex; flex-direction: column; max-width: var(--content-prose)`. Portrait wrap at `max-width: 320px`, shrinks to 240 below 720px viewports.
-- **Portrait perf**: added `loading="eager"` and `fetchpriority="high"` on the `<Image>`, plus tighter `widths={[320, 640]}` to match the new display target. Should resolve the late-LCP paint flagged in the critique.
-- **Fixed pre-existing padding bug**: `.about` and `.contact` used the `padding` shorthand which was clobbering `.container`'s `padding-inline`. Changed both to `padding-block` so the container's safe-zone inline padding is preserved (matters at narrow viewports).
-
-**Phase 3: hero refinements** ([index.astro](src/pages/index.astro))
-
-- **Vignette softened**: default cobalt-to-navy radial dropped from `rgba(8,14,32,0.88)` → `0.45` at the center, with the falloff curve adjusted to taper sooner. The heavier version still fires at `<=1100px` where the text column gets closer to the photo. Stops the upper-left from feeling like atmospheric noise.
-- **Portrait crown breathing room**: `height: 100%` → `height: calc(100% - var(--space-4))` on `.hero-portrait` so Miguel's hairline doesn't kiss the top edge of the cobalt block.
-- **Hero subtitle to full white**: was `rgba(255,255,255,0.92)` (~4.8:1 on cobalt — borderline AA). Now `#fff` for AA headroom.
-- **Selected work scroll affordance**: padding bumped to `var(--space-3) var(--space-5)`, added a 1px `rgba(255,255,255,0.24)` border and pill radius at rest, light background tint + brighter border on hover. Now reads as an obviously-clickable pill instead of a label floating on cobalt.
-
-**Phase 4: contact page substance** ([contact.astro](src/pages/contact.astro))
-
-- Replaced the trailing `.note` paragraph with two more rows in the channels list:
-  - `Response — Within a couple of working days.`
-  - `Open to — Senior in-house product design, remote or hybrid from Porto.`
-- Used `.channel-value` spans for the non-link values (paired styling with `.channels a`). Reduces the empty lower half without adding new components.
-
-**Phase 5: verification**
-
-- `npm run build` clean (0 errors / 0 warnings / 0 hints), 6 pages built.
-- Visual verification at 1568 desktop on `/`, `/about`, `/contact`, `/work/team-files` via Astro dev server + Chrome MCP screenshots.
-- DOM-measured left/width on all three case-study spine pieces and the about header + prose to confirm shared left edges.
-- Mobile breakpoints inherit cleanly from the unified container. No new media queries needed beyond what was already in place. Visual mobile-width screenshot pass not done (Chrome MCP `resize_window` wouldn't shrink the viewport in this environment) — worth a quick real-device pass before declaring v3 done.
-
-## What changed in the previous session (2026-05-28, session 2)
-
-Applied the v2 delta bundle from Claude Design (`docs/design_handoff_design_system_delta/`).
-
-- **Accent → cobalt `#1a6bff`** (was electric blue `#0088ff`). Full ramp re-derived for light and dark in [tokens.css](src/styles/tokens.css). `accent-hover`, `accent-press`, `accent-soft`, `accent-line` all updated.
-- **Paper scale neutralised.** Less yellow, still warm. `--paper-100` (canvas) is now `#fbfaf6` (was `#fffdf7`). Other steps shifted accordingly.
-- **`--ink-100`** dropped from cream `#e3e0d8` to near-neutral `#dad7d0`.
-- **`theme-color` meta** in [BaseLayout.astro](src/layouts/BaseLayout.astro) updated to `#fbfaf6` to match new canvas.
-- **Home hero reworked** ([src/pages/index.astro](src/pages/index.astro)). Replaced the text-only hero with a full-bleed cobalt section: portrait absolutely positioned bottom-right with `mix-blend-mode: luminosity` + `contrast(1.05)` for a duotone effect; top-left navy radial vignette for text legibility; bottom hairline; big sans headline; Aleo subtitle; meta strip (Porto · availability · email); centered "Selected work" scroll-down link to `#work`. Headline kept Miguel's "Calm products for complex work." line — the spec defines treatment, not copy.
-- **Hero text overlap fix.** Initial spec used `clamp(48px, 7.2vw, 96px)` headline sized for the spec's placeholder copy "Hi, I'm Miguel." (3 words). With Miguel's longer headline, text bled past the safe cobalt zone into the photo area at laptop widths. Wrapped the eyebrow/h1/subtitle/meta in `.hero-content` with `max-width: 560px`, lowered the headline ceiling to `clamp(44px, 6vw, 80px)`, deepened the base vignette, and added a 1100 px breakpoint that widens the vignette further.
-- **Hero portrait crop fix.** The original b&w source was a 3618×2184 *landscape* frame with Miguel on the right and an intentionally-empty black expanse on the left, designed so the empty-left blends into cobalt via the luminosity blend. The initial `object-fit: cover` + `object-position: center right` was cropping that black-left off and leaving a hard rectangular edge mid-frame. Dropped `object-fit` and explicit width — image now renders at its natural aspect (height-driven, `width: auto`), anchored bottom-right.
-- **Hero portrait → color cutout.** Per follow-up feedback, swapped the b&w-duotone treatment for a color portrait. New source at `src/assets/brand/miguel-portrait-color.png` is a transparent cutout in portrait orientation (3072×3821, ~0.80 aspect). Dropped `mix-blend-mode: luminosity` and `filter: contrast(1.05)` from the hero portrait — color now reads naturally, cobalt shows through the transparent area around Miguel. Renders ~580 px wide at section height (narrower than the previous ~1200 px landscape), so it sits comfortably on the right with very little overlap into the text column. About page kept the original b&w portrait file, since its two-column framed layout was working as-is.
-- **En-dash list bullets** ([typography.css](src/styles/typography.css)). MDX `<ul>` lists in `.prose` now use `::marker` content `"– "` in `--accent`, Geist semi-bold. Center-dot (`·`) stays as inline metadata separator. Also exposed an explicit `.bullets` class matching the spec for custom lists.
-- Nav backdrop didn't need updating — it uses `var(--bg-canvas)` directly rather than an RGBA literal, so it picked up the new canvas color automatically.
-
-Build is clean (0 errors / 0 warnings / 0 hints). Portrait optimized from 2.8 MB source to 14–71 KB across responsive widths.
-
-## What changed in the previous session (2026-05-28, session 1)
-
-Full design system implementation in two passes (desktop app ran Phase 1; Claude Code web ran Phases 2–4).
-
-**Phase 1**
-- `tokens.css` replaced with paper/ink/accent system. Compat aliases kept old token names alive while components were being rewritten, then stripped as each component was updated.
-- Fonts swapped: Aleo (serif body) + Geist (sans UI/display) + Geist Mono. Old `@fontsource/inter` and `@fontsource/space-grotesk` removed.
-- `global.css` and `typography.css` rewritten. All `mj-*` utility classes added. Focus ring is now `--shadow-focus` (3px accent-soft halo). `::selection` uses accent-soft.
-- `theme-color` meta updated to `#fffdf7`.
-
-**Phases 2–4**
-- Nav: wordmark-only, always-on hairline bottom, active route = accent color + 2px underline. Frosted glass and on-scroll behavior removed.
-- Footer: single `.mj-caption` meta row with LinkedIn + Email links on the right.
-- CaseStudyCard: blue hover wash gone. Borderless at rest. Image gets `--shadow-md` on hover. Meta uses `·` separators. Title in Geist semi. Summary in Aleo serif secondary.
-- Figure / CompareImages: focus ring → `--shadow-focus`. Captions → Geist sans `--fg-tertiary`.
-- Quote: Aleo body, 2px `--accent` border-left, Geist sans uppercase attribution.
-- Stat: Geist semi number, Geist sans uppercase label.
-- CaseStudyLayout: new header block at 720px — eyebrow + display title + summary + metadata row. Cover image at 960px with `--radius-md`. HeroGradient removed.
-- index.astro: text-only hero at 640px with eyebrow + h1 + Aleo intro. Cards stacked with `--space-16` gap.
-- about.astro: two-column desktop (portrait left, intro right), single-column prose below. Portrait from design bundle optimized 2.8 MB → 330 KB by Astro.
-- contact.astro: h1 + hairline-divided channels list with `.mj-label` row labels.
-- BaseLayout zoom dialog: token cleanup throughout.
+- **Design system**: Claude Design handoff v1 + v2 delta both applied. Paper/ink/single-accent palette (accent `#155fe8` after the AA darkening). Aleo serif for prose, Geist sans for all UI/display. Tokens in [src/styles/tokens.css](src/styles/tokens.css).
+- **Components**: Nav, Footer, CaseStudyCard (`compact` variant), Figure, CompareImages, Quote, Stat
+- **Layouts**: BaseLayout (head, OG meta, font preloads, zoom dialog, staging noindex), CaseStudyLayout (header block + cover image + body + "More case studies")
+- **Pages**: Home (full-bleed cobalt hero with color portrait cutout + card stack), About (portrait + intro, prose below), Contact (channels list)
+- **Assets**: wide color portrait cutout at `src/assets/brand/miguel-portrait-color-wide.png` (Home hero), b&w landscape portrait at `src/assets/brand/miguel-portrait.png` (About), case study images under `src/assets/case-studies/`, design system bundle at `docs/design_handoff_design_system/` (gitignored staging)
+- **Motion** (session 9): hero portrait scroll parallax, faint card reveals, zoom dialog scale, card hover lift, nav underline ease-in. Policy in the design brief's Motion section.
 
 ## Open items / look at these next
 
 ### Re-verify on the live site
-- **Share-sheet icon on iOS.** Verify the new `apple-touch-icon` shows the MJ wordmark instead of an auto-cropped portrait. iOS caches the icon aggressively; if you still see the old one, force-quit Safari or clear site data (Settings → Apps → Safari → Advanced → Website Data).
-- **One more Lighthouse pass** (optional) after the `6b7f2c3` deploy lands, just to confirm the "LCP request discovery" diagnostic clears. Score should stay 100 / 100 / 100 / 100.
+- **Share-sheet icon on iOS.** Verify the `apple-touch-icon` shows the MJ wordmark instead of an auto-cropped portrait. iOS caches the icon aggressively; if you still see the old one, force-quit Safari or clear site data (Settings → Apps → Safari → Advanced → Website Data).
 
 ### Fine-tuning (Miguel to drive)
-- **Hero copy.** Headline still says "Calm products for complex work." Spec showed "Hi, I'm Miguel." as placeholder. Easy to swap if the more conversational opener feels right.
-- **Card hover feel.** Shadow lift on the image is the current treatment. May want a title underline or other affordance if it feels too subtle.
+- **Hero copy.** Headline still says "Calm products for complex work." Easy to swap if a more conversational opener feels right.
 
 ### Design system notes
-- Geist as display/UI sans (substituting DIN Alternate from the Figma)
-- Aleo as body serif
-- Accent `#155fe8` cobalt (darkened from `#1a6bff` in session 5 for WCAG AA; the v2 delta value of `#1a6bff` failed AA at 4.31:1)
-- No Lucide icons yet — nav and footer are text-only and work fine. v2 spec locks Lucide @ stroke 2.0 when added.
+- Geist as display/UI sans (substituting DIN Alternate from the Figma); Aleo as body serif
+- No Lucide icons yet; nav and footer are text-only and work fine. v2 spec locks Lucide @ stroke 2.0 when added.
+- Dark-theme tokens exist in tokens.css but are not wired to a toggle; reachable via `data-theme="dark"` for testing.
 
 ### Still to do
 - **Per-case-study OG images.** The default 1200×630 shipped in session 8 ([scripts/build-og-image.mjs](scripts/build-og-image.mjs)). Per-case-study versions wait on final cover images; extend the same script and pass `ogImage` through CaseStudyLayout → BaseLayout (the prop plumbing already exists).
 - **Cover images.** Home page cards use the `*-hero-cover.png` files. Worth confirming those are the right thumbnails.
 - **Two new case studies on hold.** `docs/Case Studies/cs-board-game-app.md` and `cs-office-editor.md` are written but not on the site. When ready, each needs cover/inline images under `src/assets/case-studies/<slug>/`, a new `.mdx` in `src/content/case-studies/`, and an `order` value in the frontmatter.
-- **Switching to migueljss.com.** When ready: set `site: 'https://migueljss.com'` and remove `base` in `astro.config.mjs`; restore `public/CNAME` with `migueljss.com`; run `gh api -X PUT repos/Dgigiu/mj-portfolio/pages -f cname=migueljss.com`; add apex A records at the registrar (`185.199.108.153–.111.153`) and optional AAAA records; tick "Enforce HTTPS" in repo Settings → Pages.
-- **Case study updates.** `docs/Case Studies/` is gitignored — drop updated `.docx` or images there and Claude can refold into the MDX.
+- **Switching to migueljss.com.** When ready:
+  1. Set `site: 'https://migueljss.com'` and remove `base` in `astro.config.mjs` (this also clears the staging `noindex` automatically; confirm it is gone from the built HTML).
+  2. Update the sitemap URL in [public/robots.txt](public/robots.txt) (currently hardcoded to the staging domain).
+  3. Restore `public/CNAME` with `migueljss.com`; run `gh api -X PUT repos/Dgigiu/mj-portfolio/pages -f cname=migueljss.com`.
+  4. Add apex A records at the registrar (`185.199.108.153` to `.111.153`) and optional AAAA records; tick "Enforce HTTPS" in repo Settings → Pages.
+  5. Spot-check that old `dgigiu.github.io/mj-portfolio/...` URLs redirect somewhere sensible.
+- **Case study updates.** `docs/Case Studies/` is gitignored; drop updated `.docx` or images there and Claude can refold into the MDX.
 
 ## Quick reference
 
@@ -309,17 +129,18 @@ npm run preview
 - Tokens: [src/styles/tokens.css](src/styles/tokens.css)
 - Global styles: [src/styles/global.css](src/styles/global.css)
 - Typography + `mj-*` utilities: [src/styles/typography.css](src/styles/typography.css)
+- Base path helper: [src/lib/paths.ts](src/lib/paths.ts)
 - Design system reference: [docs/design_handoff_design_system/README.md](docs/design_handoff_design_system/README.md)
 - Design system v2 delta: [docs/design_handoff_design_system_delta/README.md](docs/design_handoff_design_system_delta/README.md)
 - Case study sources (gitignored): `docs/Case Studies/`
 
 **Conventions**
 - Canvas is warm off-white `#fbfaf6` (`--bg-canvas`). No pure white anywhere.
-- No em dashes anywhere (v2 spec made this universal — design strings, marketing, docs, alt text, error messages). Use a period, colon, parentheses, or rewrite.
-- Single accent: `#1a6bff` cobalt. Links, focus, current state only. Never decorative.
+- No em dashes anywhere. Use a period, colon, parentheses, or rewrite.
+- Single accent: cobalt (`--accent`, `#155fe8`). Links, focus, current state only. Never decorative.
 - 8pt spacing grid. Use `--space-*` tokens, no magic numbers.
 - One `h1` per page; visible focus rings; respect `prefers-reduced-motion`.
 - US English, sentence case everywhere, no marketing fluff.
 
 **Memory items (in user's Claude memory store)**
-- `feedback-location-preference` — Porto, remote/hybrid only, no relocation
+- `feedback-location-preference`: Porto, remote/hybrid only, no relocation

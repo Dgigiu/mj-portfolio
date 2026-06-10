@@ -4,11 +4,11 @@ import { Image, getImage } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import CaseStudyCard from "../components/CaseStudyCard.astro";
 import portrait from "../assets/brand/miguel-portrait-color-wide.png";
+import { base } from "../lib/paths";
 
 const studies = (await getCollection("case-studies", ({ data }) => !data.draft)).sort(
   (a, b) => a.data.order - b.data.order
 );
-const base = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
 
 // Generate a responsive preload for the hero portrait so the browser's
 // preload scanner starts fetching it before parsing the body. Widths and

@@ -27,7 +27,10 @@ pnpm-debug.log*
 .idea/
 
 # Claude Code local state
-.claude/settings.local.json
+.claude/
+
+# Obsidian vault state
+.obsidian/
 
 # Case study source materials (working folder, not shipped)
 docs/Case Studies/

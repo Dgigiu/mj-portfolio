@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 import BaseLayout from "./BaseLayout.astro";
 import CaseStudyCard from "../components/CaseStudyCard.astro";
+import { base } from "../lib/paths";
 
 interface Props {
   title: string;
@@ -12,19 +13,15 @@ interface Props {
   client: string;
   domain: string;
   cover?: ImageMetadata;
+  slug: string;
 }
 
-const { title, summary, role, period, client, domain, cover } = Astro.props;
-
-const base = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
-const currentSlug = Astro.url.pathname
-  .replace(new RegExp(`^${base}work/`), "")
-  .replace(/\/$/, "");
+const { title, summary, role, period, client, domain, cover, slug } = Astro.props;
 
 const more = (
   await getCollection("case-studies", ({ data }) => !data.draft)
 )
-  .filter((entry) => entry.slug !== currentSlug)
+  .filter((entry) => entry.slug !== slug)
   .sort((a, b) => a.data.order - b.data.order);
 ---
 

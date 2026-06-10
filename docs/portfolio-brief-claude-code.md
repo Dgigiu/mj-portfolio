@@ -1,5 +1,7 @@
 # Portfolio website: Claude Code implementation brief
 
+> **Status note (2026-06-10): the site is built; treat this brief as historical intent.** Current structure, conventions, and open work live in `CLAUDE.md` and `HANDOFF.md`. Known drift: the token starting values below were superseded by the Claude Design handoff (`docs/design_handoff_design_system/`); fonts are Aleo + Geist, not Inter or Aeonik; `HeroGradient.astro` and the card blue hover wash were removed; case studies are a content collection rendered by `src/pages/work/[slug].astro`, not standalone pages, and `slug` is derived by Astro rather than stored in frontmatter. Where this document and the repo disagree, the repo wins.
+
 ## Project
 
 Build a personal portfolio website for Miguel Jesus, Senior Product Designer based in Porto. The site showcases product case studies and supports a senior in-house product design job search. It needs to feel polished, fast, accessible, and easy to maintain.
