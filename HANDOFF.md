@@ -48,6 +48,9 @@ Corrections pass driven by a "what would you have done differently" review. No c
 **CLAUDE.md corrected**
 - Canvas color updated (`#f0f0f0` → `#fbfaf6` `--bg-canvas`), font claim fixed (`@fontsource` → self-hosted woff2 in `src/assets/fonts/`), deploy description fixed (no CNAME yet; staging base path documented), `scripts/` added to the layout map.
 
+**"More case studies" alignment fix** ([CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro))
+- Miguel spotted the section running full-bleed past the content spine on case study pages. Same bug session 3 fixed on `.about`/`.contact`: `.more` is a `.container`, and its `padding: var(--space-16) 0` shorthand zeroed the container's `padding-inline`. Now `padding-block`. DOM-verified: prose, section heading, and cards all share the 41px left edge at the test viewport.
+
 **Verification**
 - `npm run build` → 6 pages, 0 errors / 0 warnings.
 - Dev server checks: Aleo/Geist load from woff2 (`document.fonts` confirms), prose at 17px (rem scale resolves), Figure/CompareImages frame border and background computed values identical to before (`#dcd9d0` / `#fdfcfa`), container padding from the new token, no console errors, no failed requests.

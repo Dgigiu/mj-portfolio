@@ -149,8 +149,10 @@ const more = (
     margin-inline: 0;
   }
 
+  /* padding-block, not the shorthand: .more is a .container and the
+     shorthand would zero out its safe-zone padding-inline. */
   .more {
-    padding: var(--space-16) 0;
+    padding-block: var(--space-16);
     border-top: var(--hairline) solid var(--border-subtle);
   }
 
