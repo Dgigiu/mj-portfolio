@@ -152,7 +152,9 @@ const fullTitle = title === "Miguel Jesus" ? title : `${title} · Miguel Jesus`;
               io.unobserve(entry.target);
             }
           },
-          { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+          // Fire as soon as the element's edge enters: the effect is faint
+          // enough that finishing early reads smoother than a late pop.
+          { threshold: 0 }
         );
         revealEls.forEach((el) => io.observe(el));
       } else {

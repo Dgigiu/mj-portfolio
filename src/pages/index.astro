@@ -67,8 +67,8 @@ const heroPortraitPreload = await getImage({
     </header>
     <ul class="card-list">
       {
-        studies.map((s, i) => (
-          <li data-reveal style={`--reveal-delay: ${i * 60}ms`}>
+        studies.map((s) => (
+          <li data-reveal>
             <CaseStudyCard
               href={`${base}work/${s.slug}/`}
               title={s.data.title}
@@ -140,20 +140,7 @@ const heroPortraitPreload = await getImage({
 
   @media (prefers-reduced-motion: no-preference) {
     .hero-portrait {
-      animation: hero-settle var(--duration-settle) var(--ease-out);
-      transform-origin: 50% 100%;
       will-change: transform;
-    }
-
-    /* One-time settle on first paint: scale only (no opacity) so the
-       LCP measurement of the portrait is unaffected. */
-    @keyframes hero-settle {
-      from {
-        scale: 1.015;
-      }
-      to {
-        scale: 1;
-      }
     }
   }
 

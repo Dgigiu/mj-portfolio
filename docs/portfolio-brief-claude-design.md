@@ -54,7 +54,7 @@ The original brief banned all parallax and hero animation. Miguel has since opte
 - Text never animates. Cards may reveal as whole blocks; the hero heading and subtitle stay static.
 - All motion respects `prefers-reduced-motion` and degrades to static without JS.
 
-Current set: hero portrait scroll parallax (lags at ~12%, capped) and a one-time scale settle on load; case study cards rise in once on first view; the image zoom dialog scales from 0.97 as it fades in.
+Current set: hero portrait scroll parallax (lags at ~12%, capped); case study cards ease in once on first view (faint: opacity from 0.6, 8px travel, never from alpha 0); the image zoom dialog scales from 0.97 as it fades in. A load-time hero "settle" animation was tried and rejected as too theatrical; don't reintroduce entrance animations on the hero.
 
 ## Writing tone
 

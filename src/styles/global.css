@@ -121,19 +121,19 @@ hr {
   border: 0;
 }
 
-/* Scroll reveals. Elements with [data-reveal] rise in once when they
-   first enter the viewport (observer in BaseLayout). The hidden state
-   is gated on html.js (set inline in BaseLayout head) so content stays
-   visible without JS, and on motion preference so reduced-motion users
-   never get hidden content. Stagger via --reveal-delay per element. */
+/* Scroll reveals. Elements with [data-reveal] ease in once when they
+   first enter the viewport (observer in BaseLayout). Deliberately faint:
+   content starts visible (0.6, never alpha 0) and travels only 8px, per
+   Miguel's review. The pre-reveal state is gated on html.js (set inline
+   in BaseLayout head) so content stays visible without JS, and on motion
+   preference so reduced-motion users never get dimmed content. */
 @media (prefers-reduced-motion: no-preference) {
   html.js [data-reveal] {
-    opacity: 0;
-    translate: 0 var(--space-3);
+    opacity: 0.6;
+    translate: 0 var(--space-2);
     transition:
       opacity var(--duration-reveal) var(--ease-out),
       translate var(--duration-reveal) var(--ease-out);
-    transition-delay: var(--reveal-delay, 0ms);
   }
 
   html.js [data-reveal].is-revealed {

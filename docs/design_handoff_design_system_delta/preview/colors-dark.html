@@ -1,0 +1,51 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;padding:0;background:var(--bg-canvas);color:var(--fg-primary);
+    font-family:var(--font-sans);min-height:100vh;font-size:13px;}
+  .card{padding:22px 24px 24px;box-sizing:border-box;width:100%;background:#0e0e0e;}
+  .label-row{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;}
+  .h{font-family:var(--font-sans);font-size:13px;font-weight:600;color:#f5f3ec;margin:0;letter-spacing:-0.005em;}
+  .eyebrow{font-family:var(--font-sans);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;font-weight:500;color:#8a867c;}
+  .meta{font-family:var(--font-mono);font-size:10.5px;color:#8a867c;letter-spacing:-0.005em;}
+  .grid{display:grid;gap:8px;}
+  .swatch{height:60px;border-radius:4px;border:1px solid #262522;
+    display:flex;flex-direction:column;justify-content:flex-end;padding:8px 10px;}
+  .swatch .label{font-size:10px;font-family:var(--font-mono);color:rgba(255,255,255,0.92);text-shadow:0 1px 2px rgba(0,0,0,0.3);}
+  .swatch.light .label{color:rgba(0,0,0,0.7);text-shadow:none;}
+  .section-cap{margin-top:14px;font-family:var(--font-sans);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;font-weight:500;color:#66635b;margin-bottom:8px;}
+</style></head><body>
+
+<div class="card">
+
+  <div class="label-row">
+    <h2 class="h">Dark variant</h2>
+    <span class="eyebrow">Neutrals + cobalt ramp</span>
+  </div>
+
+  <!-- Neutrals row -->
+  <div class="grid" style="grid-template-columns:repeat(5,1fr);">
+    <div class="swatch" style="background:#0e0e0e;border-color:#262522;"><span class="label">canvas<br>#0e0e0e</span></div>
+    <div class="swatch" style="background:#161616;border-color:#262522;"><span class="label">elevated<br>#161616</span></div>
+    <div class="swatch" style="background:#1c1c1c;border-color:#262522;"><span class="label">subtle<br>#1c1c1c</span></div>
+    <div class="swatch" style="background:#262522;border-color:#3a3833;"><span class="label">border<br>#262522</span></div>
+    <div class="swatch light" style="background:#f5f3ec;border-color:#3a3833;"><span class="label">fg-primary<br>#f5f3ec</span></div>
+  </div>
+
+  <div class="section-cap">Cobalt accent — lifted for dark</div>
+
+  <!-- Accent ramp row -->
+  <div class="grid" style="grid-template-columns:repeat(5,1fr);">
+    <div class="swatch" style="background:#122a5e;border-color:#1f3a7a;"><span class="label">accent-soft<br>#122a5e</span></div>
+    <div class="swatch" style="background:#1f3a7a;border-color:#1f3a7a;"><span class="label">accent-line<br>#1f3a7a</span></div>
+    <div class="swatch" style="background:#4d82ff;border-color:#3a3833;"><span class="label">accent<br>#4d82ff</span></div>
+    <div class="swatch" style="background:#709bff;border-color:#3a3833;"><span class="label">hover<br>#709bff</span></div>
+    <div class="swatch light" style="background:#99b8ff;border-color:#3a3833;"><span class="label">press<br>#99b8ff</span></div>
+  </div>
+
+  <div class="meta" style="margin-top:14px;">
+    Same skeleton as light, inverted neutrals. The cobalt accent (light: <span style="color:#bccfff;">#1a6bff</span>) lifts to <span style="color:#4d82ff;">#4d82ff</span> on dark so it carries enough contrast against canvas without losing the cobalt hue.
+  </div>
+
+</div>
+</body></html>

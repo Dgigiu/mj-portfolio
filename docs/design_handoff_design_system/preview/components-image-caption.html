@@ -1,0 +1,47 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;padding:0;background:var(--bg-canvas);color:var(--fg-primary);
+    font-family:var(--font-sans);min-height:100vh;font-size:13px;}
+  .card{padding:24px 28px;box-sizing:border-box;width:100%;}
+  .meta{font-family:var(--font-mono);font-size:10.5px;color:var(--fg-tertiary);}
+  .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+  .name{font-family:var(--font-sans);font-size:11px;color:var(--fg-secondary);font-weight:500;}
+
+  /* component styles */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;
+    font-family:var(--font-sans);font-size:14px;font-weight:500;line-height:1;
+    padding:10px 16px;border-radius:4px;border:1px solid transparent;cursor:pointer;
+    transition:all 180ms cubic-bezier(.2,.7,.2,1);text-decoration:none;}
+  .btn-primary{background:#0088ff;color:#fff;}
+  .btn-primary:hover{background:#006fd9;}
+  .btn-primary:active{background:#0058b0;}
+  .btn-secondary{background:transparent;color:#181818;border-color:#181818;}
+  .btn-secondary:hover{background:#181818;color:#fffdf7;}
+  .btn-ghost{background:transparent;color:#181818;border-color:transparent;}
+  .btn-ghost:hover{background:#faf7ef;}
+
+  .tag{display:inline-flex;align-items:center;font-family:var(--font-sans);font-size:12px;
+    padding:3px 10px;border-radius:999px;background:var(--bg-subtle);
+    color:var(--fg-secondary);border:1px solid var(--border-subtle);}
+  .tag-accent{background:#e5f2ff;color:#0058b0;border-color:#b8dcff;}
+
+  .input{font-family:var(--font-serif);font-size:15px;padding:9px 12px;
+    border:1px solid var(--border-subtle);background:var(--bg-elevated);
+    border-radius:4px;color:var(--fg-primary);width:240px;
+    transition:all 180ms cubic-bezier(.2,.7,.2,1);outline:none;}
+  .input:focus{border-color:#0088ff;box-shadow:0 0 0 3px #e5f2ff;}
+  .input.focused{border-color:#0088ff;box-shadow:0 0 0 3px #e5f2ff;}
+
+</style></head><body>
+<div class="card">
+  <div style="display:flex;gap:16px;">
+    <div style="width:280px;height:160px;background:#f1ede2;border-radius:8px;position:relative;overflow:hidden;flex-shrink:0;">
+      <div style="position:absolute;inset:8px;border:1px dashed var(--border-strong);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--fg-muted);font-family:var(--font-sans);font-size:11px;">Case study image · 16:9</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+      <p class="mj-body-sm" style="margin:0;color:var(--fg-secondary);font-style:italic;text-wrap:pretty;">Caption sits next to the image, not under it — Aleo italic, secondary color, prose-style sentences.</p>
+      <span class="meta" style="margin-top:8px;">Figure layout · gap-4 · image radius-md (8px)</span>
+    </div>
+  </div>
+</div></body></html>

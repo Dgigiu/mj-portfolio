@@ -1,0 +1,27 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;padding:0;background:var(--bg-canvas);color:var(--fg-primary);
+    font-family:var(--font-sans);min-height:100vh;font-size:13px;}
+  .card{padding:20px 24px;box-sizing:border-box;width:100%;}
+  .row{display:flex;gap:12px;align-items:center;}
+  .col{display:flex;flex-direction:column;gap:10px;}
+  .meta{font-family:var(--font-mono);font-size:10.5px;color:var(--fg-tertiary);}
+  .name{font-family:var(--font-sans);font-size:11px;color:var(--fg-secondary);font-weight:500;}
+  .swatch{height:64px;border-radius:4px;border:1px solid var(--border-subtle);
+    display:flex;flex-direction:column;justify-content:flex-end;padding:8px 10px;}
+  .swatch .label{font-size:10px;font-family:var(--font-mono);color:rgba(255,255,255,0.9);text-shadow:0 1px 2px rgba(0,0,0,0.3);}
+  .swatch.dark .label{color:rgba(255,255,255,0.95);}
+  .swatch.light .label{color:rgba(0,0,0,0.7);text-shadow:none;}
+  .grid{display:grid;gap:8px;}
+</style></head><body>
+<div class="card">
+  <div class="grid" style="grid-template-columns:repeat(5,1fr);">
+    <div class="swatch light" style="background:#fffefb;"><span class="label">paper-50<br>#fffefb</span></div>
+    <div class="swatch light" style="background:#fffdf7;"><span class="label">paper-100<br>#fffdf7</span></div>
+    <div class="swatch light" style="background:#faf7ef;"><span class="label">paper-200<br>#faf7ef</span></div>
+    <div class="swatch light" style="background:#f1ede2;"><span class="label">paper-300<br>#f1ede2</span></div>
+    <div class="swatch light" style="background:#e6e0d0;"><span class="label">paper-400<br>#e6e0d0</span></div>
+  </div>
+  <div class="meta" style="margin-top:10px;">Warm off-white scale — canvas → border</div>
+</div></body></html>

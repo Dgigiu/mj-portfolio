@@ -1,0 +1,299 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<!-- Phosphor (regular + bold) -->
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<!-- Tabler -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.24.0/dist/tabler-icons.min.css">
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg-canvas);
+    color: var(--fg-primary);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    font-size: 13px;
+  }
+  .card { padding: 28px 32px 32px; box-sizing: border-box; width: 100%; }
+
+  .meta {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--fg-tertiary);
+    letter-spacing: -0.005em;
+  }
+  .label {
+    font-family: var(--font-sans);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--fg-tertiary);
+  }
+  .h {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--fg-primary);
+    margin: 0;
+  }
+  .sub {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    color: var(--fg-secondary);
+    line-height: 1.45;
+    margin: 4px 0 0;
+    max-width: 560px;
+  }
+  .divider {
+    height: 1px;
+    background: var(--border-subtle);
+    margin: 22px 0 22px;
+  }
+
+  /* Icon grid */
+  .families {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    row-gap: 18px;
+    column-gap: 24px;
+    align-items: center;
+  }
+  .family-name {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .family-name b {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: -0.01em;
+    color: var(--fg-primary);
+  }
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+  }
+  .cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-width: 44px;
+  }
+
+  /* Recommended pill */
+  .rec {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-sans);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: #003db8;
+    background: var(--accent-soft);
+    border: 1px solid var(--accent-line);
+    padding: 1px 7px;
+    border-radius: 999px;
+    margin-top: 3px;
+    width: max-content;
+  }
+
+  /* Bullet sample */
+  .bullets {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 14px;
+  }
+  .bul-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    padding: 14px 16px;
+  }
+  .bul-card.deprecated { background: transparent; }
+  .bul-title {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--fg-tertiary);
+    margin: 0 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .bul-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-serif);
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--fg-primary);
+  }
+  .bul-list li {
+    display: grid;
+    grid-template-columns: 18px 1fr;
+    gap: 6px;
+    padding: 3px 0;
+  }
+  .bul-list .marker {
+    color: var(--accent);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    text-align: left;
+    line-height: 1.5;
+  }
+  .strike { color: var(--fg-muted); text-decoration: line-through; }
+
+  /* Standardise icon sizing */
+  .ph, .ph-bold, .ti { font-size: 22px; line-height: 1; color: var(--fg-primary); }
+  .lucide { width: 22px; height: 22px; color: var(--fg-primary); }
+</style>
+</head>
+<body>
+<div class="card">
+
+  <!-- Header -->
+  <div style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; margin-bottom:18px;">
+    <div>
+      <h2 class="h">Iconography</h2>
+      <p class="sub">
+        The current Lucide @ 1.5px reads too thin against Geist. Three weightier options to consider. All retain
+        the system's restraint: icons appear only where text would labor.
+      </p>
+    </div>
+    <div class="label">Comparison</div>
+  </div>
+
+  <!-- Icon families -->
+  <div class="families">
+
+    <!-- Lucide 1.5 (previous) -->
+    <div class="family-name">
+      <b>Lucide</b>
+      <span class="meta">1.5px · previous</span>
+    </div>
+    <div class="row">
+      <div class="cell"><i class="lucide" data-lucide="arrow-up-right" data-stroke="1.5"></i><span class="meta">arrow-up-right</span></div>
+      <div class="cell"><i class="lucide" data-lucide="external-link" data-stroke="1.5"></i><span class="meta">external-link</span></div>
+      <div class="cell"><i class="lucide" data-lucide="mail" data-stroke="1.5"></i><span class="meta">mail</span></div>
+      <div class="cell"><i class="lucide" data-lucide="rss" data-stroke="1.5"></i><span class="meta">rss</span></div>
+      <div class="cell"><i class="lucide" data-lucide="chevron-down" data-stroke="1.5"></i><span class="meta">chevron-down</span></div>
+      <div class="cell"><i class="lucide" data-lucide="arrow-right" data-stroke="1.5"></i><span class="meta">arrow-right</span></div>
+    </div>
+
+    <!-- Lucide 2.0 -->
+    <div class="family-name">
+      <b>Lucide</b>
+      <span class="meta">2.0px</span>
+      <span class="rec">Locked in</span>
+    </div>
+    <div class="row">
+      <div class="cell"><i class="lucide" data-lucide="arrow-up-right" data-stroke="2"></i><span class="meta">arrow-up-right</span></div>
+      <div class="cell"><i class="lucide" data-lucide="external-link" data-stroke="2"></i><span class="meta">external-link</span></div>
+      <div class="cell"><i class="lucide" data-lucide="mail" data-stroke="2"></i><span class="meta">mail</span></div>
+      <div class="cell"><i class="lucide" data-lucide="rss" data-stroke="2"></i><span class="meta">rss</span></div>
+      <div class="cell"><i class="lucide" data-lucide="chevron-down" data-stroke="2"></i><span class="meta">chevron-down</span></div>
+      <div class="cell"><i class="lucide" data-lucide="arrow-right" data-stroke="2"></i><span class="meta">arrow-right</span></div>
+    </div>
+
+    <!-- Phosphor Bold -->
+    <div class="family-name">
+      <b>Phosphor</b>
+      <span class="meta">bold weight</span>
+    </div>
+    <div class="row">
+      <div class="cell"><i class="ph-bold ph-arrow-up-right"></i><span class="meta">arrow-up-right</span></div>
+      <div class="cell"><i class="ph-bold ph-arrow-square-out"></i><span class="meta">arrow-square-out</span></div>
+      <div class="cell"><i class="ph-bold ph-envelope-simple"></i><span class="meta">envelope-simple</span></div>
+      <div class="cell"><i class="ph-bold ph-rss"></i><span class="meta">rss</span></div>
+      <div class="cell"><i class="ph-bold ph-caret-down"></i><span class="meta">caret-down</span></div>
+      <div class="cell"><i class="ph-bold ph-arrow-right"></i><span class="meta">arrow-right</span></div>
+    </div>
+
+    <!-- Tabler -->
+    <div class="family-name">
+      <b>Tabler</b>
+      <span class="meta">2.25px stroke</span>
+    </div>
+    <div class="row">
+      <div class="cell"><i class="ti ti-arrow-up-right"></i><span class="meta">arrow-up-right</span></div>
+      <div class="cell"><i class="ti ti-external-link"></i><span class="meta">external-link</span></div>
+      <div class="cell"><i class="ti ti-mail"></i><span class="meta">mail</span></div>
+      <div class="cell"><i class="ti ti-rss"></i><span class="meta">rss</span></div>
+      <div class="cell"><i class="ti ti-chevron-down"></i><span class="meta">chevron-down</span></div>
+      <div class="cell"><i class="ti ti-arrow-right"></i><span class="meta">arrow-right</span></div>
+    </div>
+
+  </div>
+
+  <div class="meta" style="margin-top:18px;">
+    Sizes: 16px inline · 20px in button · 24px standalone. Color inherits <code>currentColor</code>. Accent only on active state. Brand marks (GitHub, LinkedIn, Read.cv) sit in <code>assets/brand-icons/</code> as flat SVG, separate from the chosen icon family.
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Bullet pattern -->
+  <div style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; margin-bottom:6px;">
+    <div>
+      <h2 class="h">Bullet marker</h2>
+      <p class="sub">
+        Lists use the en-dash glyph (–, U+2013) as marker, matching Miguel's CV style. The em dash stays banned everywhere; this is a different glyph.
+      </p>
+    </div>
+    <div class="label">New pattern</div>
+  </div>
+
+  <div class="bullets">
+    <div class="bul-card deprecated">
+      <p class="bul-title"><span style="color:var(--critical);">●</span> Was: center dot</p>
+      <ul class="bul-list">
+        <li><span class="marker">·</span><span class="strike">Defined product vision and roadmap</span></li>
+        <li><span class="marker">·</span><span class="strike">Built and maintained a design system</span></li>
+        <li><span class="marker">·</span><span class="strike">Led user research interviews and tests</span></li>
+      </ul>
+    </div>
+    <div class="bul-card">
+      <p class="bul-title"><span style="color:var(--positive);">●</span> Now: en dash</p>
+      <ul class="bul-list">
+        <li><span class="marker">–</span><span>Defined product vision and roadmap</span></li>
+        <li><span class="marker">–</span><span>Built and maintained a design system</span></li>
+        <li><span class="marker">–</span><span>Led user research interviews and tests</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="meta" style="margin-top:16px;">
+    Marker: <code>–</code> (U+2013, en dash) · Geist semi-bold (600) · accent color · 18px column · 6px gap to text.
+    Inter-paragraph dots in metadata rows still use <code>·</code> (U+00B7).
+  </div>
+
+</div>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script>
+  // Lucide accepts per-icon stroke via data-stroke
+  document.querySelectorAll('[data-lucide][data-stroke]').forEach(el => {
+    el.setAttribute('stroke-width', el.dataset.stroke);
+  });
+  lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
+  // After creation, re-apply custom stroke widths
+  document.querySelectorAll('svg.lucide').forEach(svg => {
+    const host = svg.parentElement;
+    const sw = host && host.dataset ? host.dataset.stroke : null;
+    if (sw) svg.setAttribute('stroke-width', sw);
+  });
+</script>
+</body>
+</html>

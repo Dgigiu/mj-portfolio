@@ -1,0 +1,28 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;padding:0;background:var(--bg-canvas);color:var(--fg-primary);
+    font-family:var(--font-sans);min-height:100vh;font-size:13px;}
+  .card{padding:20px 24px;box-sizing:border-box;width:100%;}
+  .row{display:flex;gap:12px;align-items:center;}
+  .col{display:flex;flex-direction:column;gap:10px;}
+  .meta{font-family:var(--font-mono);font-size:10.5px;color:var(--fg-tertiary);}
+  .name{font-family:var(--font-sans);font-size:11px;color:var(--fg-secondary);font-weight:500;}
+  .swatch{height:64px;border-radius:4px;border:1px solid var(--border-subtle);
+    display:flex;flex-direction:column;justify-content:flex-end;padding:8px 10px;}
+  .swatch .label{font-size:10px;font-family:var(--font-mono);color:rgba(255,255,255,0.9);text-shadow:0 1px 2px rgba(0,0,0,0.3);}
+  .swatch.dark .label{color:rgba(255,255,255,0.95);}
+  .swatch.light .label{color:rgba(0,0,0,0.7);text-shadow:none;}
+  .grid{display:grid;gap:8px;}
+</style></head><body>
+<div class="card" style="background:#0e0e0e;">
+  <div class="grid" style="grid-template-columns:repeat(6,1fr);">
+    <div class="swatch dark" style="background:#0e0e0e;border-color:#262522;"><span class="label">canvas<br>#0e0e0e</span></div>
+    <div class="swatch dark" style="background:#161616;border-color:#262522;"><span class="label">elevated<br>#161616</span></div>
+    <div class="swatch dark" style="background:#1c1c1c;border-color:#262522;"><span class="label">subtle<br>#1c1c1c</span></div>
+    <div class="swatch dark" style="background:#262522;border-color:#3a3833;"><span class="label">border<br>#262522</span></div>
+    <div class="swatch dark" style="background:#f5f3ec;border-color:#3a3833;"><span class="label" style="color:#181818;text-shadow:none;">fg-primary<br>#f5f3ec</span></div>
+    <div class="swatch dark" style="background:#4fa8ff;border-color:#3a3833;"><span class="label">accent<br>#4fa8ff</span></div>
+  </div>
+  <div class="meta" style="margin-top:10px;color:#8a867c;">Dark variant — same skeleton, inverted neutrals, accent lifted one stop.</div>
+</div></body></html>

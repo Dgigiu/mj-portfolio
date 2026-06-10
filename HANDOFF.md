@@ -6,7 +6,7 @@ Last updated: 2026-06-10 (session 9)
 
 The portfolio is live at **https://dgigiu.github.io/mj-portfolio/**, deployed via GitHub Actions to GitHub Pages. Repo at **https://github.com/Dgigiu/mj-portfolio**. The custom domain `migueljss.com` is held until content settles (Miguel is working on case study images); switch steps in "Still to do" below.
 
-Session 9 (2026-06-10) introduced subtle motion. Miguel explicitly relaxed the original "no parallax / no hero animation" brief rule; the new policy is written into both briefs and CLAUDE.md. Shipped: hero portrait scroll parallax + one-time settle, scroll reveals on case study cards, and a scale on the zoom dialog open/close.
+Session 9 (2026-06-10) introduced subtle motion. Miguel explicitly relaxed the original "no parallax / no hero animation" brief rule; the new policy is written into both briefs and CLAUDE.md. Shipped after review: hero portrait scroll parallax, faint scroll reveals on case study cards, and a scale on the zoom dialog open/close. A hero "settle" entrance was shipped, reviewed, and removed (Miguel: too theatrical); the first reveal version (alpha 0, 12px, staggered) was softened on review to opacity 0.6, 8px, no stagger.
 
 Session 8 (2026-06-10) was a corrections pass from a code review: default OG image now exists, fonts converted to woff2 (~1MB → ~270KB), dead code deleted (HeroGradient, old portrait, compat aliases), type scale moved to rem, CLAUDE.md updated to match reality. Also fixed the "More case studies" section ignoring container inline padding (Miguel caught it).
 
@@ -28,15 +28,15 @@ Build is clean (`npm run build` → 0 errors / 0 warnings).
 
 Subtle motion across the site. Miguel asked for ideas, picked the "starter set," and confirmed the brief's blanket motion ban should be relaxed. The policy now lives in [docs/portfolio-brief-claude-design.md](docs/portfolio-brief-claude-design.md) ("Motion" section), with pointers in the code brief and CLAUDE.md: transform/opacity only, under ~400ms or scroll-driven, text never animates, everything respects `prefers-reduced-motion` and works without JS.
 
-**Hero parallax + settle** ([index.astro](src/pages/index.astro))
-- `.hero-portrait` lags the scroll at 12% (capped at 48px) via a `--parallax-y` custom property fed by a ~20-line rAF-throttled scroll handler. Text stays static.
-- One-time settle on load: scale 1.015 → 1 over `--duration-settle` (1100ms). Scale only, no opacity, so the portrait's LCP measurement is unaffected.
-- The two effects use the individual `translate`/`scale` CSS properties so the animation and the parallax never fight over `transform`.
+**Hero parallax** ([index.astro](src/pages/index.astro))
+- `.hero-portrait` lags the scroll at 12% (capped at 48px) via a `--parallax-y` custom property fed by a ~20-line rAF-throttled scroll handler. Text stays static. Uses the individual `translate` CSS property.
+- A one-time scale "settle" on load shipped alongside it but Miguel rejected it on review (too theatrical); removed same session. Don't reintroduce hero entrance animations (noted in the design brief Motion section).
 
 **Scroll reveals** ([global.css](src/styles/global.css), [BaseLayout.astro](src/layouts/BaseLayout.astro), [index.astro](src/pages/index.astro), [CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro))
-- Generic `[data-reveal]` mechanism: opacity 0 + 12px rise → revealed once by an IntersectionObserver (threshold 0.1, -40px bottom margin), staggered 60ms per card via `--reveal-delay`. Applied to the home card list and the "More case studies" grid.
-- The hidden state is double-gated: `html.js` (set by an inline script in BaseLayout head, so no-JS users always see content) and `prefers-reduced-motion: no-preference` (reduced-motion users never get hidden content either).
-- New tokens: `--duration-reveal` (350ms), `--duration-settle` (1100ms).
+- Generic `[data-reveal]` mechanism on the home card list and the "More case studies" grid, revealed once by an IntersectionObserver.
+- Tuned per Miguel's review: deliberately faint. Opacity starts at 0.6 (never alpha 0), travel is 8px (`--space-2`), 450ms ease-out, no stagger, observer fires at threshold 0 so the ease finishes before the card is far into view. First version (alpha 0, 12px, 60ms stagger, threshold 0.1) read as chunky.
+- The pre-reveal state is double-gated: `html.js` (set by an inline script in BaseLayout head, so no-JS users always see content) and `prefers-reduced-motion: no-preference` (reduced-motion users never get dimmed content either).
+- New token: `--duration-reveal` (450ms).
 
 **Zoom dialog scale** ([BaseLayout.astro](src/layouts/BaseLayout.astro))
 - The existing fade (via `@starting-style` + `allow-discrete`) now pairs with `scale` 0.97 → 1 on open and back down on close, using the individual `scale` property. Same durations as the fade (400ms open, 200ms close); the existing reduced-motion override already covers it.
