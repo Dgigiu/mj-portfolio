@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import { Image, getImage } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import CaseStudyCard from "../components/CaseStudyCard.astro";
+import ContactOutro from "../components/ContactOutro.astro";
 import portrait from "../assets/brand/miguel-portrait-color-wide.png";
 import { base } from "../lib/paths";
 
@@ -84,16 +85,7 @@ const heroPortraitPreload = await getImage({
     </ul>
   </section>
 
-  <section class="outro container">
-    <div class="outro-inner">
-      <h2>Get in touch</h2>
-      <p>
-        I'm open to senior in-house product design roles. The fastest way to reach me is{" "}
-        <a href="mailto:miguel.jss@gmail.com?subject=Hello%20from%20migueljss.com">miguel.jss@gmail.com</a>, or find me on{" "}
-        <a href="https://www.linkedin.com/in/migueljss/" target="_blank" rel="me noopener noreferrer">LinkedIn</a>.
-      </p>
-    </div>
-  </section>
+  <ContactOutro />
 </BaseLayout>
 
 <style>
@@ -291,7 +283,6 @@ const heroPortraitPreload = await getImage({
   }
 
   .work-head h2 {
-    font-size: var(--text-xl);
     letter-spacing: var(--tracking-snug);
   }
 
@@ -308,28 +299,6 @@ const heroPortraitPreload = await getImage({
     gap: var(--space-16);
   }
 
-  /* Outro */
-  .outro {
-    padding-bottom: var(--space-16);
-  }
-
-  .outro-inner {
-    max-width: var(--content-narrow);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-    padding-top: var(--space-12);
-    border-top: var(--hairline) solid var(--border-subtle);
-  }
-
-  .outro-inner h2 {
-    font-size: var(--text-xl);
-    letter-spacing: var(--tracking-snug);
-  }
-
-  .outro-inner p {
-    color: var(--fg-secondary);
-  }
 </style>
 
 <script>

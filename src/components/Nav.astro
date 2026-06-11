@@ -87,6 +87,14 @@ const links = [
     transition: color var(--duration-fast) var(--ease-out);
   }
 
+  /* Invisible hit-area expansion so the text links meet the 44px touch
+     target floor without changing the visual size. */
+  .nav-link::before {
+    content: "";
+    position: absolute;
+    inset: calc(-1 * var(--space-3)) calc(-1 * var(--space-2));
+  }
+
   /* Underline as a pseudo-element (not border-bottom) so the hover state
      can rise in from just below instead of appearing. Sits where the old
      2px border did. */

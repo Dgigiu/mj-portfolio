@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { base } from "../lib/paths";
 ---
 
 <BaseLayout title="Contact" description="Email and LinkedIn.">
@@ -16,6 +17,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         <li>
           <span class="channel-label">LinkedIn</span>
           <a href="https://www.linkedin.com/in/migueljss/" target="_blank" rel="me noopener noreferrer">linkedin.com/in/migueljss</a>
+        </li>
+        <li>
+          <span class="channel-label">CV</span>
+          <a href={`${base}miguel-jesus-cv.pdf`} target="_blank" rel="noopener">Open the PDF</a>
         </li>
         <li>
           <span class="channel-label">Response</span>

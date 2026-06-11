@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 import BaseLayout from "./BaseLayout.astro";
 import CaseStudyCard from "../components/CaseStudyCard.astro";
+import ContactOutro from "../components/ContactOutro.astro";
 import { base } from "../lib/paths";
 
 interface Props {
@@ -14,9 +15,12 @@ interface Props {
   domain: string;
   cover?: ImageMetadata;
   slug: string;
+  headings?: { depth: number; slug: string; text: string }[];
 }
 
-const { title, summary, role, period, client, domain, cover, slug } = Astro.props;
+const { title, summary, role, period, client, domain, cover, slug, headings = [] } = Astro.props;
+
+const tocEntries = headings.filter((h) => h.depth === 2);
 
 const more = (
   await getCollection("case-studies", ({ data }) => !data.draft)
@@ -33,6 +37,20 @@ const more = (
         <h1 class="case-title">{title}</h1>
         <p class="case-summary">{summary}</p>
         <p class="case-meta">{role} · {period} · {domain}</p>
+        {
+          tocEntries.length > 1 && (
+            <nav class="case-toc" aria-label="On this page">
+              <span class="case-toc-label">On this page</span>
+              <ul>
+                {tocEntries.map((h) => (
+                  <li>
+                    <a href={`#${h.slug}`}>{h.text}</a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )
+        }
       </div>
     </div>
   </header>
@@ -84,6 +102,8 @@ const more = (
       </section>
     )
   }
+
+  <ContactOutro />
 </BaseLayout>
 
 <style>
@@ -124,6 +144,43 @@ const more = (
     margin: 0;
   }
 
+  /* Skim layer: one quiet wrapped row of section anchors. Links keep the
+     global underline treatment; only the type voice changes to UI sans. */
+  .case-toc {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: var(--space-4);
+    row-gap: var(--space-2);
+    padding-top: var(--space-2);
+  }
+
+  .case-toc-label {
+    font-family: var(--font-sans);
+    font-size: var(--text-2xs);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    color: var(--fg-tertiary);
+  }
+
+  .case-toc ul {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: var(--space-4);
+    row-gap: var(--space-2);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .case-toc a {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    padding-block: var(--space-1);
+  }
+
   .case-cover {
     padding-bottom: var(--space-12);
   }
@@ -146,6 +203,11 @@ const more = (
     margin-inline: 0;
   }
 
+  /* Anchored section headings clear the sticky nav when jumped to. */
+  .case-body .prose :global(h2) {
+    scroll-margin-top: var(--space-24);
+  }
+
   /* padding-block, not the shorthand: .more is a .container and the
      shorthand would zero out its safe-zone padding-inline. */
   .more {
@@ -160,7 +222,6 @@ const more = (
   .more-head h2 {
     font-family: var(--font-sans);
     font-weight: var(--weight-semi);
-    font-size: var(--text-xl);
     letter-spacing: var(--tracking-snug);
     color: var(--fg-primary);
     margin: 0;

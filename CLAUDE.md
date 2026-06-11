@@ -10,6 +10,11 @@ This is Miguel Jesus's personal portfolio site. It's a small Astro site whose pu
 
 When the work in the current session changes the state of the project meaningfully, update `HANDOFF.md` before wrapping. The next session will land cold and rely on it.
 
+## Design context
+
+- **[PRODUCT.md](PRODUCT.md)** — strategic design context: register (brand), audience, personality, anti-references, principles. Read before any design or copy work.
+- **[DESIGN.md](DESIGN.md)** — the visual system spec (Stitch DESIGN.md format) generated from `tokens.css` and the live components. Tokens in the frontmatter are descriptive, not a second source of truth: `src/styles/tokens.css` stays canonical. Regenerate with `/impeccable document` if the system drifts.
+
 ## Stack at a glance
 
 - Astro 5 + MDX + sitemap, TypeScript strict

@@ -11,8 +11,8 @@ import portrait from "../assets/brand/miguel-portrait.png";
         <Image
           src={portrait}
           alt="Miguel Jesus"
-          widths={[320, 640]}
-          sizes="(min-width: 720px) 320px, 100vw"
+          widths={[720, 1080, 1440]}
+          sizes="(min-width: 768px) 720px, 100vw"
           loading="eager"
           fetchpriority="high"
           class="portrait"
@@ -96,14 +96,21 @@ import portrait from "../assets/brand/miguel-portrait.png";
     border-bottom: var(--hairline) solid var(--border-subtle);
   }
 
+  /* Full column width: the portrait opens the page with the same
+     presence the home hero gives it (reframed, never shrunk). The
+     ink field behind the transparent cutout restores the original
+     photograph's dark strip, so the figure sits in a composition
+     instead of floating on bare canvas. */
   .portrait-wrap {
-    max-width: 320px;
+    max-width: 100%;
+    background: var(--ink-900);
+    border-radius: var(--radius-md);
+    overflow: hidden;
   }
 
   .portrait {
     width: 100%;
     height: auto;
-    border-radius: var(--radius-md);
     display: block;
   }
 
@@ -132,9 +139,4 @@ import portrait from "../assets/brand/miguel-portrait.png";
     margin-inline: 0;
   }
 
-  @media (max-width: 720px) {
-    .portrait-wrap {
-      max-width: 240px;
-    }
-  }
 </style>

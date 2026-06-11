@@ -35,5 +35,10 @@ pnpm-debug.log*
 # Case study source materials (working folder, not shipped)
 docs/Case Studies/
 
+# Impeccable design skill (reinstall with: npx impeccable skills install)
+# and its local working artifacts (critique snapshots, live config)
+.github/skills/
+.impeccable/
+
 # Misc
 *.tsbuildinfo
