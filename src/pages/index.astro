@@ -45,6 +45,7 @@ const heroPortraitPreload = await getImage({
     />
     <div class="hero-glow" aria-hidden="true"></div>
     <div class="hero-vignette" aria-hidden="true"></div>
+    <div class="hero-veil" aria-hidden="true"></div>
     <div class="hero-hairline" aria-hidden="true"></div>
 
     <div class="container hero-inner">
@@ -177,6 +178,38 @@ const heroPortraitPreload = await getImage({
     height: 1px;
     background: rgba(255, 255, 255, 0.18);
     z-index: 3;
+  }
+
+  /* Scroll exit veil: a transparent-to-dark-cobalt curtain parked one panel
+     height below the hero, so it's invisible at rest (and without JS, and
+     under reduced motion). The scroll handler raises it faster than the page
+     scrolls (see --veil-shift below), so it climbs up over the portrait and
+     washes it in cobalt as the hero leaves. Sits above the portrait but below
+     the text (z 3), so the headline stays fully legible. */
+  .hero-veil {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+    /* Transparent at the top, through pressed cobalt, to the same deep navy the
+       vignette uses (rgb 8 14 32) at the bottom, so the curtain reads cobalt as
+       it arrives and settles into navy as it covers the figure. */
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      var(--accent-press) 45%,
+      #080e20 100%
+    );
+    translate: 0 calc(-1 * var(--veil-shift, 0px));
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-veil {
+      will-change: transform;
+    }
   }
 
   .hero-inner {
@@ -345,25 +378,53 @@ const heroPortraitPreload = await getImage({
 </style>
 
 <script>
-  // Hero parallax: the portrait lags the scroll at ~12% so it reads as a
-  // layer behind the cobalt plane and the (static) text. Capped so the
-  // bottom crop never opens a gap once the hero is scrolled past.
+  // Hero scroll motion, all driven off one rAF-throttled scroll handler:
+  //  - Portrait parallax: the portrait lags the scroll at ~12% so it reads as
+  //    a layer behind the cobalt plane and the (static) text. Capped so the
+  //    bottom crop never opens a gap once the hero is scrolled past.
+  //  - Exit veil: a cobalt-to-navy curtain parked one panel height below the
+  //    hero is raised at ~80% of the scroll. Added to the panel height it
+  //    travels (the hero scrolls away at 100%), it climbs faster than
+  //    everything else and washes the portrait as the hero leaves. Capped so it
+  //    stops once it has fully covered the panel.
+  const hero = document.querySelector<HTMLElement>(".hero");
   const portrait = document.querySelector<HTMLElement>(".hero-portrait");
+  const veil = document.querySelector<HTMLElement>(".hero-veil");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-  if (portrait && !reduceMotion.matches) {
+  if (hero && (portrait || veil) && !reduceMotion.matches) {
+    const VEIL_RATE = 0.8;
+    let heroHeight = hero.offsetHeight;
     let ticking = false;
+
     const update = () => {
       ticking = false;
-      const y = Math.min(window.scrollY * 0.12, 48);
-      portrait.style.setProperty("--parallax-y", `${y.toFixed(1)}px`);
+      const s = window.scrollY;
+      if (portrait) {
+        const y = Math.min(s * 0.12, 48);
+        portrait.style.setProperty("--parallax-y", `${y.toFixed(1)}px`);
+      }
+      if (veil) {
+        // Cap a touch past full coverage so the dark crests over the top edge,
+        // then holds while the rest of the hero scrolls off.
+        const shift = Math.min(s * VEIL_RATE, heroHeight * 1.25);
+        veil.style.setProperty("--veil-shift", `${shift.toFixed(1)}px`);
+      }
     };
+
     window.addEventListener(
       "scroll",
       () => {
         if (ticking) return;
         ticking = true;
         requestAnimationFrame(update);
+      },
+      { passive: true }
+    );
+    window.addEventListener(
+      "resize",
+      () => {
+        heroHeight = hero.offsetHeight;
       },
       { passive: true }
     );
