@@ -49,7 +49,7 @@ const heroPortraitPreload = await getImage({
 
     <div class="container hero-inner">
       <div class="hero-content">
-        <h1 id="hero-title">Calm products for complex work.</h1>
+        <h1 id="hero-title">Calm products <br class="hero-break" />for complex work.</h1>
         <p class="hero-subtitle">
           I'm Miguel. For 20+ years I've designed SaaS and mobile products, often the sole designer alongside small engineering and product teams. The case studies below follow a few of those products from first sketch to launch and the years after.
         </p>
@@ -186,15 +186,38 @@ const heroPortraitPreload = await getImage({
     padding-bottom: var(--space-20);
   }
 
-  /* Hard cap on the text column so it never bleeds into the portrait area. */
+  /* Hard cap on the text column so it never bleeds into the portrait area, and
+     a small downward nudge so the block sits just below the panel's vertical
+     center. 600px seats the headline's longer line at the 72px ceiling. */
   .hero-content {
-    max-width: 560px;
+    max-width: 600px;
+    transform: translateY(var(--space-12));
+  }
+
+  /* The headline breaks "Calm products" / "for complex work." on its own line.
+     The font ceiling (72px) is set so the longer line seats inside the 600
+     column on one row, giving a clean two-line title that still clears the
+     portrait. Below the phone breakpoint the forced break is dropped and the
+     title wraps naturally instead. */
+  .hero-break {
+    display: inline;
+  }
+
+  @media (max-width: 480px) {
+    .hero-break {
+      display: none;
+    }
   }
 
   .hero h1 {
     font-family: var(--font-sans);
     font-weight: var(--weight-bold);
-    font-size: clamp(44px, 6vw, 80px);
+    /* Tops out at 72px on wide screens. The 5.3vw rate (rather than a steeper
+       one) is deliberate: it holds 72px down to ~1360px, then eases the title
+       smaller through the laptop range so the second line clears the portrait
+       figure, which sits closer to the text as the viewport narrows. Verified
+       clear (glyph edge vs. the figure's opaque pixels) at 1100 to 1440. */
+    font-size: clamp(44px, 5.3vw, 72px);
     line-height: 1;
     letter-spacing: -0.035em;
     color: #fff;
