@@ -11,13 +11,12 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content, headings } = await entry.render();
+const { Content } = await entry.render();
 const { data } = entry;
 ---
 
 <CaseStudyLayout
   slug={entry.slug}
-  headings={headings}
   title={data.title}
   summary={data.summary}
   role={data.role}
