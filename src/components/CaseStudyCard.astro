@@ -5,6 +5,7 @@ interface Props {
   href: string;
   title: string;
   summary: string;
+  benefit?: string;
   client?: string;
   domain?: string;
   period?: string;
@@ -12,11 +13,18 @@ interface Props {
   compact?: boolean;
 }
 
-const { href, title, summary, client, domain, period, cover, compact = false } = Astro.props;
+const { href, title, summary, benefit, client, domain, period, cover, compact = false } = Astro.props;
 
 const metaParts = compact
   ? [client].filter(Boolean)
   : [client, domain, period].filter(Boolean);
+
+// When a benefit lead is present it's authored as the summary's first
+// sentence, so strip it from the summary to get the description and avoid
+// printing the same line twice. Falls back to the full summary if it doesn't
+// prefix-match (e.g. the field was edited independently).
+const description =
+  benefit && summary.startsWith(benefit) ? summary.slice(benefit.length).trim() : summary;
 ---
 
 <a href={href} class:list={["card", { compact }]}>
@@ -37,9 +45,11 @@ const metaParts = compact
     }
   </div>
   <div class="card-body">
-    {metaParts.length > 0 && <p class="card-meta">{metaParts.join(" · ")}</p>}
+    {compact && metaParts.length > 0 && <p class="card-meta">{metaParts.join(" · ")}</p>}
     <h3 class="card-title">{title}</h3>
-    {!compact && <p class="card-summary">{summary}</p>}
+    {!compact && benefit && <p class="card-benefit">{benefit}</p>}
+    {!compact && <p class="card-summary">{description}</p>}
+    {!compact && metaParts.length > 0 && <p class="card-meta">{metaParts.join(" · ")}</p>}
     {!compact && <span class="card-cta" aria-hidden="true">Read the case study →</span>}
   </div>
 </a>
@@ -123,6 +133,17 @@ const metaParts = compact
     font-size: var(--text-2xl);
     line-height: var(--leading-snug);
     letter-spacing: var(--tracking-snug);
+    color: var(--fg-primary);
+    margin: 0;
+  }
+
+  /* Benefit lead: serif standfirst in primary ink, a step up in size from
+     the description so it reads as the line that frames the case. Stays a
+     static type voice (no accent): blue is reserved for the CTA below. */
+  .card-benefit {
+    font-family: var(--font-serif);
+    font-size: var(--text-lg);
+    line-height: var(--leading-snug);
     color: var(--fg-primary);
     margin: 0;
   }
