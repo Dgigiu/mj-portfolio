@@ -194,13 +194,15 @@ const heroPortraitPreload = await getImage({
     height: 100%;
     z-index: 3;
     pointer-events: none;
-    /* Transparent at the top, through pressed cobalt, to the same deep navy the
-       vignette uses (rgb 8 14 32) at the bottom, so the curtain reads cobalt as
-       it arrives and settles into navy as it covers the figure. */
+    /* Transparent at the top, through translucent pressed cobalt, to the deep
+       navy the vignette uses (rgb 8 14 32), solid at the very bottom edge. The
+       opacity ramps across the stops so the portrait stays readable through the
+       mid band and only the bottom edge fully covers. Two dials: the 70% sets
+       how strongly the middle tints, the bottom stop how deep it lands. */
     background: linear-gradient(
       180deg,
       transparent 0%,
-      var(--accent-press) 45%,
+      color-mix(in srgb, var(--accent-press) 70%, transparent) 45%,
       #080e20 100%
     );
     translate: 0 calc(-1 * var(--veil-shift, 0px));
