@@ -1,6 +1,6 @@
 # Handoff
 
-Last updated: 2026-06-12 (session 12)
+Last updated: 2026-06-15 (session 13)
 
 ## Where we are
 
@@ -11,6 +11,13 @@ The staging deploy emits `<meta name="robots" content="noindex">` on every page 
 Astro is configured with `site: 'https://dgigiu.github.io'` and `base: '/mj-portfolio'`. All internal links use the normalized base exported from [src/lib/paths.ts](src/lib/paths.ts).
 
 Build is clean (`npm run build` → 6 pages, 0 errors / 0 warnings).
+
+## What changed in this session (2026-06-15, session 13)
+
+Two mobile fixes Miguel spotted on his phone. Both shipped to `main` (deploy green); browser-verified at zero-inset for no regression, build clean (7 pages, 0/0/0). The dynamic-island fix itself needs an on-device landscape confirm on Brave (the headless preview has no physical island).
+
+- **Nav baseline alignment** ([Nav.astro](src/components/Nav.astro)): `.nav-inner` went `align-items: center` → `align-items: baseline`. The wordmark is `--text-lg` and the links `--text-md`; centering two sizes left their text baselines offset (the larger wordmark sat lower). Baseline alignment sits them on the same line.
+- **Safe-area insets / dynamic island** ([BaseLayout.astro](src/layouts/BaseLayout.astro), [global.css](src/styles/global.css)): in landscape on Brave, container text slid under the dynamic island; Safari looked fine. Cause: no `viewport-fit=cover` on the viewport meta, so `env(safe-area-inset-*)` resolved to 0 and only Safari silently inset the layout. Fix: added `viewport-fit=cover`, and `.container` now pads with `max(var(--container-pad), env(safe-area-inset-left/right))`. Insets are 0 in portrait and on non-notched devices, so padding falls back to `--container-pad` unchanged (verified: 33.76px at 844px wide, identical to before). Side effect to know: with `viewport-fit=cover` the full-bleed bands (hero, contact, footer) now extend under the island area too, which is correct since they're meant to be edge-to-edge color/image. `Figure.bleed` still breaks out by `--container-pad` only, so a bleed figure stays just inside the island inset in landscape (acceptable, landscape-only edge case).
 
 ## What changed in this session (2026-06-12, session 12)
 
@@ -139,6 +146,7 @@ Per-session detail beyond this lives in the git log; commit messages carry the s
 ## Open items / look at these next
 
 ### Re-verify on the live site
+- **Dynamic island in landscape (Brave).** Session 13 added `viewport-fit=cover` + safe-area `max()` padding to fix container text sliding under the island. The headless preview can't reproduce a physical island, so confirm on-device: a case study page (e.g. Team Files) in landscape on Brave should keep all text clear of the island. Force-refresh / clear site data if the old CSS is cached.
 - **Share-sheet icon on iOS.** Verify the `apple-touch-icon` shows the MJ wordmark instead of an auto-cropped portrait. iOS caches the icon aggressively; if you still see the old one, force-quit Safari or clear site data (Settings → Apps → Safari → Advanced → Website Data).
 
 ### Fine-tuning (Miguel to drive)
