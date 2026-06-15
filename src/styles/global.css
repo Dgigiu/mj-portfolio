@@ -92,7 +92,12 @@ hr {
 .container {
   max-width: var(--content-page);
   margin-inline: auto;
-  padding-inline: var(--container-pad);
+  /* max() folds the device safe-area insets into the inline padding so content
+     clears the notch/dynamic island in landscape. Insets are 0 in portrait and
+     on non-notched devices, so the padding falls back to --container-pad there.
+     Needs viewport-fit=cover on the viewport meta for env() to resolve. */
+  padding-inline: max(var(--container-pad), env(safe-area-inset-left))
+                  max(var(--container-pad), env(safe-area-inset-right));
   width: 100%;
 }
 
