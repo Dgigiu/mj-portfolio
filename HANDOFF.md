@@ -1,6 +1,6 @@
 # Handoff
 
-Last updated: 2026-08-28 (session 17)
+Last updated: 2026-08-29 (session 18)
 
 ## Where we are
 
@@ -11,6 +11,17 @@ The staging deploy emits `<meta name="robots" content="noindex">` on every page 
 Astro is configured with `site: 'https://dgigiu.github.io'` and `base: '/mj-portfolio'`. All internal links use the normalized base exported from [src/lib/paths.ts](src/lib/paths.ts).
 
 Build is clean (`npm run build` → 6 pages, 0 errors / 0 warnings).
+
+## What changed in this session (2026-08-29, session 18)
+
+Full resync of [food-save.mdx](src/content/case-studies/food-save.mdx) from **[docs/Case Studies/cs-food-save-app.md](docs/Case Studies/cs-food-save-app.md)**, plus the first real image set for this case (previously all placeholders). Build clean (7 pages, 0/0/0), all 5 new images verified 200 in-browser and correctly wired into both the case page and the home card.
+
+- **Images exported from Figma** (`RqT7cSB5meoG2VQu7ggWNo`, page "version 2") via the Figma MCP: `FS-02-library`, `FS-03-measure-detail`, `FS-04-tasklist`, `FS-05-home` (all PNG, 1600×1055, matching the existing UI-screen convention) and the cover, exported as **both** `FS-00-cover-banner.jpg` (1920×960) and `FS-00-cover-thumb.jpg` (1200×900). Only the banner frame was asked for, but a matching `FS-00-cover-thumb` frame already existed in the Figma page at exactly the 1200×900 target from the session-16 spec, so I exported it too rather than reusing the banner for both slots. This finally gives food-save the same two-image cover treatment myfoodways got in session 17 (the open item from that session). Format followed the established pattern exactly: jpg for the photographic cover (hand holding a phone), png for the UI-screen frames, scale 1, filenames matching frame names verbatim.
+- **Old placeholder images deleted**: `FS-01-hero-cover.png`, `FS-01-hero.png`, `FS-03-tasklist.png` (content now `FS-04-tasklist.png`), `FS-04-home.png` (content now `FS-05-home.png`).
+- **Whole-body rewrite from the doc**, same approach as session 17's myfoodways pass. New content folded in: a "Home" subsection under Design execution (previously the home screen had no dedicated write-up), a sentence about sharing a measure directly with a colleague in Measure library, and a closing Collaboration paragraph tying the user research back to the budget-saving implementation choice. Measure library and Measure detail are now two sequential `<Figure>`s instead of a `<CompareImages>` side-by-side, matching how the doc presents them as full multi-panel screens rather than single-screen comparisons; `CompareImages` import dropped since nothing uses it anymore in this file.
+- **Bullet-list semicolons restored to match the doc**, consistent with [[feedback_bullet_list_punctuation]] and the immediately preceding commit that did the same for myfoodways: the UX design learnings list (previously plain periods, a leftover from session 6 before that convention was established) now uses semicolons with a final full stop, like every other list in this file.
+- **Minor editorial smoothing kept from the pre-existing text over the doc's raw phrasing** in two spots, both same-meaning, not content changes: the Role section's "Moritz and Mark (Swiss Foodways team → United Against Waste)" stayed as flowing prose rather than the doc's arrow shorthand; the Part of a pair section's "Food Save suggested measures to adopt; the Waste Tracker showed..." kept its semicolon over the doc's comma splice.
+- **Doc file itself updated too**: replaced all five `FIGMA:name` placeholders in `cs-food-save-app.md` with real relative paths to the exported assets, per this session's explicit request (the myfoodways doc was left with its placeholders after its session-17 resync; this is a deliberate difference this time, not an inconsistency to fix).
 
 ## What changed in this session (2026-08-28, session 17)
 
@@ -25,7 +36,7 @@ Full resync of [myfoodways.mdx](src/content/case-studies/myfoodways.mdx) from Mi
 ### Open item for Miguel
 
 - **`MFW-05-flexible-recipe2.png` still doesn't exist.** The doc's Flexible recipe flow section still narrates a second image after the "Let's cook" MVP paragraph (a "Let's cook" final screen with leftover/storage tips), but no file for it was ever re-exported — Miguel confirmed recipe2 was meant to replace recipe as a single updated image, not exist as a second screen, so this build uses just `MFW-05-flexible-recipe.png` and the follow-on paragraph runs as plain text with no second figure. If a second screen is still wanted there, export `MFW-05-flexible-recipe2.png` and say so and I'll add the figure back.
-- The other two case studies (food-save, team-files) still point `thumbnail`/`banner` at their old single hero-cover placeholder — same two-image treatment needed when their new images land.
+- ~~The other two case studies (food-save, team-files) still point `thumbnail`/`banner` at their old single hero-cover placeholder~~ — food-save got its real images and two-image cover treatment in session 18. **team-files** still points `thumbnail`/`banner` at its old single `TF-01-hero-cover.png` placeholder; same treatment needed when its new images land.
 
 ## What changed in this session (2026-08-28, session 16)
 
