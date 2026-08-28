@@ -63,6 +63,27 @@
   --accent-soft:   #e6edff;
   --accent-line:   #bccfff;
 
+  /* ── Color: accent 2 (gold, annotation badges only) ──────
+     Cobalt's near-complement. Solid badge fills over imagery;
+     its glyph rides on --accent2-on (ink) since white fails AA
+     over gold (2.3:1). Never as a connector line: gold is too
+     light to hold over the grey board, so connectors use ink. */
+  --accent2:       #e89e15;
+  --accent2-hover: #cf8c0a;
+  --accent2-press: #a8720a;
+  --accent2-soft:  #fcf1dc;
+  --accent2-line:  #f2d08f;
+  --accent2-on:    var(--ink-900);   /* dark glyph on gold, 7.8:1 */
+
+  /* ── Color: accent 3 (sienna, optional minimal details) ──
+     Parked third note. Not in use yet; kept for small details
+     if a case ever needs a warm mark distinct from gold. */
+  --accent3:       #b8420a;
+  --accent3-hover: #9c360a;
+  --accent3-press: #7e2c08;
+  --accent3-soft:  #fbeee8;
+  --accent3-line:  #f2c4ae;
+
   /* ── Color: status (kept quiet) ─────────────────────────── */
   --positive:      #1f7a4d;
   --positive-soft: #e6f3eb;
@@ -220,6 +241,20 @@
   --accent-press:  #99b8ff;
   --accent-soft:   #122a5e;
   --accent-line:   #1f3a7a;
+
+  /* accent 2 (gold) — glyph stays dark: --accent2-on keeps --ink-900 */
+  --accent2:       #f0ab2e;
+  --accent2-hover: #f5bc52;
+  --accent2-press: #f8cc78;
+  --accent2-soft:  #3a2a08;
+  --accent2-line:  #6b5210;
+
+  /* accent 3 (sienna) — lifted for dark canvas */
+  --accent3:       #e06e36;
+  --accent3-hover: #eb8a58;
+  --accent3-press: #f2a880;
+  --accent3-soft:  #3a1808;
+  --accent3-line:  #6b2810;
 
   --link:          var(--accent);
   --link-hover:    var(--accent-hover);

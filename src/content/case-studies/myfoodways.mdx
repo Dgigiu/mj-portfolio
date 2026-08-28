@@ -6,28 +6,29 @@ role: "Sole UX/UI designer"
 period: "2018 to 2020"
 client: "Foodways"
 domain: "Consumer mobile, sustainability"
-cover: "../../assets/case-studies/myfoodways/MFW-01-hero-cover.png"
+thumbnail: "../../assets/case-studies/myfoodways/MFW-00-cover-thumb.jpg"
+banner: "../../assets/case-studies/myfoodways/MFW-00-cover-banner.jpg"
 order: 2
 draft: false
 ---
 
 import Figure from "../../components/Figure.astro";
-import CompareImages from "../../components/CompareImages.astro";
 
-import hero from "../../assets/case-studies/myfoodways/MFW-01-hero.png";
+import product from "../../assets/case-studies/myfoodways/MFW-01-product.png";
 import problem from "../../assets/case-studies/myfoodways/MFW-02-problem-A.png";
 import solution from "../../assets/case-studies/myfoodways/MFW-03-solution.png";
 import personalization from "../../assets/case-studies/myfoodways/MFW-04-Personalization.png";
-import recipeA from "../../assets/case-studies/myfoodways/MFW-05-flexible-recipe.png";
-import recipeB from "../../assets/case-studies/myfoodways/MFW-05-flexible-recipe2.png";
+import recipe from "../../assets/case-studies/myfoodways/MFW-05-flexible-recipe.png";
 import challenges from "../../assets/case-studies/myfoodways/MFW-06-challenges.png";
+import accessibility from "../../assets/case-studies/myfoodways/MFW-07-accessibility.png";
+import postLaunch from "../../assets/case-studies/myfoodways/MFW-08-post-launch-changes.png";
 
 ## Product
 
-MyFoodways was a sustainable recipes app for iOS and Android designed to help people cook healthy, practical meals with the ingredients they already had in the fridge. The core scenario: it’s 7 PM on a weekday, fatigue sets in, and people default to familiar meals. MyFoodways suggested recipes based on what was on hand, removing the need for an extra shop or tricky substitutions. The aim was to make sustainable cooking feel like a small choice in an everyday routine.
+MyFoodways was a sustainable recipes app for iOS and Android designed to help people cook healthy, practical meals with the ingredients they already had in the fridge. The core scenario: it’s 7 PM on a weekday, fatigue sets in, and people default to familiar meals. MyFoodways suggested recipes based on what was on hand, removing the need for an extra trip to the store or tricky substitutions. The aim was to make sustainable cooking feel like a small choice in an everyday routine.
 
 <Figure
-  src={hero}
+  src={product}
   alt="MyFoodways home screen showing a ‘What’s in your fridge?’ search with example results."
   caption="Ingredient-led discovery using what users already have."
 />
@@ -42,22 +43,27 @@ I was the sole UX/UI designer from March 2018 to December 2020, joining shortly 
 
 ## Problem and context
 
-Swiss authorities commissioned MyFoodways to help households reduce food waste with a mobile-first experience. The real challenge: people wanted to cook sustainably but faced decision fatigue at the end of the day, and most recipes didn’t fit their lives. Hard-to-find ingredients, large portions, tricky substitutions.
+Swiss authorities commissioned MyFoodways to help households reduce food waste with a mobile-first experience. The real challenge: people wanted to cook sustainably but faced decision fatigue at day’s end, and most recipes didn’t fit their lives. Hard-to-find ingredients, large portions, tricky substitutions. It’s a pattern still common in recipe apps today: rigid ingredient lists with no room to improvise, portions fixed regardless of who’s actually cooking.
 
-From the start, we worked under tight constraints: a fixed visual identity from an external agency, an outsourced dev team across time zones, and a hard public launch set for the middle of 2018. I joined in March, which left roughly three months to get the first release out. That runway shaped what shipped. We cut scope deliberately, holding back features like the recipe library for after launch, and kept adding recipes throughout the app’s first year live. Our goal was to make sustainable cooking a minor adjustment, not a lifestyle overhaul.
+<Figure
+  src={problem}
+  alt="Two competitor recipe apps showing a strict pre-set ingredients list and fixed portions regardless of household size."
+  caption="The problem: recipes that don’t fit real life."
+/>
 
-<CompareImages
-  left={problem}
-  leftAlt="A generic rigid recipe screen demanding four servings and unavailable ingredients."
-  leftCaption="The problem: recipes that don’t fit real life."
-  right={solution}
-  rightAlt="The MyFoodways search results showing recipes matched to ingredients on hand."
-  rightCaption="The fix: instant recipes from what’s already in the fridge."
+From the start, we worked under tight constraints: a fixed visual identity from an external agency, with a pastel-heavy palette that predated any of the accessibility work, an outsourced dev team across time zones, and a hard public launch set for June of 2018. I joined in March, which left roughly three months to get the first release out. That runway shaped what shipped. We cut scope deliberately, holding back features like the recipe library for after launch, and kept adding recipes throughout the app’s first year live. Our goal was to make sustainable cooking a minor adjustment, not a lifestyle overhaul.
+
+<Figure
+  src={solution}
+  alt="The MyFoodways search results showing recipes matched to ingredients on hand."
+  caption="The fix: instant recipes from what’s already in the fridge."
 />
 
 ## Research insights
 
-User research and early focus groups confirmed the problem. People loved the sustainability mission but needed practicality. Key findings:
+User research and early focus groups confirmed the problem. People loved the sustainability mission but needed practicality.
+
+Key findings:
 
 - People wanted easy recipes using what was in their fridge right now
 - Portion scaling and ingredient swaps were essential for small households and flexible cooking
@@ -67,7 +73,9 @@ These shaped the app: ingredient-led discovery first, flexible recipes second, l
 
 ## Solution strategy
 
-When I joined, MyFoodways had a clear “fridge-first” vision and chef-curated recipes. What was needed were behavioral enablers: intuitive ingredient swapping and portion scaling. My strategy:
+When I joined, MyFoodways had a clear “fridge-first” vision and chef-curated recipes. What was needed were behavioral enablers: intuitive ingredient swapping and portion scaling.
+
+My strategy:
 
 - Ingredient-led discovery as the primary entry point (“What’s in your fridge?”)
 - Flexible recipes that adapt to household size and available ingredients
@@ -95,42 +103,25 @@ All three answers fed the personalization tab, where they became settings the pe
 
 No-gos did more than hide things. If a recipe used an ingredient someone avoided but a safe alternative existed, the recipe still appeared, with the alternative already swapped in rather than dropped from the results. Add soy to your no-gos and a recipe that called for it would quietly show up with something else in its place. The catalog stayed open instead of shrinking every time someone added a restriction. This is the automatic, profile-driven half of a swap system that also had a manual side inside each recipe, covered below.
 
-That allergies screen is also where the first update after launch changed something small that mattered. Framing the question as allergies turned a cooking preference into a medical declaration. It felt heavier than it needed to be, and didn’t fit people who simply disliked an ingredient or avoided it for reasons that had nothing to do with health. So we reworded it. The onboarding screen became “are there any ingredients you’d rather avoid,” and the setting became “My no-gos.” The softer framing covered a serious allergy and a personal dislike equally, without asking anyone to categorize themselves medically.
+That allergies screen is also where the first update after launch changed something small that mattered. Framing the question as allergies turned a cooking preference into a medical declaration. It felt heavier than it needed to be and didn’t fit people who simply disliked an ingredient or avoided it for reasons that had nothing to do with health. So we reworded it. The onboarding screen became “are there any ingredients you’d rather avoid,” and the setting became “My no-gos.” The softer framing covered a serious allergy and a personal dislike equally, without asking anyone to categorize themselves medically.
 
 ### 3. Flexible recipe flow
 
 Every recipe loaded with smart defaults from the user’s profile:
 
 - **Portion scaling** automatically adjusted to household size (for example “2 adults, 0 kids”) with instant recalculation, making cooking for the right number easier.
-- **Ingredient swaps** appeared via yellow chevrons (spinach → chard → kale). Where the profile handled avoidance automatically, this was the manual, in-the-moment version: out of spinach tonight, tap to see what else works. The swaps still respected your no-gos, so the alternatives offered were always ones you could actually eat. It doubled as a confidence aid for less experienced cooks who don’t yet have the instinct for which substitutions hold up, so a missing ingredient stopped being a reason to abandon the recipe or make an extra trip to the shop.
+- **Ingredient swaps** appeared via yellow chevrons (spinach → chard → kale). Where the profile handled avoidance automatically, this was the manual, in-the-moment version: out of spinach tonight, tap to see what else works. The swaps still respected your no-gos, so the alternatives offered were always ones you could actually eat. It doubled as a confidence aid for less experienced cooks who don’t yet have the instinct for which substitutions hold up, so a missing ingredient stopped being a reason to abandon the recipe or make an extra trip to the store.
 - **“Let’s cook”** generated final cooking steps with the reviewed ingredients and quantities, plus leftover suggestions and storage tips to encourage sustainable habits.
+
+<Figure
+  src={recipe}
+  alt="Recipe view with household-size portion scaling and yellow chevrons indicating ingredient swaps."
+  caption="Adapts to household size, suggests sustainable swaps."
+/>
 
 The “Let’s cook” button was a pragmatic MVP decision. Live, step-by-step cooking updates weren’t technically feasible for v1, so we consolidated everything into a single server call. This gave users one quick path from ingredient review to cooking.
 
-<CompareImages
-  left={recipeA}
-  leftAlt="Recipe view with household-size portion scaling and yellow chevrons indicating ingredient swaps."
-  leftCaption="Adapts to household size, suggests sustainable swaps."
-  right={recipeB}
-  rightAlt="The ‘Let’s cook’ final screen with leftover and storage tips."
-  rightCaption="A single action from ingredients to cooking."
-/>
-
-### 4. Accessibility inside a fixed brand
-
-The visual identity arrived fixed from an external agency, and bright yellow (`#FAD21E`) was its signature color. As an accent it was fine. The problem was that the agency’s design also used it for primary action buttons with white text on top, and white on that yellow scored 1.47:1. The AA threshold for normal text is 4.5:1, so this wasn’t a borderline call.
-
-I flagged it immediately and proposed alternatives: a darker, more toasted orange first, then other colors pulled straight from the brand guide. All were turned down. The color guide was the agency’s to defend, and my PM wouldn’t deviate from it, so the clean fix was off the table.
-
-For a while the problem stayed contained. There were only a handful of these buttons and they always said the same thing, “Sign in” and “Let’s cook,” so people learned them by shape and position. Not good, but survivable once the label was familiar.
-
-In the first update after launch, user feedback confirmed the buttons were hard to read. The labels were already all caps, so the lever I had left was weight. I made the text bolder. It didn’t move the contrast ratio, but it gave the text more presence and made the buttons easier to pick out. A partial mitigation inside the constraint, not a fix.
-
-The Challenges feature, in the last update, finally broke the workaround. Its buttons carried more text, and the text changed from screen to screen, so there was nothing fixed to learn. Bad contrast on a predictable label is one thing. Bad contrast on a label you have to actually read every time is another. That gave me the case to push harder, this time on a new surface rather than against the locked core palette. I designed the challenge buttons as white with an emboss so they still read as tappable, used a warm gray (`#5B5752`) for the label, which cleared AA, and put the brand yellow to work as a state: a button filled yellow once you completed that day’s task. Yellow went from the thing hurting legibility to a signal that meant something.
-
-It was a contained win. The new pattern applied to Challenges, while the original buttons kept their treatment. The lesson stuck anyway. I’d raised the contrast issue at the start and been overruled, mitigated it with the one lever I had, and only won the real change once new conditions made the cost impossible to wave off. Worth flagging these things early, but also worth watching for the moment the argument finally lands.
-
-### 5. Challenges (2020)
+### 4. Challenges (2020)
 
 The last feature I worked on was a structured challenge to nudge habits over a set period. Rather than a self-serve menu, it ran as a cohort. Every user took it on at the same time, with an email and push notifications a few days ahead to build some anticipation.
 
@@ -144,11 +135,37 @@ The one that shipped was “Plant-based Rockstar,” a seven-day challenge built
 
 I designed the full flow for this first challenge, with more planned to follow. The follow-ups were never greenlit, and the format was paused after the first run. I don’t have engagement data to point to, so I’ll only say what I know: one challenge shipped, the rest didn’t, and the idea didn’t become a recurring part of the app.
 
+## Accessibility over time
+
+The visual identity arrived fixed from an external agency. The initial primary color was a soft pink, which had its own legibility problems, and user feedback pushed the team toward yellow instead. I got the revised brand guidelines when I joined the project and worked on the switch from the soft pink to the bright yellow that signaled most of the interactive elements.
+
+Initially, the CTA buttons had regular white text over the primary color. I already suspected white on that particular yellow would be a stretch, so I made it bold and all-caps to improve legibility. At the same time, the recipe tags moved from filled color badges with white text to a dot next to dark text, easier to read and taking up less space. The tab bar’s selected state moved from the soft pink to dark gray before v1 shipped too, defensible both on the general look of iOS apps at the time and on contrast. Three small calls, one instinct.
+
+None of that was enough for the buttons, though. Once live, bright yellow (`#FAD21E`) sat behind primary action buttons with white text on top, and white on that yellow scored 1.47:1. The AA threshold for large text is 3:1, so this wasn’t a borderline call. I flagged it and proposed alternatives, a darker toasted orange first, then other colors pulled straight from the brand guide. All were turned down. The palette was the agency’s to defend, and the yellow had just won a round on user feedback, so it wasn’t moving again. It stayed survivable for a while, only a handful of buttons, always saying the same thing, “Sign in” and “Let’s cook,” so people learned them by shape and position rather than reading them.
+
+<Figure
+  src={accessibility}
+  alt="Comparison of the Beta and Version 1.0 recipe screens showing the button, tag, and tab bar treatments."
+  caption="Quick fixes landed everywhere except the buttons themselves."
+/>
+
+In the first real update after launch, I went through the app for legibility more broadly: section headers went from a light weight to properly dark, cards got more room to breathe, and the ingredient-swap indicator got a more prominent look to communicate it was interactive, among other smaller fixes. The bigger repeat of the same instinct was the Favourites screen: a segmented control became a familiar tab look, dark text signaling the selected tab like the app’s own tab bar, yellow reduced to reinforcement rather than the label’s fill.
+
+<Figure
+  src={postLaunch}
+  alt="Comparison of the Version 1.0 and First Update onboarding and Favourites screens."
+  caption="More fixes followed, this time after launch."
+/>
+
+The Challenges feature, in the last update, finally broke the standing workaround. Its buttons carried more text, and the text changed from screen to screen, so there was nothing fixed left to learn. Bad contrast on a predictable label is one thing. Bad contrast on a label you have to actually read every time is another. That gave me the case to push harder, this time on a new surface rather than against the locked core palette. I designed the challenge buttons as white with an emboss so they still read as tappable, used a warm gray (`#5B5752`) for the label, which cleared AA, and put the brand yellow to work as a state: a button filled yellow once you completed that day’s task. Yellow went from the thing hurting legibility to a signal that meant something.
+
+It was a contained win. The new pattern applied to Challenges, while the original buttons kept their treatment. The lesson stuck anyway: the same accessible instinct showed up on its own, more than once, wherever I had room to act on it. Where I didn’t, I said so, flagged it early, mitigated what I could, and waited for the moment the argument would finally land.
+
 ## Collaboration and delivery
 
 I worked mostly asynchronously with PM Laura Robinson, switching to formal syncs for key milestones with the Lisbon team and developers. Autonomy continued even when Laura was away, supported by clear documentation.
 
-Handoffs used annotated Sketch files and Laura’s written specs for amendments. We scoped pragmatically: “Let’s cook” was the simple solution, while a “favorites cookbook” was deferred until after launch. Post-launch changes, such as inclusive language, were driven by user feedback.
+Handoffs used annotated Sketch files and Laura’s written specs for amendments. We scoped pragmatically: “Let’s cook” was the simple solution, while “Favourites cookbook” was deferred until after launch. Post-launch changes, such as inclusive language, were driven by user feedback.
 
 ## Impact and reflections
 
@@ -164,7 +181,7 @@ The fridge-first premise and ingredient swapping, the two bets the whole experie
 
 - **Inclusive language.** “Food allergies” → “My no-gos” made profiles accessible beyond medical contexts.
 - **MVP pragmatism.** A single “Let’s cook” button beat complex live updates.
-- **Accessibility advocacy.** White-on-yellow buttons failed AA. I flagged it early and was overruled, and the contrast stayed survivable only because the labels never changed. After launch, user feedback pushed me to make the text bolder, the one lever I had. When Challenges later introduced variable button text, I had the case to redesign them: white buttons with a readable gray label, yellow repurposed as a completion state. A contained win, but it taught me to flag issues early and watch for the moment the argument can finally land.
+- **Accessibility advocacy.** White-on-yellow buttons failed AA. I paired the yellow switch with bold, all-caps text from the start, anticipating the problem, but the color itself was locked, and I was overruled on every alternative I proposed. Where I had room to act, the same instinct kept resurfacing: the tab bar before launch, the Favourites screen after. When Challenges later introduced variable button text, I had the case to redesign the buttons entirely, white with a readable gray label, yellow repurposed as a completion state. A contained win on the core CTAs, since “Sign in” and “Let’s cook” kept their original treatment throughout.
 - **Reading a quiet result.** I designed and shipped the first cohort challenge, “Plant-based Rockstar.” The planned follow-ups were paused and never built. Without hard data, I won’t claim it changed habits. Not every bet becomes a pillar, and being honest about which ones didn’t is part of the work.
 
 ### Reflections

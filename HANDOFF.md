@@ -1,6 +1,6 @@
 # Handoff
 
-Last updated: 2026-06-15 (session 13)
+Last updated: 2026-08-28 (session 17)
 
 ## Where we are
 
@@ -11,6 +11,58 @@ The staging deploy emits `<meta name="robots" content="noindex">` on every page 
 Astro is configured with `site: 'https://dgigiu.github.io'` and `base: '/mj-portfolio'`. All internal links use the normalized base exported from [src/lib/paths.ts](src/lib/paths.ts).
 
 Build is clean (`npm run build` → 6 pages, 0 errors / 0 warnings).
+
+## What changed in this session (2026-08-28, session 17)
+
+Full resync of [myfoodways.mdx](src/content/case-studies/myfoodways.mdx) from Miguel's **[docs/Case Studies/cs-myfoodways-app.md](docs/Case Studies/cs-myfoodways-app.md)** (edited with Claude Chat). First pass in this session had only folded in the images + accessibility section and left the rest of the older prose alone; Miguel flagged that his broader text edits weren't showing up, so this pass rewrote the whole body from the doc, not just the diff. Build clean (0/0), all images verified 200 + decoding in-browser, 8 figures render in the right order.
+
+- **Whole-body rewrite from the doc.** Every section (Product, Problem and context, Research, Solution strategy, Key features, Accessibility, Collaboration, Impact and reflections) now matches the doc's current text. Only normalized two established, pre-existing site conventions that predate this case: sentence-case headings ("Problem and context" not "Problem & Context" — matches food-save.mdx/team-files.mdx) and curly quotes/apostrophes (per the "use typographic apostrophes and quotes" commit). Also US-spelled "Favorites" (doc had UK "Favourites") per the site's US English rule, and dropped bullets' trailing semicolons to match the site's no-trailing-punctuation list style.
+- **Structural change carried over from the doc:** Problem and context now runs as two sequential single figures (problem image → paragraph → solution image) rather than the old side-by-side `<CompareImages>`. `CompareImages` import removed from this file since nothing uses it anymore.
+- **Accessibility is its own top-level section** (`## Accessibility over time`), after Key features, before Collaboration. Two new figures in it: `MFW-07-accessibility.png` and `MFW-08-post-launch-changes.png`.
+- **Covers switched to jpg.** Miguel exported both `.jpg` and `.png` versions of the covers on purpose (jpg for compression, since they're photographic). Switched `thumbnail`/`banner` to the `.jpg` sources and deleted the now-unused `.png` duplicates. Both jpgs confirmed exact target dimensions: thumb 1200×900 (4:3), banner 1920×960 (2:1).
+- **Renamed on disk:** `MFW-01-hero.png` → `MFW-01-product.png`; `MFW-08-post launch changes.png` → `MFW-08-post-launch-changes.png` (spaces break JS imports).
+
+### Open item for Miguel
+
+- **`MFW-05-flexible-recipe2.png` still doesn't exist.** The doc's Flexible recipe flow section still narrates a second image after the "Let's cook" MVP paragraph (a "Let's cook" final screen with leftover/storage tips), but no file for it was ever re-exported — Miguel confirmed recipe2 was meant to replace recipe as a single updated image, not exist as a second screen, so this build uses just `MFW-05-flexible-recipe.png` and the follow-on paragraph runs as plain text with no second figure. If a second screen is still wanted there, export `MFW-05-flexible-recipe2.png` and say so and I'll add the figure back.
+- The other two case studies (food-save, team-files) still point `thumbnail`/`banner` at their old single hero-cover placeholder — same two-image treatment needed when their new images land.
+
+## What changed in this session (2026-08-28, session 16)
+
+Split the single case-study `cover` image into **two independent images per case** so Miguel can compose and crop the home card and the case-page hero separately. Miguel is producing the new images; this session was the code side. Build clean (`npm run build` → astro check + 7 pages, 0 errors).
+
+- **Schema ([src/content/config.ts](src/content/config.ts)):** `cover` removed; replaced by two optional fields, `thumbnail` and `banner`. Each falls back to the other in code, so a case with only one image still renders everywhere.
+- **Wiring:** [CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro) hero now uses `banner ?? thumbnail`; home cards ([index.astro](src/pages/index.astro)) and the "More case studies" list use `thumbnail ?? banner`. [work/[slug].astro](src/pages/work/[slug].astro) passes both through. `CaseStudyCard`'s prop stayed the generic `cover` (caller decides which image to feed it).
+- **All three MDX files** (food-save, myfoodways, team-files) now set both `thumbnail` and `banner` to the existing `*-hero-cover.png` as a placeholder, so nothing breaks until the new images land.
+
+### Image target sizes (for the new images)
+
+- **Thumbnail (home + "more case studies" cards):** hard **4:3** crop, `object-fit: cover` trims overflow. Max on-screen width 456px; Astro emits 480/800/1200 variants. **Export 1200 × 900 px.** Keep key content off the edges (center-cropped) and clear of the rounded corners.
+- **Banner (case study page hero):** locked to **2:1** (illustrative strip), enforced via `aspect-ratio: 2 / 1` + `object-fit: cover` on `.cover-img` so it reserves space (no layout shift) and crops any off-ratio export instead of distorting. Max on-screen width 960px (`--content-wide`); Astro emits 960/1440/1920 variants. **Export 1920 × 960 px.** Miguel chose 2:1 since the banner is now more illustrative than the old cover.
+
+**When new images land:** drop files into `src/assets/case-studies/<slug>/`, point `thumbnail:` and `banner:` at them in each MDX frontmatter (currently both point at the same placeholder), then `npm run build`.
+
+## What changed in this session (2026-07-01, session 14)
+
+Design-system work, mostly in the **Figma** file (MJ Design System, `rUbsiKyYr0xITgTGVXJjJT`), plus a token wire-up in code. No site UI changed; the new accents have no consumer in the Astro site yet (there is no badge/annotation component), so this is design-system-only until those ship. Not yet browser-relevant, so no build/preview run.
+
+- **Spacing + radius variables added to Figma** (Primitives collection): `spacing/0…40` (8pt grid, mirrors `tokens.css`, scoped WIDTH_HEIGHT + GAP) and `radius/none…pill` (scoped CORNER_RADIUS). Code already had these; this brought Figma to parity.
+- **Second accent = gold `#e89e15`** ("accent 2"). Context: Miguel needs annotation badges (warning triangle, etc.) that read over case study screenshots; the old `status/warning` amber washed out. Gold is cobalt's near-complement. In Figma: new `gold/*` primitive ramp; the existing `accent2/*` semantic tokens were **repointed** from sienna to gold (they already backed the warning badge, so it flipped automatically).
+- **Decoupled connector from badge.** Key finding: no gold can be both "gold" and dark enough to stay legible over the grey Figma board (a thin dashed line needs luminance contrast; gold is intrinsically light). So the badge carries the color and the **connector line goes neutral ink**. The Step Connector component's `Color=Warning` variant became `Color=Ink` (rebound to `ink/700`). `Color=Cobalt` left as-is. **Caveat for next session:** if the Step Connector is consumed as a library component in the case-study working file, those instances may need reattaching after the variant rename.
+- **Icon contrast fix (AA).** White over gold is only ~2.3:1 (fails). The warning glyph now uses a new `accent2/on-accent2` token → `ink/900` (`#181818`, ~7.8:1). The cobalt star glyph keeps white `fg/on-accent`. So "on-accent" is per-accent now: white on cobalt, ink on gold.
+- **Sienna `#b8420a` kept as "accent 3"** (optional, minimal details, nothing uses it yet). New `accent3/*` tokens aliased to the `sienna/*` primitives. Figma colors page reorganized: sections now Cobalt · accent → **Gold · accent 2** → Sienna · accent 3.
+- **Wired into [tokens.css](src/styles/tokens.css):** added `--accent2*` (+ `--accent2-on: var(--ink-900)`) and `--accent3*` blocks after the cobalt accent, with matching dark-mode overrides. `--accent2-on` intentionally stays `--ink-900` in dark mode too (gold badge stays light in dark, so its glyph stays dark).
+- **DESIGN.md not regenerated** — its color frontmatter/prose still describes only cobalt. Regenerate with `/impeccable document` when convenient, or leave until the accents actually appear in the UI.
+
+## What changed in this session (2026-07-01, session 15)
+
+Ran `/impeccable document` (refresh mode) to bring [DESIGN.md](DESIGN.md) and its sidecar [.impeccable/design.json](.impeccable/design.json) up to date with what's actually shipped and tokenized; no site code changed. Also updated the impeccable skill itself, v3.5.0 → v3.9.0 (`npx impeccable skills update`).
+
+- **Gold/sienna documented as reserved, not live.** Added Secondary (gold `#e89e15`) and Tertiary (sienna `#b8420a`) color groups to DESIGN.md, both marked token-only with a new **Reserved Accent Rule**: neither has a consumer in the shipped site (the annotation-badge component they were built for hasn't been built), so nothing should reference `--accent2`/`--accent3` yet.
+- **Fixed a real inaccuracy, not just an omission.** The prior DESIGN.md's "One Blue Note Rule" claimed cobalt appears only at interaction points, which the shipped site has contradicted since session 12 (full-bleed hero panel, hero glow, contact band, footer strip are all non-interactive cobalt). Added a **Sanctioned Surfaces Rule** naming the four approved uses explicitly, so the doc now matches HANDOFF's "Decisions that must not regress" instead of silently disagreeing with it.
+- **Documented two components that existed in code but not in the doc:** the Case Study Card's benefit standfirst line (serif, primary ink, deliberately not cobalt) and a new "Cobalt Band" signature component covering the ContactOutro/Footer pairing (two-tone full-bleed cobalt, shared hover-to-Cobalt-Line pattern).
+- **Do's and Don'ts** gained matching entries: gold-on-white AA failure (2.3:1, use Gold-On-Ink `#181818` instead), and a guard against adding a fifth full-bleed cobalt surface without the same sign-off the original four got.
+- Sidecar `.impeccable/design.json`: added `colorMeta` tonal ramps for gold/sienna, a new "Cobalt Band" component snippet, and synced `narrative` (rules/dos/donts) verbatim with the DESIGN.md prose.
 
 ## What changed in this session (2026-06-15, session 13)
 

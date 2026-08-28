@@ -15,7 +15,15 @@ const caseStudies = defineCollection({
       period: z.string(),
       client: z.string(),
       domain: z.string(),
-      cover: image().optional(),
+      // Two distinct images per case, so each surface can be composed and
+      // cropped independently:
+      //   thumbnail — home + "more case studies" cards. Hard 4:3 crop
+      //     (object-fit: cover). Export 1200×900.
+      //   banner — case study page hero. Fixed 2:1 illustrative strip
+      //     (enforced via aspect-ratio in CaseStudyLayout). Export 1920×960.
+      // Both optional; each falls back to the other if only one is supplied.
+      thumbnail: image().optional(),
+      banner: image().optional(),
       order: z.number(),
       draft: z.boolean().default(false),
     }),

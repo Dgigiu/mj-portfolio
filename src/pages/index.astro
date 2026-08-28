@@ -80,7 +80,7 @@ const heroPortraitPreload = await getImage({
               client={s.data.client}
               domain={s.data.domain}
               period={s.data.period}
-              cover={s.data.cover}
+              cover={s.data.thumbnail ?? s.data.banner}
             />
           </li>
         ))
