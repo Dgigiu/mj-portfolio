@@ -4,13 +4,13 @@ Last updated: 2026-08-31 (session 19)
 
 ## Where we are
 
-The portfolio is live at **https://dgigiu.github.io/mj-portfolio/**, deployed via GitHub Actions to GitHub Pages. Repo at **https://github.com/Dgigiu/mj-portfolio**. The custom domain `migueljss.com` is held until content settles (Miguel is working on case study images); switch steps in "Still to do" below.
+**Domain switch happened this session.** The portfolio now lives at **https://migueljss.com**, deployed via GitHub Actions to GitHub Pages. Repo at **https://github.com/Dgigiu/mj-portfolio**. The old staging URL `https://dgigiu.github.io/mj-portfolio/...` no longer resolves to a working site now that `base` is gone (root-relative paths only exist at the new domain); this is expected, not a regression, see the session 19 entry below.
 
-The staging deploy emits `<meta name="robots" content="noindex">` on every page (added session 10) so the temporary `/mj-portfolio/...` URLs never get indexed; the guard keys off the github.io host in `Astro.site` and clears automatically at the domain switch.
+Astro is configured with `site: 'https://migueljss.com'` and no `base` (removed). All internal links use the normalized base exported from [src/lib/paths.ts](src/lib/paths.ts), which now just collapses to `/`.
 
-Astro is configured with `site: 'https://dgigiu.github.io'` and `base: '/mj-portfolio'`. All internal links use the normalized base exported from [src/lib/paths.ts](src/lib/paths.ts).
+The staging-only `noindex` guard (added session 10) is gone automatically: it was keyed off the github.io host in `Astro.site`, which is no longer that host. Nothing to undo, this was the designed behavior.
 
-Build is clean (`npm run build` → 6 pages, 0 errors / 0 warnings).
+Build is clean (`npm run build` → 7 pages, 0 errors / 0 warnings).
 
 ## What changed in this session (2026-08-31, session 19)
 
@@ -31,6 +31,15 @@ Miguel updated the background on the Figma frames for Food Save and MyFoodways; 
   - **New 1920×1008 exports landed same session**: Miguel updated all three Figma covers in place (same node IDs, `FS-00-cover-banner`/`MFW-00-cover-banner`/`TF-00-cover-banner` frames resized from 1920×960 to 1920×1008, the separate thumb frames deleted from all three files). Re-exported and swapped in at the renamed paths. The `fit: "cover"` transitional crop mentioned above is no longer doing any real work now that the source matches the target ratio exactly, confirmed by the generated OG webp coming out at precisely 1200×630 (no longer 1200×600 short of target, which is what an unmatched ratio without `fit: "cover"` would have produced).
   - Build clean (7 pages, 0/0/0), browser-verified: OG meta tag resolves to a real `1200×630` webp per case study (verified pixel dimensions with the new sources, not just the URL), home cards and case-page hero both render at the new ratio with the actual new compositions, no console errors, no leftover `thumbnail` references anywhere in `src/`.
 - **Home hero headline split into two visual beats** ([index.astro](src/pages/index.astro)), Miguel's follow-up once the single-block headline was live: "Hi! I'm Miguel." reads as its own line at the full size, then a gap, then "I design products from first sketch to first release and beyond." wraps on its own at a smaller size for hierarchy (Miguel supplied a reference screenshot of the target look). Markup: the `<h1>` now wraps two `<span>`s (`.hero-title-lead`, `.hero-title-body`) instead of one text node, still a single `<h1>` landmark. `.hero-title-body` is `font-size: 0.65em` (relative to the h1's own responsive `clamp(44px, 5.3vw, 72px)`, so it scales at every breakpoint without its own clamp) with slightly tighter `letter-spacing: -0.02em`. Both spans are `display: block` with `text-wrap: balance` set directly on each, since making them block-level splits the h1 into two separate wrapping contexts and balance doesn't inherit across that split. The `margin-bottom: 0.25em` gap between them is on `.hero-title-lead`, also em-based off its own (full) size. Browser-verified at 375/1440/1920px against Miguel's reference, no console errors, build clean (7 pages, 0/0/0).
+- **Domain switch to migueljss.com, executed.** Miguel added DNS at his registrar (Namecheap): 4× A records on `@` to the GitHub Pages IPs (`185.199.108.153`–`.111.153`) and a CNAME on `www` → `dgigiu.github.io`. First pass had two of the four A records mistakenly on `www` instead of `@`; caught and corrected before proceeding. Once DNS was confirmed:
+  - **astro.config.mjs**: `site` → `https://migueljss.com`, `base` removed entirely.
+  - **public/robots.txt**: sitemap URL updated to `https://migueljss.com/sitemap-index.xml`.
+  - **public/CNAME** created with `migueljss.com` (new file, wasn't in the repo before).
+  - **Custom domain registered on GitHub Pages** via `gh api -X PUT repos/Dgigiu/mj-portfolio/pages -f cname=migueljss.com`. Confirmed via `gh api repos/Dgigiu/mj-portfolio/pages`: `html_url` now `http://migueljss.com/`, DNS already showing verified (`pending_domain_unverified_at: null`) since the records were in place first, HTTPS cert in progress (`https_certificate.state: "authorization_created"`, `https_enforced: false` until that finishes).
+  - No other code changes needed: both `src/lib/paths.ts`'s `base` export and `BaseLayout.astro`'s staging-`noindex` guard were written back in sessions 10–11 specifically to self-resolve at this exact moment (base collapses to `/`, noindex clears because `Astro.site.hostname` no longer ends in `github.io`), and did.
+  - Build clean (7 pages, 0/0/0), verified in the built output: all internal links root-relative (no `/mj-portfolio/` prefix), zero `noindex` occurrences, canonical/`og:image`/sitemap all point to `migueljss.com`, `CNAME` file present in `dist/`. Browser-verified the dev server serves correctly at `/` with no base prefix.
+  - **Still open**: "Enforce HTTPS" in repo Settings → Pages can't be ticked until the cert finishes provisioning (a few minutes typically). Check `gh api repos/Dgigiu/mj-portfolio/pages` for `https_certificate.state` to become `"issued"`, then enable it. Also worth a final spot-check once DNS is fully settled everywhere: confirm `https://migueljss.com`, `https://www.migueljss.com`, and the old `https://dgigiu.github.io/mj-portfolio/...` all behave sensibly (the last one will 404 past the root, which is expected, see "Where we are").
+
 ## What changed in this session (2026-08-29, session 18)
 
 Full resync of [food-save.mdx](src/content/case-studies/food-save.mdx) from **[docs/Case Studies/cs-food-save-app.md](docs/Case Studies/cs-food-save-app.md)**, plus the first real image set for this case (previously all placeholders). Build clean (7 pages, 0/0/0), all 5 new images verified 200 in-browser and correctly wired into both the case page and the home card.
@@ -241,12 +250,7 @@ Per-session detail beyond this lives in the git log; commit messages carry the s
 ### Still to do
 - **Per-case-study OG images.** The default 1200×630 shipped in session 8 ([scripts/build-og-image.mjs](scripts/build-og-image.mjs)) and is still the only one in use. All three cases now have final cover images (session 19), so nothing blocks building per-case-study versions: extend the same script and pass `ogImage` through CaseStudyLayout → BaseLayout (the prop plumbing already exists).
 - **Two new case studies on hold.** `docs/Case Studies/cs-board-game-app.md` and `cs-office-editor.md` are written but not on the site. When ready, each needs cover/inline images under `src/assets/case-studies/<slug>/`, a new `.mdx` in `src/content/case-studies/`, and an `order` value in the frontmatter.
-- **Switching to migueljss.com.** When ready:
-  1. Set `site: 'https://migueljss.com'` and remove `base` in `astro.config.mjs` (this also clears the staging `noindex` automatically; confirm it is gone from the built HTML).
-  2. Update the sitemap URL in [public/robots.txt](public/robots.txt) (currently hardcoded to the staging domain).
-  3. Restore `public/CNAME` with `migueljss.com`; run `gh api -X PUT repos/Dgigiu/mj-portfolio/pages -f cname=migueljss.com`.
-  4. Add apex A records at the registrar (`185.199.108.153` to `.111.153`) and optional AAAA records; tick "Enforce HTTPS" in repo Settings → Pages.
-  5. Spot-check that old `dgigiu.github.io/mj-portfolio/...` URLs redirect somewhere sensible.
+- ~~Switching to migueljss.com~~ — done this session (session 19), see the changelog entry above. Only remaining piece: enable "Enforce HTTPS" in repo Settings → Pages once the cert finishes provisioning.
 - **Case study updates.** `docs/Case Studies/` is gitignored; drop updated `.docx` or images there and Claude can refold into the MDX.
 
 ## Quick reference
