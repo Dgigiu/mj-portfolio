@@ -6,14 +6,13 @@ role: "Co-founder and founding designer"
 period: "2018 to 2025"
 client: "ikuTeam"
 domain: "B2B SaaS, Atlassian ecosystem"
-thumbnail: "../../assets/case-studies/team-files/TF-01-hero-cover.png"
-banner: "../../assets/case-studies/team-files/TF-01-hero-cover.png"
+thumbnail: "../../assets/case-studies/team-files/TF-00-cover-thumb.jpg"
+banner: "../../assets/case-studies/team-files/TF-00-cover-banner.jpg"
 order: 1
 draft: false
 ---
 
 import Figure from "../../components/Figure.astro";
-import CompareImages from "../../components/CompareImages.astro";
 
 import connectFolder from "../../assets/case-studies/team-files/TF-02-connect-folder.png";
 import attachFiles from "../../assets/case-studies/team-files/TF-03-attach-files.png";
@@ -26,19 +25,27 @@ import designSystem from "../../assets/case-studies/team-files/tf-getting-starte
 
 Team Files connects Jira and Confluence to cloud storage providers like Dropbox and SharePoint, so teams can attach and edit files without creating endless duplicates. Instead of downloading, editing locally, and re-uploading new versions, users link files and folders directly from their cloud drives and open them in a click. Updates happen in the original storage, so everyone sees the latest version.
 
+A normal Confluence attachment shows as a small static thumbnail, frozen at the moment it was uploaded and impossible to edit without downloading it first. Team Files replaces that with a full preview inline, one click away from edit mode, and the preview keeps updating as the file changes, whether that happens in Team Files or back in the original storage.
+
+<Figure
+  src={valueProp}
+  alt="Comparison of a frozen Confluence attachment against a live Team Files preview, one click from editing."
+  caption="A frozen Confluence attachment versus a live preview, one click from editing."
+/>
+
 ## Company
 
-Team Files is made by ikuTeam and sold on the Atlassian Marketplace. It grew out of a previous startup I co-founded: TOPDOX, a mobile, single-user document tool that never found a sustainable business but surfaced a clearer opportunity. Individual users didn’t get enough value from what we had built, while teams had a much stronger use case. We carried that one idea forward, helping teams with the work around their documents, and it became ikuTeam, bootstrapped with no external funding.
+Team Files is made by ikuTeam and sold on the Atlassian Marketplace. It grew out of a previous startup I co-founded: TOPDOX, a mobile, single-user document tool that never found a sustainable business, but surfaced a clearer opportunity. Individual users didn’t get enough value from what we had built, while teams had a much stronger use case. We carried that one idea forward, helping teams with the work around their documents, and it became ikuTeam, bootstrapped with no external funding.
 
 ## Role
 
-I was one of three founders and the only designer from 2018 to 2025. During that time our team grew to seven people. I handled UX and UI, branding, communication, UX writing, and later product documentation. As the sole designer I shaped the product from initial flows and visual identity to the design system, handoff, and ongoing improvements.
+I was one of three founders and the only designer from 2018 to 2025. During that time, our team grew to seven people. I handled UX and UI, branding, communication, UX writing, and later, product documentation. As the sole designer, I shaped the product from initial flows and visual identity to the design system, handoff, and ongoing improvements.
 
 ## Problem and context
 
-Team Files is for knowledge workers in Jira and Confluence, including software teams, support, marketing, operations, and others. The main problem was clear. Once someone attached a document to an issue or page, collaboration became a cycle of downloading, editing, and re-uploading, leading to duplicates and version confusion.
+Team Files is for knowledge workers in Jira and Confluence, including software teams, support, marketing, operations, and others. The main problem was clear: once someone attached a document to an issue or page, collaboration became a cycle of downloading, editing, and re-uploading, leading to duplicates and version confusion.
 
-Teams were wasting time, cluttering Jira and Confluence with copies, and often losing track of which file was the latest. Cloud storage providers had already solved collaboration, but the integration with Atlassian tools was weak. Our goal was to bring cloud files into Jira and Confluence in a way that respected how these teams actually worked: one source of truth, one-click access, and no extra friction.
+Teams were wasting time, cluttering Jira and Confluence with copies, and often losing track of which file was “the latest.” Cloud storage providers already solved collaboration, but the integration with Atlassian tools was weak. Our goal was to bring cloud files into Jira and Confluence in a way that respected how these teams actually worked: one source of truth, one-click access, and no extra friction.
 
 ## Strategy
 
@@ -48,53 +55,53 @@ As the product matured and the main flows became stable, we shifted from just ma
 
 A few of those changes stuck with me. Some actions weren’t visible enough, so I added a dedicated preview button to the file options, since many people never realized they could open a full-screen preview. We added contextual help, with each part of the app linking to the relevant documentation right where you needed it. And we rewrote error messages so each one guided the user toward a resolution, with no more “something went wrong” dead ends. Accessibility ran through all of it, as it did through every release: contrast, legibility, clear system feedback, and error tolerance. No single change was dramatic on its own. But work like this, alongside steady improvements to stability and usability, is the kind of thing that quietly compounds into a product people stay with.
 
-<Figure
-  src={connectFolder}
-  alt="First-time setup screen for connecting a cloud storage folder to an Atlassian project."
-  caption="First-time setup: connect cloud storage and link the right folders to projects."
-/>
-
 ## Core UX challenges
 
-The biggest challenge was always the core flow: attaching a file in a way that was more powerful than a simple link but still felt straightforward. First-time users had to connect a cloud account, connect a folder to a project, then select files to attach. Powerful, but complex, so over the years I redesigned this flow many times to simplify the steps and clarify the language.
+The biggest challenge was always the core flow: attaching a file in a way that was more powerful than a simple link but still felt straightforward. First-time users had to connect a cloud account, connect a folder to a project, then select files to attach. Powerful, but complex, so over the years I redesigned this flow many times to simplify the steps and clarify the language. A small addition to that flow: a live preview showed how attachments would look on the page before you attached them.
 
-One small redesign captures the approach. To connect a folder, users picked from their list of connected storages. But the same path ran even when no storage was connected yet, dropping users into an empty list. So I had “connect folder” take them straight to connecting a storage instead, then land them right back in the flow to select folders. One step less, and it tested well.
+<Figure
+  src={attachFiles}
+  alt="Team Files attach flow: opening the dialog, selecting files or folders, and attaching to a Jira issue, with a live preview of how attachments will look on the page."
+  caption="Open the dialog, select files or folders, and attach to the page. The live preview shows how attachments will look on the page."
+/>
+
+One small redesign captures the approach. To connect a folder, users picked from their list of connected storages. But the same path ran even when no storage was connected yet, dropping users into an empty list. So I had “connect folder” take them straight to connecting a storage instead, then land them right back in the flow to select folders. One step less, and it tested well. The same screen also carried permissions settings, letting people define which teammates could access the attached folder and whether they had edit rights.
+
+<Figure
+  src={connectFolder}
+  alt="Team Files connect folder flow: empty state leading straight to connecting a cloud storage, then back into folder selection, with permissions settings for access and edit rights."
+  caption="Empty state routes straight to connecting a storage, then back into folder selection. Permissions settings define who can access the folder and whether they can edit it."
+/>
 
 On its own this is a small thing. But the path to making Team Files better was built from moments like it, the kind of friction you only notice once you’ve watched enough people hit it over time. That noticing is something long tenure on a product buys you that a short engagement never can.
 
-Another turning point was removing mandatory authentication from the app’s first version. This was a real engineering achievement, but it removed an important moment to explain the product. Most users never chose to install Team Files; their admin did, and the first they saw of it was a panel sitting inside an issue, with no context for what it was. So I moved the explaining into the product itself: empty states that guided users toward connecting their first folder, and a short in-app tour. The first-run empty state became the real onboarding, not a placeholder.
+Another turning point was removing mandatory authentication from the app’s first version. This was a real engineering achievement, but it removed an important moment to explain the product. Most users never chose to install Team Files; their admin did, and the first they saw of it was a panel sitting inside an issue, with no context for what it was. So I moved the explaining into the product itself: empty states that guided users toward connecting their first folder and a short in-app tour. The first-run empty state became the real onboarding, not a placeholder.
 
 That call was strategic as much as design. It simplified access for everyone, especially the large share of users who only wanted to view attached files and previously had to create an account just to look. It also reinforced something for me: when you can’t control where someone enters a product, every default state has to teach.
 
 We also had to design for narrow spaces, especially in Jira views. Team Files isn’t a mobile app, but it carries many of the same constraints: tight panels, a wide range of screen sizes, and information that has to be prioritized so the most important things survive when space runs short. I planned layouts so the app stayed usable in a small side panel and a wide full-page view alike.
 
-<Figure
-  src={attachFiles}
-  alt="Selecting files and folders from connected cloud storage to attach to a Jira issue."
-  caption="Attach files and folders directly to issues and pages. No more uploads or copies."
-/>
-
 ## Design execution
 
-Beyond the core connect-and-attach flows above, I owned the full surface of the product over seven years:
+Beyond the core connect-and-attach flows already described, I owned the full surface of the product over seven years:
 
 - **Search.** I designed a search system for finding folders inside connected storage, working around the technical limits that always made search a hard problem in this product.
-- **Layout options and responsive behavior.** Layout modes and display options so teams could choose how files appeared, balancing density and readability, including the responsive and mobile behavior these views needed.
+- **Layout options and responsive behavior.** Layout modes and display options so teams could choose how files appeared, balancing density and readability, including handling the responsive and mobile behavior these views needed.
 - **Automation and admin settings.** The setup for automation flows, and later a review and overhaul of admin settings, with clearer configuration for admins managing multiple projects and storage connections.
 
 <Figure
   src={layout}
-  alt="Layout options letting teams choose between list, grid, and detailed views."
-  caption="Layout options let teams choose how files appear, balancing density and readability."
+  alt="Team Files layout options showing density and display mode settings for how attached files appear."
+  caption="Layout modes and display options, balancing density and readability."
 />
 
 <Figure
   src={automation}
-  alt="Admin settings screen for configuring automation rules and storage connections."
-  caption="Clear admin settings for managing multiple projects and storage connections."
+  alt="Team Files admin settings screen for managing automation flows and storage connections across projects."
+  caption="Automation setup and admin settings, reworked for teams managing multiple projects and storage connections."
 />
 
-Alongside the product work, I established the design system. It started as Team Files components extending the Atlassian Design System Figma library to speed up my own prototyping and keep the experience coherent across Jira, Confluence, and ikuTeam’s other apps. Over time it outgrew the design side. By the time I left, it had become something engineers were actively building from, with my role shifting from author to providing direction. A system that crosses from Figma into the codebase is the point where it stops being a designer’s artifact and starts being shared infrastructure.
+Alongside the product work, I established the design system. It started as Team Files components extending the Atlassian Design System Figma library to speed up my own prototyping and keep the experience coherent across Jira, Confluence, and ikuTeam’s other apps. Over time it outgrew the design side: by the time I left, it had become something engineers were actively building from, with my role shifting from author to providing direction. A system that crosses from Figma into the codebase is the point where it stops being a designer’s artifact and starts being shared infrastructure.
 
 <Figure
   src={designSystem}
@@ -108,7 +115,7 @@ I also improved my own process along the way. I moved from Sketch to Figma, and 
 
 I defined the visual and brand guidelines for ikuTeam, but inside the product the brand stayed deliberately subtle. Team Files was meant to feel like a natural part of Jira and Confluence, with productivity and clarity taking priority over strong branding.
 
-We faced real technical constraints. We bootstrapped the project and grew at a steady pace, which sometimes slowed progress but made it more thoughtful. Security needs and browser rules also shaped the user experience. For example, many users wanted to open files in new tabs, but browser security often prevented us from doing so. In those cases we had to choose between a less-than-ideal interaction and no feature at all, so we carefully designed around those limits.
+We faced real technical constraints. We bootstrapped the project and grew at a steady pace, which sometimes slowed progress but made it more thoughtful. Security needs and browser rules also shaped the user experience. For example, many users wanted to open files in new tabs, but browser security often prevented us from doing so. In those cases, we had to choose between a less-than-ideal interaction and no feature at all, so we carefully designed around those limits.
 
 I worked closely with engineering from the start of each proposal. I preferred open discussion over just handing off designs, checked feasibility early, and adjusted designs when technical limits arose, while still keeping core user experience principles intact.
 
@@ -117,12 +124,6 @@ I worked closely with engineering from the start of each proposal. I preferred o
 As a founder and the only designer, my work didn’t stop at the product. If something had a visual or written side, I was usually the one doing it. I created the Atlassian Marketplace listings, including screenshots and demo videos, and I designed, wrote, and coded the marketing site. I produced the documentation, promotional materials, and the assets we brought to Atlassian events, including Team ’23 in Las Vegas and Unleash 2023 in Amsterdam, both of which I attended.
 
 This wasn’t a separate job from designing the product. It was the same ownership extended across every surface where users and prospects met the work, from a Jira panel to a conference booth.
-
-<Figure
-  src={valueProp}
-  alt="Marketplace value-proposition view for Team Files."
-  caption="Public-facing marketplace presence, reflecting the same calm, native-feeling system."
-/>
 
 ## Impact and learnings
 

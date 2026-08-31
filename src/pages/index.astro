@@ -50,9 +50,9 @@ const heroPortraitPreload = await getImage({
 
     <div class="container hero-inner">
       <div class="hero-content">
-        <h1 id="hero-title">Calm products <br class="hero-break" />for complex work.</h1>
+        <h1 id="hero-title">Hi! I’m Miguel. I design products from first sketch to first release and beyond.</h1>
         <p class="hero-subtitle">
-          I’m Miguel. For 20+ years I’ve designed SaaS and mobile products, often the sole designer alongside small engineering and product teams. The case studies below follow a few of those products from first sketch to launch and the years after.
+          For 20+ years I’ve designed SaaS and mobile products, connecting user needs with business goals. A few of those stories are below.
         </p>
         <a href="#work" class="hero-scroll" aria-label="Jump to selected work">
           <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -227,21 +227,6 @@ const heroPortraitPreload = await getImage({
   .hero-content {
     max-width: 600px;
     transform: translateY(var(--space-12));
-  }
-
-  /* The headline breaks "Calm products" / "for complex work." on its own line.
-     The font ceiling (72px) is set so the longer line seats inside the 600
-     column on one row, giving a clean two-line title that still clears the
-     portrait. Below the phone breakpoint the forced break is dropped and the
-     title wraps naturally instead. */
-  .hero-break {
-    display: inline;
-  }
-
-  @media (max-width: 480px) {
-    .hero-break {
-      display: none;
-    }
   }
 
   .hero h1 {
