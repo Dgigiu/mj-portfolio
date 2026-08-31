@@ -1,6 +1,6 @@
 # Handoff
 
-Last updated: 2026-08-29 (session 18)
+Last updated: 2026-08-31 (session 19)
 
 ## Where we are
 
@@ -11,6 +11,14 @@ The staging deploy emits `<meta name="robots" content="noindex">` on every page 
 Astro is configured with `site: 'https://dgigiu.github.io'` and `base: '/mj-portfolio'`. All internal links use the normalized base exported from [src/lib/paths.ts](src/lib/paths.ts).
 
 Build is clean (`npm run build` → 6 pages, 0 errors / 0 warnings).
+
+## What changed in this session (2026-08-31, session 19)
+
+Miguel updated the background on the Figma frames for Food Save and MyFoodways; re-exported every frame already wired into the site for both cases and overwrote the existing files in place (same filenames, same node IDs as prior sessions, no mdx changes needed). Build clean (7 pages, 0/0/0), all images verified 200 with correct dimensions via the dev server.
+
+- **Food Save** (`RqT7cSB5meoG2VQu7ggWNo`, page "version 2"): re-exported `FS-02-library`, `FS-03-measure-detail`, `FS-04-tasklist`, `FS-05-home` (PNG, 1600×1055). `FS-00-cover-banner.jpg` and `FS-00-cover-thumb.jpg` also re-exported but came back byte-identical to the existing files, the cover frames weren't touched by this background update.
+- **MyFoodways** (`m1vVaKCwVkvG4AtieNx7NW`, page "v2", file key newly recorded here since it wasn't in HANDOFF before): re-exported all nine frames, `MFW-00-cover-banner.jpg`/`MFW-00-cover-thumb.jpg` (JPG, 1920×960 / 1200×900) and `MFW-01-product` through `MFW-08-post-launch-changes` (PNG, native frame sizes). All changed.
+- Also resolved the myfoodways `recipe2` open item from session 17/18 and cleaned the stale "Let's cook" second-screen paragraph out of `docs/Case Studies/cs-myfoodways-app.md` (gitignored staging doc, doc tidiness only, no code change).
 
 ## What changed in this session (2026-08-29, session 18)
 
@@ -35,7 +43,7 @@ Full resync of [myfoodways.mdx](src/content/case-studies/myfoodways.mdx) from Mi
 
 ### Open item for Miguel
 
-- **`MFW-05-flexible-recipe2.png` still doesn't exist.** The doc's Flexible recipe flow section still narrates a second image after the "Let's cook" MVP paragraph (a "Let's cook" final screen with leftover/storage tips), but no file for it was ever re-exported — Miguel confirmed recipe2 was meant to replace recipe as a single updated image, not exist as a second screen, so this build uses just `MFW-05-flexible-recipe.png` and the follow-on paragraph runs as plain text with no second figure. If a second screen is still wanted there, export `MFW-05-flexible-recipe2.png` and say so and I'll add the figure back.
+- ~~`MFW-05-flexible-recipe2.png` still doesn't exist~~ — resolved (session 19, 2026-08-31): recipe2 was never a second screen, it was a newer version of the same recipe image. `MFW-05-flexible-recipe.png` is the current, correct file; no second figure needed. The doc's `cs-myfoodways-app.md` still has a stale "Let's cook" second-screen paragraph and `FIGMA:MFW-05-flexible-recipe2` placeholder left over from before this was resolved (gitignored staging file, not cleaned up).
 - ~~The other two case studies (food-save, team-files) still point `thumbnail`/`banner` at their old single hero-cover placeholder~~ — food-save got its real images and two-image cover treatment in session 18. **team-files** still points `thumbnail`/`banner` at its old single `TF-01-hero-cover.png` placeholder; same treatment needed when its new images land.
 
 ## What changed in this session (2026-08-28, session 16)
