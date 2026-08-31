@@ -8,13 +8,15 @@ import { base } from "../lib/paths";
 interface Props {
   title: string;
   description?: string;
+  // Full site-root-relative path (already including `base`), e.g. the
+  // default below or a getImage() result's .src for a per-page image.
   ogImage?: string;
 }
 
 const {
   title,
   description = "Miguel Jesus, Senior Product Designer based in Porto. Portfolio of product case studies across SaaS and mobile.",
-  ogImage = "og/default.png",
+  ogImage = `${base}og/default.png`,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
@@ -23,7 +25,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 // path). Keyed off the site host so it clears automatically once `site`
 // becomes migueljss.com.
 const isStaging = Astro.site?.hostname.endsWith("github.io") ?? false;
-const ogImageUrl = new URL(`${base}${ogImage.replace(/^\//, "")}`, Astro.site).toString();
+const ogImageUrl = new URL(ogImage, Astro.site).toString();
 const fullTitle = title === "Miguel Jesus" ? title : `${title} · Miguel Jesus`;
 ---
 

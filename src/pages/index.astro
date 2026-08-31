@@ -50,7 +50,10 @@ const heroPortraitPreload = await getImage({
 
     <div class="container hero-inner">
       <div class="hero-content">
-        <h1 id="hero-title">Hi! I’m Miguel. I design products from first sketch to first release and beyond.</h1>
+        <h1 id="hero-title">
+          <span class="hero-title-lead">Hi! I’m Miguel.</span>
+          <span class="hero-title-body">I design products from first sketch to first release and beyond.</span>
+        </h1>
         <p class="hero-subtitle">
           For 20+ years I’ve designed SaaS and mobile products, connecting user needs with business goals. A few of those stories are below.
         </p>
@@ -80,7 +83,7 @@ const heroPortraitPreload = await getImage({
               client={s.data.client}
               domain={s.data.domain}
               period={s.data.period}
-              cover={s.data.thumbnail ?? s.data.banner}
+              cover={s.data.banner}
             />
           </li>
         ))
@@ -241,8 +244,29 @@ const heroPortraitPreload = await getImage({
     line-height: 1;
     letter-spacing: -0.035em;
     color: #fff;
-    text-wrap: balance;
     margin: 0 0 var(--space-6);
+  }
+
+  /* Two visual beats: the greeting stays at the h1's full size, then a
+     smaller second line for hierarchy before the longer description wraps
+     on its own. Both spans get text-wrap: balance directly since setting
+     display: block on them splits the h1 into two separate wrapping
+     contexts. The gap and the body size are both em-based off the h1's own
+     font-size (not the body's smaller one) so they scale with the h1's
+     responsive clamp() instead of needing their own breakpoints. */
+  .hero-title-lead,
+  .hero-title-body {
+    display: block;
+    text-wrap: balance;
+  }
+
+  .hero-title-lead {
+    margin-bottom: 0.25em;
+  }
+
+  .hero-title-body {
+    font-size: 0.65em;
+    letter-spacing: -0.02em;
   }
 
   .hero-subtitle {

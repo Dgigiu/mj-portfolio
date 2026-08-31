@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import BaseLayout from "./BaseLayout.astro";
 import CaseStudyCard from "../components/CaseStudyCard.astro";
 import ContactOutro from "../components/ContactOutro.astro";
@@ -13,15 +13,18 @@ interface Props {
   period: string;
   client: string;
   domain: string;
-  thumbnail?: ImageMetadata;
   banner?: ImageMetadata;
   slug: string;
 }
 
-const { title, summary, role, period, client, domain, thumbnail, banner, slug } = Astro.props;
+const { title, summary, role, period, client, domain, banner, slug } = Astro.props;
 
-// Hero uses the wide banner; falls back to the thumbnail if a case only has one.
-const heroImage = banner ?? thumbnail;
+// Per-case OG/share image, derived from the same cover used for the hero
+// and cards. getImage()'s .src already includes `base`, so it can be passed
+// straight through to BaseLayout without any extra path handling.
+const ogImage = banner
+  ? (await getImage({ src: banner, width: 1200, height: 630, fit: "cover", format: "webp" })).src
+  : undefined;
 
 const more = (
   await getCollection("case-studies", ({ data }) => !data.draft)
@@ -30,7 +33,7 @@ const more = (
   .sort((a, b) => a.data.order - b.data.order);
 ---
 
-<BaseLayout title={title} description={summary}>
+<BaseLayout title={title} description={summary} ogImage={ogImage}>
   <header class="case-header">
     <div class="container">
       <div class="case-header-inner">
@@ -43,11 +46,11 @@ const more = (
   </header>
 
   {
-    heroImage && (
+    banner && (
       <div class="case-cover">
         <div class="container">
           <Image
-            src={heroImage}
+            src={banner}
             alt={`${title} project cover`}
             widths={[960, 1440, 1920]}
             sizes="(min-width: 960px) 960px, 100vw"
@@ -80,7 +83,7 @@ const more = (
                 client={s.data.client}
                 domain={s.data.domain}
                 period={s.data.period}
-                cover={s.data.thumbnail ?? s.data.banner}
+                cover={s.data.banner}
                 compact
               />
             </li>
@@ -135,13 +138,14 @@ const more = (
     padding-bottom: var(--space-12);
   }
 
-  /* Banner is a fixed 2:1 illustrative strip across all cases. aspect-ratio
-     reserves the space (no layout shift) and object-fit: cover guards against
-     an export that isn't exactly 2:1. Source is exported 1920×960. */
+  /* Cover is a fixed 1200:630 strip across all cases, matching the OG image
+     ratio since this same source also generates it. aspect-ratio reserves
+     the space (no layout shift) and object-fit: cover guards against an
+     export that isn't exactly 1200:630. Source is exported 1920×1008. */
   .cover-img {
     width: 100%;
     max-width: var(--content-wide);
-    aspect-ratio: 2 / 1;
+    aspect-ratio: 1200 / 630;
     height: auto;
     object-fit: cover;
     border-radius: var(--radius-md);
