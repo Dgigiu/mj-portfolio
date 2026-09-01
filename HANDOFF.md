@@ -248,9 +248,9 @@ Per-session detail beyond this lives in the git log; commit messages carry the s
 - Dark-theme tokens exist in tokens.css but are not wired to a toggle; reachable via `data-theme="dark"` for testing.
 
 ### Still to do
-- **Per-case-study OG images.** The default 1200×630 shipped in session 8 ([scripts/build-og-image.mjs](scripts/build-og-image.mjs)) and is still the only one in use. All three cases now have final cover images (session 19), so nothing blocks building per-case-study versions: extend the same script and pass `ogImage` through CaseStudyLayout → BaseLayout (the prop plumbing already exists).
+- ~~Per-case-study OG images~~ — done, session 19: each case study now generates its own 1200×630 OG image at build time from its `banner`, as part of the cover-image unification (see the changelog entry above). `scripts/build-og-image.mjs`'s output is now only the fallback for pages with no `banner` (home/about/contact).
 - **Two new case studies on hold.** `docs/Case Studies/cs-board-game-app.md` and `cs-office-editor.md` are written but not on the site. When ready, each needs cover/inline images under `src/assets/case-studies/<slug>/`, a new `.mdx` in `src/content/case-studies/`, and an `order` value in the frontmatter.
-- ~~Switching to migueljss.com~~ — done this session (session 19), see the changelog entry above. Only remaining piece: enable "Enforce HTTPS" in repo Settings → Pages once the cert finishes provisioning.
+- ~~Switching to migueljss.com~~ — done and fully verified live, session 19 (custom domain, HTTPS enforced, old staging links redirect correctly). Nothing left open here.
 - **Case study updates.** `docs/Case Studies/` is gitignored; drop updated `.docx` or images there and Claude can refold into the MDX.
 
 ## Quick reference
