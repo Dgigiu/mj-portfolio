@@ -22,6 +22,13 @@ const aleo = await embed("Aleo-VariableFont_wght.woff2");
 const BG = "#155fe8";
 const FG = "#ffffff";
 
+// Centered composition (Figma "share assets" page, frame "OG - Default
+// (crop-safe)"). iOS's share-sheet link preview crops this 1200×630 image
+// down to a centered 630×630 square (x: 285–915) for its small icon; the
+// old left-aligned layout landed mid-word inside that crop. Centering the
+// mark and copy keeps them inside the crop window with margin to spare,
+// while the full-width image (WhatsApp, Messages, Slack) still reads as an
+// intentional centered poster rather than a truncated one.
 const svg = `
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
@@ -39,21 +46,22 @@ const svg = `
         font-style: normal;
       }
     </style>
-    <radialGradient id="vignette" cx="0%" cy="0%" r="120%">
-      <stop offset="0%" stop-color="#080e20" stop-opacity="0.55"/>
-      <stop offset="55%" stop-color="#080e20" stop-opacity="0.18"/>
-      <stop offset="100%" stop-color="#080e20" stop-opacity="0"/>
-    </radialGradient>
   </defs>
   <rect width="1200" height="630" fill="${BG}"/>
-  <rect width="1200" height="630" fill="url(#vignette)"/>
-  <text x="96" y="330" font-family="Geist, system-ui, sans-serif" font-weight="700"
-        font-size="92" letter-spacing="-0.02em" fill="${FG}">Miguel Jesus</text>
-  <text x="98" y="404" font-family="Aleo, Georgia, serif" font-weight="400"
-        font-size="40" fill="${FG}" fill-opacity="0.92">Senior Product Designer</text>
-  <rect x="96" y="498" width="1008" height="2" fill="${FG}" fill-opacity="0.28"/>
-  <text x="96" y="556" font-family="Geist, system-ui, sans-serif" font-weight="500"
-        font-size="26" letter-spacing="0.02em" fill="${FG}" fill-opacity="0.92">Product case studies · SaaS and mobile</text>
+
+  <!-- MJ badge, echoes apple-touch-icon.png but inverted for the cobalt field -->
+  <rect x="564" y="165" width="72" height="72" rx="16" fill="${FG}"/>
+  <text x="600" y="211" text-anchor="middle" font-family="Geist, system-ui, sans-serif"
+        font-weight="700" font-size="28" letter-spacing="-0.56" fill="${BG}">MJ</text>
+
+  <text x="600" y="313" text-anchor="middle" font-family="Geist, system-ui, sans-serif"
+        font-weight="700" font-size="60" letter-spacing="-1.2" fill="${FG}">Miguel Jesus</text>
+  <text x="600" y="364" text-anchor="middle" font-family="Aleo, Georgia, serif"
+        font-weight="400" font-size="30" fill="${FG}" fill-opacity="0.92">Senior Product Designer</text>
+
+  <rect x="420" y="414" width="360" height="2" fill="${FG}" fill-opacity="0.28"/>
+  <text x="600" y="452" text-anchor="middle" font-family="Geist, system-ui, sans-serif"
+        font-weight="500" font-size="22" letter-spacing="0.44" fill="${FG}" fill-opacity="0.92">Product case studies · SaaS and mobile</text>
 </svg>
 `;
 

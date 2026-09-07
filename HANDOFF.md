@@ -1,6 +1,15 @@
 # Handoff
 
-Last updated: 2026-08-31 (session 19)
+Last updated: 2026-09-07 (session 20)
+
+## What changed in this session (2026-09-07, session 20)
+
+Fixed the default OG/share image (`public/og/default.png`, home/about/contact only, per-case-study images untouched) so it survives iOS's share-sheet square crop. Miguel spotted the bug live: sharing `migueljss.com` via the iOS Share Sheet showed a preview icon with "el Jesus" / "duct Designer", the tail ends of "Miguel Jesus" / "Senior Product Designer" cut off. Root cause: iOS crops a centered 630×630 square out of the 1200×630 `og:image` for that icon slot (x: 285–915); the old layout was left-aligned starting at x=96, so the crop landed mid-word. The `apple-touch-icon.png` itself was already correct, this was purely the OG image's design.
+
+- **Prototyped the fix in Figma first** (Miguel's request), on the "share assets" page of the [MJ Design System](https://www.figma.com/design/rUbsiKyYr0xITgTGVXJjJT/MJ-Design-System) file (new page, was empty), frame **"OG - Default (crop-safe)"** (`94:2`). Centered composition: a white rounded "MJ" badge (echoes `apple-touch-icon.png`, inverted for the cobalt field) above "Miguel Jesus" / "Senior Product Designer", a thin rule, then the tagline, all centered horizontally. Verified via bounding boxes that name (x 412–789) and tagline (x 390–811) both sit inside the 285–915 crop window with 100px+ margin. Miguel approved as-is, no refinements made.
+- **Ported to [scripts/build-og-image.mjs](scripts/build-og-image.mjs)**: replaced the left-aligned SVG layout with the centered one (badge rect + text, centered name/subtitle, centered divider + tagline). Also dropped the top-left radial vignette, the approved Figma frame is flat cobalt, matching the `apple-touch-icon` treatment more directly.
+- Regenerated `public/og/default.png`. Build clean (7 pages, 0/0/0).
+- This only touches the fallback OG image (home/about/contact). Per-case-study OG images are generated from each case's `banner` (a screenshot/product photo, not text), so they aren't subject to the same failure mode and weren't touched.
 
 ## Where we are
 
@@ -238,7 +247,7 @@ Per-session detail beyond this lives in the git log; commit messages carry the s
 ## Open items / look at these next
 
 ### Re-verify on the live site
-- **Share-sheet icon on iOS.** Verify the `apple-touch-icon` shows the MJ wordmark instead of an auto-cropped portrait. iOS caches the icon aggressively; if you still see the old one, force-quit Safari or clear site data (Settings → Apps → Safari → Advanced → Website Data).
+- ~~Share-sheet icon on iOS~~ — resolved session 20: the icon itself (`apple-touch-icon.png`) was already correct; the actual bug was the default OG image's square crop cutting off text mid-word. Fixed by centering the composition. iOS caches aggressively, so if the old cropped preview still shows, force-quit Safari or clear site data (Settings → Apps → Safari → Advanced → Website Data) before re-checking.
 
 ### Fine-tuning (Miguel to drive)
 - ~~Hero copy~~ — resolved session 19: swapped to the more conversational "Hi! I'm Miguel..." headline.
