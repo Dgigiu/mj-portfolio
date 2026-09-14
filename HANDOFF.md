@@ -1,6 +1,18 @@
 # Handoff
 
-Last updated: 2026-09-07 (session 20)
+Last updated: 2026-09-14 (session 21)
+
+## What changed in this session (2026-09-14, session 21)
+
+Copy-only pass, Miguel's request: drop the "20+ years" / "since 2005" framing from headline copy on age-bias grounds, while keeping full work history and dates everywhere they already appear (case study role dates, about page timeline).
+
+- **Home hero subhead** ([index.astro](src/pages/index.astro)): "For 20+ years I've designed SaaS and mobile products..." → "I've spent the last decade designing SaaS and mobile products...".
+- **About H1 + opening paragraph** ([about.astro](src/pages/about.astro)): "Twenty years of designing clear experiences..." → "Designing clear experiences for complex products."; the lede's "I've been designing for over 20 years, starting in..." → "I started in graphic and web design, and have spent the last decade focused on...".
+- **Footer tagline** ([Footer.astro](src/components/Footer.astro)): "Designing with clarity and calm purpose since 2005." → "...for complex products."
+- **CV PDF swapped** ([public/miguel-jesus-cv.pdf](public/miguel-jesus-cv.pdf)), Miguel replaced the file directly, same filename so existing links keep working.
+- Repo-wide search also turned up "20+ years" in three internal docs (`PRODUCT.md`, `docs/portfolio-brief-claude-design.md`, `docs/about-page.md`) and the gitignored `docs/old md versions/about-page-mj.md`. Flagged rather than auto-changed, since they're not rendered site copy; Miguel chose to leave them as-is (historical/working docs, not corrected).
+- Build clean (7 pages, 0/0/0). Browser-verified hero, about, and footer render the new copy; case study role dates (2013, 2014, 2018 to 2025, etc.) untouched.
+- Shipped as commit `de02358`, pushed to `main`.
 
 ## What changed in this session (2026-09-07, session 20)
 
