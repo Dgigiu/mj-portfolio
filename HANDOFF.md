@@ -1,6 +1,10 @@
 # Handoff
 
-Last updated: 2026-09-14 (session 21)
+Last updated: 2026-09-25 (session 22)
+
+## What changed in this session (2026-09-25, session 22)
+
+- **CV PDF updated** ([public/miguel-jesus-cv.pdf](public/miguel-jesus-cv.pdf)) with Miguel's latest version. The site filename stays `miguel-jesus-cv.pdf` so existing links keep working. The Dropbox source was renamed: it's now `2026-01 Portfolio MJ + AI/Miguel Jesus - CV - Senior Product Designer.pdf` (was `CV Miguel Jesus - Senior Product Designer.pdf`).
 
 ## What changed in this session (2026-09-14, session 21)
 
@@ -171,7 +175,7 @@ Later in the session: ran `/impeccable critique` (site-wide, scored 34/40, snaps
 
 Verification: `npm run build` clean (7 pages, 0 errors / 0 warnings); browser-checked home, Team Files (anchors, TOC, outro), About, 404 at 1280 and 375; console clean.
 
-**CV wired in** (same session, after Miguel provided the PDF): the CV lives at [public/miguel-jesus-cv.pdf](public/miguel-jesus-cv.pdf) (served at `/miguel-jesus-cv.pdf` under the base). Linked from the contact page channels list (CV row, "Open the PDF") and from the shared outro's secondary line on home and case pages. Links use the `base` helper and open in a new tab. Verified: HEAD request returns 200 `application/pdf`; build clean. **When the CV changes, replace the file in `public/` and keep the same filename** so shared links keep working; the Dropbox source was `2026-01 Portfolio MJ + AI/CV Miguel Jesus - Senior Product Designer.pdf`.
+**CV wired in** (same session, after Miguel provided the PDF): the CV lives at [public/miguel-jesus-cv.pdf](public/miguel-jesus-cv.pdf) (served at `/miguel-jesus-cv.pdf` under the base). Linked from the contact page channels list (CV row, "Open the PDF") and from the shared outro's secondary line on home and case pages. Links use the `base` helper and open in a new tab. Verified: HEAD request returns 200 `application/pdf`; build clean. **When the CV changes, replace the file in `public/` and keep the same filename** so shared links keep working; the Dropbox source is now `2026-01 Portfolio MJ + AI/Miguel Jesus - CV - Senior Product Designer.pdf` (renamed in session 22).
 
 **Still open from the critique**: hero headline swap (Miguel to drive, pre-dates the critique).
 
