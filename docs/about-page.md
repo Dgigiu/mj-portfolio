@@ -10,7 +10,7 @@ I trained as a designer at Universidade de Aveiro and started out in print and w
 
 I think in systems and in narratives at the same time. A good product needs both: components that hold up under reuse, and flows that make sense when a real person uses the product. I start with the problem, talk to users when I can, sketch early, and stay close to engineering throughout. I lean iterative: ship the core functionality that helps users reach their goals, then make it better.
 
-Most of my career has been as the sole designer on small teams. That taught me to take ownership end to end: research, strategy, UX, UI, copy, documentation, and the trade-offs in between. I care about long-term ownership, clear product thinking, and work that actually helps people get things done.
+For most of my career I've been the only designer on small teams, working directly with engineering and product. That taught me to take ownership end to end: research, strategy, UX, UI, copy, documentation, and the trade-offs in between. I care about long-term ownership, clear product thinking, and work that actually helps people get things done.
 
 ## Working with AI
 
@@ -22,7 +22,7 @@ The craft still belongs to the designer. The tools just remove the friction arou
 
 ## Strategy and planning
 
-A lot of my work has happened upstream of the screen. As a founder I helped shape product direction, roadmaps, and positioning. As the sole designer on small teams, I prioritized what to build next based on user feedback, usage data, and engineering reality. I've negotiated trade-offs with product managers and engineers, scoped features down to what could realistically ship, and made hard calls about where design effort would have the most leverage. Strategy and planning aren't separate from design for me. They're part of doing the job well.
+A lot of my work has happened upstream of the screen. As a founder I helped shape product direction, roadmaps, and positioning. As the only designer on small teams, I prioritized what to build next based on user feedback, usage data, and engineering reality. I've negotiated trade-offs with product managers and engineers, scoped features down to what could realistically ship, and made hard calls about where design effort would have the most leverage. Strategy and planning aren't separate from design for me. They're part of doing the job well.
 
 ## Outside of work
 
