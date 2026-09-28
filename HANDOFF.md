@@ -10,7 +10,8 @@ Copy-only pass on [team-files.mdx](src/content/case-studies/team-files.mdx) to a
 - Skipped: the "Project Summary" Role and Impact lines (the case has no such block, only the `role`/`period` frontmatter shown in the meta line, and no impact field), and the Constraints "Instead of finalizing..." replacement (that sentence doesn't exist in the current MDX). Both need Miguel's call.
 - Leftovers flagged, not changed: "sole designer" still in team-files.mdx Role paragraph and on the About page (two spots); "around 3.7 stars" in the Impact sentence; `role: "Co-founder and founding designer"` frontmatter.
 - Follow-up (same session, same branch): `role` frontmatter is now "Product designer and co-founder"; Impact sentence now "used by over 9,000 companies and rated 3.7 out of 4 on the Atlassian Marketplace during my tenure"; dropped "As the sole designer," from the Role paragraph; Constraints paragraph's second sentence replaced with the CTO spec review wording (the old trailing clause "while still keeping core user experience principles intact" went with it).
-- **Open:** About page "sole designer" rewrites (about.astro lines 40 and 56) proposed to Miguel, awaiting confirmation. Once confirmed, mirror them in `docs/about-page.md`, which carries the same text.
+- **Done:** About page "sole designer" rewrites, confirmed by Miguel and applied to [about.astro](src/pages/about.astro) and mirrored in `docs/about-page.md`: intro now "For most of my career I've been the only designer on small teams, working directly with engineering and product."; Strategy paragraph now "As the only designer on small teams, I prioritized...". Constraints paragraph opener trimmed to "I worked closely with engineering from the start."
+- Branch `copy/team-files-cv-alignment` is ready for Miguel to review and push himself.
 
 ## What changed in this session (2026-09-25, session 22)
 
