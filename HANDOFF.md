@@ -11,7 +11,8 @@ Copy-only pass on [team-files.mdx](src/content/case-studies/team-files.mdx) to a
 - Leftovers flagged, not changed: "sole designer" still in team-files.mdx Role paragraph and on the About page (two spots); "around 3.7 stars" in the Impact sentence; `role: "Co-founder and founding designer"` frontmatter.
 - Follow-up (same session, same branch): `role` frontmatter is now "Product designer and co-founder"; Impact sentence now "used by over 9,000 companies and rated 3.7 out of 4 on the Atlassian Marketplace during my tenure"; dropped "As the sole designer," from the Role paragraph; Constraints paragraph's second sentence replaced with the CTO spec review wording (the old trailing clause "while still keeping core user experience principles intact" went with it).
 - **Done:** About page "sole designer" rewrites, confirmed by Miguel and applied to [about.astro](src/pages/about.astro) and mirrored in `docs/about-page.md`: intro now "For most of my career I've been the only designer on small teams, working directly with engineering and product."; Strategy paragraph now "As the only designer on small teams, I prioritized...". Constraints paragraph opener trimmed to "I worked closely with engineering from the start."
-- Branch `copy/team-files-cv-alignment` is ready for Miguel to review and push himself.
+- Branch `copy/team-files-cv-alignment` merged to `main` via PR #2.
+- Follow-up on `main`: Team Files "Beyond the product" opener trimmed to "My work didn't stop at the product." (dropped "As a founder and the only designer,").
 
 ## What changed in this session (2026-09-25, session 22)
 
