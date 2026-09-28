@@ -8,7 +8,7 @@ First of several Team Files image updates, batched on branch **`tf-image-updates
 
 - New figure `TF-07-ux-improvements.png` (1600×1055, exported from Figma `oIt1mAagsb5rIThaLCjvFt`, node `4120:4227`) placed after the 2023 UX review paragraph, before "Core UX challenges", in [team-files.mdx](src/content/case-studies/team-files.mdx).
 - Same paragraph gained: "I also gave every file and folder action its own icon, so they could be scanned at a glance."
-- **Workflow change:** the mdx is now the source of truth for published case studies; the `docs/Case Studies/*.md` docs are obsolete for them (Claude Chat reads the mdx from the repo). CLAUDE.md updated. Surfaced because `cs-team-files.md` had drifted: its UX review paragraph has an extra sentence (Atlassian design system, larger metadata labels, revised contrast) that was never in the mdx. Left out; add it to the mdx directly if wanted.
+- **Workflow change:** the mdx is now the source of truth for published case studies; the `docs/Case Studies/*.md` docs are obsolete for them (Claude Chat reads the mdx from the repo). CLAUDE.md updated. Surfaced because `cs-team-files.md` had drifted: its UX review paragraph has an extra sentence (Atlassian design system, larger metadata labels, revised contrast) that was never in the mdx. Miguel approved adding it to the mdx (after the error messages sentence), and the accessibility sentence after it was shortened to "...as it did through every release, from clear system feedback to error tolerance." to avoid repeating contrast and legibility.
 
 ## What changed in this session (2026-09-28, session 24)
 
