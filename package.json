@@ -8,7 +8,8 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "cv": "node scripts/stamp-cv.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
@@ -18,6 +19,7 @@
     "typescript": "^5.7.0"
   },
   "devDependencies": {
+    "pdf-lib": "^1.17.1",
     "wawoff2": "^2.0.1"
   }
 }
