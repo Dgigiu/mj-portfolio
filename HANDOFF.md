@@ -1,6 +1,14 @@
 # Handoff
 
-Last updated: 2026-09-28 (session 24)
+Last updated: 2026-09-28 (session 25)
+
+## What changed in this session (2026-09-28, session 25)
+
+First of several Team Files image updates, batched on branch **`tf-image-updates`**. Committed, **not pushed, PR still pending** until the remaining images are in.
+
+- New figure `TF-07-ux-improvements.png` (1600×1055, exported from Figma `oIt1mAagsb5rIThaLCjvFt`, node `4120:4227`) placed after the 2023 UX review paragraph, before "Core UX challenges", in [team-files.mdx](src/content/case-studies/team-files.mdx).
+- Same paragraph gained: "I also gave every file and folder action its own icon, so they could be scanned at a glance."
+- **Not synced to `docs/Case Studies/cs-team-files.md`**: the doc's version of that paragraph differs from the mdx (it has an extra sentence about pulling in Atlassian's design system, larger metadata labels and revised contrast, and uses straight quotes). Miguel to decide which version is canonical.
 
 ## What changed in this session (2026-09-28, session 24)
 
