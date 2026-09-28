@@ -4,6 +4,7 @@ import "../styles/global.css";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import { base } from "../lib/paths";
+import { UMAMI_DOMAINS, UMAMI_SCRIPT_SRC, UMAMI_WEBSITE_ID } from "../lib/analytics";
 
 interface Props {
   title: string;
@@ -27,6 +28,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 const isStaging = Astro.site?.hostname.endsWith("github.io") ?? false;
 const ogImageUrl = new URL(ogImage, Astro.site).toString();
 const fullTitle = title === "Miguel Jesus" ? title : `${title} · Miguel Jesus`;
+const loadAnalytics = import.meta.env.PROD && UMAMI_WEBSITE_ID !== "";
 ---
 
 <!doctype html>
@@ -56,6 +58,18 @@ const fullTitle = title === "Miguel Jesus" ? title : `${title} · Miguel Jesus`;
          first paint so content never flashes, and stays visible without JS. -->
     <script is:inline>document.documentElement.classList.add("js");</script>
 
+    {
+      loadAnalytics && (
+        <script
+          is:inline
+          defer
+          src={UMAMI_SCRIPT_SRC}
+          data-website-id={UMAMI_WEBSITE_ID}
+          data-domains={UMAMI_DOMAINS}
+        />
+      )
+    }
+
     <slot name="head" />
   </head>
   <body>
@@ -73,6 +87,10 @@ const fullTitle = title === "Miguel Jesus" ? title : `${title} · Miguel Jesus`;
     </dialog>
 
     <script>
+      import { tagReferral } from "../lib/analytics";
+
+      tagReferral();
+
       const host = window.location.host;
       document.querySelectorAll<HTMLAnchorElement>('a[href^="http"]').forEach((a) => {
         try {

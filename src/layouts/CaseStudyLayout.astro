@@ -65,6 +65,7 @@ const more = (
     <div class="prose">
       <slot />
     </div>
+    <div data-read-marker data-case={slug} aria-hidden="true"></div>
   </article>
 
   {
@@ -95,6 +96,22 @@ const more = (
 
   <ContactOutro />
 </BaseLayout>
+
+<script>
+  import { track } from "../lib/analytics";
+
+  // "Case study read": the reader reached the end of the article body, past
+  // the learnings. Fires once per page view.
+  const marker = document.querySelector<HTMLElement>("[data-read-marker]");
+  if (marker && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver((entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      track("Case study read", { case: marker.dataset.case ?? "" });
+      io.disconnect();
+    });
+    io.observe(marker);
+  }
+</script>
 
 <style>
   .case-header {
