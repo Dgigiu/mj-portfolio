@@ -1,6 +1,14 @@
 # Handoff
 
-Last updated: 2026-09-25 (session 22)
+Last updated: 2026-09-28 (session 23)
+
+## What changed in this session (2026-09-28, session 23)
+
+Copy-only pass on [team-files.mdx](src/content/case-studies/team-files.mdx) to align with Miguel's revised CV and LinkedIn. On branch `copy/team-files-cv-alignment`, **not merged or pushed** pending Miguel's review.
+
+- Applied: TOPDOX pivot sentence ("valued it but wouldn't pay, companies would"), Role opener (only one working as a designer; design-literate PO co-founder), Strategy sentence on trial-to-paid and retention after the 2023 UX review, design system paragraph sentence on developer time and consistency as product quality, Beyond the product sentence on site/listing experiments, Impact churn paragraph plus new quote lead-in, last Learnings bullet.
+- Skipped: the "Project Summary" Role and Impact lines (the case has no such block, only the `role`/`period` frontmatter shown in the meta line, and no impact field), and the Constraints "Instead of finalizing..." replacement (that sentence doesn't exist in the current MDX). Both need Miguel's call.
+- Leftovers flagged, not changed: "sole designer" still in team-files.mdx Role paragraph and on the About page (two spots); "around 3.7 stars" in the Impact sentence; `role: "Co-founder and founding designer"` frontmatter.
 
 ## What changed in this session (2026-09-25, session 22)
 
