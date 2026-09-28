@@ -36,8 +36,8 @@ src/
   styles/                   tokens.css, global.css, typography.css
 public/                     favicon, app icons, robots, OG images
 scripts/                    one-shot generators (app icon, OG image, font conversion)
-docs/                       briefs; Case Studies/ folder is a gitignored
-                            staging area for content updates
+docs/                       briefs; Case Studies/ folder is gitignored and
+                            obsolete for live cases (drafts only)
 ```
 
 ## Conventions
@@ -52,7 +52,7 @@ docs/                       briefs; Case Studies/ folder is a gitignored
 
 ## Working with case study content
 
-Case study source `.docx` files live in `docs/Case Studies/` (gitignored). When Miguel updates them, refold the changes into the corresponding `src/content/case-studies/<slug>.mdx`. Images go into `src/assets/case-studies/<slug>/` so `astro:assets` can optimize them.
+The `.mdx` files in `src/content/case-studies/` are the source of truth for every published case study. Updates arrive as direct edit prompts against the mdx (Claude Chat reads the latest version from the repository), so don't sync changes to, or check wording against, the old docs in `docs/Case Studies/`: those are obsolete for published cases. The only exception is unpublished drafts there (board game app, office editor), which stay the source until they're migrated to mdx. Images go into `src/assets/case-studies/<slug>/` so `astro:assets` can optimize them.
 
 ## Common commands
 

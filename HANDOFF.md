@@ -8,7 +8,7 @@ First of several Team Files image updates, batched on branch **`tf-image-updates
 
 - New figure `TF-07-ux-improvements.png` (1600×1055, exported from Figma `oIt1mAagsb5rIThaLCjvFt`, node `4120:4227`) placed after the 2023 UX review paragraph, before "Core UX challenges", in [team-files.mdx](src/content/case-studies/team-files.mdx).
 - Same paragraph gained: "I also gave every file and folder action its own icon, so they could be scanned at a glance."
-- **Not synced to `docs/Case Studies/cs-team-files.md`**: the doc's version of that paragraph differs from the mdx (it has an extra sentence about pulling in Atlassian's design system, larger metadata labels and revised contrast, and uses straight quotes). Miguel to decide which version is canonical.
+- **Workflow change:** the mdx is now the source of truth for published case studies; the `docs/Case Studies/*.md` docs are obsolete for them (Claude Chat reads the mdx from the repo). CLAUDE.md updated. Surfaced because `cs-team-files.md` had drifted: its UX review paragraph has an extra sentence (Atlassian design system, larger metadata labels, revised contrast) that was never in the mdx. Left out; add it to the mdx directly if wanted.
 
 ## What changed in this session (2026-09-28, session 24)
 
@@ -310,7 +310,7 @@ Per-session detail beyond this lives in the git log; commit messages carry the s
 - ~~Per-case-study OG images~~ — done, session 19: each case study now generates its own 1200×630 OG image at build time from its `banner`, as part of the cover-image unification (see the changelog entry above). `scripts/build-og-image.mjs`'s output is now only the fallback for pages with no `banner` (home/about/contact).
 - **Two new case studies on hold.** `docs/Case Studies/cs-board-game-app.md` and `cs-office-editor.md` are written but not on the site. When ready, each needs cover/inline images under `src/assets/case-studies/<slug>/`, a new `.mdx` in `src/content/case-studies/`, and an `order` value in the frontmatter.
 - ~~Switching to migueljss.com~~ — done and fully verified live, session 19 (custom domain, HTTPS enforced, old staging links redirect correctly). Nothing left open here.
-- **Case study updates.** `docs/Case Studies/` is gitignored; drop updated `.docx` or images there and Claude can refold into the MDX.
+- **Case study updates.** Edit the mdx directly (it's the source of truth since session 25). `docs/Case Studies/` is obsolete for published cases; only the two unpublished drafts there still matter.
 
 ## Quick reference
 
@@ -328,7 +328,7 @@ npm run preview
 - Base path helper: [src/lib/paths.ts](src/lib/paths.ts)
 - Design system reference: [docs/design_handoff_design_system/README.md](docs/design_handoff_design_system/README.md)
 - Design system v2 delta: [docs/design_handoff_design_system_delta/README.md](docs/design_handoff_design_system_delta/README.md)
-- Case study sources (gitignored): `docs/Case Studies/`
+- Case study source of truth: `src/content/case-studies/*.mdx` (`docs/Case Studies/` holds only unpublished drafts that still matter)
 
 **Conventions**
 - Canvas is warm off-white `#fbfaf6` (`--bg-canvas`). No pure white anywhere.
