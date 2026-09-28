@@ -1,6 +1,17 @@
 # Handoff
 
-Last updated: 2026-09-28 (session 23)
+Last updated: 2026-09-28 (session 24)
+
+## What changed in this session (2026-09-28, session 24)
+
+Added cookieless analytics via **Umami Cloud** (free Hobby tier), on branch `feat/umami-analytics`. Chosen over Plausible (paid) and GA4 (needs cookies and a consent banner). No cookies or device storage, so no banner; disclosed on a new `/privacy` page linked from the footer.
+
+- **Config** in [src/lib/analytics.ts](src/lib/analytics.ts): script URL, website ID (`ae146c72-...`, public by design), `data-domains="migueljss.com"`. Also holds the `track()` / `tagReferral()` client helpers, which no-op quietly when the tracker is missing (dev, ad blockers).
+- **Tracker tag** rendered by [BaseLayout.astro](src/layouts/BaseLayout.astro) only in production builds with a non-empty ID. `data-domains` keeps `npm run preview` on localhost out of the stats.
+- **Events**: `Case study read` (end-of-article marker in [CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro), prop `case`); `Case study card` (props `case`, `from`: home/more); `Email click`, `LinkedIn click`, `CV open` (prop `location`: footer/outro/contact/about). Click events use Umami's `data-umami-event` attributes, no extra JS.
+- **Application links**: `?ref=<company>` (letters, digits, `-`, `_`; max 40) tags the Umami session via `umami.identify({ ref })`, so every page in that visit can be filtered by company. Company-level tags only, never a person's name (the privacy page says so).
+- **Miguel's side**: exclude own visits by running `localStorage.setItem("umami.disabled", 1)` in the console on migueljss.com in each browser used.
+- Verified: build 8 pages, 0/0/0; tracker renders only with an ID; read event fires once per view with the right slug; `ref` tagging lowercases and rejects junk values. Note for browser testing: when the Browser pane is hidden, IntersectionObserver doesn't fire, so front the pane before testing scroll events.
 
 ## What changed in this session (2026-09-28, session 23)
 

@@ -1,4 +1,6 @@
 ---
+import { base } from "../lib/paths";
+
 const year = new Date().getFullYear();
 ---
 
@@ -8,14 +10,17 @@ const year = new Date().getFullYear();
     <div class="social">
       <a
         href="https://www.linkedin.com/in/migueljss/"
+        data-umami-event="LinkedIn click" data-umami-event-location="footer"
         target="_blank"
         rel="me noopener noreferrer"
         class="social-link"
       >LinkedIn</a>
       <a
         href="mailto:miguel.jss@gmail.com?subject=Hello%20from%20migueljss.com"
+        data-umami-event="Email click" data-umami-event-location="footer"
         class="social-link"
       >Email</a>
+      <a href={`${base}privacy/`} class="social-link">Privacy</a>
     </div>
   </div>
 </footer>

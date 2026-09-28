@@ -25,9 +25,17 @@ const metaParts = compact
 // prefix-match (e.g. the field was edited independently).
 const description =
   benefit && summary.startsWith(benefit) ? summary.slice(benefit.length).trim() : summary;
+
+const slug = href.split("/").filter(Boolean).pop() ?? "";
 ---
 
-<a href={href} class:list={["card", { compact }]}>
+<a
+  href={href}
+  class:list={["card", { compact }]}
+  data-umami-event="Case study card"
+  data-umami-event-case={slug}
+  data-umami-event-from={compact ? "more" : "home"}
+>
   <div class="card-media">
     {
       cover ? (

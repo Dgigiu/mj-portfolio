@@ -1,0 +1,51 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Privacy" description="What this site measures, and what it doesn’t.">
+  <article class="privacy container">
+    <div class="prose">
+      <h1>Privacy</h1>
+      <p>
+        This site uses <a href="https://umami.is">Umami</a> to count visits. It doesn’t use cookies, doesn’t store anything on your device, and doesn’t follow you to other sites. That’s why there’s no consent banner.
+      </p>
+
+      <h2>What’s measured</h2>
+      <ul>
+        <li>Which pages are viewed, and roughly for how long;</li>
+        <li>The site that linked here, if your browser shares it;</li>
+        <li>A company tag, if you arrived through a link I sent with a job application, so I know the application was opened;</li>
+        <li>Country, browser, operating system, and device type;</li>
+        <li>A few actions: reaching the end of a case study, opening the CV, and clicking the email or LinkedIn links.</li>
+      </ul>
+      <p>
+        Everything is reported in aggregate. I can see that a case study was read, not who read it. Umami doesn’t store your IP address.
+      </p>
+
+      <h2>Why</h2>
+      <p>
+        I’m looking for my next role, and this tells me which case studies are useful to the people reading them. That’s the whole purpose. The data isn’t sold, shared, or used for advertising.
+      </p>
+
+      <h2>Opting out</h2>
+      <p>
+        A content or ad blocker will stop the counting entirely, and the site works the same either way.
+      </p>
+
+      <h2>Questions</h2>
+      <p>
+        Email me at <a href="mailto:miguel.jss@gmail.com?subject=Privacy%20question">miguel.jss@gmail.com</a>.
+      </p>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .privacy {
+    padding-block: var(--space-16) var(--space-24);
+  }
+
+  .privacy .prose {
+    margin-inline: 0;
+  }
+</style>
