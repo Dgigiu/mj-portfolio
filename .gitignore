@@ -35,6 +35,9 @@ pnpm-debug.log*
 # Case study source materials (working folder, not shipped)
 docs/Case Studies/
 
+# Per-application CVs from `npm run cv <tag>` (company names stay private)
+docs/Applications/
+
 # Impeccable design skill (reinstall with: npx impeccable skills install)
 # and its local working artifacts (critique snapshots, live config)
 .github/skills/

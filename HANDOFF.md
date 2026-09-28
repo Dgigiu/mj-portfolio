@@ -12,6 +12,8 @@ Added cookieless analytics via **Umami Cloud** (free Hobby tier). Merged via PR 
 - **Application links**: `?ref=<company>` (letters, digits, `-`, `_`; max 40) tags the Umami session via `umami.identify({ ref })`, so every page in that visit can be filtered by company. Company-level tags only, never a person's name (the privacy page says so).
 - **Miguel's side**: exclude own visits by running `localStorage.setItem("umami.disabled", 1)` in the console on migueljss.com in each browser used.
 - Verified: build 8 pages, 0/0/0; tracker renders only with an ID; read event fires once per view with the right slug; `ref` tagging lowercases and rejects junk values. Note for browser testing: when the Browser pane is hidden, IntersectionObserver doesn't fire, so front the pane before testing scroll events.
+- **CV stamper** for per-application tags: `npm run cv -- <tag>` ([scripts/stamp-cv.mjs](scripts/stamp-cv.mjs), uses `pdf-lib`, dev dependency) rewrites only the CV's clickable migueljss.com link to `?ref=<tag>` and saves to `docs/Applications/<tag>/Miguel Jesus - CV - Senior Product Designer.pdf` (gitignored; the company is never in the filename). Render is pixel-identical to the source, metadata untouched. Wrapped in a local project skill, `/cv-stamp <company>` (`.claude/skills/cv-stamp/`, not in git since `.claude/` is ignored), which also slugifies the name, logs `date,company,tag` to `docs/Applications/log.csv`, and reveals the file in Finder.
+- **Site CV now carries `?ref=cv`** (stamped in place). **When a new Pages export replaces `public/miguel-jesus-cv.pdf`, run `npm run cv -- cv --in-place` before committing**, or the tag is lost.
 
 ## What changed in this session (2026-09-28, session 23)
 
