@@ -4,7 +4,7 @@ Last updated: 2026-09-28 (session 24)
 
 ## What changed in this session (2026-09-28, session 24)
 
-Added cookieless analytics via **Umami Cloud** (free Hobby tier), on branch `feat/umami-analytics`. Chosen over Plausible (paid) and GA4 (needs cookies and a consent banner). No cookies or device storage, so no banner; disclosed on a new `/privacy` page linked from the footer.
+Added cookieless analytics via **Umami Cloud** (free Hobby tier). Merged via PR #3 and live; confirmed a live pageview reaches `gateway.umami.is/api/send` (200). Chosen over Plausible (paid) and GA4 (needs cookies and a consent banner). No cookies or device storage, so no banner; disclosed on a new `/privacy` page linked from the footer.
 
 - **Config** in [src/lib/analytics.ts](src/lib/analytics.ts): script URL, website ID (`ae146c72-...`, public by design), `data-domains="migueljss.com"`. Also holds the `track()` / `tagReferral()` client helpers, which no-op quietly when the tracker is missing (dev, ad blockers).
 - **Tracker tag** rendered by [BaseLayout.astro](src/layouts/BaseLayout.astro) only in production builds with a non-empty ID. `data-domains` keeps `npm run preview` on localhost out of the stats.
