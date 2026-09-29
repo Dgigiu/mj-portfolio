@@ -1,0 +1,71 @@
+---
+import LabLayout from "../LabLayout.astro";
+import { parseTokens, tokenCount } from "../tokens";
+
+const entries = [
+  { href: "/lab/tokens", title: "Tokens", body: `${tokenCount()} custom properties across ${parseTokens().length} groups, with live contrast checks.` },
+  { href: "/lab/type", title: "Typography", body: "Element defaults, the mj-* utilities and a full prose specimen." },
+  { href: "/lab/components", title: "Components", body: "Every component with its variants and edge cases, on real content." },
+  { href: "/lab/playground", title: "Playground", body: "Retune color, type, spacing, radius and motion live, then copy the diff." },
+  { href: "/lab/viewports", title: "Viewports", body: "Any page at phone, tablet and laptop widths side by side." },
+];
+---
+
+<LabLayout
+  title="Design lab"
+  lede="A workbench for the portfolio's design system. It renders the real tokens and components, so nothing here can drift from the site. It only exists under npm run dev and is never built or deployed."
+>
+  <ul class="lab-index">
+    {
+      entries.map((e) => (
+        <li>
+          <a href={e.href} class="lab-index-card">
+            <h2 class="mj-h3">{e.title}</h2>
+            <p class="mj-body-sm">{e.body}</p>
+            <span class="lab-index-cta" aria-hidden="true">Open →</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</LabLayout>
+
+<style>
+  .lab-index {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--space-5);
+    max-width: var(--content-wide);
+  }
+
+  .lab-index-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-6);
+    border: var(--hairline) solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background: var(--bg-elevated);
+    text-decoration: none;
+    color: var(--fg-primary);
+    transition: box-shadow var(--duration-normal) var(--ease-out),
+                translate var(--duration-normal) var(--ease-out);
+  }
+
+  .lab-index-card:hover {
+    box-shadow: var(--shadow-md);
+    translate: 0 -2px;
+  }
+
+  .lab-index-cta {
+    margin-top: auto;
+    padding-top: var(--space-3);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    color: var(--accent);
+  }
+</style>

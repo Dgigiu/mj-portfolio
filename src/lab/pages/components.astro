@@ -1,0 +1,283 @@
+---
+import { getCollection } from "astro:content";
+import LabLayout from "../LabLayout.astro";
+import CaseStudyCard from "../../components/CaseStudyCard.astro";
+import Figure from "../../components/Figure.astro";
+import CompareImages from "../../components/CompareImages.astro";
+import Quote from "../../components/Quote.astro";
+import Stat from "../../components/Stat.astro";
+import Nav from "../../components/Nav.astro";
+import ContactOutro from "../../components/ContactOutro.astro";
+import Footer from "../../components/Footer.astro";
+
+import tfLayout from "../../assets/case-studies/team-files/TF-04-layout.png";
+import mfwProblem from "../../assets/case-studies/myfoodways/MFW-02-problem-A.png";
+import mfwSolution from "../../assets/case-studies/myfoodways/MFW-03-solution.png";
+
+// Real content, so the cards show what the home page shows.
+const studies = (await getCollection("case-studies", ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const [first] = studies;
+
+const sections = [
+  { id: "case-study-card", name: "CaseStudyCard" },
+  { id: "figure", name: "Figure" },
+  { id: "compare-images", name: "CompareImages" },
+  { id: "quote", name: "Quote" },
+  { id: "stat", name: "Stat" },
+  { id: "nav", name: "Nav" },
+  { id: "contact-outro", name: "ContactOutro" },
+  { id: "footer", name: "Footer" },
+  { id: "reveal", name: "Scroll reveal" },
+];
+---
+
+<LabLayout
+  title="Components"
+  lede="Every component in src/components, rendered with the real code and real case study content. Variants and edge cases sit side by side. Image zoom works here too."
+>
+  <ul slot="subnav" class="lab-subnav">
+    {sections.map((s) => <li><a class="lab-sublink" href={`#${s.id}`}>{s.name}</a></li>)}
+  </ul>
+
+  <!-- ── CaseStudyCard ─────────────────────────────── -->
+  <section class="lab-section" id="case-study-card">
+    <h2>CaseStudyCard</h2>
+    <p class="lab-path">src/components/CaseStudyCard.astro</p>
+    <table class="lab-table">
+      <thead><tr><th>Prop</th><th>Type</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><code>href, title, summary</code></td><td>string</td><td>required</td></tr>
+        <tr><td><code>benefit</code></td><td>string?</td><td>serif standfirst; stripped from the summary if it prefixes it</td></tr>
+        <tr><td><code>client, domain, period</code></td><td>string?</td><td>meta line; compact shows client only</td></tr>
+        <tr><td><code>cover</code></td><td>ImageMetadata?</td><td>falls back to a title placeholder</td></tr>
+        <tr><td><code>compact</code></td><td>boolean</td><td>image on top, for "More case studies"</td></tr>
+      </tbody>
+    </table>
+
+    <div class="lab-story">
+      <div class="lab-story-label"><span class="mj-label">Default · home list</span></div>
+      <div class="lab-stage">
+        <CaseStudyCard
+          href="#case-study-card"
+          title={first.data.title}
+          summary={first.data.summary}
+          benefit={first.data.benefit}
+          client={first.data.client}
+          domain={first.data.domain}
+          period={first.data.period}
+          cover={first.data.banner}
+        />
+      </div>
+    </div>
+
+    <div class="lab-story">
+      <div class="lab-story-label"><span class="mj-label">No benefit, no cover</span></div>
+      <div class="lab-stage">
+        <CaseStudyCard
+          href="#case-study-card"
+          title="Untitled draft"
+          summary="A draft case without a cover image yet. The placeholder keeps the 1200:630 frame so the list rhythm holds."
+          client="Sample client"
+        />
+      </div>
+    </div>
+
+    <div class="lab-story">
+      <div class="lab-story-label"><span class="mj-label">Compact · all published cases</span></div>
+      <div class="lab-stage">
+        <div class="compact-grid">
+          {
+            studies.map((s) => (
+              <CaseStudyCard
+                href="#case-study-card"
+                title={s.data.title}
+                summary={s.data.summary}
+                client={s.data.client}
+                cover={s.data.banner}
+                compact
+              />
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="lab-story">
+      <div class="lab-story-label"><span class="mj-label">Edge case · long title</span></div>
+      <div class="lab-stage">
+        <div class="compact-grid">
+          <CaseStudyCard
+            href="#case-study-card"
+            title="Rebuilding file management inside Jira for teams that live in Dropbox, Drive and OneDrive"
+            summary="Long title check."
+            client="Team Files"
+            cover={first.data.banner}
+            compact
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Figure ────────────────────────────────────── -->
+  <section class="lab-section" id="figure">
+    <h2>Figure</h2>
+    <p class="lab-path">src/components/Figure.astro</p>
+    <table class="lab-table">
+      <thead><tr><th>Prop</th><th>Type</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><code>src, alt</code></td><td>ImageMetadata, string</td><td>required; click to zoom</td></tr>
+        <tr><td><code>caption</code></td><td>string?</td><td>centered, also shown in the zoom dialog</td></tr>
+        <tr><td><code>bleed</code></td><td>boolean</td><td>breaks out by --container-pad on each side</td></tr>
+        <tr><td><code>widths, sizes</code></td><td>number[], string</td><td>responsive image overrides</td></tr>
+      </tbody>
+    </table>
+
+    <div class="lab-story">
+      <div class="lab-story-label"><span class="mj-label">With caption</span></div>
+      <div class="lab-stage">
+        <div class="prose">
+          <Figure src={tfLayout} alt="Team Files layout inside a Jira issue" caption="The file list sits inside the issue, where the work already happens." />
+        </div>
+      </div>
+    </div>
+
+    <div class="lab-story">
+      <div class="lab-story-label"><span class="mj-label">Bleed · no caption</span></div>
+      <div class="lab-stage">
+        <div class="prose bleed-host">
+          <Figure src={tfLayout} alt="Team Files layout" bleed />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CompareImages ─────────────────────────────── -->
+  <section class="lab-section" id="compare-images">
+    <h2>CompareImages</h2>
+    <p class="lab-path">src/components/CompareImages.astro</p>
+    <p class="lab-section-note">Two zoomable frames side by side; stacks under 640px.</p>
+    <div class="lab-stage">
+      <div class="prose">
+        <CompareImages
+          left={mfwProblem}
+          leftAlt="Before"
+          leftCaption="Before"
+          right={mfwSolution}
+          rightAlt="After"
+          rightCaption="After"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Quote ─────────────────────────────────────── -->
+  <section class="lab-section" id="quote">
+    <h2>Quote</h2>
+    <p class="lab-path">src/components/Quote.astro</p>
+    <p class="lab-section-note">Slot for the quote, optional <code>attribution</code>.</p>
+    <div class="lab-stage">
+      <div class="prose">
+        <Quote attribution="Sample attribution, role and company">
+          Sample quote. A short line to check the accent rule and the attribution label below it.
+        </Quote>
+        <Quote>
+          Without attribution. A longer quote to check how the measure and the accent rule hold across
+          several lines of text at the prose width.
+        </Quote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Stat ──────────────────────────────────────── -->
+  <section class="lab-section" id="stat">
+    <h2>Stat</h2>
+    <p class="lab-path">src/components/Stat.astro</p>
+    <p class="lab-section-note">Props <code>value</code> and <code>label</code>. Shown here in a three-up row.</p>
+    <div class="lab-stage">
+      <div class="stat-row">
+        <Stat value="9,000+" label="Companies" />
+        <Stat value="3.7 / 4" label="Marketplace rating" />
+        <Stat value="7 yrs" label="Years on the product, a long label to check wrapping" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Nav ───────────────────────────────────────── -->
+  <section class="lab-section" id="nav">
+    <h2>Nav</h2>
+    <p class="lab-path">src/components/Nav.astro</p>
+    <p class="lab-section-note">Sticky in the site; here it scrolls with the stage. Active state follows the current URL, so nothing is active in the lab. Hover a link for the underline ease.</p>
+    <div class="lab-stage flush"><Nav /></div>
+  </section>
+
+  <!-- ── ContactOutro ──────────────────────────────── -->
+  <section class="lab-section" id="contact-outro">
+    <h2>ContactOutro</h2>
+    <p class="lab-path">src/components/ContactOutro.astro</p>
+    <p class="lab-section-note">Full-bleed cobalt band that closes home and case study pages, followed by the footer.</p>
+    <div class="lab-stage flush">
+      <ContactOutro />
+      <Footer />
+    </div>
+  </section>
+
+  <!-- ── Footer ────────────────────────────────────── -->
+  <section class="lab-section" id="footer">
+    <h2>Footer</h2>
+    <p class="lab-path">src/components/Footer.astro</p>
+    <p class="lab-section-note">On its own, as it ends the about and contact pages.</p>
+    <div class="lab-stage flush"><Footer /></div>
+  </section>
+
+  <!-- ── Reveal ────────────────────────────────────── -->
+  <section class="lab-section" id="reveal">
+    <h2>Scroll reveal</h2>
+    <p class="lab-path">[data-reveal] · global.css + layout observer</p>
+    <p class="lab-section-note">Opacity from 0.75 and 8px of travel, once, when the element enters the viewport. Replay resets it.</p>
+    <div class="lab-story-label"><button type="button" class="lab-btn" data-replay>Replay reveal</button></div>
+    <div class="lab-stage">
+      <div class="compact-grid">
+        {studies.map((s) => (
+          <div data-reveal class="reveal-item">
+            <CaseStudyCard href="#reveal" title={s.data.title} summary={s.data.summary} client={s.data.client} cover={s.data.banner} compact />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</LabLayout>
+
+<script>
+  document.querySelector("[data-replay]")?.addEventListener("click", () => {
+    const items = document.querySelectorAll<HTMLElement>(".reveal-item");
+    items.forEach((el) => el.classList.remove("is-revealed"));
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => items.forEach((el) => el.classList.add("is-revealed")))
+    );
+  });
+</script>
+
+<style>
+  .compact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: var(--space-8);
+  }
+
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--space-6);
+  }
+
+  .bleed-host {
+    --container-pad: var(--space-8);
+  }
+
+  .lab-stage.flush :global(.nav) {
+    position: static;
+  }
+</style>

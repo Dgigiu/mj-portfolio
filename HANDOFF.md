@@ -1,6 +1,18 @@
 # Handoff
 
-Last updated: 2026-09-28 (session 24)
+Last updated: 2026-09-29 (session 27)
+
+## What changed in this session (2026-09-29, session 27)
+
+Built a **design lab**, a Storybook-style workbench for Miguel to play with the system. On branch **`feat/design-lab`** (off `main`), committed, not pushed. Real Storybook was ruled out: its Astro support is experimental, and it would need React wrappers that drift from the shipped components.
+
+- **Dev only.** Lives in [src/lab/](src/lab/). [integration.mjs](src/lab/integration.mjs) injects the `/lab/*` routes only when `command === "dev"`, so nothing reaches `dist/` or the sitemap (verified after a build).
+- **Pages:** `/lab` overview; `/lab/tokens` (parses `tokens.css` as text on every request, so it can't drift: swatches with dark values and live WCAG contrast against the canvas, type scale, leading, tracking, weights, spacing, layout, radii, borders, shadows, hoverable motion tracks); `/lab/type` (element defaults, `mj-*` utilities, prose specimen); `/lab/components` (every component with variants and edge cases on real case study content, props tables, reveal replay); `/lab/playground` (retune semantic colors, fonts, type scale, spacing density, radius, motion speed across the whole lab, persisted in localStorage, with a copyable `:root` diff; never writes to `tokens.css`); `/lab/viewports` (any page in 375/768/1280 iframes, so media queries fire for real).
+- **Dark theme toggle** in the lab sidebar sets `data-theme="dark"`, exercising the dark token set that the site doesn't wire up yet.
+- **One production refactor:** the image zoom dialog (markup, script, styles) moved out of [BaseLayout.astro](src/layouts/BaseLayout.astro) into [ZoomDialog.astro](src/components/ZoomDialog.astro) so the lab can reuse it. No behavior change; zoom and Esc-to-close verified on the Team Files page.
+- Sample copy in lab stories (quotes, stat labels, the placeholder card) is marked as sample; no invented claims.
+- Build clean (8 pages, 0/0/0).
+- **Merge note:** sessions 25 and 26 are on `tf-image-updates` (session 26 uncommitted and stashed when this branch was cut: `git stash pop` after switching back). Expect a small HANDOFF.md conflict when both branches land; keep all three entries.
 
 ## What changed in this session (2026-09-28, session 24)
 
