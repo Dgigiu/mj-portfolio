@@ -2,6 +2,12 @@
 
 Last updated: 2026-09-29 (session 27)
 
+## What changed in this session (2026-09-29, session 27, MyFoodways image)
+
+- Re-exported `MFW-01-product.png` (1600×1055) from Figma `m1vVaKCwVkvG4AtieNx7NW` ("MyFoodways"), node `193:4558`, overwriting the file in place. Miguel updated the left phone: now an Android device showing the "Just for you" suggestions screen (pasta salad with courgette), was an iPhone with "Your handpicked recipes". The right phone (search screen) is unchanged.
+- No mdx change: the figure's alt and caption describe only the search screen, so they still hold.
+- On branch `mfw-product-image`, merged via PR. Build clean (8 pages, 0/0/0).
+
 ## What changed in this session (2026-09-29, session 27, continued)
 
 **Status: `tf-image-updates` merged to `main` via PR #6 (`606faca`) and live on migueljss.com.** Deploy succeeded; the live Team Files page shows the new design system figure and the corrected onboarding paragraph. The batch was merged before the remaining Team Files images were in, at Miguel's call; any further TF images go in a new branch. The `tf-image-updates` branch still exists locally and on origin.
