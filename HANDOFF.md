@@ -2,9 +2,28 @@
 
 Last updated: 2026-09-29 (session 27)
 
+## What changed in this session (2026-09-29, session 27, continued)
+
+Third change in the open `tf-image-updates` batch: text only. Committed and pushed; **PR still pending**.
+
+- Factual correction to the onboarding paragraph ("Another turning point...") in Core UX challenges of [team-files.mdx](src/content/case-studies/team-files.mdx). Inside issues, the app only appears once something is shared: users usually first met it as a file attached to an issue, which they could open or unlock by connecting their own cloud account. People who opened the app from the Jira apps menu landed in an empty file manager, and that's where the tour lived (was "a short in-app tour"). The following paragraph ("That call was strategic...") is unchanged.
+- Build clean (0/0/0), no em or en dashes added. Browser check done later in the session: new paragraph renders, old wording gone, next paragraph unchanged, no failed requests or console errors from the page.
+
+**Merge order (resolved):** `feat/design-lab` landed on `main` first (PR #5). `main` was then merged into `tf-image-updates` to open its PR; the only conflict was `HANDOFF.md`, resolved by keeping every session entry (the lab entry is relabeled "design lab session" since it was also numbered 27).
+
 ## What changed in this session (2026-09-29, session 27)
 
-Built a **design lab**, a Storybook-style workbench for Miguel to play with the system. On branch **`feat/design-lab`** (off `main`), committed, not pushed. Real Storybook was ruled out: its Astro support is experimental, and it would need React wrappers that drift from the shipped components.
+Second change in the open Team Files image batch on branch **`tf-image-updates`**. Committed; the branch was pushed later in the session. **PR still pending** until the remaining images are in.
+
+- New design system figure `TF-08-design-system.png`, exported from Figma `oIt1mAagsb5rIThaLCjvFt` ("Team-Files-app"), page "Version 2", frame node `4178:3610`, at **1600×720**. Intentionally wider than the other TF figures (1600×1055); not resized or padded. It shows the item component: content types with their own actions; normal, hover, and disabled states; and selection and nesting options.
+- In [team-files.mdx](src/content/case-studies/team-files.mdx), the `designSystem` import now points to it; the Figure (Design execution, after the design system paragraph) keeps its position, with new alt and caption. Surrounding text unchanged.
+- Deleted `tf-getting-started-system.png`, now unreferenced (session 20 had kept it because the Figma file had no matching frame; this frame replaces it).
+- Build clean (0/0/0). Rendered page resolves the figure to the new image in the same spot; renders at a 2.22 ratio with the frame matching the image (no cropping or letterboxing); no 404s or console errors. No em or en dashes added.
+- Session 26's uncommitted paragraph (below) was committed separately on the same branch in this session.
+
+## What changed in this session (2026-09-29, design lab session)
+
+Built a **design lab**, a Storybook-style workbench for Miguel to play with the system. On branch **`feat/design-lab`** (off `main`), merged to `main` via PR #5. Real Storybook was ruled out: its Astro support is experimental, and it would need React wrappers that drift from the shipped components.
 
 - **Dev only.** Lives in [src/lab/](src/lab/). [integration.mjs](src/lab/integration.mjs) injects the `/lab/*` routes only when `command === "dev"`, so nothing reaches `dist/` or the sitemap (verified after a build).
 - **Pages:** `/lab` overview; `/lab/tokens` (parses `tokens.css` as text on every request, so it can't drift: swatches with dark values and live WCAG contrast against the canvas, type scale, leading, tracking, weights, spacing, layout, radii, borders, shadows, hoverable motion tracks); `/lab/type` (element defaults, `mj-*` utilities, prose specimen); `/lab/components` (every component with variants and edge cases on real case study content, props tables, reveal replay); `/lab/playground` (retune semantic colors, fonts, type scale, spacing density, radius, motion speed across the whole lab, persisted in localStorage, with a copyable `:root` diff; never writes to `tokens.css`); `/lab/viewports` (any page in 375/768/1280 iframes, so media queries fire for real).
@@ -13,6 +32,22 @@ Built a **design lab**, a Storybook-style workbench for Miguel to play with the 
 - Sample copy in lab stories (quotes, stat labels, the placeholder card) is marked as sample; no invented claims.
 - Build clean (8 pages, 0/0/0).
 - **Merge note:** sessions 25 and 26 are on `tf-image-updates` (session 26 uncommitted and stashed when this branch was cut: `git stash pop` after switching back). Expect a small HANDOFF.md conflict when both branches land; keep all three entries.
+
+## What changed in this session (2026-09-29, session 26)
+
+Copy-only, on branch `tf-image-updates` (committed in session 27).
+
+- New paragraph in [team-files.mdx](src/content/case-studies/team-files.mdx) "Core UX challenges": the connected-folder log story ("Support was one of the best places to do that noticing..."), placed after "On its own this is a small thing..." and before "Another turning point...". No figure, no other text changes.
+- Same paragraph also inserted in the gitignored `docs/Case Studies/cs-team-files.md` at Miguel's request, even though that doc is otherwise obsolete for published cases (see session 25).
+- Build clean (8 pages, 0/0/0); paragraph order confirmed in the built Team Files page.
+
+## What changed in this session (2026-09-28, session 25)
+
+First of several Team Files image updates, batched on branch **`tf-image-updates`**. Committed, **not pushed, PR still pending** until the remaining images are in.
+
+- New figure `TF-07-ux-improvements.png` (1600×1055, exported from Figma `oIt1mAagsb5rIThaLCjvFt`, node `4120:4227`) placed after the 2023 UX review paragraph, before "Core UX challenges", in [team-files.mdx](src/content/case-studies/team-files.mdx).
+- Same paragraph gained: "I also gave every file and folder action its own icon, so they could be scanned at a glance."
+- **Workflow change:** the mdx is now the source of truth for published case studies; the `docs/Case Studies/*.md` docs are obsolete for them (Claude Chat reads the mdx from the repo). CLAUDE.md updated. Surfaced because `cs-team-files.md` had drifted: its UX review paragraph has an extra sentence (Atlassian design system, larger metadata labels, revised contrast) that was never in the mdx. Miguel approved adding it to the mdx (after the error messages sentence), and the accessibility sentence after it was shortened to "...as it did through every release, from clear system feedback to error tolerance." to avoid repeating contrast and legibility.
 
 ## What changed in this session (2026-09-28, session 24)
 
@@ -314,7 +349,7 @@ Per-session detail beyond this lives in the git log; commit messages carry the s
 - ~~Per-case-study OG images~~ — done, session 19: each case study now generates its own 1200×630 OG image at build time from its `banner`, as part of the cover-image unification (see the changelog entry above). `scripts/build-og-image.mjs`'s output is now only the fallback for pages with no `banner` (home/about/contact).
 - **Two new case studies on hold.** `docs/Case Studies/cs-board-game-app.md` and `cs-office-editor.md` are written but not on the site. When ready, each needs cover/inline images under `src/assets/case-studies/<slug>/`, a new `.mdx` in `src/content/case-studies/`, and an `order` value in the frontmatter.
 - ~~Switching to migueljss.com~~ — done and fully verified live, session 19 (custom domain, HTTPS enforced, old staging links redirect correctly). Nothing left open here.
-- **Case study updates.** `docs/Case Studies/` is gitignored; drop updated `.docx` or images there and Claude can refold into the MDX.
+- **Case study updates.** Edit the mdx directly (it's the source of truth since session 25). `docs/Case Studies/` is obsolete for published cases; only the two unpublished drafts there still matter.
 
 ## Quick reference
 
@@ -332,7 +367,7 @@ npm run preview
 - Base path helper: [src/lib/paths.ts](src/lib/paths.ts)
 - Design system reference: [docs/design_handoff_design_system/README.md](docs/design_handoff_design_system/README.md)
 - Design system v2 delta: [docs/design_handoff_design_system_delta/README.md](docs/design_handoff_design_system_delta/README.md)
-- Case study sources (gitignored): `docs/Case Studies/`
+- Case study source of truth: `src/content/case-studies/*.mdx` (`docs/Case Studies/` holds only unpublished drafts that still matter)
 
 **Conventions**
 - Canvas is warm off-white `#fbfaf6` (`--bg-canvas`). No pure white anywhere.

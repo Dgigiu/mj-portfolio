@@ -18,7 +18,8 @@ import attachFiles from "../../assets/case-studies/team-files/TF-03-attach-files
 import layout from "../../assets/case-studies/team-files/TF-04-layout.png";
 import automation from "../../assets/case-studies/team-files/TF-05-automation-settings.png";
 import valueProp from "../../assets/case-studies/team-files/TF-06-value-proposition.png";
-import designSystem from "../../assets/case-studies/team-files/tf-getting-started-system.png";
+import designSystem from "../../assets/case-studies/team-files/TF-08-design-system.png";
+import uxImprovements from "../../assets/case-studies/team-files/TF-07-ux-improvements.png";
 
 ## Product
 
@@ -52,7 +53,13 @@ From the start, our strategy was to do more than just let users paste a link. We
 
 As the product matured and the main flows became stable, we shifted from just making it work to making it smooth. The clearest example of that shift was a full UX review in 2023. By then the question wasn’t only whether people would try Team Files, but whether trials turned into paying customers and whether those customers stayed. I went through the product against Nielsen Norman’s usability heuristics, wrote up a report, turned each finding into a user story in Jira, and worked through them sprint by sprint rather than treating the review as a one-time cleanup.
 
-A few of those changes stuck with me. Some actions weren’t visible enough, so I added a dedicated preview button to the file options, since many people never realized they could open a full-screen preview. We added contextual help, with each part of the app linking to the relevant documentation right where you needed it. And we rewrote error messages so each one guided the user toward a resolution, with no more “something went wrong” dead ends. Accessibility ran through all of it, as it did through every release: contrast, legibility, clear system feedback, and error tolerance. No single change was dramatic on its own. But work like this, alongside steady improvements to stability and usability, is the kind of thing that quietly compounds into a product people stay with.
+A few of those changes stuck with me. Some actions weren’t visible enough, so I added a dedicated preview button to the file options, since many people never realized they could open a full-screen preview. I also gave every file and folder action its own icon, so they could be scanned at a glance. We added contextual help, with each part of the app linking to the relevant documentation right where you needed it. And we rewrote error messages so each one guided the user toward a resolution, with no more “something went wrong” dead ends. It’s also when I started pulling more of Atlassian’s own design system into the product: metadata labels on files and folders got a size increase for legibility, and I revised colors across the board to meet its contrast requirements. Accessibility ran through all of it, as it did through every release, from clear system feedback to error tolerance. No single change was dramatic on its own. But work like this, alongside steady improvements to stability and usability, is the kind of thing that quietly compounds into a product people stay with.
+
+<Figure
+  src={uxImprovements}
+  alt="Team Files folder view in Confluence with four callouts from the 2023 UX review: a contextual help icon linking to documentation, an error message that explains the problem and offers a reconnect action, larger and higher-contrast file metadata, and icons on every file and folder action."
+  caption="Four fixes from the 2023 UX review: contextual help, error messages that point to a solution, higher-contrast metadata, and an icon for every file and folder action."
+/>
 
 ## Core UX challenges
 
@@ -74,7 +81,9 @@ One small redesign captures the approach. To connect a folder, users picked from
 
 On its own this is a small thing. But the path to making Team Files better was built from moments like it, the kind of friction you only notice once you’ve watched enough people hit it over time. That noticing is something long tenure on a product buys you that a short engagement never can.
 
-Another turning point was removing mandatory authentication from the app’s first version. This was a real engineering achievement, but it removed an important moment to explain the product. Most users never chose to install Team Files; their admin did, and the first they saw of it was a panel sitting inside an issue, with no context for what it was. So I moved the explaining into the product itself: empty states that guided users toward connecting their first folder and a short in-app tour. The first-run empty state became the real onboarding, not a placeholder.
+Support was one of the best places to do that noticing. For a while, a recurring ticket had users suddenly losing access to connected folders. Engineering kept making the code more resilient, and that helped, but every new ticket still meant piecing together what had happened. Was it a real error, or had someone disconnected the folder and connected it again? At the time, reconnecting could break the links to files already attached. So I raised it with our CTO and product owner, and designed a log for each connected folder, where admins could see its history and tell one case from the other. After it shipped, that kind of ticket became rare, and when one did come in, we had a clear record to work from instead of going in circles trying to reconstruct it.
+
+Another turning point was removing mandatory authentication from the app’s first version. This was a real engineering achievement, but it removed an important moment to explain the product. Most users never chose to install Team Files; their admin did. Usually, the first they saw of it was a file someone had attached to an issue, which they could open right away or unlock by connecting their own cloud account, with no Team Files account needed. The ones who went looking for the app itself, through the Jira apps menu, landed in a file manager with nothing connected yet. So I moved the explaining into the product itself: empty states that guided users toward connecting their first folder, and a short tour of the file manager. The first-run empty state became the real onboarding, not a placeholder.
 
 That call was strategic as much as design. It simplified access for everyone, especially the large share of users who only wanted to view attached files and previously had to create an account just to look. It also reinforced something for me: when you can’t control where someone enters a product, every default state has to teach.
 
@@ -104,8 +113,8 @@ Alongside the product work, I established the design system. It started as Team 
 
 <Figure
   src={designSystem}
-  alt="Snapshot of the Team Files design system built on Atlassian components."
-  caption="A design system built on Atlassian components to keep Team Files feeling native."
+  alt="Team Files item component in three groups: content types (file, folder, connected folder, Google Drive account, site, and Jira issue), each with its own actions; normal, hover, and disabled states; and selection and nesting options shown with a checkbox, a chevron, and an indented subfolder."
+  caption="The item component, built on Atlassian elements: content types with their own actions, states, and options for selection and nesting."
 />
 
 I also improved my own process along the way. I moved from Sketch to Figma, and improved handoffs with interactive prototypes and detailed Jira tickets that doubled as the basis for user documentation. Part of that process has always been folding in new tools as they earned their place, from Grammarly supporting the steady volume of documentation, site copy, and articles I wrote, to language models helping with UX writing, ideation, and research. I kept an eye on where things were heading too, like Figma Make, which made it clear that prototypes would soon be built in tools like it. The tools kept changing; the habit of adopting them deliberately didn’t.
