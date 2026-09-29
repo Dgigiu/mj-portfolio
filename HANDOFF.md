@@ -7,7 +7,9 @@ Last updated: 2026-09-29 (session 27)
 Third change in the open `tf-image-updates` batch: text only. Committed and pushed; **PR still pending**.
 
 - Factual correction to the onboarding paragraph ("Another turning point...") in Core UX challenges of [team-files.mdx](src/content/case-studies/team-files.mdx). Inside issues, the app only appears once something is shared: users usually first met it as a file attached to an issue, which they could open or unlock by connecting their own cloud account. People who opened the app from the Jira apps menu landed in an empty file manager, and that's where the tour lived (was "a short in-app tour"). The following paragraph ("That call was strategic...") is unchanged.
-- Build clean, no console errors, no em or en dashes added.
+- Build clean (0/0/0), no em or en dashes added. Browser console check not done: the permission check blocked page reloads for the rest of the session. Recheck the Team Files page for console errors next session.
+
+**Merge order for open branches (decided with Miguel):** there's a second unmerged branch, `feat/design-lab` (`8f47544`, dev-only design lab at `/lab`), cut from `main` before this batch. Plan: finish the Team Files batch and merge `tf-image-updates` into `main` first; then update `feat/design-lab` from the new `main`. The likely conflict is `HANDOFF.md` (both branches add entries at the top); resolve it by keeping both entries. Branches not yet compared file by file.
 
 ## What changed in this session (2026-09-29, session 27)
 
