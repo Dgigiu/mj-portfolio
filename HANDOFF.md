@@ -2,9 +2,16 @@
 
 Last updated: 2026-09-29 (session 27)
 
+## What changed in this session (2026-09-29, session 27, continued)
+
+Third change in the open `tf-image-updates` batch: text only. Committed and pushed; **PR still pending**.
+
+- Factual correction to the onboarding paragraph ("Another turning point...") in Core UX challenges of [team-files.mdx](src/content/case-studies/team-files.mdx). Inside issues, the app only appears once something is shared: users usually first met it as a file attached to an issue, which they could open or unlock by connecting their own cloud account. People who opened the app from the Jira apps menu landed in an empty file manager, and that's where the tour lived (was "a short in-app tour"). The following paragraph ("That call was strategic...") is unchanged.
+- Build clean, no console errors, no em or en dashes added.
+
 ## What changed in this session (2026-09-29, session 27)
 
-Second change in the open Team Files image batch on branch **`tf-image-updates`**. Committed, **not pushed, PR still pending** until the remaining images are in.
+Second change in the open Team Files image batch on branch **`tf-image-updates`**. Committed; the branch was pushed later in the session. **PR still pending** until the remaining images are in.
 
 - New design system figure `TF-08-design-system.png`, exported from Figma `oIt1mAagsb5rIThaLCjvFt` ("Team-Files-app"), page "Version 2", frame node `4178:3610`, at **1600×720**. Intentionally wider than the other TF figures (1600×1055); not resized or padded. It shows the item component: content types with their own actions; normal, hover, and disabled states; and selection and nesting options.
 - In [team-files.mdx](src/content/case-studies/team-files.mdx), the `designSystem` import now points to it; the Figure (Design execution, after the design system paragraph) keeps its position, with new alt and caption. Surrounding text unchanged.
