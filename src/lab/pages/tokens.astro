@@ -1,0 +1,389 @@
+---
+import LabLayout from "../LabLayout.astro";
+import { parseTokens, type TokenGroup } from "../tokens";
+
+const groups = parseTokens();
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+const kind = (g: TokenGroup) => {
+  const t = g.title.toLowerCase();
+  if (t.startsWith("color")) return "color";
+  if (t === "type: families") return "family";
+  if (t === "type: scale") return "scale";
+  if (t === "type: leading") return "leading";
+  if (t === "type: tracking") return "tracking";
+  if (t === "type: weight") return "weight";
+  if (t.startsWith("spacing")) return "space";
+  if (t === "layout") return "layout";
+  if (t === "radii") return "radius";
+  if (t === "borders") return "border";
+  if (t.startsWith("shadows")) return "shadow";
+  if (t === "motion") return "motion";
+  return "table";
+};
+const specimen = "Designing clear experiences for complex products.";
+---
+
+<LabLayout
+  title="Tokens"
+  lede="Every custom property in src/styles/tokens.css, read straight from the file on each request. Edit a token there and this page updates with it. Color swatches show their contrast against the canvas; flip the dark theme to see both sets."
+>
+  <ul slot="subnav" class="lab-subnav">
+    {groups.map((g) => <li><a class="lab-sublink" href={`#${slug(g.title)}`}>{g.title}</a></li>)}
+  </ul>
+
+  {
+    groups.map((g) => (
+      <section class="lab-section" id={slug(g.title)}>
+        <h2>{g.title}</h2>
+        <p class="lab-section-note">{g.tokens.length} tokens</p>
+
+        {kind(g) === "color" && (
+          <div class="swatches">
+            {g.tokens.map((t) => (
+              <div class="swatch">
+                <div class="swatch-chip" style={`background: var(${t.name})`} data-contrast-chip />
+                <code class="swatch-name">{t.name}</code>
+                <span class="swatch-value">
+                  {t.value}
+                  {t.dark && <span class="swatch-dark"> · dark {t.dark}</span>}
+                </span>
+                <span class="swatch-contrast" data-contrast />
+                {t.note && <span class="swatch-note">{t.note}</span>}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {kind(g) === "family" && g.tokens.map((t) => (
+          <div class="row">
+            <code class="row-name">{t.name}</code>
+            <p class="row-specimen family" style={`font-family: var(${t.name})`}>{specimen}</p>
+          </div>
+        ))}
+
+        {kind(g) === "scale" && g.tokens.slice().reverse().map((t) => (
+          <div class="row">
+            <code class="row-name">{t.name}<span>{t.value}{t.note && ` · ${t.note}`}</span></code>
+            <p class="row-specimen scale" style={`font-size: var(${t.name})`}>{specimen}</p>
+          </div>
+        ))}
+
+        {kind(g) === "leading" && (
+          <div class="leading-grid">
+            {g.tokens.map((t) => (
+              <div>
+                <code class="row-name">{t.name}<span>{t.value}</span></code>
+                <p class="leading-sample" style={`line-height: var(${t.name})`}>
+                  I start from the problem, not the screen, and work closely with engineering to ship something that holds up in use.
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {kind(g) === "tracking" && g.tokens.map((t) => (
+          <div class="row">
+            <code class="row-name">{t.name}<span>{t.value}</span></code>
+            <p class="row-specimen tracking" style={`letter-spacing: var(${t.name})`}>Selected work</p>
+          </div>
+        ))}
+
+        {kind(g) === "weight" && g.tokens.map((t) => (
+          <div class="row">
+            <code class="row-name">{t.name}<span>{t.value}</span></code>
+            <p class="row-specimen weight" style={`font-weight: var(${t.name})`}>
+              <span class="sans">Geist {t.value}</span>
+              <span class="serif">Aleo {t.value}</span>
+            </p>
+          </div>
+        ))}
+
+        {kind(g) === "space" && g.tokens.map((t) => (
+          <div class="row">
+            <code class="row-name">{t.name}<span>{t.value}</span></code>
+            <div class="bar" style={`width: var(${t.name})`} />
+          </div>
+        ))}
+
+        {kind(g) === "layout" && g.tokens.map((t) => (
+          <div class="row">
+            <code class="row-name">{t.name}<span>{t.value}</span></code>
+            <div class="bar layout" style={`width: min(100%, var(${t.name}))`} />
+          </div>
+        ))}
+
+        {kind(g) === "radius" && (
+          <div class="tiles">
+            {g.tokens.map((t) => (
+              <div class="tile-wrap">
+                <div class="tile" style={`border-radius: var(${t.name})`} />
+                <code class="row-name">{t.name}<span>{t.value}</span></code>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {kind(g) === "border" && g.tokens.map((t) => (
+          <div class="row">
+            <code class="row-name">{t.name}<span>{t.value}</span></code>
+            <div class="rule" style={`border-top-width: var(${t.name})`} />
+          </div>
+        ))}
+
+        {kind(g) === "shadow" && (
+          <div class="tiles">
+            {g.tokens.map((t) => (
+              <div class="tile-wrap">
+                <div class="tile raised" style={`box-shadow: var(${t.name})`} />
+                <code class="row-name">{t.name}</code>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {kind(g) === "motion" && (
+          <>
+            <p class="lab-section-note">Hover a track to run it. Durations use --ease-out; easings use --duration-slow.</p>
+            {g.tokens.filter((t) => !t.name.startsWith("--transition")).map((t) => (
+              <div class="row">
+                <code class="row-name">{t.name}<span>{t.value}</span></code>
+                <div
+                  class="track"
+                  style={
+                    t.name.startsWith("--ease")
+                      ? `--run-ease: var(${t.name}); --run-duration: var(--duration-slow)`
+                      : `--run-ease: var(--ease-out); --run-duration: var(${t.name})`
+                  }
+                >
+                  <span class="puck" />
+                </div>
+              </div>
+            ))}
+          </>
+        )}
+
+        {kind(g) === "table" && (
+          <table class="lab-table">
+            <tbody>
+              {g.tokens.map((t) => (
+                <tr><td><code>{t.name}</code></td><td>{t.value}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </section>
+    ))
+  }
+</LabLayout>
+
+<script>
+  // WCAG contrast of each swatch against the current canvas. Recomputed on
+  // theme flips since semantic tokens change underneath.
+  const channel = (c: number) => {
+    const s = c / 255;
+    return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+  };
+  const luminance = (rgb: string) => {
+    const [r, g, b] = (rgb.match(/[\d.]+/g) ?? []).map(Number);
+    return 0.2126 * channel(r) + 0.7152 * channel(g) + 0.0722 * channel(b);
+  };
+  const update = () => {
+    const canvas = luminance(getComputedStyle(document.body).backgroundColor);
+    document.querySelectorAll<HTMLElement>(".swatch").forEach((sw) => {
+      const chip = sw.querySelector<HTMLElement>("[data-contrast-chip]");
+      const out = sw.querySelector<HTMLElement>("[data-contrast]");
+      if (!chip || !out) return;
+      const bg = getComputedStyle(chip).backgroundColor;
+      const l = luminance(bg);
+      const ratio = (Math.max(l, canvas) + 0.05) / (Math.min(l, canvas) + 0.05);
+      out.textContent = `${ratio.toFixed(2)}:1 on canvas${ratio >= 4.5 ? " · AA text" : ratio >= 3 ? " · AA large" : ""}`;
+    });
+  };
+  update();
+  document.addEventListener("lab:theme", update);
+</script>
+
+<style>
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: var(--space-6) var(--space-5);
+  }
+
+  .swatch {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    line-height: var(--leading-normal);
+  }
+
+  .swatch-chip {
+    height: 72px;
+    border-radius: var(--radius-md);
+    border: var(--hairline) solid var(--border-subtle);
+    margin-bottom: var(--space-2);
+  }
+
+  .swatch-name {
+    background: none;
+    padding: 0;
+    color: var(--fg-primary);
+  }
+
+  .swatch-value,
+  .swatch-contrast {
+    color: var(--fg-secondary);
+  }
+
+  .swatch-dark,
+  .swatch-note {
+    color: var(--fg-tertiary);
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: var(--space-5);
+    align-items: center;
+    padding: var(--space-3) 0;
+    border-bottom: var(--hairline) solid var(--border-subtle);
+  }
+
+  .row-name {
+    display: flex;
+    flex-direction: column;
+    background: none;
+    padding: 0;
+    font-size: var(--text-xs);
+    color: var(--fg-primary);
+  }
+
+  .row-name span {
+    color: var(--fg-tertiary);
+  }
+
+  .row-specimen {
+    margin: 0;
+    color: var(--fg-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .row-specimen.family {
+    font-size: var(--text-2xl);
+  }
+
+  .row-specimen.scale {
+    font-family: var(--font-sans);
+    font-weight: var(--weight-semi);
+    letter-spacing: var(--tracking-snug);
+    line-height: var(--leading-snug);
+  }
+
+  .row-specimen.tracking {
+    font-family: var(--font-sans);
+    font-weight: var(--weight-semi);
+    font-size: var(--text-3xl);
+  }
+
+  .row-specimen.weight {
+    display: flex;
+    gap: var(--space-8);
+    font-size: var(--text-2xl);
+  }
+
+  .weight .sans {
+    font-family: var(--font-sans);
+  }
+
+  .leading-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--space-6);
+  }
+
+  .leading-sample {
+    margin-top: var(--space-2);
+    padding: var(--space-3);
+    background: var(--accent-soft);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-sm);
+  }
+
+  .bar {
+    height: var(--space-3);
+    background: var(--accent);
+    border-radius: var(--radius-xs);
+    min-width: 1px;
+  }
+
+  .bar.layout {
+    background: var(--accent-line);
+  }
+
+  .tiles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8);
+  }
+
+  .tile-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .tile {
+    width: 112px;
+    height: 112px;
+    background: var(--accent-soft);
+    border: var(--hairline) solid var(--accent-line);
+  }
+
+  .tile.raised {
+    background: var(--bg-elevated);
+    border: 0;
+    border-radius: var(--radius-md);
+  }
+
+  .rule {
+    border-top: 0 solid var(--fg-primary);
+  }
+
+  .track {
+    position: relative;
+    height: var(--space-8);
+    background: var(--bg-subtle);
+    border-radius: var(--radius-pill);
+  }
+
+  .puck {
+    position: absolute;
+    top: var(--space-1);
+    left: var(--space-1);
+    width: var(--space-6);
+    height: var(--space-6);
+    border-radius: var(--radius-pill);
+    background: var(--accent);
+    transition: translate var(--run-duration) var(--run-ease);
+  }
+
+  .track:hover .puck {
+    translate: calc(100cqw - var(--space-8)) 0;
+  }
+
+  .track {
+    container-type: inline-size;
+    max-width: 480px;
+  }
+
+  @media (max-width: 720px) {
+    .row {
+      grid-template-columns: 1fr;
+      gap: var(--space-2);
+    }
+  }
+</style>

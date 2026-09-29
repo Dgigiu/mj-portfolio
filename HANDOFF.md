@@ -9,7 +9,7 @@ Third change in the open `tf-image-updates` batch: text only. Committed and push
 - Factual correction to the onboarding paragraph ("Another turning point...") in Core UX challenges of [team-files.mdx](src/content/case-studies/team-files.mdx). Inside issues, the app only appears once something is shared: users usually first met it as a file attached to an issue, which they could open or unlock by connecting their own cloud account. People who opened the app from the Jira apps menu landed in an empty file manager, and that's where the tour lived (was "a short in-app tour"). The following paragraph ("That call was strategic...") is unchanged.
 - Build clean (0/0/0), no em or en dashes added. Browser check done later in the session: new paragraph renders, old wording gone, next paragraph unchanged, no failed requests or console errors from the page.
 
-**Merge order for open branches (decided with Miguel):** there's a second unmerged branch, `feat/design-lab` (`8f47544`, dev-only design lab at `/lab`), cut from `main` before this batch. Plan: finish the Team Files batch and merge `tf-image-updates` into `main` first; then update `feat/design-lab` from the new `main`. The likely conflict is `HANDOFF.md` (both branches add entries at the top); resolve it by keeping both entries. Branches not yet compared file by file.
+**Merge order (resolved):** `feat/design-lab` landed on `main` first (PR #5). `main` was then merged into `tf-image-updates` to open its PR; the only conflict was `HANDOFF.md`, resolved by keeping every session entry (the lab entry is relabeled "design lab session" since it was also numbered 27).
 
 ## What changed in this session (2026-09-29, session 27)
 
@@ -20,6 +20,18 @@ Second change in the open Team Files image batch on branch **`tf-image-updates`*
 - Deleted `tf-getting-started-system.png`, now unreferenced (session 20 had kept it because the Figma file had no matching frame; this frame replaces it).
 - Build clean (0/0/0). Rendered page resolves the figure to the new image in the same spot; renders at a 2.22 ratio with the frame matching the image (no cropping or letterboxing); no 404s or console errors. No em or en dashes added.
 - Session 26's uncommitted paragraph (below) was committed separately on the same branch in this session.
+
+## What changed in this session (2026-09-29, design lab session)
+
+Built a **design lab**, a Storybook-style workbench for Miguel to play with the system. On branch **`feat/design-lab`** (off `main`), merged to `main` via PR #5. Real Storybook was ruled out: its Astro support is experimental, and it would need React wrappers that drift from the shipped components.
+
+- **Dev only.** Lives in [src/lab/](src/lab/). [integration.mjs](src/lab/integration.mjs) injects the `/lab/*` routes only when `command === "dev"`, so nothing reaches `dist/` or the sitemap (verified after a build).
+- **Pages:** `/lab` overview; `/lab/tokens` (parses `tokens.css` as text on every request, so it can't drift: swatches with dark values and live WCAG contrast against the canvas, type scale, leading, tracking, weights, spacing, layout, radii, borders, shadows, hoverable motion tracks); `/lab/type` (element defaults, `mj-*` utilities, prose specimen); `/lab/components` (every component with variants and edge cases on real case study content, props tables, reveal replay); `/lab/playground` (retune semantic colors, fonts, type scale, spacing density, radius, motion speed across the whole lab, persisted in localStorage, with a copyable `:root` diff; never writes to `tokens.css`); `/lab/viewports` (any page in 375/768/1280 iframes, so media queries fire for real).
+- **Dark theme toggle** in the lab sidebar sets `data-theme="dark"`, exercising the dark token set that the site doesn't wire up yet.
+- **One production refactor:** the image zoom dialog (markup, script, styles) moved out of [BaseLayout.astro](src/layouts/BaseLayout.astro) into [ZoomDialog.astro](src/components/ZoomDialog.astro) so the lab can reuse it. No behavior change; zoom and Esc-to-close verified on the Team Files page.
+- Sample copy in lab stories (quotes, stat labels, the placeholder card) is marked as sample; no invented claims.
+- Build clean (8 pages, 0/0/0).
+- **Merge note:** sessions 25 and 26 are on `tf-image-updates` (session 26 uncommitted and stashed when this branch was cut: `git stash pop` after switching back). Expect a small HANDOFF.md conflict when both branches land; keep all three entries.
 
 ## What changed in this session (2026-09-29, session 26)
 

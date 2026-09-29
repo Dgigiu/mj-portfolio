@@ -34,6 +34,10 @@ src/
     case-studies/*.mdx      case study source
   assets/case-studies/      images consumed by astro:assets
   styles/                   tokens.css, global.css, typography.css
+  lab/                      design lab (dev only): tokens, type, components,
+                            playground, viewports at /lab. Routes injected by
+                            lab/integration.mjs under `astro dev` only, so
+                            never built or deployed
 public/                     favicon, app icons, robots, OG images
 scripts/                    one-shot generators (app icon, OG image, font conversion)
 docs/                       briefs; Case Studies/ folder is gitignored and
@@ -58,7 +62,7 @@ The `.mdx` files in `src/content/case-studies/` are the source of truth for ever
 
 ```
 npm install
-npm run dev       # http://localhost:4321/
+npm run dev       # http://localhost:4321/ (design lab at /lab)
 npm run build     # astro check && astro build
 npm run preview
 ```
