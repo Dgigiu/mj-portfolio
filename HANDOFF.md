@@ -1,6 +1,24 @@
 # Handoff
 
-Last updated: 2026-09-28 (session 25)
+Last updated: 2026-09-29 (session 27)
+
+## What changed in this session (2026-09-29, session 27)
+
+Second change in the open Team Files image batch on branch **`tf-image-updates`**. Committed, **not pushed, PR still pending** until the remaining images are in.
+
+- New design system figure `TF-08-design-system.png`, exported from Figma `oIt1mAagsb5rIThaLCjvFt` ("Team-Files-app"), page "Version 2", frame node `4178:3610`, at **1600×720**. Intentionally wider than the other TF figures (1600×1055); not resized or padded. It shows the item component: content types with their own actions; normal, hover, and disabled states; and selection and nesting options.
+- In [team-files.mdx](src/content/case-studies/team-files.mdx), the `designSystem` import now points to it; the Figure (Design execution, after the design system paragraph) keeps its position, with new alt and caption. Surrounding text unchanged.
+- Deleted `tf-getting-started-system.png`, now unreferenced (session 20 had kept it because the Figma file had no matching frame; this frame replaces it).
+- Build clean (0/0/0). Rendered page resolves the figure to the new image in the same spot; renders at a 2.22 ratio with the frame matching the image (no cropping or letterboxing); no 404s or console errors. No em or en dashes added.
+- Session 26's uncommitted paragraph (below) was committed separately on the same branch in this session.
+
+## What changed in this session (2026-09-29, session 26)
+
+Copy-only, on branch `tf-image-updates` (committed in session 27).
+
+- New paragraph in [team-files.mdx](src/content/case-studies/team-files.mdx) "Core UX challenges": the connected-folder log story ("Support was one of the best places to do that noticing..."), placed after "On its own this is a small thing..." and before "Another turning point...". No figure, no other text changes.
+- Same paragraph also inserted in the gitignored `docs/Case Studies/cs-team-files.md` at Miguel's request, even though that doc is otherwise obsolete for published cases (see session 25).
+- Build clean (8 pages, 0/0/0); paragraph order confirmed in the built Team Files page.
 
 ## What changed in this session (2026-09-28, session 25)
 
