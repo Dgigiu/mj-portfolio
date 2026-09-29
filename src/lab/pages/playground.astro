@@ -1,0 +1,416 @@
+---
+import { getCollection } from "astro:content";
+import LabLayout from "../LabLayout.astro";
+import CaseStudyCard from "../../components/CaseStudyCard.astro";
+import Figure from "../../components/Figure.astro";
+import Quote from "../../components/Quote.astro";
+import Stat from "../../components/Stat.astro";
+import Nav from "../../components/Nav.astro";
+import ContactOutro from "../../components/ContactOutro.astro";
+import Footer from "../../components/Footer.astro";
+import { parseTokens } from "../tokens";
+import tfLayout from "../../assets/case-studies/team-files/TF-04-layout.png";
+
+const studies = (await getCollection("case-studies", ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const [first] = studies;
+
+const groups = parseTokens();
+const namesIn = (title: string) => groups.find((g) => g.title === title)?.tokens.map((t) => t.name) ?? [];
+
+// Semantic colors, not the raw paper/ink ramps: aliases like --fg-primary
+// resolve at :root, so these are the knobs the components actually read.
+const colors = [
+  ["--accent", "Accent"],
+  ["--accent-soft", "Accent soft"],
+  ["--accent-line", "Accent line"],
+  ["--accent-press", "Accent press (footer)"],
+  ["--bg-canvas", "Canvas"],
+  ["--bg-elevated", "Elevated"],
+  ["--bg-subtle", "Subtle"],
+  ["--fg-primary", "Text primary"],
+  ["--fg-secondary", "Text secondary"],
+  ["--fg-tertiary", "Text tertiary"],
+  ["--border-subtle", "Border subtle"],
+];
+
+const fontOptions = [
+  ['"Aleo", Georgia, serif', "Aleo"],
+  ['"Geist", system-ui, sans-serif', "Geist"],
+  ['"Geist Mono", ui-monospace, monospace', "Geist Mono"],
+  ["Georgia, serif", "Georgia"],
+  ["system-ui, sans-serif", "System UI"],
+];
+---
+
+<LabLayout
+  title="Playground"
+  lede="Change tokens and watch the real components respond. Edits apply to the whole lab, persist in this browser, and never touch tokens.css. Copy the diff when something is worth keeping."
+>
+  <div class="pg">
+    <form class="pg-panel" id="pg-form" onsubmit="return false">
+      <fieldset>
+        <legend class="mj-label">Color</legend>
+        {
+          colors.map(([name, label]) => (
+            <label class="pg-color">
+              <input type="color" data-token={name} />
+              <span>{label}<code>{name}</code></span>
+            </label>
+          ))
+        }
+      </fieldset>
+
+      <fieldset>
+        <legend class="mj-label">Type</legend>
+        <label class="pg-field">
+          <span>Serif voice <code>--font-serif</code></span>
+          <select data-token="--font-serif">
+            {fontOptions.map(([v, l]) => <option value={v}>{l}</option>)}
+          </select>
+        </label>
+        <label class="pg-field">
+          <span>Sans voice <code>--font-sans</code></span>
+          <select data-token="--font-sans">
+            {fontOptions.map(([v, l]) => <option value={v} selected={l === "Geist"}>{l}</option>)}
+          </select>
+        </label>
+        <label class="pg-field">
+          <span>Type scale <output data-out="type">100%</output></span>
+          <input type="range" min="80" max="125" step="5" value="100" data-scale="type" data-names={namesIn("Type: scale").join(",")} />
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend class="mj-label">Space and shape</legend>
+        <label class="pg-field">
+          <span>Spacing density <output data-out="space">100%</output></span>
+          <input type="range" min="50" max="150" step="10" value="100" data-scale="space" data-names={namesIn("Spacing: 8pt grid").join(",")} />
+        </label>
+        <label class="pg-field">
+          <span>Corner radius <output data-out="radius">100%</output></span>
+          <input type="range" min="0" max="300" step="25" value="100" data-scale="radius" data-names="--radius-xs,--radius-sm,--radius-md,--radius-lg" />
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend class="mj-label">Motion</legend>
+        <label class="pg-field">
+          <span>Speed <output data-out="motion">100%</output></span>
+          <input type="range" min="25" max="400" step="25" value="100" data-scale="motion" data-names={namesIn("Motion").filter((n) => n.startsWith("--duration")).join(",")} />
+        </label>
+      </fieldset>
+
+      <div class="pg-actions">
+        <button type="button" class="lab-btn" id="pg-reset">Reset all</button>
+        <button type="button" class="lab-btn" id="pg-copy">Copy diff</button>
+      </div>
+      <pre class="pg-diff" id="pg-diff" aria-live="polite"></pre>
+    </form>
+
+    <div class="pg-preview">
+      <div class="lab-stage flush">
+        <Nav />
+        <div class="pg-body">
+          <p class="mj-eyebrow">Case study</p>
+          <h2 class="mj-display-md">{first.data.title}</h2>
+          <p class="pg-lede">{first.data.summary}</p>
+          <div class="pg-stats">
+            <Stat value="9,000+" label="Companies" />
+            <Stat value="3.7 / 4" label="Marketplace rating" />
+          </div>
+          <div class="prose">
+            <p>
+              Body copy in the serif voice, with an <a href="#pg-form">inline link</a> in the accent. Hover
+              the card below for the lift, and click the figure to open the zoom dialog.
+            </p>
+            <Quote attribution="Sample attribution">A sample quote to show the accent rule and label.</Quote>
+            <Figure src={tfLayout} alt="Team Files layout" caption="A figure with its caption." />
+          </div>
+          <CaseStudyCard
+            href="#pg-form"
+            title={first.data.title}
+            summary={first.data.summary}
+            benefit={first.data.benefit}
+            client={first.data.client}
+            domain={first.data.domain}
+            period={first.data.period}
+            cover={first.data.banner}
+          />
+        </div>
+        <ContactOutro />
+        <Footer />
+      </div>
+    </div>
+  </div>
+</LabLayout>
+
+<script>
+  const KEY = "mj-lab-playground";
+  const root = document.documentElement;
+  const form = document.getElementById("pg-form") as HTMLFormElement;
+  const diffOut = document.getElementById("pg-diff") as HTMLPreElement;
+  const colorInputs = form.querySelectorAll<HTMLInputElement>('input[type="color"][data-token]');
+  const selects = form.querySelectorAll<HTMLSelectElement>("select[data-token]");
+  const scales = form.querySelectorAll<HTMLInputElement>("input[data-scale]");
+
+  type State = { tokens: Record<string, string>; scales: Record<string, number> };
+  let state: State = { tokens: {}, scales: {} };
+  try {
+    state = { ...state, ...JSON.parse(localStorage.getItem(KEY) ?? "{}") };
+  } catch {}
+
+  // Baselines come from the stylesheet with inline overrides cleared, so they
+  // always reflect tokens.css (and the dark theme, if it's on).
+  let base: Record<string, string> = {};
+  const readBase = () => {
+    root.removeAttribute("style");
+    const cs = getComputedStyle(root);
+    base = {};
+    const names = [
+      ...[...colorInputs, ...selects].map((el) => el.dataset.token!),
+      ...[...scales].flatMap((el) => el.dataset.names!.split(",")),
+    ];
+    names.forEach((n) => (base[n] = cs.getPropertyValue(n).trim()));
+  };
+
+  const toHex = (value: string) => {
+    const probe = document.createElement("span");
+    probe.style.color = value;
+    document.body.append(probe);
+    const [r, g, b] = (getComputedStyle(probe).color.match(/[\d.]+/g) ?? []).map(Number);
+    probe.remove();
+    return "#" + [r, g, b].map((c) => Math.round(c).toString(16).padStart(2, "0")).join("");
+  };
+
+  const scaled = (value: string, factor: number) => `calc(${value} * ${factor})`;
+
+  const apply = () => {
+    const overrides: Record<string, string> = { ...state.tokens };
+    scales.forEach((el) => {
+      const pct = state.scales[el.dataset.scale!] ?? 100;
+      if (pct === 100) return;
+      el.dataset.names!.split(",").forEach((n) => (overrides[n] = scaled(base[n], pct / 100)));
+    });
+    root.removeAttribute("style");
+    Object.entries(overrides).forEach(([n, v]) => root.style.setProperty(n, v));
+
+    colorInputs.forEach((el) => (el.value = toHex(state.tokens[el.dataset.token!] ?? base[el.dataset.token!])));
+    selects.forEach((el) => {
+      const current = state.tokens[el.dataset.token!];
+      if (current) el.value = current;
+    });
+    scales.forEach((el) => {
+      const pct = state.scales[el.dataset.scale!] ?? 100;
+      el.value = String(pct);
+      const out = form.querySelector(`[data-out="${el.dataset.scale}"]`);
+      if (out) out.textContent = `${pct}%`;
+    });
+
+    const lines = Object.entries(overrides).map(([n, v]) => `  ${n}: ${v};`);
+    diffOut.textContent = lines.length ? `:root {\n${lines.join("\n")}\n}` : "No changes yet.";
+    try {
+      localStorage.setItem(KEY, JSON.stringify(state));
+    } catch {}
+  };
+
+  colorInputs.forEach((el) =>
+    el.addEventListener("input", () => {
+      const name = el.dataset.token!;
+      if (el.value === toHex(base[name])) delete state.tokens[name];
+      else state.tokens[name] = el.value;
+      apply();
+    })
+  );
+  selects.forEach((el) =>
+    el.addEventListener("change", () => {
+      state.tokens[el.dataset.token!] = el.value;
+      apply();
+    })
+  );
+  scales.forEach((el) =>
+    el.addEventListener("input", () => {
+      state.scales[el.dataset.scale!] = Number(el.value);
+      apply();
+    })
+  );
+
+  document.getElementById("pg-reset")?.addEventListener("click", () => {
+    state = { tokens: {}, scales: {} };
+    readBase();
+    selects.forEach((el) => (el.selectedIndex = el.dataset.token === "--font-sans" ? 1 : 0));
+    apply();
+  });
+
+  document.getElementById("pg-copy")?.addEventListener("click", async (e) => {
+    const btn = e.currentTarget as HTMLButtonElement;
+    try {
+      await navigator.clipboard.writeText(diffOut.textContent ?? "");
+      btn.textContent = "Copied";
+    } catch {
+      btn.textContent = "Copy failed";
+    }
+    setTimeout(() => (btn.textContent = "Copy diff"), 1400);
+  });
+
+  document.addEventListener("lab:theme", () => {
+    readBase();
+    apply();
+  });
+
+  readBase();
+  apply();
+</script>
+
+<style>
+  .pg {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: var(--space-8);
+    align-items: start;
+  }
+
+  .pg-panel {
+    position: sticky;
+    top: var(--space-6);
+    max-height: calc(100vh - var(--space-12));
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    padding-right: var(--space-2);
+  }
+
+  fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  legend {
+    margin-bottom: var(--space-3);
+  }
+
+  .pg-color,
+  .pg-field {
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    color: var(--fg-primary);
+  }
+
+  .pg-color {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .pg-color input {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: var(--hairline) solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    background: none;
+    cursor: pointer;
+    flex: none;
+  }
+
+  .pg-color span,
+  .pg-field > span {
+    display: flex;
+    flex-direction: column;
+    line-height: var(--leading-snug);
+  }
+
+  .pg-field > span {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-2);
+  }
+
+  .pg-color code,
+  .pg-field code {
+    background: none;
+    padding: 0;
+    font-size: var(--text-2xs);
+    color: var(--fg-tertiary);
+  }
+
+  .pg-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .pg-field output {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--fg-tertiary);
+  }
+
+  .pg-field select {
+    font: inherit;
+    color: var(--fg-primary);
+    background: var(--bg-elevated);
+    border: var(--hairline) solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    padding: var(--space-1) var(--space-2);
+  }
+
+  .pg-field input[type="range"] {
+    accent-color: var(--accent);
+  }
+
+  .pg-actions {
+    display: flex;
+    gap: var(--space-2);
+  }
+
+  .pg-diff {
+    margin: 0;
+    font-size: var(--text-2xs);
+    white-space: pre-wrap;
+  }
+
+  .pg-body {
+    padding: var(--space-12) var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .pg-lede {
+    color: var(--fg-secondary);
+    max-width: var(--content-prose);
+  }
+
+  .pg-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 200px));
+    gap: var(--space-6);
+  }
+
+  .pg-body .prose {
+    margin-inline: 0;
+  }
+
+  .pg-preview :global(.nav) {
+    position: static;
+  }
+
+  @media (max-width: 1100px) {
+    .pg {
+      grid-template-columns: 1fr;
+    }
+
+    .pg-panel {
+      position: static;
+      max-height: none;
+    }
+  }
+</style>

@@ -1,0 +1,145 @@
+---
+import { getCollection } from "astro:content";
+import LabLayout from "../LabLayout.astro";
+
+const studies = (await getCollection("case-studies", ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const pages = [
+  ["/", "Home"],
+  ["/about/", "About"],
+  ["/contact/", "Contact"],
+  ...studies.map((s) => [`/work/${s.slug}/`, s.data.title]),
+  ["/privacy/", "Privacy"],
+  ["/404/", "404"],
+];
+
+const widths = [
+  [375, "Phone"],
+  [768, "Tablet"],
+  [1280, "Laptop"],
+];
+---
+
+<LabLayout
+  title="Viewports"
+  lede="Real pages in real-width frames, so media queries fire the way they do on devices. Scroll inside a frame to move through the page."
+>
+  <div class="vp-bar">
+    <label>
+      <span class="mj-label">Page</span>
+      <select id="vp-page">
+        {pages.map(([href, label]) => <option value={href}>{label}</option>)}
+      </select>
+    </label>
+    <label>
+      <span class="mj-label">Scale</span>
+      <select id="vp-scale">
+        <option value="0.5">50%</option>
+        <option value="0.66" selected>66%</option>
+        <option value="1">100%</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="vp-row">
+    {
+      widths.map(([w, label]) => (
+        <figure class="vp" data-width={w}>
+          <figcaption class="mj-caption">{label} · {w}px</figcaption>
+          <div class="vp-frame">
+            <iframe src="/" title={`${label} preview`} width={w} height="800" loading="lazy" />
+          </div>
+        </figure>
+      ))
+    }
+  </div>
+</LabLayout>
+
+<script>
+  const page = document.getElementById("vp-page") as HTMLSelectElement;
+  const scale = document.getElementById("vp-scale") as HTMLSelectElement;
+  const frames = document.querySelectorAll<HTMLElement>(".vp");
+  const HEIGHT = 800;
+
+  try {
+    const saved = JSON.parse(localStorage.getItem("mj-lab-viewports") ?? "{}");
+    if (saved.page) page.value = saved.page;
+    if (saved.scale) scale.value = saved.scale;
+  } catch {}
+
+  const render = () => {
+    const s = Number(scale.value);
+    frames.forEach((f) => {
+      const w = Number(f.dataset.width);
+      const box = f.querySelector<HTMLElement>(".vp-frame")!;
+      const iframe = f.querySelector("iframe")!;
+      box.style.width = `${w * s}px`;
+      box.style.height = `${HEIGHT * s}px`;
+      iframe.style.scale = String(s);
+      if (iframe.getAttribute("src") !== page.value) iframe.src = page.value;
+    });
+    try {
+      localStorage.setItem("mj-lab-viewports", JSON.stringify({ page: page.value, scale: scale.value }));
+    } catch {}
+  };
+
+  page.addEventListener("change", render);
+  scale.addEventListener("change", render);
+  render();
+</script>
+
+<style>
+  .vp-bar {
+    display: flex;
+    gap: var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+
+  .vp-bar label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .vp-bar select {
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    color: var(--fg-primary);
+    background: var(--bg-elevated);
+    border: var(--hairline) solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    padding: var(--space-1) var(--space-2);
+  }
+
+  .vp-row {
+    display: flex;
+    gap: var(--space-8);
+    align-items: flex-start;
+    overflow-x: auto;
+    padding-bottom: var(--space-4);
+  }
+
+  .vp {
+    margin: 0;
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .vp-frame {
+    overflow: hidden;
+    border: var(--hairline) solid var(--border-strong);
+    border-radius: var(--radius-md);
+    background: var(--bg-canvas);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .vp-frame iframe {
+    display: block;
+    border: 0;
+    transform-origin: 0 0;
+  }
+</style>

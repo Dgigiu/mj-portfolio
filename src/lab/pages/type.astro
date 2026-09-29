@@ -1,0 +1,146 @@
+---
+import LabLayout from "../LabLayout.astro";
+
+const utilities = [
+  ["mj-display-xl", "Display XL"],
+  ["mj-display-lg", "Display LG"],
+  ["mj-display-md", "Display MD"],
+  ["mj-h1", "Heading 1"],
+  ["mj-h2", "Heading 2"],
+  ["mj-h3", "Heading 3"],
+  ["mj-h4", "Heading 4"],
+  ["mj-prose", "Prose paragraph in the reading voice"],
+  ["mj-body", "Body text for supporting copy"],
+  ["mj-body-sm", "Small body for secondary notes"],
+  ["mj-ui", "UI text for controls and meta"],
+  ["mj-caption", "Caption under a figure"],
+  ["mj-label", "Label"],
+  ["mj-eyebrow", "Eyebrow"],
+  ["eyebrow", "Legacy eyebrow"],
+];
+---
+
+<LabLayout
+  title="Typography"
+  lede="Element defaults from typography.css, the mj-* utility classes, and a prose specimen that mirrors what a case study body renders."
+>
+  <ul slot="subnav" class="lab-subnav">
+    <li><a class="lab-sublink" href="#elements">Elements</a></li>
+    <li><a class="lab-sublink" href="#utilities">Utility classes</a></li>
+    <li><a class="lab-sublink" href="#prose">Prose specimen</a></li>
+    <li><a class="lab-sublink" href="#inline">Inline and code</a></li>
+  </ul>
+
+  <section class="lab-section" id="elements">
+    <h2>Elements</h2>
+    <p class="lab-section-note">Bare h2 to h4 and p, styled only by typography.css. The page h1 above is the h1 specimen.</p>
+    <div class="lab-stage stack">
+      <h2>h2 · Core UX challenges</h2>
+      <h3>h3 · Connecting a folder to a Jira issue</h3>
+      <h4>h4 · What changed after launch</h4>
+      <p>p · Support was one of the best places to notice where people got stuck, so I read every ticket and turned the patterns into small, shippable fixes.</p>
+      <p><small>small · Updated September 2026</small></p>
+    </div>
+  </section>
+
+  <section class="lab-section" id="utilities">
+    <h2>Utility classes</h2>
+    <p class="lab-section-note">Defined in typography.css. Class name on the left.</p>
+    <div class="lab-stage">
+      {
+        utilities.map(([cls, text]) => (
+          <div class="util-row">
+            <code>.{cls}</code>
+            <p class={cls}>{text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="lab-section" id="prose">
+    <h2>Prose specimen</h2>
+    <p class="lab-section-note">A .prose wrapper at --content-prose width, the same container case study bodies use.</p>
+    <div class="lab-stage">
+      <div class="prose">
+        <h2>The problem</h2>
+        <p>
+          Teams kept project files in Dropbox and Google Drive, but the work itself lived in Jira. People
+          copied links back and forth, and the links went stale. The goal was simple to state: bring the
+          files to the issue, without making anyone change where they store them.
+        </p>
+        <ul>
+          <li>files lived in three or four different places;</li>
+          <li>links broke when folders moved;</li>
+          <li>nobody could tell which version was current.</li>
+        </ul>
+        <blockquote>
+          A bare blockquote, styled by typography.css. The Quote component adds a figure and attribution.
+        </blockquote>
+        <h3>What we shipped first</h3>
+        <ol>
+          <li>Connect a folder to an issue.</li>
+          <li>Show its contents inline.</li>
+          <li>Keep it in sync without a refresh.</li>
+        </ol>
+        <p>
+          The first version was intentionally small. We measured trial-to-paid conversion and kept what
+          moved it. <a href="#prose">Inline links</a> use the accent with a soft underline.
+        </p>
+        <hr />
+        <p>A horizontal rule sits above this paragraph.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="lab-section" id="inline">
+    <h2>Inline and code</h2>
+    <div class="lab-stage stack">
+      <p>Text with <strong>strong emphasis</strong>, <em>Aleo italic</em>, <code>inline code</code>, and <kbd>⌘ K</kbd>.</p>
+      <pre><code>npm run dev   # http://localhost:4321/lab</code></pre>
+      <ul class="bullets">
+        <li><span class="marker">–</span><span>.bullets list with an explicit marker span</span></li>
+        <li><span class="marker">–</span><span>for custom lists outside MDX</span></li>
+      </ul>
+    </div>
+  </section>
+</LabLayout>
+
+<style>
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .util-row {
+    display: grid;
+    grid-template-columns: 160px minmax(0, 1fr);
+    gap: var(--space-5);
+    align-items: baseline;
+    padding: var(--space-3) 0;
+    border-bottom: var(--hairline) solid var(--border-subtle);
+  }
+
+  .util-row:last-child {
+    border-bottom: 0;
+  }
+
+  .util-row code {
+    background: none;
+    padding: 0;
+    font-size: var(--text-xs);
+    color: var(--fg-tertiary);
+  }
+
+  .util-row p {
+    margin: 0;
+  }
+
+  @media (max-width: 720px) {
+    .util-row {
+      grid-template-columns: 1fr;
+      gap: var(--space-1);
+    }
+  }
+</style>

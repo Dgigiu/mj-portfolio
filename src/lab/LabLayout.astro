@@ -1,0 +1,381 @@
+---
+import "../styles/global.css";
+import ZoomDialog from "../components/ZoomDialog.astro";
+
+interface Props {
+  title: string;
+  lede?: string;
+}
+
+const { title, lede } = Astro.props;
+const path = Astro.url.pathname.replace(/\/$/, "");
+
+const links = [
+  { href: "/lab", label: "Overview" },
+  { href: "/lab/tokens", label: "Tokens" },
+  { href: "/lab/type", label: "Typography" },
+  { href: "/lab/components", label: "Components" },
+  { href: "/lab/playground", label: "Playground" },
+  { href: "/lab/viewports", label: "Viewports" },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{title} · MJ Lab</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script is:inline>
+      document.documentElement.classList.add("js");
+      try {
+        const theme = localStorage.getItem("mj-lab-theme");
+        if (theme === "dark") document.documentElement.dataset.theme = "dark";
+      } catch {}
+    </script>
+  </head>
+  <body class="lab">
+    <aside class="lab-side">
+      <a href="/lab" class="lab-brand">MJ <span>Lab</span></a>
+      <nav aria-label="Lab">
+        <ul>
+          {
+            links.map((l) => (
+              <li>
+                <a
+                  href={l.href}
+                  class:list={["lab-link", { "is-active": path === l.href }]}
+                  aria-current={path === l.href ? "page" : undefined}
+                >
+                  {l.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <slot name="subnav" />
+      </nav>
+      <div class="lab-controls">
+        <button type="button" class="lab-toggle" data-theme-toggle aria-pressed="false">
+          <span class="lab-toggle-dot" aria-hidden="true"></span>
+          Dark theme
+        </button>
+        <a href="/" class="lab-exit">Back to site ↗</a>
+      </div>
+    </aside>
+
+    <main id="main" class="lab-main">
+      <header class="lab-head">
+        <p class="mj-eyebrow">Design lab · dev only</p>
+        <h1>{title}</h1>
+        {lede && <p class="lab-lede">{lede}</p>}
+      </header>
+      <slot />
+    </main>
+
+    <ZoomDialog />
+
+    <script>
+      const root = document.documentElement;
+      const toggle = document.querySelector<HTMLButtonElement>("[data-theme-toggle]");
+      const sync = () => toggle?.setAttribute("aria-pressed", String(root.dataset.theme === "dark"));
+      sync();
+      toggle?.addEventListener("click", () => {
+        const dark = root.dataset.theme !== "dark";
+        if (dark) root.dataset.theme = "dark";
+        else delete root.dataset.theme;
+        try {
+          localStorage.setItem("mj-lab-theme", dark ? "dark" : "light");
+        } catch {}
+        sync();
+        document.dispatchEvent(new CustomEvent("lab:theme"));
+      });
+
+      // Same reveal observer as the site, so [data-reveal] demos behave live.
+      const io = new IntersectionObserver((entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          e.target.classList.add("is-revealed");
+          io.unobserve(e.target);
+        }
+      });
+      document.querySelectorAll("[data-reveal]").forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  body.lab {
+    display: grid;
+    grid-template-columns: 232px minmax(0, 1fr);
+    flex-direction: initial;
+  }
+
+  .lab-side {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    padding: var(--space-8) var(--space-6);
+    border-right: var(--hairline) solid var(--border-subtle);
+    background: var(--bg-elevated);
+    overflow-y: auto;
+  }
+
+  .lab-brand {
+    font-family: var(--font-sans);
+    font-weight: var(--weight-semi);
+    font-size: var(--text-lg);
+    letter-spacing: var(--tracking-snug);
+    color: var(--fg-primary);
+    text-decoration: none;
+  }
+
+  .lab-brand span {
+    color: var(--accent);
+  }
+
+  .lab-side ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .lab-link,
+  .lab-sublink {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+    color: var(--fg-secondary);
+    text-decoration: none;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+  }
+
+  .lab-link:hover,
+  .lab-sublink:hover {
+    color: var(--fg-primary);
+    background: var(--bg-subtle);
+  }
+
+  .lab-link.is-active {
+    color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  .lab-subnav {
+    margin-top: var(--space-4) !important;
+    padding-left: var(--space-3) !important;
+    border-left: var(--hairline) solid var(--border-subtle);
+  }
+
+  .lab-sublink {
+    font-size: var(--text-xs);
+    color: var(--fg-tertiary);
+  }
+
+  .lab-controls {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .lab-toggle {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    color: var(--fg-secondary);
+  }
+
+  .lab-toggle-dot {
+    width: 28px;
+    height: 16px;
+    border-radius: var(--radius-pill);
+    background: var(--border-strong);
+    position: relative;
+    transition: background var(--duration-fast) var(--ease-out);
+  }
+
+  .lab-toggle-dot::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 12px;
+    height: 12px;
+    border-radius: var(--radius-pill);
+    background: var(--bg-canvas);
+    transition: translate var(--duration-fast) var(--ease-out);
+  }
+
+  .lab-toggle[aria-pressed="true"] .lab-toggle-dot {
+    background: var(--accent);
+  }
+
+  .lab-toggle[aria-pressed="true"] .lab-toggle-dot::after {
+    translate: 12px 0;
+  }
+
+  .lab-exit {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    color: var(--fg-tertiary);
+    text-decoration: none;
+  }
+
+  .lab-main {
+    padding: var(--space-12) clamp(var(--space-5), 4vw, var(--space-16)) var(--space-24);
+    min-width: 0;
+  }
+
+  .lab-head {
+    max-width: var(--content-prose);
+    margin-bottom: var(--space-12);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .lab-lede {
+    color: var(--fg-secondary);
+  }
+
+  /* ── Shared lab building blocks ───────────────────────── */
+
+  .lab-section {
+    margin-bottom: var(--space-16);
+    scroll-margin-top: var(--space-8);
+  }
+
+  .lab-section > h2 {
+    margin-bottom: var(--space-2);
+  }
+
+  .lab-section-note {
+    font-size: var(--text-sm);
+    color: var(--fg-tertiary);
+    margin-bottom: var(--space-6);
+    max-width: var(--content-prose);
+  }
+
+  .lab-path {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--fg-tertiary);
+  }
+
+  .lab-story {
+    margin-top: var(--space-6);
+  }
+
+  .lab-story-label {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-2);
+  }
+
+  /* The stage every example renders on: canvas color so components see the
+     same ground as the site, a dashed edge so it reads as a specimen. */
+  .lab-stage {
+    background: var(--bg-canvas);
+    border: var(--hairline) dashed var(--border-strong);
+    border-radius: var(--radius-md);
+    padding: var(--space-8);
+  }
+
+  .lab-stage.flush {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .lab-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    margin-top: var(--space-4);
+  }
+
+  .lab-table th,
+  .lab-table td {
+    text-align: left;
+    padding: var(--space-2) var(--space-3);
+    border-bottom: var(--hairline) solid var(--border-subtle);
+    vertical-align: top;
+  }
+
+  .lab-table th {
+    color: var(--fg-tertiary);
+    font-weight: var(--weight-medium);
+  }
+
+  .lab-table code {
+    font-size: var(--text-xs);
+  }
+
+  .lab-btn {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    color: var(--fg-secondary);
+    border: var(--hairline) solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    padding: var(--space-1) var(--space-3);
+    background: var(--bg-elevated);
+  }
+
+  .lab-btn:hover {
+    color: var(--fg-primary);
+    border-color: var(--fg-muted);
+  }
+
+  .lab-btn[aria-pressed="true"] {
+    color: var(--accent);
+    border-color: var(--accent-line);
+    background: var(--accent-soft);
+  }
+
+  @media (max-width: 800px) {
+    body.lab {
+      grid-template-columns: 1fr;
+    }
+
+    .lab-side {
+      position: static;
+      height: auto;
+      padding: var(--space-5) var(--space-4);
+      gap: var(--space-4);
+      border-right: 0;
+      border-bottom: var(--hairline) solid var(--border-subtle);
+    }
+
+    .lab-side ul {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .lab-subnav {
+      display: none !important;
+    }
+
+    .lab-controls {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .lab-main {
+      padding-inline: var(--space-4);
+    }
+  }
+</style>
