@@ -2,9 +2,11 @@
 
 Last updated: 2026-10-02 (session 28)
 
+**Status at session close: branch `copy/team-files-shared-auth` is pushed to origin, not merged, no PR opened.** Miguel wants to add more Team Files work to it before merging, so the next session should keep committing on this branch. Still to come: the narrow spaces figure, and renumbering the TF figures once all new ones are placed.
+
 ## What changed in this session (2026-10-02, session 28, continued: TF-04 and TF-08 re-exports)
 
-Images only, no copy or code changes. Second commit on branch **`copy/team-files-shared-auth`** (still unmerged and unpushed, so it was reused instead of a new branch).
+Images only, no copy or code changes. Second commit on branch **`copy/team-files-shared-auth`** (unmerged at the time, so it was reused instead of a new branch).
 
 - **`TF-04-layout.png`** re-exported (1600×1055, node `4070:4559`), overwritten in place. Callouts restyled: all three now have the check icon and a bold label with a colon ("Per issue or page: set layout options", "Preview: reflects the selected settings", "Admin: set default layout options"). The numbered "1" marker and the all-bold "Visualization of selected settings" callout are gone. Alt and caption left as they were; neither mentions a numbered step or "visualization".
 - **`TF-08-design-system.png`** re-exported (1600×720, node `4178:3610`), overwritten in place. The mdx already imported this file. The change is a hand cursor on the hover row.
@@ -13,7 +15,7 @@ Images only, no copy or code changes. Second commit on branch **`copy/team-files
 
 ## What changed in this session (2026-10-02, session 28, Team Files shared-folder authentication)
 
-Copy plus one new figure in [team-files.mdx](src/content/case-studies/team-files.mdx). On branch **`copy/team-files-shared-auth`** (off `main`), committed locally, **not merged or pushed**: Miguel reviews and pushes.
+Copy plus one new figure in [team-files.mdx](src/content/case-studies/team-files.mdx). On branch **`copy/team-files-shared-auth`** (off `main`), pushed at session close, **not merged** (see status above).
 
 - **New figure `TF-09-authentication.png`** (1600×1452, PNG at 1x), exported from Figma `oIt1mAagsb5rIThaLCjvFt` ("Team-Files-app"), page "Version 2", frame node `4194:3276`. Export checked against the frame: all four callouts (Connected accounts, Access granted, Locked folders, Failed attempt), the red "Account has no access" label, and all four arrows (blue to the account picker, green to Access granted, red down to the failure modal, blue return from "Try another account") are in.
 - **Core UX challenges copy:**
