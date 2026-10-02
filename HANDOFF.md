@@ -1,6 +1,26 @@
 # Handoff
 
-Last updated: 2026-09-29 (session 27)
+Last updated: 2026-10-02 (session 28)
+
+## What changed in this session (2026-10-02, session 28, Team Files shared-folder authentication)
+
+Copy plus one new figure in [team-files.mdx](src/content/case-studies/team-files.mdx). On branch **`copy/team-files-shared-auth`** (off `main`), committed locally, **not merged or pushed**: Miguel reviews and pushes.
+
+- **New figure `TF-09-authentication.png`** (1600×1452, PNG at 1x), exported from Figma `oIt1mAagsb5rIThaLCjvFt` ("Team-Files-app"), page "Version 2", frame node `4194:3276`. Export checked against the frame: all four callouts (Connected accounts, Access granted, Locked folders, Failed attempt), the red "Account has no access" label, and all four arrows (blue to the account picker, green to Access granted, red down to the failure modal, blue return from "Try another account") are in.
+- **Core UX challenges copy:**
+  - Onboarding paragraph opener is now "Another turning point was dropping the separate Team Files sign-up that the app's first version required." (was "removing mandatory authentication").
+  - Two new paragraphs after "...every default state has to teach.": shared folders at larger companies (security and accountability), then the admin choice between simple sharing and per-person sign-in. The TF-09 figure follows them, before the narrow spaces paragraph.
+  - Narrow spaces paragraph gained a closing sentence ("In narrow views, attachments dropped secondary metadata first..."). Its own figure comes later; no placeholder added.
+- **Design execution:** the layout bullet is now "**Layout options.**" and no longer mentions responsive or mobile behavior.
+- **Not renumbered, on purpose.** TF-09 sits between TF-02 and TF-04 in page order. File names stay as they are until all new figures are placed.
+- Build clean (8 pages, 0/0/0). Browser-checked at 1440 and 375: figure in the right spot, no horizontal overflow, zoom dialog opens, no console errors. No em or en dashes, curly apostrophes throughout.
+
+### Flagged for Miguel (reported, nothing changed)
+
+- **TF-09 is only partly readable at the desktop figure width.** The prose column renders it at 718px, so the 1600px frame is scaled to about 45%. The four callouts and "Account has no access" land around 11px and read fine. Modal titles ("Authenticate", "Authentication failed") land around 6px: recognizable, not comfortable. The failure modal's body text, the button labels, and the folder and account names land around 4 to 5px and can't be read on a 1x display; on retina they are sharp but still too small to read without leaning in. The callouts carry the story on their own.
+- **Zoom helps less than on other figures.** The frame is taller than the other TF figures (1452 vs 1055), so in a 1440×900 window the zoom dialog is height-limited to 833px wide, only about 16% larger than inline. Modal body text is still around 5px there.
+- **At 375px** the figure is 333px wide; even the callouts drop to about 5px, so mobile readers depend on zoom.
+- Small thing in the frame itself: the blue return arrow runs up through the right edge of the failure screen, over the row behind the modal.
 
 ## What changed in this session (2026-09-29, session 27, MyFoodways image)
 
