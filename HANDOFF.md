@@ -2,6 +2,15 @@
 
 Last updated: 2026-10-02 (session 28)
 
+## What changed in this session (2026-10-02, session 28, continued: TF-04 and TF-08 re-exports)
+
+Images only, no copy or code changes. Second commit on branch **`copy/team-files-shared-auth`** (still unmerged and unpushed, so it was reused instead of a new branch).
+
+- **`TF-04-layout.png`** re-exported (1600×1055, node `4070:4559`), overwritten in place. Callouts restyled: all three now have the check icon and a bold label with a colon ("Per issue or page: set layout options", "Preview: reflects the selected settings", "Admin: set default layout options"). The numbered "1" marker and the all-bold "Visualization of selected settings" callout are gone. Alt and caption left as they were; neither mentions a numbered step or "visualization".
+- **`TF-08-design-system.png`** re-exported (1600×720, node `4178:3610`), overwritten in place. The mdx already imported this file. The change is a hand cursor on the hover row.
+- Build clean (8 pages, 0/0/0). Both figures render at the same size and position as before (718×473 and 718×323 in the 720px column at 1440).
+- **Dev cache gotcha:** `astro dev` serves `/_image` URLs with a one-year `max-age` and the URL doesn't change when a file is overwritten in place, so a browser that already loaded the page keeps showing the old image. Hard-reload (or use a fresh profile) to see a re-export locally. Production isn't affected: the built file names carry a content hash, and both changed.
+
 ## What changed in this session (2026-10-02, session 28, Team Files shared-folder authentication)
 
 Copy plus one new figure in [team-files.mdx](src/content/case-studies/team-files.mdx). On branch **`copy/team-files-shared-auth`** (off `main`), committed locally, **not merged or pushed**: Miguel reviews and pushes.
