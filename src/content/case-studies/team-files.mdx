@@ -20,6 +20,8 @@ import automation from "../../assets/case-studies/team-files/TF-05-automation-se
 import valueProp from "../../assets/case-studies/team-files/TF-06-value-proposition.png";
 import designSystem from "../../assets/case-studies/team-files/TF-08-design-system.png";
 import uxImprovements from "../../assets/case-studies/team-files/TF-07-ux-improvements.png";
+import authentication from "../../assets/case-studies/team-files/TF-09-authentication.png";
+import narrowViews from "../../assets/case-studies/team-files/TF-10-narrow-views.png";
 
 ## Product
 
@@ -83,18 +85,34 @@ On its own this is a small thing. But the path to making Team Files better was b
 
 Support was one of the best places to do that noticing. For a while, a recurring ticket had users suddenly losing access to connected folders. Engineering kept making the code more resilient, and that helped, but every new ticket still meant piecing together what had happened. Was it a real error, or had someone disconnected the folder and connected it again? At the time, reconnecting could break the links to files already attached. So I raised it with our CTO and product owner, and designed a log for each connected folder, where admins could see its history and tell one case from the other. After it shipped, that kind of ticket became rare, and when one did come in, we had a clear record to work from instead of going in circles trying to reconstruct it.
 
-Another turning point was removing mandatory authentication from the app’s first version. This was a real engineering achievement, but it removed an important moment to explain the product. Most users never chose to install Team Files; their admin did. Usually, the first they saw of it was a file someone had attached to an issue, which they could open right away or unlock by connecting their own cloud account, with no Team Files account needed. The ones who went looking for the app itself, through the Jira apps menu, landed in a file manager with nothing connected yet. So I moved the explaining into the product itself: empty states that guided users toward connecting their first folder, and a short tour of the file manager. The first-run empty state became the real onboarding, not a placeholder.
+Another turning point was dropping the separate Team Files sign-up that the app’s first version required. This was a real engineering achievement, but it removed an important moment to explain the product. Most users never chose to install Team Files; their admin did. Usually, the first they saw of it was a file someone had attached to an issue, which they could open right away or unlock by connecting their own cloud account, with no Team Files account needed. The ones who went looking for the app itself, through the Jira apps menu, landed in a file manager with nothing connected yet. So I moved the explaining into the product itself: empty states that guided users toward connecting their first folder, and a short tour of the file manager. The first-run empty state became the real onboarding, not a placeholder.
 
 That call was strategic as much as design. It simplified access for everyone, especially the large share of users who only wanted to view attached files and previously had to create an account just to look. It also reinforced something for me: when you can’t control where someone enters a product, every default state has to teach.
 
-We also had to design for narrow spaces, especially in Jira views. Team Files isn’t a mobile app, but it carries many of the same constraints: tight panels, a wide range of screen sizes, and information that has to be prioritized so the most important things survive when space runs short. I planned layouts so the app stayed usable in a small side panel and a wide full-page view alike.
+Shared folders raised a different problem as customers grew. Team Files started with small teams, so sharing a folder was simple: when one person connected it, everyone else browsed it through that person’s cloud account. At larger companies, that stopped being enough. Admins raised it as a security risk, and it broke accountability, since edits to shared Word documents all appeared under the name of whoever had shared the folder.
+
+Many small teams still wanted the simple version, so instead of replacing it, we let admins choose between simple sharing and requiring each person to sign in with their own cloud account. The design challenge was adding that step without making shared folders feel broken. I kept folders visible with a clear Authenticate action, let people reuse an account they had already connected, and made a failed attempt offer another account instead of a dead end. Over time, signing in with your own account became the default.
+
+<Figure
+  src={authentication}
+  alt="Team Files shared folder authentication in Jira: locked folders with an Authenticate action, an account picker with connected accounts, access granted, and a failed attempt that loops back to the picker."
+  caption="Each person signs in with their own account; a failed attempt loops back to the account picker."
+/>
+
+We also had to design for narrow spaces, especially in Jira views. Team Files isn’t a mobile app, but it carries many of the same constraints: tight panels, a wide range of screen sizes, and information that has to be prioritized so the most important things survive when space runs short. I planned layouts so the app stayed usable in a small side panel and a wide full-page view alike. In narrow views, attachments dropped secondary metadata first, and the file manager grouped its folder actions under a single button, giving the space to the files themselves while keeping every action one click away.
+
+<Figure
+  src={narrowViews}
+  alt="Team Files file manager in Jira at full width, with folder actions in a sidebar, and in a narrow panel, where the same actions sit under one button, shown open."
+  caption="The file manager at full width and in narrow space, where folder actions group under one button."
+/>
 
 ## Design execution
 
 Beyond the core connect-and-attach flows already described, I owned the full surface of the product over seven years:
 
 - **Search.** I designed a search system for finding folders inside connected storage, working around the technical limits that always made search a hard problem in this product.
-- **Layout options and responsive behavior.** Layout modes and display options so teams could choose how files appeared, balancing density and readability, including handling the responsive and mobile behavior these views needed.
+- **Layout options.** Layout modes and display options so teams could choose how files appeared, balancing density and readability.
 - **Automation and admin settings.** The setup for automation flows, and later a review and overhaul of admin settings, with clearer configuration for admins managing multiple projects and storage connections.
 
 <Figure
