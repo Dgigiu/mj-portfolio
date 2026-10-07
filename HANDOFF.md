@@ -1,8 +1,39 @@
 # Handoff
 
-Last updated: 2026-10-02 (session 28)
+Last updated: 2026-10-07 (session 29)
 
-**Status at session close: branch `copy/team-files-shared-auth` is pushed to origin, not merged, no PR opened.** Miguel wants to add more Team Files work to it before merging, so the next session should keep committing on this branch. Still to come: the narrow spaces figure, and renumbering the TF figures once all new ones are placed.
+**Status at session close: branch `tf-auth-narrow-views` is pushed, [PR #8](https://github.com/Dgigiu/mj-portfolio/pull/8) is open against `main`, not merged.** Miguel reviews before merging. Open decisions for him: whether to renumber the TF figures (order below), and whether TF-09 and TF-10 need larger text (readability notes below). `copy/team-files-shared-auth` is now fully contained in the new branch and can be deleted once PR #8 merges.
+
+## What changed in this session (2026-10-07, session 29, Team Files shared folder authentication and narrow views)
+
+Copy plus two figures in [team-files.mdx](src/content/case-studies/team-files.mdx). The brief asked for a new branch off `main`, but most of its edits already sat on the unmerged `copy/team-files-shared-auth` (session 28, rooted on current `main`). So **`tf-auth-narrow-views`** was cut from that branch's tip: it keeps the session 28 copy and the TF-04 and TF-08 re-exports, and adds this session's work on top.
+
+- **Copy, checked against the brief word for word** (curly apostrophes kept, per the file's convention): Edit A (onboarding opener "dropping the separate Team Files sign-up"), Edit B (two shared folder paragraphs plus the TF-09 figure), Edit C (narrow views sentence at the end of the narrow spaces paragraph) and Edit D ("**Layout options.**" bullet) were already on the branch from session 28 and match. New this session: the TF-09 alt text was replaced with the brief's wording, and the TF-10 figure was added after the narrow spaces paragraph, before "Design execution".
+- **`TF-10-narrow-views.png`**, new: 1600×758, PNG at 1x, Figma `oIt1mAagsb5rIThaLCjvFt` ("Team-Files-app"), page "Version 2", frame node `4210:5062`. Imported as `narrowViews`. It shows the full-width file manager with folder actions in a right-hand column, and the narrow panel with the same actions under one "..." button, shown open, with a "Folder actions: grouped under one button" callout.
+- **`TF-09-authentication.png`**, re-exported: 1600×1452, node `4194:3276`, overwritten in place. The frame changed in Figma after session 28's export: modal text and buttons are larger, and the failure modal body now wraps to three lines. Callouts and arrows are unchanged.
+- Neither figure was resized, cropped or padded. Both render at their natural ratio: 718×652 and 718×340 in the 720px column at 1440.
+- **Not renumbered, on purpose.** Figures in render order (file, section):
+  1. TF-06-value-proposition, Product
+  2. TF-07-ux-improvements, Strategy
+  3. TF-03-attach-files, Core UX challenges
+  4. TF-02-connect-folder, Core UX challenges
+  5. TF-09-authentication, Core UX challenges
+  6. TF-10-narrow-views, Core UX challenges
+  7. TF-04-layout, Design execution
+  8. TF-05-automation-settings, Design execution
+  9. TF-08-design-system, Design execution
+
+  The cover (`TF-00-cover.jpg`) comes before all of them and isn't a Figure. Note that TF-03 also renders before TF-02, not only the new ones.
+- Build clean (0/0/0). Browser check at 1440: both figures are in the right spots with their captions; all 9 figures load; no 4xx responses, no console errors; the old onboarding sentence and old layout bullet are gone. No em or en dashes added.
+
+### Readability at the rendered width (reported, images unchanged)
+
+Sizes are CSS px at the 718px inline width (the frame is scaled to about 45%). Estimated from pixel crops at 1x and 2x and checked against 1:1 browser captures.
+
+- **TF-09:** callouts (Connected accounts, Access granted, Locked folders, Failed attempt) and "Account has no access" are about 11 to 13px and read easily. Modal titles ("Authenticate", "Authentication failed") are about 7.5px and readable. "Connected places", the Google Drive names, the "Access granted" toast title and the button labels are about 5.5 to 6px: readable if you look for them, sharper on retina. The failure modal body is also about 5.5px; it can be made out on retina with effort but not comfortably on a 1x display. It is clearer than session 28's export, where it was about 4 to 5px. Account emails, quota lines and folder subtitles are about 4px and unreadable, which is fine because they're texture. Zoom only gets the image to 833px wide at 1440×900, because the frame is tall, so the modal body is still about 6px there.
+- **TF-10:** the callout is about 12px and reads easily; the "Documentation Sample Folder" title is about 8px. File names (Images, Blue balance sheet.xlsx, DataJournalismHandbook.pdf, Geometric presentation.pptx, Report.docx) and the menu items (New folder, New document, Upload file, Ordering) are about 5.5px: legible on retina, soft on 1x. File size and date lines are about 4px. Zoom helps a lot here: the frame is wide, so the dialog shows it at 1283px and file names reach about 10px.
+- The story reads from the callouts and the overall shape in both figures, so neither depends on the small text.
+- Side note: in the Browser pane the `srcset` picked the 800w variant at 2x DPR. That is most likely the pane's scaled-down emulation, since `sizes` is `(min-width: 800px) 800px` and a real 2x browser should pick 1600w. It's unrelated to this change and was left alone.
 
 ## What changed in this session (2026-10-02, session 28, continued: TF-04 and TF-08 re-exports)
 
