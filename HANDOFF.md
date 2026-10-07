@@ -2,7 +2,7 @@
 
 Last updated: 2026-10-07 (session 29)
 
-**Status at session close: [PR #9](https://github.com/Dgigiu/mj-portfolio/pull/9) (`tf-renumber-figures`) merged to `main` as `31461f5` and live on migueljss.com.** It renumbers the Team Files figures in render order, in the repo and in Figma (details below). Deploy succeeded; the live page loads TF-00 and TF-01 to TF-09 in order, all 200, and no old filenames remain. The `tf-renumber-figures` branch still exists locally and on origin. Before that, [PR #8](https://github.com/Dgigiu/mj-portfolio/pull/8) (`tf-auth-narrow-views`) was merged as `585d040` and is live; its branches, and `copy/team-files-shared-auth`, were deleted locally and on origin. Still open for Miguel: whether the authentication and narrow views figures (now TF-05 and TF-06) need larger text (readability notes below).
+**Status at session close: [PR #9](https://github.com/Dgigiu/mj-portfolio/pull/9) (`tf-renumber-figures`) merged to `main` as `31461f5` and live on migueljss.com.** It renumbers the Team Files figures in render order, in the repo and in Figma (details below). Deploy succeeded; the live page loads TF-00 and TF-01 to TF-09 in order, all 200, and no old filenames remain. The `tf-renumber-figures` branch was deleted locally and on origin after the merge. Before that, [PR #8](https://github.com/Dgigiu/mj-portfolio/pull/8) (`tf-auth-narrow-views`) was merged as `585d040` and is live; its branches, and `copy/team-files-shared-auth`, were deleted locally and on origin. Still open for Miguel: whether the authentication and narrow views figures (now TF-05 and TF-06) need larger text (readability notes below).
 
 ## What changed in this session (2026-10-07, session 29, continued: TF figure renumbering)
 
