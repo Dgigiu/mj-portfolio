@@ -21,6 +21,7 @@ import valueProp from "../../assets/case-studies/team-files/TF-06-value-proposit
 import designSystem from "../../assets/case-studies/team-files/TF-08-design-system.png";
 import uxImprovements from "../../assets/case-studies/team-files/TF-07-ux-improvements.png";
 import authentication from "../../assets/case-studies/team-files/TF-09-authentication.png";
+import narrowViews from "../../assets/case-studies/team-files/TF-10-narrow-views.png";
 
 ## Product
 
@@ -94,11 +95,17 @@ Many small teams still wanted the simple version, so instead of replacing it, we
 
 <Figure
   src={authentication}
-  alt="Signing in to a shared folder: a folder list with Authenticate buttons, an account picker with connected accounts, an Access granted confirmation, and an Authentication failed modal that loops back to the account picker."
+  alt="Team Files shared folder authentication in Jira: locked folders with an Authenticate action, an account picker with connected accounts, access granted, and a failed attempt that loops back to the picker."
   caption="Each person signs in with their own account; a failed attempt loops back to the account picker."
 />
 
 We also had to design for narrow spaces, especially in Jira views. Team Files isn’t a mobile app, but it carries many of the same constraints: tight panels, a wide range of screen sizes, and information that has to be prioritized so the most important things survive when space runs short. I planned layouts so the app stayed usable in a small side panel and a wide full-page view alike. In narrow views, attachments dropped secondary metadata first, and the file manager grouped its folder actions under a single button, giving the space to the files themselves while keeping every action one click away.
+
+<Figure
+  src={narrowViews}
+  alt="Team Files file manager in Jira at full width, with folder actions in a sidebar, and in a narrow panel, where the same actions sit under one button, shown open."
+  caption="The file manager at full width and in narrow space, where folder actions group under one button."
+/>
 
 ## Design execution
 
