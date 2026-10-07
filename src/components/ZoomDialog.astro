@@ -1,21 +1,68 @@
 ---
-/* Shared image zoom: any `.zoomable` button with data-zoom-src/alt/caption
-   (Figure, CompareImages) opens this dialog. Rendered once per page by the
-   layout. */
+/* Shared image zoom: any `.zoomable` button with
+   data-zoom-src/width/height/alt/caption (Figure, CompareImages) opens this
+   dialog. Rendered once per page by the layout. */
 ---
 
 <dialog id="zoom-dialog" class="zoom-dialog" aria-label="Image zoom">
   <button type="button" class="zoom-close" aria-label="Close">×</button>
-  <img class="zoom-image" alt="" />
+  <div class="zoom-scroll">
+    <img class="zoom-image" alt="" />
+  </div>
   <p class="zoom-caption"></p>
 </dialog>
 
 <script>
   const dialog = document.getElementById("zoom-dialog") as HTMLDialogElement | null;
   const dialogImg = dialog?.querySelector<HTMLImageElement>(".zoom-image");
+  const dialogScroll = dialog?.querySelector<HTMLDivElement>(".zoom-scroll");
   const dialogCaption = dialog?.querySelector<HTMLParagraphElement>(".zoom-caption");
   const dialogClose = dialog?.querySelector<HTMLButtonElement>(".zoom-close");
   let lastTrigger: HTMLElement | null = null;
+  let natural = { width: 0, height: 0 };
+
+  /* Fit rule. By default the whole image fits on screen. When that would
+     leave it narrower than MIN_FIT_SHARE of the width it could fill, fit the
+     width instead and scroll vertically. 0.7 sits between the 1600x1055
+     figures (about 0.77 to 0.89 on laptop viewports, so they stay contained)
+     and the 1600x1452 one (about 0.56 to 0.66, so it scrolls). */
+  const MIN_FIT_SHARE = 0.7;
+
+  const shouldScroll = (width: number, height: number) => {
+    if (!dialog || !dialogImg || !width || !height) return false;
+    const px = (value: string) => parseFloat(value) || 0;
+    const box = getComputedStyle(dialog);
+    const availWidth =
+      px(box.maxWidth) -
+      px(box.paddingLeft) -
+      px(box.paddingRight) -
+      px(box.borderLeftWidth) -
+      px(box.borderRightWidth);
+    const availHeight = px(getComputedStyle(dialogImg).maxHeight);
+    const fitWidth = Math.min(width, availWidth);
+    const fitWhole = Math.min(fitWidth, availHeight * (width / height));
+    return fitWhole < fitWidth * MIN_FIT_SHARE;
+  };
+
+  const applyFit = () => {
+    if (!dialog || !dialogImg || !dialogScroll) return;
+    // Measure against the contained layout, then switch if needed.
+    dialog.classList.remove("is-tall");
+    const tall = shouldScroll(natural.width, natural.height);
+    dialog.classList.toggle("is-tall", tall);
+    if (tall) {
+      dialog.style.setProperty("--zoom-natural-width", `${natural.width}px`);
+      dialogImg.width = natural.width;
+      dialogImg.height = natural.height;
+      dialogScroll.tabIndex = 0;
+    } else {
+      if (document.activeElement === dialogScroll) dialogClose?.focus();
+      dialog.style.removeProperty("--zoom-natural-width");
+      dialogImg.removeAttribute("width");
+      dialogImg.removeAttribute("height");
+      dialogScroll.removeAttribute("tabindex");
+    }
+  };
 
   const closeDialog = () => {
     if (!dialog) return;
@@ -56,15 +103,43 @@
       dialogImg.alt = alt;
       dialogCaption.textContent = caption;
       dialogCaption.hidden = caption.length === 0;
+      natural = {
+        width: Number(trigger.dataset.zoomWidth) || 0,
+        height: Number(trigger.dataset.zoomHeight) || 0,
+      };
+      applyFit();
       lastTrigger = trigger;
       dialog.showModal();
+      if (dialogScroll && dialog.classList.contains("is-tall")) {
+        // Start at the top, with keyboard scrolling ready.
+        dialogScroll.scrollTop = 0;
+        dialogScroll.focus({ preventScroll: true });
+      }
     });
+  });
+
+  window.addEventListener("resize", () => {
+    if (dialog?.open) applyFit();
   });
 
   dialogClose?.addEventListener("click", closeDialog);
 
+  // Close only for a press and release that both land outside the dialog,
+  // so dragging the scrollbar out onto the backdrop never closes it.
+  const onBackdrop = (e: MouseEvent) => {
+    if (!dialog || e.target !== dialog) return false;
+    const r = dialog.getBoundingClientRect();
+    return e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+  };
+  let pressedOnBackdrop = false;
+
+  dialog?.addEventListener("pointerdown", (e) => {
+    pressedOnBackdrop = onBackdrop(e);
+  });
+
   dialog?.addEventListener("click", (e) => {
-    if (e.target === dialog) closeDialog();
+    if (pressedOnBackdrop && onBackdrop(e)) closeDialog();
+    pressedOnBackdrop = false;
   });
 
   dialog?.addEventListener("cancel", (e) => {
@@ -74,6 +149,13 @@
 </script>
 
 <style is:global>
+  /* Lock the page while the dialog is open; the stable gutter keeps it from
+     shifting where scrollbars take up space. */
+  html:has(.zoom-dialog[open]) {
+    overflow: hidden;
+    scrollbar-gutter: stable;
+  }
+
   .zoom-dialog {
     max-width: min(92vw, 1400px);
     max-height: 92vh;
@@ -167,6 +249,29 @@
     height: auto;
     margin: 0;
     border-radius: var(--radius-sm);
+  }
+
+  /* Tall images (see the fit rule in the script): fill the width, up to the
+     natural size, and scroll inside the dialog. */
+  .zoom-dialog.is-tall .zoom-scroll {
+    flex: 1 1 auto;
+    width: var(--zoom-natural-width);
+    max-width: 100%;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    border-radius: var(--radius-sm);
+  }
+
+  .zoom-dialog.is-tall .zoom-image {
+    width: 100%;
+    max-height: none;
+  }
+
+  .zoom-scroll:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
   }
 
   .zoom-caption {
