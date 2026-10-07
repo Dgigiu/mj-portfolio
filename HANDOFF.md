@@ -2,7 +2,28 @@
 
 Last updated: 2026-10-07 (session 29)
 
-**Status at session close: [PR #8](https://github.com/Dgigiu/mj-portfolio/pull/8) (`tf-auth-narrow-views`) merged to `main` as `585d040` and live on migueljss.com.** Deploy succeeded; the live Team Files page has the new copy, both figures and the re-exported TF-09, and the old wording is gone. Still open for Miguel: whether to renumber the TF figures (order below), and whether TF-09 and TF-10 need larger text (readability notes below). The branches `tf-auth-narrow-views` and `copy/team-files-shared-auth` were deleted locally and on origin after the merge.
+**Status at session close: branch `tf-renumber-figures` is pushed with a PR open against `main`, not merged.** It renumbers the Team Files figures in render order, in the repo and in Figma (details below). Before that, [PR #8](https://github.com/Dgigiu/mj-portfolio/pull/8) (`tf-auth-narrow-views`) was merged as `585d040` and is live; its branches, and `copy/team-files-shared-auth`, were deleted locally and on origin. Still open for Miguel: whether the authentication and narrow views figures (now TF-05 and TF-06) need larger text (readability notes below).
+
+## What changed in this session (2026-10-07, session 29, continued: TF figure renumbering)
+
+Team Files figure files now follow render order, TF-01 to TF-09. The cover stays `TF-00-cover.jpg` (Figma frame `TF-00-cover-banner`). On branch **`tf-renumber-figures`**, off `main` after PR #8.
+
+| Old | New | Figma node |
+| --- | --- | --- |
+| TF-06-value-proposition | TF-01-value-proposition | `4070:4503` |
+| TF-07-ux-improvements | TF-02-ux-improvements | `4120:4227` |
+| TF-03-attach-files | TF-03-attach-files (unchanged) | `4070:4533` |
+| TF-02-connect-folder | TF-04-connect-folder | `4070:4475` |
+| TF-09-authentication | TF-05-authentication | `4194:3276` |
+| TF-10-narrow-views | TF-06-narrow-views | `4210:5062` |
+| TF-04-layout | TF-07-layout | `4070:4559` |
+| TF-05-automation-settings | TF-08-automation-settings | `4070:4581` |
+| TF-08-design-system | TF-09-design-system | `4178:3610` |
+
+- **Figma** (`oIt1mAagsb5rIThaLCjvFt`, page "Version 2"): the eight frames were renamed to the new names. Their export settings (PNG at 1x, no suffix) take the filename from the frame name, so a fresh export now lands on the right repo filename. Canvas positions and layer order were not touched. The "Version 1" page was not looked at or changed.
+- **Repo:** `git mv` for the eight files, so git records them as pure renames with unchanged bytes. The import block in [team-files.mdx](src/content/case-studies/team-files.mdx) was rewritten in render order; the variable names, alts and captions are unchanged. The two lab pages that use the layout figure ([components.astro](src/lab/pages/components.astro), [playground.astro](src/lab/pages/playground.astro)) now import `TF-07-layout.png`.
+- **Older HANDOFF entries keep the old names**, since they record what happened at the time. Use the table above to translate them.
+- Build clean (0/0/0). Browser check: the Team Files page renders TF-01 to TF-09 in order, each at its usual size, with no failed requests; `/lab/components` and `/lab/playground` load the layout figure.
 
 ## What changed in this session (2026-10-07, session 29, Team Files shared folder authentication and narrow views)
 
