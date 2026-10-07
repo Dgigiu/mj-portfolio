@@ -2,7 +2,7 @@
 
 Last updated: 2026-10-07 (session 29)
 
-**Status at session close: branch `tf-renumber-figures` is pushed with a PR open against `main`, not merged.** It renumbers the Team Files figures in render order, in the repo and in Figma (details below). Before that, [PR #8](https://github.com/Dgigiu/mj-portfolio/pull/8) (`tf-auth-narrow-views`) was merged as `585d040` and is live; its branches, and `copy/team-files-shared-auth`, were deleted locally and on origin. Still open for Miguel: whether the authentication and narrow views figures (now TF-05 and TF-06) need larger text (readability notes below).
+**Status at session close: branch `tf-renumber-figures` is pushed, [PR #9](https://github.com/Dgigiu/mj-portfolio/pull/9) is open against `main`, not merged.** It renumbers the Team Files figures in render order, in the repo and in Figma (details below). Before that, [PR #8](https://github.com/Dgigiu/mj-portfolio/pull/8) (`tf-auth-narrow-views`) was merged as `585d040` and is live; its branches, and `copy/team-files-shared-auth`, were deleted locally and on origin. Still open for Miguel: whether the authentication and narrow views figures (now TF-05 and TF-06) need larger text (readability notes below).
 
 ## What changed in this session (2026-10-07, session 29, continued: TF figure renumbering)
 
