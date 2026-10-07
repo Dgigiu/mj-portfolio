@@ -2,7 +2,42 @@
 
 Last updated: 2026-10-07 (session 29)
 
-**Status at session close: [PR #9](https://github.com/Dgigiu/mj-portfolio/pull/9) (`tf-renumber-figures`) merged to `main` as `31461f5` and live on migueljss.com.** It renumbers the Team Files figures in render order, in the repo and in Figma (details below). Deploy succeeded; the live page loads TF-00 and TF-01 to TF-09 in order, all 200, and no old filenames remain. The `tf-renumber-figures` branch was deleted locally and on origin after the merge. Before that, [PR #8](https://github.com/Dgigiu/mj-portfolio/pull/8) (`tf-auth-narrow-views`) was merged as `585d040` and is live; its branches, and `copy/team-files-shared-auth`, were deleted locally and on origin. Still open for Miguel: whether the authentication and narrow views figures (now TF-05 and TF-06) need larger text (readability notes below).
+**Status at session close: branch `zoom-tall-images` is pushed with a PR open against `main`, not merged.** Miguel reviews before merging. It makes the zoom dialog readable for tall figures (details below). Earlier in session 29, [PR #8](https://github.com/Dgigiu/mj-portfolio/pull/8) (shared folder authentication and narrow views) and [PR #9](https://github.com/Dgigiu/mj-portfolio/pull/9) (TF renumbering) were merged and are live, and their branches deleted. Still open for Miguel: whether TF-05 and TF-06 need larger text inline (readability notes below); this PR addresses the zoomed view, not the inline one.
+
+## What changed in this session (2026-10-07, session 29, continued: zoom for tall figures)
+
+On branch **`zoom-tall-images`**, off `main` after PR #9. Changes in [ZoomDialog.astro](src/components/ZoomDialog.astro), plus two data attributes in [Figure.astro](src/components/Figure.astro) and [CompareImages.astro](src/components/CompareImages.astro).
+
+**The rule** (one helper, `shouldScroll`, and one constant, `MIN_FIT_SHARE = 0.7`):
+
+- Work out two widths: the width if the whole image fits on screen (today's behavior), and the width if only the width is fitted (capped at the natural width, so no upscaling).
+- If the whole-image width would be less than 70% of the width-fit width, the dialog switches to tall mode: the image fills the width and scrolls vertically inside the dialog, opening at the top. Otherwise nothing changes.
+- The available width and height are read from the dialog's computed CSS (`max-width`, padding, border, and the image's `max-height`), so the CSS stays the only source for sizes. The rule runs again on resize while the dialog is open.
+- Why 0.7: on laptop viewports, 1600×1055 figures land at about 0.77 to 0.89 and stay contained, while TF-05 (1600×1452) lands at about 0.56 to 0.66 and scrolls. When tall mode does apply, the image is always at least 43% taller than the available space, so a figure that would only overflow by a few pixels never gets a small scroll.
+- Triggers now pass `data-zoom-width` and `data-zoom-height`, so the decision happens before the image loads and nothing jumps.
+
+**Measurements** (layout sizes, Team Files, Chrome):
+
+| Figure | 1440×900 before | 1440×900 after | 1280×800 before | 1280×800 after |
+| --- | --- | --- | --- | --- |
+| TF-05 (1600×1452) | 833×756, fits | 1283×1164, scrolls (749px visible) | 732×664, fits | 1136×1031, scrolls (657px visible) |
+| TF-01 to TF-04, TF-07, TF-08 (1600×1055) | 1147×756 | same, no scroll | 1007×664 | same, no scroll |
+| TF-06 (1600×758) | 1283×608 | same, no scroll | 1136×538 | same, no scroll |
+| TF-09 (1600×720) | 1283×577 | same, no scroll | 1136×511 | same, no scroll |
+
+- **TF-05 readability when zoomed:** the image now shows at about 80% of the frame at 1440×900 (was 52%) and 71% at 1280×800 (was 46%). The failure modal's body text is about 9.5px at 1440 and 8.5px at 1280 (was about 6px), clearly readable at 1:1. Modal titles are about 13px and 12px. Account emails are about 7px and 6px.
+- **MyFoodways and Food Save:** all 12 figures measure identically on this branch and on `main` at 1440×900 (checked by stashing the change), with no scroll. MFW-02 (1600×940) and MFW-07 (1600×740) are wide and stay contained.
+- **Phone, 375×812:** every Team Files figure opens and closes normally, and none scroll. TF-05 included: on a portrait phone the width is the limit, so it already fills the full width (303×275). **Phone landscape, 812×375:** the 1600×1055 figures and TF-05 switch to scrolling, because there is so little height; the two wide figures stay contained. Worth a look in review; raising or lowering `MIN_FIT_SHARE` is the one place to tune it.
+- `/lab/components`: the Figure and CompareImages zooms open and close normally (CompareImages passes its sizes too).
+
+**Behavior fixed or added along the way:**
+
+- **Page scroll lock.** The page behind was not actually locked before: wheeling over the backdrop scrolled it (3000 to 3500px in a test). Now `html:has(.zoom-dialog[open])` sets `overflow: hidden` with `scrollbar-gutter: stable`, so the page doesn't move or shift. Verified with real wheel events over the image and the backdrop.
+- **Backdrop click is stricter.** It now closes only when both the press and the release land outside the dialog's box. A drag that starts on the image or scrollbar and ends on the backdrop no longer closes it (verified), and clicking the dialog's own padding no longer closes it either (before, it did).
+- **Focus.** In tall mode the scroll area gets `tabindex="0"` and focus on open, with the site's focus ring when opened by keyboard. Arrow keys and Space scroll it (verified with real key events). Shift+Tab reaches the close button; Esc and the close button work; focus returns to the figure on close. PageUp and PageDown couldn't be exercised: the test tool's synthetic PageDown doesn't scroll even a plain page. If a resize switches the dialog back to contained while the scroll area has focus, focus moves to the close button.
+- Unchanged: caption, alt, open and close transitions, reduced motion. `scrollbar-gutter: stable` and `overscroll-behavior: contain` apply only in tall mode, so contained figures don't get a gutter.
+- The design hook flags the dialog's empty `<img>` as a broken image. That's a false positive and predates this change: the script sets `src` before the dialog opens.
+- Build clean (0/0/0). No console errors from this change; two stale 500s in the dev log date from the renumbering, between the file renames and the import update.
 
 ## What changed in this session (2026-10-07, session 29, continued: TF figure renumbering)
 
