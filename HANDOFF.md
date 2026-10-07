@@ -2,7 +2,7 @@
 
 Last updated: 2026-10-07 (session 29)
 
-**Status at session close: branch `tf-auth-narrow-views` is pushed, [PR #8](https://github.com/Dgigiu/mj-portfolio/pull/8) is open against `main`, not merged.** Miguel reviews before merging. Open decisions for him: whether to renumber the TF figures (order below), and whether TF-09 and TF-10 need larger text (readability notes below). `copy/team-files-shared-auth` is now fully contained in the new branch and can be deleted once PR #8 merges.
+**Status at session close: [PR #8](https://github.com/Dgigiu/mj-portfolio/pull/8) (`tf-auth-narrow-views`) merged to `main` as `585d040` and live on migueljss.com.** Deploy succeeded; the live Team Files page has the new copy, both figures and the re-exported TF-09, and the old wording is gone. Still open for Miguel: whether to renumber the TF figures (order below), and whether TF-09 and TF-10 need larger text (readability notes below). The branches `tf-auth-narrow-views` and `copy/team-files-shared-auth` are fully merged and still exist locally and on origin; safe to delete.
 
 ## What changed in this session (2026-10-07, session 29, Team Files shared folder authentication and narrow views)
 
