@@ -1,8 +1,12 @@
 # Handoff
 
-Last updated: 2026-10-07 (session 29)
+Last updated: 2026-10-12 (session 30)
 
 **Status at session close: [PR #10](https://github.com/Dgigiu/mj-portfolio/pull/10) (`zoom-tall-images`) merged to `main` as `1794a7d` and live on migueljss.com.** It makes the zoom dialog readable for tall figures (details below). Deploy succeeded; the live Team Files page carries the new markup, size attributes, inline script and CSS (checked with curl, not the browser, to keep the visit out of Umami). The `zoom-tall-images` branch was deleted locally and on origin after the merge. Earlier in session 29, [PR #8](https://github.com/Dgigiu/mj-portfolio/pull/8) (shared folder authentication and narrow views) and [PR #9](https://github.com/Dgigiu/mj-portfolio/pull/9) (TF renumbering) were merged and are live, and their branches deleted. Still open for Miguel: whether TF-05 and TF-06 need larger text inline (readability notes below); this PR addresses the zoomed view, not the inline one.
+
+## What changed in this session (2026-10-12, session 30: CV update)
+
+- **CV PDF replaced** with Miguel's new Pages export (new summary, current role, Skills moved below experience; title line "Senior Product Designer · B2B SaaS and mobile"), re-stamped with `?ref=cv`, committed as `a4d92e6` and live (2 pages; email, LinkedIn and portfolio links intact). Per-application copies in `docs/Applications/` were not regenerated.
 
 ## What changed in this session (2026-10-07, session 29, continued: zoom for tall figures)
 
