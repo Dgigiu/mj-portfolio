@@ -6,7 +6,7 @@ Last updated: 2026-10-12 (session 30)
 
 ## What changed in this session (2026-10-12, session 30: CV update)
 
-- **CV PDF replaced** with Miguel's new Pages export (new summary, current role, Skills moved below experience; title line "Senior Product Designer · B2B SaaS and mobile"), re-stamped with `?ref=cv`, committed as `a4d92e6` and live (2 pages; email, LinkedIn and portfolio links intact). Per-application copies in `docs/Applications/` were not regenerated.
+- **CV PDF replaced** with Miguel's new Pages export (new summary, current role, Skills moved below experience; title line "Senior Product Designer · B2B SaaS and mobile"), re-stamped with `?ref=cv`, committed as `a4d92e6` and live (2 pages; email, LinkedIn and portfolio links intact). Replaced again the same day (`6404b28`, live): the contact line now reads "Portfolio: migueljss.com", with the link still on the URL. Per-application copies in `docs/Applications/` were not regenerated.
 
 ## What changed in this session (2026-10-07, session 29, continued: zoom for tall figures)
 
