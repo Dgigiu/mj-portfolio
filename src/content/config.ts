@@ -11,6 +11,9 @@ const caseStudies = defineCollection({
       // sentence so the card can strip it from the summary and avoid repeating
       // it. The full summary still feeds the case page lead and SEO description.
       benefit: z.string().optional(),
+      // Optional results shown as a short list in the case page header,
+      // under the meta line. Not shown on the cards.
+      outcomes: z.array(z.string()).optional(),
       role: z.string(),
       period: z.string(),
       client: z.string(),

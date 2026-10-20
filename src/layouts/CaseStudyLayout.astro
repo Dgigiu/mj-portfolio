@@ -9,6 +9,7 @@ import { base } from "../lib/paths";
 interface Props {
   title: string;
   summary: string;
+  outcomes?: string[];
   role: string;
   period: string;
   client: string;
@@ -17,7 +18,7 @@ interface Props {
   slug: string;
 }
 
-const { title, summary, role, period, client, domain, banner, slug } = Astro.props;
+const { title, summary, outcomes, role, period, client, domain, banner, slug } = Astro.props;
 
 // Per-case OG/share image, derived from the same cover used for the hero
 // and cards. getImage()'s .src already includes `base`, so it can be passed
@@ -41,6 +42,13 @@ const more = (
         <h1 class="case-title">{title}</h1>
         <p class="case-summary">{summary}</p>
         <p class="case-meta">{role} · {period} · {domain}</p>
+        {
+          outcomes && outcomes.length > 0 && (
+            <ul class="case-outcomes" aria-label="Outcomes">
+              {outcomes.map((outcome) => <li>{outcome}</li>)}
+            </ul>
+          )
+        }
       </div>
     </div>
   </header>
@@ -149,6 +157,36 @@ const more = (
     line-height: var(--leading-normal);
     color: var(--fg-tertiary);
     margin: 0;
+  }
+
+  /* Results the summary can't carry. Hairline top rule like Stat, and the
+     same en-dash marker as prose lists, at a quieter size and ink. */
+  .case-outcomes {
+    list-style: none;
+    margin: 0;
+    padding: var(--space-4) 0 0;
+    border-top: var(--hairline) solid var(--border-subtle);
+  }
+
+  .case-outcomes li {
+    position: relative;
+    padding-left: 1.6em;
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+    color: var(--fg-secondary);
+  }
+
+  .case-outcomes li + li {
+    margin-top: var(--space-2);
+  }
+
+  .case-outcomes li::before {
+    content: "–";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: var(--weight-semi);
   }
 
   .case-cover {
