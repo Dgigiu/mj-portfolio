@@ -133,9 +133,15 @@
   };
   let pressedOnBackdrop = false;
 
-  dialog?.addEventListener("pointerdown", (e) => {
-    pressedOnBackdrop = onBackdrop(e);
-  });
+  // On the document, not the dialog: iOS Safari doesn't send a tap's
+  // pointerdown on the backdrop to a listener on the dialog itself.
+  document.addEventListener(
+    "pointerdown",
+    (e) => {
+      pressedOnBackdrop = onBackdrop(e);
+    },
+    { passive: true },
+  );
 
   dialog?.addEventListener("click", (e) => {
     if (pressedOnBackdrop && onBackdrop(e)) closeDialog();
