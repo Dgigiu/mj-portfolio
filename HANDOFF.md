@@ -2,11 +2,20 @@
 
 Last updated: 2026-10-21 (session 33)
 
-**Status at session close (session 33): Food Save "Part of a pair" rewrite and the new FS-06 Waste Tracker figure are committed to `main` (`d618cd3`) but not pushed, at Miguel's request.** Build clean. Details in the session 33 entry below.
+**Status at session close (session 33): three local commits on `main`, not pushed, at Miguel's request: the Food Save "Part of a pair" rewrite with the new FS-06 Waste Tracker figure (`d618cd3`), then copy edits to Food Save and MyFoodways (role line, Company sections removed, new Role paragraphs, Food Save Reflections).** Build clean. Details in the session 33 entries below.
 
 **Previous status (session 32): case study header outcomes, the "active installations" copy fix, an iPhone fix for closing the zoom dialog, and a TF-05 re-export were committed straight to `main` and pushed, at Miguel's request.** GitHub Pages deploys on push. Details in the session 32 entry below.
 
 **Earlier status (session 31): [PR #10](https://github.com/Dgigiu/mj-portfolio/pull/10) (`zoom-tall-images`) merged to `main` as `1794a7d` and live on migueljss.com.** It makes the zoom dialog readable for tall figures (details below). Deploy succeeded; the live Team Files page carries the new markup, size attributes, inline script and CSS (checked with curl, not the browser, to keep the visit out of Umami). The `zoom-tall-images` branch was deleted locally and on origin after the merge. Earlier in session 29, [PR #8](https://github.com/Dgigiu/mj-portfolio/pull/8) (shared folder authentication and narrow views) and [PR #9](https://github.com/Dgigiu/mj-portfolio/pull/9) (TF renumbering) were merged and are live, and their branches deleted. Still open for Miguel: whether TF-05 and TF-06 need larger text inline (readability notes below); this PR addresses the zoomed view, not the inline one.
+
+## What changed in this session (2026-10-21, session 33, continued: Food Save and MyFoodways copy)
+
+Copy only, Miguel's text. No layout, schema or image changes.
+
+- **Both cases:** `role` is now "UX/UI designer" (was "Sole UX/UI designer"); "only designer on the project" moved into the Role paragraphs instead. The "## Company" sections are gone; the company context now sits in the Role paragraph (MyFoodways also lost the UN Sustainable Development Goals line, and its "public service and a behavior-change experiment" phrase moved into the first sentence of Problem and context).
+- **Food Save:** new Role paragraph (Foodways for United Against Waste, Moritz and **Markus**, about three months covering João's paternity leave). Headings renamed: "Research and insights" to "Research insights" (matches MyFoodways), "Strategy and concept shift" to "From competition to practical tool". Collaboration and delivery trimmed so it doesn't repeat the Role paragraph. "Part of a pair" now says United Against Waste launched both apps in June 2019 as the Food Save Starter Kit. Impact paragraphs reordered (feedback first, discontinuation second), and a new "### Reflections" subsection closes the page, like MyFoodways.
+- **"Mark" is "Markus"** everywhere he's named: the mdx and `docs/Case Studies/cs-food-save-app.md` (gitignored, so that one isn't in the commit). The bullet "Mark them as completed" is the verb and was left alone.
+- Build clean (0/0/0, 8 pages). Dev server check of both pages' HTML: header meta reads "UX/UI designer · …", no Company heading, headings in the expected order, Food Save ends with Reflections before "More case studies". No visual or mobile check this time (copy only).
 
 ## What changed in this session (2026-10-21, session 33: Waste Tracker figure)
 
