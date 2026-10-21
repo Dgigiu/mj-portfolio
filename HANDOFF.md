@@ -1,10 +1,18 @@
 # Handoff
 
-Last updated: 2026-10-20 (session 32)
+Last updated: 2026-10-21 (session 33)
 
-**Status at session close (session 32): case study header outcomes, the "active installations" copy fix, an iPhone fix for closing the zoom dialog, and a TF-05 re-export were committed straight to `main` and pushed, at Miguel's request.** GitHub Pages deploys on push. Details in the session 32 entry below.
+**Status at session close (session 33): Food Save "Part of a pair" rewrite and the new FS-06 Waste Tracker figure are committed to `main` (`d618cd3`) but not pushed, at Miguel's request.** Build clean. Details in the session 33 entry below.
 
-**Previous status (session 31): [PR #10](https://github.com/Dgigiu/mj-portfolio/pull/10) (`zoom-tall-images`) merged to `main` as `1794a7d` and live on migueljss.com.** It makes the zoom dialog readable for tall figures (details below). Deploy succeeded; the live Team Files page carries the new markup, size attributes, inline script and CSS (checked with curl, not the browser, to keep the visit out of Umami). The `zoom-tall-images` branch was deleted locally and on origin after the merge. Earlier in session 29, [PR #8](https://github.com/Dgigiu/mj-portfolio/pull/8) (shared folder authentication and narrow views) and [PR #9](https://github.com/Dgigiu/mj-portfolio/pull/9) (TF renumbering) were merged and are live, and their branches deleted. Still open for Miguel: whether TF-05 and TF-06 need larger text inline (readability notes below); this PR addresses the zoomed view, not the inline one.
+**Previous status (session 32): case study header outcomes, the "active installations" copy fix, an iPhone fix for closing the zoom dialog, and a TF-05 re-export were committed straight to `main` and pushed, at Miguel's request.** GitHub Pages deploys on push. Details in the session 32 entry below.
+
+**Earlier status (session 31): [PR #10](https://github.com/Dgigiu/mj-portfolio/pull/10) (`zoom-tall-images`) merged to `main` as `1794a7d` and live on migueljss.com.** It makes the zoom dialog readable for tall figures (details below). Deploy succeeded; the live Team Files page carries the new markup, size attributes, inline script and CSS (checked with curl, not the browser, to keep the visit out of Umami). The `zoom-tall-images` branch was deleted locally and on origin after the merge. Earlier in session 29, [PR #8](https://github.com/Dgigiu/mj-portfolio/pull/8) (shared folder authentication and narrow views) and [PR #9](https://github.com/Dgigiu/mj-portfolio/pull/9) (TF renumbering) were merged and are live, and their branches deleted. Still open for Miguel: whether TF-05 and TF-06 need larger text inline (readability notes below); this PR addresses the zoomed view, not the inline one.
+
+## What changed in this session (2026-10-21, session 33: Waste Tracker figure)
+
+- **New figure `FS-06-waste-tracker.png`** (1600×1055, PNG at scale 1), exported from Figma `RqT7cSB5meoG2VQu7ggWNo`, page "version 2", frame node `2087:149`, via the Figma MCP's `download_assets`. Three Android screens with callouts: the one-off setup check, daily data input by category with sales and guests, and a one-week report by category and by day. Imported as `wasteTracker` in [food-save.mdx](src/content/case-studies/food-save.mdx), placed after the "From there, staff entered weights" paragraph and before the Reto Mettler quote.
+- **"Part of a pair" rewritten** with Miguel's text: the Waste Tracker Lead, the trilingual setup kit (equipment guide, lead briefing, team briefing, app and paper-form versions), the one-off setup check, the password-protected web report (replaces "connected web app ... monthly reports"), and the Insights tab pointing back to Food Save. The opening paragraph, the quote and the closing line are unchanged. No other section touched.
+- Build clean (0/0/0, 8 pages). Dev server check: the figure sits under "Part of a pair" at 718×473 in the prose column, all four srcset widths (480 to 1600) decode, the zoom button is present, no console errors. The Browser pane was hidden, so no screenshot of the painted figure.
 
 ## What changed in this session (2026-10-20, session 32: outcome-led case headers)
 
