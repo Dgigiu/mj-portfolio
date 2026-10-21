@@ -4,9 +4,20 @@ Last updated: 2026-10-21 (session 33)
 
 **Status at session close (session 33): three commits on `main`, pushed (`bdb056e..aba96a1`); GitHub Pages deploys on push: the Food Save "Part of a pair" rewrite with the new FS-06 Waste Tracker figure (`d618cd3`), then copy edits to Food Save and MyFoodways (role line, Company sections removed, new Role paragraphs, Food Save Reflections).** Build clean. Details in the session 33 entries below.
 
+**Then, also pushed:** one more commit on `main` with MyFoodways and Team Files copy edits and a re-exported MFW-06 (see "session 33, continued again" below).
+
 **Previous status (session 32): case study header outcomes, the "active installations" copy fix, an iPhone fix for closing the zoom dialog, and a TF-05 re-export were committed straight to `main` and pushed, at Miguel's request.** GitHub Pages deploys on push. Details in the session 32 entry below.
 
 **Earlier status (session 31): [PR #10](https://github.com/Dgigiu/mj-portfolio/pull/10) (`zoom-tall-images`) merged to `main` as `1794a7d` and live on migueljss.com.** It makes the zoom dialog readable for tall figures (details below). Deploy succeeded; the live Team Files page carries the new markup, size attributes, inline script and CSS (checked with curl, not the browser, to keep the visit out of Umami). The `zoom-tall-images` branch was deleted locally and on origin after the merge. Earlier in session 29, [PR #8](https://github.com/Dgigiu/mj-portfolio/pull/8) (shared folder authentication and narrow views) and [PR #9](https://github.com/Dgigiu/mj-portfolio/pull/9) (TF renumbering) were merged and are live, and their branches deleted. Still open for Miguel: whether TF-05 and TF-06 need larger text inline (readability notes below); this PR addresses the zoomed view, not the inline one.
+
+## What changed in this session (2026-10-21, session 33, continued again: MyFoodways and Team Files copy, MFW-06)
+
+Miguel's text. Committed and pushed to `main`.
+
+- **`MFW-06-challenges.png` re-exported** (1600×1055, PNG at scale 1, Figma `m1vVaKCwVkvG4AtieNx7NW` page "v2", node `56:119`), overwritten in place. The annotation now reads "A new action every day". A pixel diff against the previous file finds changes only in a 47×21 px box on the word "day" (x 872 to 918, y 655 to 675). The built 1600w webp, cropped there, shows "every day".
+- **MyFoodways:** "Accessibility over time" is now "Contrast versus a fixed brand"; "4. Challenges (2020)" is now "4. Seven-day challenges (2020)"; the MFW-06 caption now describes the daily themes, the warm gray completion label on white, and yellow for done days. Alt text unchanged.
+- **Team Files:** Problem and context opens on the download, edit, re-upload cycle, with the audience sentence second. The Product paragraph drops the "Instead of downloading..." clause. **New "## The 2023 UX review" section** after Strategy's first paragraph; it takes the next two paragraphs and the TF-02 figure, unchanged (no image renumbering). "Constraints and collaboration" is now "Collaboration and constraints", reordered: engineering, technical constraints, brand guidelines (wording unchanged). "Beyond the product" opens on "If something had a visual or written side". Design execution opens with "Besides" instead of "Beyond".
+- Nothing in `src/` or `public/` linked to the old heading anchors. Build clean (0/0/0, 8 pages). Dev server check of both pages' HTML: headings in the expected order, Strategy has one paragraph, the review section has two paragraphs and the figure, Collaboration and constraints is in the new order, and MFW-06 sits under "4. Seven-day challenges (2020)" with the new caption and its image returns 200.
 
 ## What changed in this session (2026-10-21, session 33, continued: Food Save and MyFoodways copy)
 
