@@ -2,7 +2,7 @@
 
 Last updated: 2026-10-21 (session 33)
 
-**Status at session close (session 33): three local commits on `main`, not pushed, at Miguel's request: the Food Save "Part of a pair" rewrite with the new FS-06 Waste Tracker figure (`d618cd3`), then copy edits to Food Save and MyFoodways (role line, Company sections removed, new Role paragraphs, Food Save Reflections).** Build clean. Details in the session 33 entries below.
+**Status at session close (session 33): three commits on `main`, pushed (`bdb056e..aba96a1`); GitHub Pages deploys on push: the Food Save "Part of a pair" rewrite with the new FS-06 Waste Tracker figure (`d618cd3`), then copy edits to Food Save and MyFoodways (role line, Company sections removed, new Role paragraphs, Food Save Reflections).** Build clean. Details in the session 33 entries below.
 
 **Previous status (session 32): case study header outcomes, the "active installations" copy fix, an iPhone fix for closing the zoom dialog, and a TF-05 re-export were committed straight to `main` and pushed, at Miguel's request.** GitHub Pages deploys on push. Details in the session 32 entry below.
 
