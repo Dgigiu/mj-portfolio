@@ -4,6 +4,8 @@ Last updated: 2026-10-22 (session 35)
 
 **Status at session close (session 35): one commit on `main`, pushed (`48336a3`) and live on migueljss.com: a new brand paragraph closing About's "How I work", a What's new paragraph in the middle of Team Files "Beyond the product", and the Team Files "Company" heading renamed "From TOPDOX to ikuTeam".** No case study has a "Company" section anymore. A follow-up commit (`dd99992`, also live, checked with curl) added serial commas to the About paragraph. Build clean. Details in the session 35 entry below.
 
+**Then, also pushed:** the Food Save cover `FS-00-cover.jpg` re-exported from Figma (a desaturated version of the same frame); see "session 35, continued" below.
+
 **Previous status (session 34): one commit on `main`, pushed (`ae6aa16`) and live on migueljss.com: the Team Files Design execution list replaced by one paragraph, and MFW-03, MFW-04 and MFW-05 re-exported with the "Favourites" tab label.** Miguel approved the faint differences the pixel diff found outside the label boxes. Build clean. Live check with curl (not the browser, to keep Umami clean): both pages return 200, Team Files Design execution has no list markup and goes paragraph then figures, and the MyFoodways page references the new image hashes (`D-6Viy__`, `CUi-0NSz`, `Ddoncsj6`), all 12 of which return 200 with the same sizes as the local build. Details in the session 34 entry below.
 
 **Previous status (session 33): three commits on `main`, pushed (`bdb056e..aba96a1`); GitHub Pages deploys on push: the Food Save "Part of a pair" rewrite with the new FS-06 Waste Tracker figure (`d618cd3`), then copy edits to Food Save and MyFoodways (role line, Company sections removed, new Role paragraphs, Food Save Reflections).** Build clean. Details in the session 33 entries below.
@@ -13,6 +15,18 @@ Last updated: 2026-10-22 (session 35)
 **Previous status (session 32): case study header outcomes, the "active installations" copy fix, an iPhone fix for closing the zoom dialog, and a TF-05 re-export were committed straight to `main` and pushed, at Miguel's request.** GitHub Pages deploys on push. Details in the session 32 entry below.
 
 **Earlier status (session 31): [PR #10](https://github.com/Dgigiu/mj-portfolio/pull/10) (`zoom-tall-images`) merged to `main` as `1794a7d` and live on migueljss.com.** It makes the zoom dialog readable for tall figures (details below). Deploy succeeded; the live Team Files page carries the new markup, size attributes, inline script and CSS (checked with curl, not the browser, to keep the visit out of Umami). The `zoom-tall-images` branch was deleted locally and on origin after the merge. Earlier in session 29, [PR #8](https://github.com/Dgigiu/mj-portfolio/pull/8) (shared folder authentication and narrow views) and [PR #9](https://github.com/Dgigiu/mj-portfolio/pull/9) (TF renumbering) were merged and are live, and their branches deleted. Still open for Miguel: whether TF-05 and TF-06 need larger text inline (readability notes below); this PR addresses the zoomed view, not the inline one.
+
+## What changed in this session (2026-10-22, session 35, continued: Food Save cover)
+
+- **`FS-00-cover.jpg` re-exported** (1920×1008, JPG at scale 1, sRGB, 1.0 MB; Figma `RqT7cSB5meoG2VQu7ggWNo`, page "version 2", frame `FS-00-cover-banner`, node `2026:597`, via the Figma MCP's `download_assets`), overwritten in place in `src/assets/case-studies/food-save/`. The frame holds one image layer (`uaw-food-save-promo2 1`, 2206×1241, offset y −25).
+- **Diff against the previous file (from August 31):** same framing and layout; the phone UI text lines up exactly (near-zero difference on the text edges). The whole image is desaturated: mean saturation 0.295 to 0.224, mean luma 180.4 to 181.1. The change is strongest on the blurred produce in the background (oranges and yellows read more muted) and on the in-app illustrations (crate, cutting board, tomato, bottle); the white screen areas are unchanged. Read as an intentional adjustment in Figma, not a crop or export issue.
+- **Built asset hash changed** (`DP-7bZAt` to `BCVhcpjJ`), so production browsers won't serve a stale copy. No mdx or alt change (alt stays "Food Save project cover").
+- **Surfaces checked:**
+  - Case header: 960w/1440w/1920w srcset, renders at 944×496 at 1440×900.
+  - Home card: 480w/800w/1200w srcset, renders at 456×239 with the 1200w file.
+  - Share image: `og:image` is the 1200×630 webp, the full frame scaled with nothing cropped (byte-identical to the card's 1200w variant).
+  - The "More case studies" grids on Team Files and MyFoodways reference the same new files.
+  - Build clean (0/0/0, 8 pages), no console errors on the dev server.
 
 ## What changed in this session (2026-10-22, session 35: About brand paragraph, Team Files What's new and origin heading)
 
