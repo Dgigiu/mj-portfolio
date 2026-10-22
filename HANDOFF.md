@@ -1,14 +1,26 @@
 # Handoff
 
-Last updated: 2026-10-21 (session 33)
+Last updated: 2026-10-22 (session 34)
 
-**Status at session close (session 33): three commits on `main`, pushed (`bdb056e..aba96a1`); GitHub Pages deploys on push: the Food Save "Part of a pair" rewrite with the new FS-06 Waste Tracker figure (`d618cd3`), then copy edits to Food Save and MyFoodways (role line, Company sections removed, new Role paragraphs, Food Save Reflections).** Build clean. Details in the session 33 entries below.
+**Status at session close (session 34): one commit on `main`, pushed: the Team Files Design execution list replaced by one paragraph, and MFW-03, MFW-04 and MFW-05 re-exported with the "Favourites" tab label.** Miguel approved the faint differences the pixel diff found outside the label boxes. Build clean. Details in the session 34 entry below.
+
+**Previous status (session 33): three commits on `main`, pushed (`bdb056e..aba96a1`); GitHub Pages deploys on push: the Food Save "Part of a pair" rewrite with the new FS-06 Waste Tracker figure (`d618cd3`), then copy edits to Food Save and MyFoodways (role line, Company sections removed, new Role paragraphs, Food Save Reflections).** Build clean. Details in the session 33 entries below.
 
 **Then, also pushed:** one more commit on `main` with MyFoodways and Team Files copy edits and a re-exported MFW-06 (see "session 33, continued again" below).
 
 **Previous status (session 32): case study header outcomes, the "active installations" copy fix, an iPhone fix for closing the zoom dialog, and a TF-05 re-export were committed straight to `main` and pushed, at Miguel's request.** GitHub Pages deploys on push. Details in the session 32 entry below.
 
 **Earlier status (session 31): [PR #10](https://github.com/Dgigiu/mj-portfolio/pull/10) (`zoom-tall-images`) merged to `main` as `1794a7d` and live on migueljss.com.** It makes the zoom dialog readable for tall figures (details below). Deploy succeeded; the live Team Files page carries the new markup, size attributes, inline script and CSS (checked with curl, not the browser, to keep the visit out of Umami). The `zoom-tall-images` branch was deleted locally and on origin after the merge. Earlier in session 29, [PR #8](https://github.com/Dgigiu/mj-portfolio/pull/8) (shared folder authentication and narrow views) and [PR #9](https://github.com/Dgigiu/mj-portfolio/pull/9) (TF renumbering) were merged and are live, and their branches deleted. Still open for Miguel: whether TF-05 and TF-06 need larger text inline (readability notes below); this PR addresses the zoomed view, not the inline one.
+
+## What changed in this session (2026-10-22, session 34: Team Files Design execution, MyFoodways "Favourites")
+
+- **Team Files, Design execution:** the opening sentence and the three-item list (Search, Layout options, Automation and admin settings) are replaced by one paragraph, Miguel's text verbatim. The Search bullet is dropped on purpose, and no Search figure is planned. The layout and automation figures, the design system paragraph and figure, and the process paragraph are unchanged. `docs/Case Studies/cs-team-files.md` not touched.
+- **MyFoodways: `MFW-03-solution.png`, `MFW-04-Personalization.png` and `MFW-05-flexible-recipe.png` re-exported** (Figma `m1vVaKCwVkvG4AtieNx7NW` page "v2", nodes `18:26`, `50:108`, `51:81`, PNG at scale 1 via the Figma MCP's `download_assets`), overwritten in place, all still 1600×1055. Miguel changed the tab bar label from "Favorites" to "Favourites" in Figma (1, 2 and 3 labels). Alts and captions unchanged.
+- **Pixel diff against the previous files (from August 31):**
+  - Real changes (channel difference above 16) sit on the tab labels and the heart icons above them. "Favourites" is one letter wider than "Favorites", so each label spills 1px past the left edge and 1px past the bottom of the approximate boxes in the brief (for example MFW-03 x 850 to 895, y 937 to 971).
+  - The rest of each frame differs by 1 to 4 levels out of 255 (about 300,000 to 425,000 pixels per image, averaging +0.4, slightly lighter; no alpha changes). Nothing is visible at 4x. It looks like Figma's renderer output changed since the August export, not a content change.
+  - A few isolated pixels outside the boxes differ by up to 30 levels: 1 to 4 px specks on anti-aliased phone bezel edges (x 973 and 1253, y 216 to 218 and 807 to 810) and on the tab bar row (x 369 and 869, y 969). MFW-05 has none above 4. Enlarged crops of the old and new files look identical.
+- Build clean (0/0/0, 8 pages). Dev server check: Team Files Design execution goes h2, the new paragraph, then the layout figure (no `ul`/`li` in the section). MyFoodways: all 12 srcset variants (480 to 1600) of the three figures return 200 as webp. The built 1600w webps, cropped on each tab label, read "Favourites" in all six places.
 
 ## What changed in this session (2026-10-21, session 33, continued again: MyFoodways and Team Files copy, MFW-06)
 
