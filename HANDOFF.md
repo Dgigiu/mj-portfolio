@@ -2,7 +2,7 @@
 
 Last updated: 2026-10-22 (session 34)
 
-**Status at session close (session 34): one commit on `main`, pushed: the Team Files Design execution list replaced by one paragraph, and MFW-03, MFW-04 and MFW-05 re-exported with the "Favourites" tab label.** Miguel approved the faint differences the pixel diff found outside the label boxes. Build clean. Details in the session 34 entry below.
+**Status at session close (session 34): one commit on `main`, pushed (`ae6aa16`) and live on migueljss.com: the Team Files Design execution list replaced by one paragraph, and MFW-03, MFW-04 and MFW-05 re-exported with the "Favourites" tab label.** Miguel approved the faint differences the pixel diff found outside the label boxes. Build clean. Live check with curl (not the browser, to keep Umami clean): both pages return 200, Team Files Design execution has no list markup and goes paragraph then figures, and the MyFoodways page references the new image hashes (`D-6Viy__`, `CUi-0NSz`, `Ddoncsj6`), all 12 of which return 200 with the same sizes as the local build. Details in the session 34 entry below.
 
 **Previous status (session 33): three commits on `main`, pushed (`bdb056e..aba96a1`); GitHub Pages deploys on push: the Food Save "Part of a pair" rewrite with the new FS-06 Waste Tracker figure (`d618cd3`), then copy edits to Food Save and MyFoodways (role line, Company sections removed, new Role paragraphs, Food Save Reflections).** Build clean. Details in the session 33 entries below.
 
