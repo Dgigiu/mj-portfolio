@@ -2,7 +2,7 @@
 
 Last updated: 2026-10-22 (session 35)
 
-**Status at session close (session 35): one commit on `main`, pushed: a new brand paragraph closing About's "How I work", a What's new paragraph in the middle of Team Files "Beyond the product", and the Team Files "Company" heading renamed "From TOPDOX to ikuTeam".** No case study has a "Company" section anymore. Build clean. Details in the session 35 entry below.
+**Status at session close (session 35): one commit on `main`, pushed (`48336a3`) and live on migueljss.com: a new brand paragraph closing About's "How I work", a What's new paragraph in the middle of Team Files "Beyond the product", and the Team Files "Company" heading renamed "From TOPDOX to ikuTeam".** No case study has a "Company" section anymore. Build clean. Details in the session 35 entry below.
 
 **Previous status (session 34): one commit on `main`, pushed (`ae6aa16`) and live on migueljss.com: the Team Files Design execution list replaced by one paragraph, and MFW-03, MFW-04 and MFW-05 re-exported with the "Favourites" tab label.** Miguel approved the faint differences the pixel diff found outside the label boxes. Build clean. Live check with curl (not the browser, to keep Umami clean): both pages return 200, Team Files Design execution has no list markup and goes paragraph then figures, and the MyFoodways page references the new image hashes (`D-6Viy__`, `CUi-0NSz`, `Ddoncsj6`), all 12 of which return 200 with the same sizes as the local build. Details in the session 34 entry below.
 
@@ -21,7 +21,8 @@ Copy only, Miguel's text verbatim (with typographic apostrophes). Committed stra
 - **About, "How I work":** new third paragraph after "For most of my career I've been the only designer on small teams", before "Working with AI": ikuTeam brand identity and voice across UI copy, marketing site, Marketplace listing and documentation; the app following Atlassian's guidelines while the brand came through in the onboarding, empty state and What's new illustrations; brand and product as one design language. Nothing else on the page changed.
 - **Team Files, "Beyond the product":** new middle paragraph about the What's new screen (no user email addresses, so no newsletter; each feature linked to its blog post). The first and closing paragraphs are unchanged.
 - **Team Files: "## Company" is now "## From TOPDOX to ikuTeam"** (anchor `#from-topdox-to-ikuteam`), paragraph unchanged. Nothing in `src/` or `public/` linked to `#company`. Matches Food Save's "From competition to practical tool".
-- Build clean (0/0/0, 8 pages). Built HTML check: About "How I work" has three paragraphs in the expected order; Team Files headings run Product, From TOPDOX to ikuTeam, Role, Problem and context, and on; "Beyond the product" has three paragraphs with the What's new one in the middle. No em or en dashes in the added lines. Live check with curl, not the browser (see below).
+- Build clean (0/0/0, 8 pages). Built HTML check: About "How I work" has three paragraphs in the expected order; Team Files headings run Product, From TOPDOX to ikuTeam, Role, Problem and context, and on; "Beyond the product" has three paragraphs with the What's new one in the middle. No em or en dashes in the added lines.
+- Deploy succeeded. Live check with curl (not the browser, to keep Umami clean): both pages return 200 and show the same structure as the build, and the Team Files page has no `id="company"` and carries `id="from-topdox-to-ikuteam"`.
 
 ## What changed in this session (2026-10-22, session 34: Team Files Design execution, MyFoodways "Favourites")
 
