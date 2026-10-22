@@ -4,7 +4,7 @@ Last updated: 2026-10-22 (session 35)
 
 **Status at session close (session 35): one commit on `main`, pushed (`48336a3`) and live on migueljss.com: a new brand paragraph closing About's "How I work", a What's new paragraph in the middle of Team Files "Beyond the product", and the Team Files "Company" heading renamed "From TOPDOX to ikuTeam".** No case study has a "Company" section anymore. A follow-up commit (`dd99992`, also live, checked with curl) added serial commas to the About paragraph. Build clean. Details in the session 35 entry below.
 
-**Then, also pushed:** the Food Save cover `FS-00-cover.jpg` re-exported from Figma (a desaturated version of the same frame); see "session 35, continued" below.
+**Then, also pushed and live (`f2ec15d`):** the Food Save cover `FS-00-cover.jpg` re-exported from Figma (a desaturated version of the same frame); see "session 35, continued" below.
 
 **Previous status (session 34): one commit on `main`, pushed (`ae6aa16`) and live on migueljss.com: the Team Files Design execution list replaced by one paragraph, and MFW-03, MFW-04 and MFW-05 re-exported with the "Favourites" tab label.** Miguel approved the faint differences the pixel diff found outside the label boxes. Build clean. Live check with curl (not the browser, to keep Umami clean): both pages return 200, Team Files Design execution has no list markup and goes paragraph then figures, and the MyFoodways page references the new image hashes (`D-6Viy__`, `CUi-0NSz`, `Ddoncsj6`), all 12 of which return 200 with the same sizes as the local build. Details in the session 34 entry below.
 
@@ -27,6 +27,7 @@ Last updated: 2026-10-22 (session 35)
   - Share image: `og:image` is the 1200×630 webp, the full frame scaled with nothing cropped (byte-identical to the card's 1200w variant).
   - The "More case studies" grids on Team Files and MyFoodways reference the same new files.
   - Build clean (0/0/0, 8 pages), no console errors on the dev server.
+- Committed as `f2ec15d`; deploy succeeded. Live check with curl (not the browser): home, Food Save, Team Files and MyFoodways reference only `BCVhcpjJ` cover files (no `DP-7bZAt` left), the Food Save `og:image` is the new 1200×630 webp, and all seven variants return 200 as webp with the same byte sizes as the local build.
 
 ## What changed in this session (2026-10-22, session 35: About brand paragraph, Team Files What's new and origin heading)
 
