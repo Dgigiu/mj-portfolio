@@ -1,8 +1,10 @@
 # Handoff
 
-Last updated: 2026-10-22 (session 34)
+Last updated: 2026-10-22 (session 35)
 
-**Status at session close (session 34): one commit on `main`, pushed (`ae6aa16`) and live on migueljss.com: the Team Files Design execution list replaced by one paragraph, and MFW-03, MFW-04 and MFW-05 re-exported with the "Favourites" tab label.** Miguel approved the faint differences the pixel diff found outside the label boxes. Build clean. Live check with curl (not the browser, to keep Umami clean): both pages return 200, Team Files Design execution has no list markup and goes paragraph then figures, and the MyFoodways page references the new image hashes (`D-6Viy__`, `CUi-0NSz`, `Ddoncsj6`), all 12 of which return 200 with the same sizes as the local build. Details in the session 34 entry below.
+**Status at session close (session 35): one commit on `main`, pushed: a new brand paragraph closing About's "How I work", a What's new paragraph in the middle of Team Files "Beyond the product", and the Team Files "Company" heading renamed "From TOPDOX to ikuTeam".** No case study has a "Company" section anymore. Build clean. Details in the session 35 entry below.
+
+**Previous status (session 34): one commit on `main`, pushed (`ae6aa16`) and live on migueljss.com: the Team Files Design execution list replaced by one paragraph, and MFW-03, MFW-04 and MFW-05 re-exported with the "Favourites" tab label.** Miguel approved the faint differences the pixel diff found outside the label boxes. Build clean. Live check with curl (not the browser, to keep Umami clean): both pages return 200, Team Files Design execution has no list markup and goes paragraph then figures, and the MyFoodways page references the new image hashes (`D-6Viy__`, `CUi-0NSz`, `Ddoncsj6`), all 12 of which return 200 with the same sizes as the local build. Details in the session 34 entry below.
 
 **Previous status (session 33): three commits on `main`, pushed (`bdb056e..aba96a1`); GitHub Pages deploys on push: the Food Save "Part of a pair" rewrite with the new FS-06 Waste Tracker figure (`d618cd3`), then copy edits to Food Save and MyFoodways (role line, Company sections removed, new Role paragraphs, Food Save Reflections).** Build clean. Details in the session 33 entries below.
 
@@ -11,6 +13,15 @@ Last updated: 2026-10-22 (session 34)
 **Previous status (session 32): case study header outcomes, the "active installations" copy fix, an iPhone fix for closing the zoom dialog, and a TF-05 re-export were committed straight to `main` and pushed, at Miguel's request.** GitHub Pages deploys on push. Details in the session 32 entry below.
 
 **Earlier status (session 31): [PR #10](https://github.com/Dgigiu/mj-portfolio/pull/10) (`zoom-tall-images`) merged to `main` as `1794a7d` and live on migueljss.com.** It makes the zoom dialog readable for tall figures (details below). Deploy succeeded; the live Team Files page carries the new markup, size attributes, inline script and CSS (checked with curl, not the browser, to keep the visit out of Umami). The `zoom-tall-images` branch was deleted locally and on origin after the merge. Earlier in session 29, [PR #8](https://github.com/Dgigiu/mj-portfolio/pull/8) (shared folder authentication and narrow views) and [PR #9](https://github.com/Dgigiu/mj-portfolio/pull/9) (TF renumbering) were merged and are live, and their branches deleted. Still open for Miguel: whether TF-05 and TF-06 need larger text inline (readability notes below); this PR addresses the zoomed view, not the inline one.
+
+## What changed in this session (2026-10-22, session 35: About brand paragraph, Team Files What's new and origin heading)
+
+Copy only, Miguel's text verbatim (with typographic apostrophes). Committed straight to `main` and pushed.
+
+- **About, "How I work":** new third paragraph after "For most of my career I've been the only designer on small teams", before "Working with AI": ikuTeam brand identity and voice across UI copy, marketing site, Marketplace listing and documentation; the app following Atlassian's guidelines while the brand came through in the onboarding, empty state and What's new illustrations; brand and product as one design language. Nothing else on the page changed.
+- **Team Files, "Beyond the product":** new middle paragraph about the What's new screen (no user email addresses, so no newsletter; each feature linked to its blog post). The first and closing paragraphs are unchanged.
+- **Team Files: "## Company" is now "## From TOPDOX to ikuTeam"** (anchor `#from-topdox-to-ikuteam`), paragraph unchanged. Nothing in `src/` or `public/` linked to `#company`. Matches Food Save's "From competition to practical tool".
+- Build clean (0/0/0, 8 pages). Built HTML check: About "How I work" has three paragraphs in the expected order; Team Files headings run Product, From TOPDOX to ikuTeam, Role, Problem and context, and on; "Beyond the product" has three paragraphs with the What's new one in the middle. No em or en dashes in the added lines. Live check with curl, not the browser (see below).
 
 ## What changed in this session (2026-10-22, session 34: Team Files Design execution, MyFoodways "Favourites")
 
