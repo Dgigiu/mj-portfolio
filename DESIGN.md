@@ -107,7 +107,7 @@ A near-monochrome composition where cobalt is the system's only working chromati
 
 This system explicitly rejects the art director showcase, marketing-site flourishes, and generic AI aesthetics (gradients for their own sake, glassmorphism, overdesigned cards). It also refuses tech-minimal mimicry: the discipline of Linear or Vercel without their cool-gray look. Density is generous and editorial; long-form case studies read like well-typeset articles, not slide decks.
 
-Motion is quiet and earned: transform and opacity only, under ~400ms or scroll-driven, text never animates, everything respects reduced motion and works without JavaScript. The current set is a hero portrait scroll parallax, a hero scroll-exit veil that washes the portrait cobalt-to-navy as the hero leaves, faint card reveals (opacity from 0.75, 8px travel, no stagger), a 2px card hover lift, a nav underline that rises in from below, and a zoom dialog that scales from 0.97. No entrance animations on the hero, ever.
+Motion is quiet and earned: transform and opacity only, under ~400ms or scroll-driven, text never animates, everything respects reduced motion and works without JavaScript. The current set is a hero portrait scroll parallax, a hero scroll-exit veil that washes the portrait cobalt-to-navy as the hero leaves, faint card reveals (opacity from 0.75, 8px travel, no stagger), a 2px card hover lift, a nav underline that rises in from below, a jump list marker that eases in beside the current section, and a zoom dialog that scales from 0.97. No entrance animations on the hero, ever.
 
 Two further accents, gold and sienna, exist at the token layer (wired into `tokens.css`, and built out as a full ramp in the companion Figma design system) but have no consumer in the shipped site yet: they were added for a future annotation-badge system for case study screenshots. Until that component ships, the live UI remains cobalt-only; treat gold and sienna as reserved, not available for general use.
 
@@ -199,6 +199,13 @@ Flat by default. The canvas, text, and most surfaces share one plane; depth is r
 - Wordmark left, three text links right, set in Geist at 0.875rem with snug tracking. No icons, no pills, no background.
 - **Hover:** a 2px muted-gray underline rises in from 3px below with a fade (120ms). **Active page:** a full Working Cobalt underline, static.
 - **Mobile:** same row, tighter gaps. No hamburger; three links fit.
+
+### Jump List ("On this page")
+- **Content:** the case study's h2s, word for word, as native anchor links. h3s stay out.
+- **Rail (1024px and up):** sticky in the 224px the page container leaves beside the 720 prose column (40px gap, 184px wide), level with a jumped-to h2 (96px from the top), and it stops where the article ends. Label in the Label style; links in Geist 0.875rem, Ink Secondary, Ink on hover, balanced two-line wrapping.
+- **Current section:** link text turns Working Cobalt and the prose lists' cobalt en-dash hangs in the gutter beside it, easing in like the nav underline (120ms, opacity and a 4px slide). Set by an observer as each h2 crosses a line 40% down the viewport; marked `aria-current="location"`.
+- **Below 1024px:** a collapsed "On this page" row between hairlines at the top of the body, with a chevron that turns on open. Rows are 44px tap targets. No current-state styling here.
+- **Without JS:** the list is always open and nothing is marked current.
 
 ### Case Study Card
 - **Character:** borderless and editorial; the cover image is the card.

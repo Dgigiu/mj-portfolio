@@ -11,7 +11,7 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content, headings } = await entry.render();
 const { data } = entry;
 ---
 
@@ -25,6 +25,7 @@ const { data } = entry;
   client={data.client}
   domain={data.domain}
   banner={data.banner}
+  headings={headings.filter((heading) => heading.depth === 2)}
 >
   <Content />
 </CaseStudyLayout>

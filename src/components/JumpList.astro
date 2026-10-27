@@ -1,0 +1,228 @@
+---
+/* "On this page": a case study's h2s as a jump list. From 1024px it's a
+   sticky rail beside the prose (CaseStudyLayout's grid places it); below
+   that it sits above the prose as a list that starts collapsed. Without JS
+   it's always open, and nothing is marked current. */
+interface Props {
+  headings: { slug: string; text: string }[];
+  caseSlug: string;
+}
+
+const { headings, caseSlug } = Astro.props;
+---
+
+<nav class="jump" aria-label="On this page" data-jump>
+  <p class="jump-label mj-label" aria-hidden="true">On this page</p>
+  <button type="button" class="jump-toggle mj-label" aria-expanded="false" aria-controls="jump-list">
+    On this page
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  </button>
+  <ol id="jump-list" class="jump-list">
+    {
+      headings.map((heading) => (
+        <li>
+          <a
+            href={`#${heading.slug}`}
+            data-umami-event="Jump link"
+            data-umami-event-case={caseSlug}
+            data-umami-event-section={heading.slug}
+          >
+            {/* Hyphenated words stay whole: balanced wrapping in the
+                narrow rail would otherwise break "re- / upload". */}
+            {heading.text.split(/(\S*-\S*)/).map((part, i) => (i % 2 ? <span class="nobreak">{part}</span> : part))}
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<script>
+  const nav = document.querySelector<HTMLElement>("[data-jump]");
+
+  // Disclosure for the collapsed list. In the rail the button is hidden and
+  // the list always shows, whatever the state.
+  const toggle = nav?.querySelector<HTMLButtonElement>(".jump-toggle");
+  toggle?.addEventListener("click", () => {
+    const open = toggle.getAttribute("aria-expanded") === "true";
+    toggle.setAttribute("aria-expanded", String(!open));
+  });
+
+  // Current section, rail only: the last h2 whose top is above a line 40%
+  // down the viewport. The observer's root runs from far above the page down
+  // to that line, so a heading flips state exactly when it crosses the line,
+  // even on a jump that carries it from below the line to above the
+  // viewport in one frame. The rects decide which one is current.
+  const LINE = 0.4;
+  const ABOVE = 100000;
+  const rail = window.matchMedia("(min-width: 1024px)");
+  const links = Array.from(nav?.querySelectorAll<HTMLAnchorElement>(".jump-list a") ?? []);
+  const targets = links.map((link) => document.getElementById(decodeURIComponent(link.hash.slice(1))));
+
+  if (links.length > 0 && "IntersectionObserver" in window) {
+    let current: HTMLAnchorElement | undefined;
+
+    const update = () => {
+      let next: HTMLAnchorElement | undefined;
+      if (rail.matches) {
+        const line = window.innerHeight * LINE;
+        for (const [i, target] of targets.entries()) {
+          if (target && target.getBoundingClientRect().top <= line) next = links[i];
+        }
+      }
+      if (next === current) return;
+      current?.removeAttribute("aria-current");
+      next?.setAttribute("aria-current", "location");
+      current = next;
+    };
+
+    const io = new IntersectionObserver(update, {
+      rootMargin: `${ABOVE}px 0px -${(1 - LINE) * 100}% 0px`,
+    });
+    for (const target of targets) if (target) io.observe(target);
+    rail.addEventListener("change", update);
+  }
+</script>
+
+<style>
+  .jump-label {
+    margin: 0 0 var(--space-4);
+  }
+
+  .jump-toggle {
+    display: none;
+  }
+
+  .jump-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .jump-list li {
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+  }
+
+  .jump-list a {
+    position: relative;
+    display: block;
+    color: var(--fg-secondary);
+    text-decoration: none;
+    text-wrap: balance;
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .nobreak {
+    white-space: nowrap;
+  }
+
+  .jump-list a:hover {
+    color: var(--fg-primary);
+  }
+
+  .jump-list a[aria-current="location"] {
+    color: var(--accent);
+  }
+
+  /* Current marker: the prose lists' cobalt en-dash, hung in the gutter so
+     every item keeps the label's left edge. Eases in like the nav
+     underline; the link text itself only changes color. */
+  .jump-list a::before {
+    content: "–";
+    position: absolute;
+    right: 100%;
+    margin-right: var(--space-2);
+    color: var(--accent);
+    font-weight: var(--weight-semi);
+    opacity: 0;
+    translate: calc(-1 * var(--space-1)) 0;
+    transition: opacity var(--duration-fast) var(--ease-out),
+                translate var(--duration-fast) var(--ease-out);
+  }
+
+  .jump-list a[aria-current="location"]::before {
+    opacity: 1;
+    translate: none;
+  }
+
+  /* Rail. Sticks level with a jumped-to h2 (its scroll-margin-top in
+     CaseStudyLayout) and scrolls itself if a short window can't hold it.
+     The scroll clip would cut the hung marker and the focus rings, so the
+     box is padded for them and pulled back by the same amount. */
+  @media (min-width: 1024px) {
+    .jump {
+      position: sticky;
+      top: var(--space-24);
+      max-height: calc(100vh - var(--space-24) - var(--space-8));
+      overflow-y: auto;
+      margin: calc(-1 * var(--space-1)) calc(-1 * var(--space-1)) 0 calc(-1 * var(--space-5));
+      padding: var(--space-1) var(--space-1) var(--space-1) var(--space-5);
+    }
+  }
+
+  /* Collapsed list above the prose. Hairlines set it apart from the body;
+     with JS the label turns into the disclosure button. */
+  @media (max-width: 1023.98px) {
+    .jump {
+      margin-bottom: var(--space-12);
+      border-block: var(--hairline) solid var(--border-subtle);
+    }
+
+    .jump-label {
+      margin: 0;
+      padding-block: var(--space-4) var(--space-2);
+    }
+
+    .jump-list {
+      gap: 0;
+      padding-bottom: var(--space-2);
+    }
+
+    /* 44px tap rows: a 14px line at --leading-normal with --space-3 above
+       and below. */
+    .jump-list li {
+      line-height: var(--leading-normal);
+    }
+
+    .jump-list a {
+      padding-block: var(--space-3);
+    }
+
+    :global(html.js) .jump-label {
+      display: none;
+    }
+
+    :global(html.js) .jump-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding-block: var(--space-4);
+      color: var(--fg-tertiary);
+      transition: color var(--duration-fast) var(--ease-out);
+    }
+
+    :global(html.js) .jump-toggle:hover {
+      color: var(--fg-primary);
+    }
+
+    .jump-toggle svg {
+      transition: rotate var(--duration-fast) var(--ease-out);
+    }
+
+    .jump-toggle[aria-expanded="true"] svg {
+      rotate: 180deg;
+    }
+
+    :global(html.js) .jump-toggle[aria-expanded="false"] ~ .jump-list {
+      display: none;
+    }
+  }
+</style>

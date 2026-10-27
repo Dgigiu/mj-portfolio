@@ -1,9 +1,11 @@
 ---
+import type { MarkdownHeading } from "astro";
 import { getCollection } from "astro:content";
 import { Image, getImage } from "astro:assets";
 import BaseLayout from "./BaseLayout.astro";
 import CaseStudyCard from "../components/CaseStudyCard.astro";
 import ContactOutro from "../components/ContactOutro.astro";
+import JumpList from "../components/JumpList.astro";
 import { base } from "../lib/paths";
 
 interface Props {
@@ -16,9 +18,10 @@ interface Props {
   domain: string;
   banner?: ImageMetadata;
   slug: string;
+  headings?: MarkdownHeading[];
 }
 
-const { title, summary, outcomes, role, period, client, domain, banner, slug } = Astro.props;
+const { title, summary, outcomes, role, period, client, domain, banner, slug, headings = [] } = Astro.props;
 
 // Per-case OG/share image, derived from the same cover used for the hero
 // and cards. getImage()'s .src already includes `base`, so it can be passed
@@ -72,6 +75,7 @@ const more = (
   }
 
   <article class="case-body container">
+    {headings.length > 1 && <JumpList headings={headings} caseSlug={slug} />}
     <div class="prose">
       <slot />
     </div>
@@ -220,8 +224,39 @@ const more = (
   }
 
   /* Anchored section headings clear the sticky nav when jumped to. */
-  .case-body .prose :global(h2) {
+  .case-body .prose :global(h2),
+  .case-body .prose :global(h3) {
     scroll-margin-top: var(--space-24);
+  }
+
+  /* From 1024px the jump list rides beside the prose in the 224px the page
+     container leaves free (JumpList switches at the same width). It spans
+     both rows so it sticks until the article ends, clear of "More case
+     studies". A bleed figure would run into it, so it bleeds left only. */
+  @media (min-width: 1024px) {
+    .case-body {
+      display: grid;
+      grid-template-columns: var(--content-prose) minmax(0, 1fr);
+      column-gap: var(--space-10);
+      align-items: start;
+    }
+
+    .case-body .prose {
+      grid-area: 1 / 1;
+    }
+
+    .case-body [data-read-marker] {
+      grid-area: 2 / 1;
+    }
+
+    .case-body :global(.jump) {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+
+    .case-body :global(.figure.bleed) {
+      margin-inline-end: 0;
+    }
   }
 
   /* padding-block, not the shorthand: .more is a .container and the
