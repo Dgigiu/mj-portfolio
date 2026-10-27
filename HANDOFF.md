@@ -1,8 +1,10 @@
 # Handoff
 
-Last updated: 2026-10-22 (session 35)
+Last updated: 2026-10-27 (session 36)
 
-**Status at session close (session 35): one commit on `main`, pushed (`48336a3`) and live on migueljss.com: a new brand paragraph closing About's "How I work", a What's new paragraph in the middle of Team Files "Beyond the product", and the Team Files "Company" heading renamed "From TOPDOX to ikuTeam".** No case study has a "Company" section anymore. A follow-up commit (`dd99992`, also live, checked with curl) added serial commas to the About paragraph. Build clean. Details in the session 35 entry below.
+**Status at session close (session 36): one commit on `main`, pushed (`ad62ba2`) and live on migueljss.com: Phase 1 copy from the October 26 portfolio review (home hero subtitle, MyFoodways and Food Save summaries and role, MyFoodways outcomes, About "How I work", a Team Files Role sentence) and eager, high-priority case study covers.** Build clean. The hero subtitle went through two versions; the first collided with the portrait between 1101 and 1229 px wide, so Miguel shortened the text instead of changing hero layout values (details in the session 36 entry below).
+
+**Previous status (session 35): one commit on `main`, pushed (`48336a3`) and live on migueljss.com: a new brand paragraph closing About's "How I work", a What's new paragraph in the middle of Team Files "Beyond the product", and the Team Files "Company" heading renamed "From TOPDOX to ikuTeam".** No case study has a "Company" section anymore. A follow-up commit (`dd99992`, also live, checked with curl) added serial commas to the About paragraph. Build clean. Details in the session 35 entry below.
 
 **Then, also pushed and live (`f2ec15d`):** the Food Save cover `FS-00-cover.jpg` re-exported from Figma (a desaturated version of the same frame); see "session 35, continued" below.
 
@@ -15,6 +17,43 @@ Last updated: 2026-10-22 (session 35)
 **Previous status (session 32): case study header outcomes, the "active installations" copy fix, an iPhone fix for closing the zoom dialog, and a TF-05 re-export were committed straight to `main` and pushed, at Miguel's request.** GitHub Pages deploys on push. Details in the session 32 entry below.
 
 **Earlier status (session 31): [PR #10](https://github.com/Dgigiu/mj-portfolio/pull/10) (`zoom-tall-images`) merged to `main` as `1794a7d` and live on migueljss.com.** It makes the zoom dialog readable for tall figures (details below). Deploy succeeded; the live Team Files page carries the new markup, size attributes, inline script and CSS (checked with curl, not the browser, to keep the visit out of Umami). The `zoom-tall-images` branch was deleted locally and on origin after the merge. Earlier in session 29, [PR #8](https://github.com/Dgigiu/mj-portfolio/pull/8) (shared folder authentication and narrow views) and [PR #9](https://github.com/Dgigiu/mj-portfolio/pull/9) (TF renumbering) were merged and are live, and their branches deleted. Still open for Miguel: whether TF-05 and TF-06 need larger text inline (readability notes below); this PR addresses the zoomed view, not the inline one.
+
+## What changed in this session (2026-10-27, session 36: October 26 review, Phase 1 copy)
+
+Miguel's approved text verbatim, with typographic apostrophes. Committed straight to `main` as `ad62ba2` and pushed.
+
+- **Home hero subtitle** (`.hero-subtitle` in [index.astro](src/pages/index.astro)): now "I'm a senior product designer for SaaS and mobile, working day to day with engineering and product. The main story here: seven years on Team Files, with over 9,000 active installations." No hero layout values changed (`max-width` stays 520px).
+- **MyFoodways:** new `summary` (reviews praised the two ideas it was built on); `benefit` unchanged, so the card still strips it. `outcomes` replaced: "First public release in June 2018, three months after I joined;" then the 6,000 downloads item. The reviews outcome was dropped on purpose because the summary now carries it. `role` is "Product designer".
+- **Food Save:** new `summary` (interviews showed kitchen managers wanted practical measures, not a competition, launched with United Against Waste in June 2019). `benefit` and `outcomes` unchanged. `role` is "Product designer".
+- **About, "How I work":** the "For most of my career I've been the only designer on small teams" paragraph is replaced by one that opens "I've always worked closely with engineering and product" (the ikuTeam CTO and product owner, Doist, mentoring at TOPDOX, ownership where he was the only designer). The brand paragraph after it is unchanged.
+- **Team Files, Role:** new sentence after "...pushed back on my work when it needed it.": "Until 2020 I was at ikuTeam part-time, alongside my work at Foodways, and full-time from 2021."
+- **Case study covers** ([CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro)): `loading="eager"` and `fetchpriority="high"` on the `.cover-img` `<Image>`. It used to be lazy, so it could show up after the text. Dev check on Food Save at 1440×900, no scroll: the cover request started at 148 ms, before DOMContentLoaded (164 ms), and was the page's first image request.
+
+**Hero measurement method** (reuse it for any future subtitle change): sweep an iframe of `/` across 1101 to 1441 px wide in 4 px steps at 768, 800 and 900 px tall. Above 1100px the portrait sits above the vignette. For each subtitle line, compare the right edge of its word boxes with the leftmost portrait pixel with alpha above 128 in the same rows. A negative gap means the line runs into the figure.
+
+- **First version** ("...SaaS and mobile products... The longest story here is Team Files: seven years, over 9,000 active installations, and a design system its engineers built from."): 5 lines on desktop. Line 4 ("...its engineers") ran up to 27 px into the shirt sleeve at 63 of 123 sizes between 1101 and 1229 px wide. At 1440 it was clear (98 px).
+- **Alternatives tested:** a 440px `max-width` fixed it (closest 5 px), 480px only just cleared (0 px), and `text-wrap: pretty` changed nothing. Miguel chose to shorten the text instead of changing hero layout values.
+- **Shipped version:**
+  - 4 lines on desktop, no overlap at any of the 258 sizes. Closest is 11 px (1125×800, line 3). It's 97 px at 1441×900, and the h1's closest is 95 px.
+  - The old subtitle got to 3 px by this method. Miguel's own browser measurement read 16 px for the new text and 8 px for the old one, the same 5 px offset on both, so the difference is the method.
+  - 375×812: 5 lines, hero stays 600 tall, chevron 57 px above the hero's bottom edge (71 with the old text).
+  - 360×780: 6 lines, chevron 42 px from the bottom.
+  - 720 and 1100: 4 lines, with the figure dimmed under the vignette as designed.
+  - No horizontal overflow at any width.
+
+**Checks:**
+- Build clean (0/0/0, 8 pages).
+- At 1440 all three home card descriptions wrap to three lines.
+- The MyFoodways and Food Save headers and meta descriptions carry the new summaries. The MyFoodways outcomes are in the new order, and both role lines read "Product designer · ...".
+- No em or en dashes and no straight apostrophes in any changed line.
+
+**Live check:** the deploy succeeded. Checked with curl, not the browser, to keep Umami clean:
+- Home, About and all three case pages return 200.
+- Home carries the new subtitle, with no trace of the old one.
+- About has the new "How I work" paragraph and no "For most of my career".
+- Team Files has the "part-time ... full-time" sentence.
+- MyFoodways and Food Save carry the new summaries in the meta description, "Product designer" with no "UX/UI designer" left, and the expected outcomes (MyFoodways in the new order).
+- All three covers are `loading="eager"` `fetchpriority="high"`, and the MyFoodways and Food Save cover files return 200 as webp with the same hashes as the local build.
 
 ## What changed in this session (2026-10-22, session 35, continued: Food Save cover)
 
