@@ -1,8 +1,10 @@
 # Handoff
 
-Last updated: 2026-10-27 (session 36)
+Last updated: 2026-10-27 (session 37)
 
-**Status at session close (session 36): one commit on `main`, pushed (`ad62ba2`) and live on migueljss.com: Phase 1 copy from the October 26 portfolio review (home hero subtitle, MyFoodways and Food Save summaries and role, MyFoodways outcomes, About "How I work", a Team Files Role sentence) and eager, high-priority case study covers.** Build clean. The hero subtitle went through two versions; the first collided with the portrait between 1101 and 1229 px wide, so Miguel shortened the text instead of changing hero layout values (details in the session 36 entry below). **Then, also live (`c0f3246`):** a new CV export on the site, stamped with `?ref=cv` (see "session 36, continued" below).
+**Status at session close (session 37): seven commits on `main`, pushed (`746aed7..ff519cd`) and live on migueljss.com: Phase 3 of the October 26 review (new section headings on all three case studies) and an "On this page" jump list on every case study.** Build clean, deploy succeeded, live pages checked with curl. Details in the session 37 entry below.
+
+**Previous status (session 36): one commit on `main`, pushed (`ad62ba2`) and live on migueljss.com: Phase 1 copy from the October 26 portfolio review (home hero subtitle, MyFoodways and Food Save summaries and role, MyFoodways outcomes, About "How I work", a Team Files Role sentence) and eager, high-priority case study covers.** Build clean. The hero subtitle went through two versions; the first collided with the portrait between 1101 and 1229 px wide, so Miguel shortened the text instead of changing hero layout values (details in the session 36 entry below). **Then, also live (`c0f3246`):** a new CV export on the site, stamped with `?ref=cv` (see "session 36, continued" below).
 
 **Previous status (session 35): one commit on `main`, pushed (`48336a3`) and live on migueljss.com: a new brand paragraph closing About's "How I work", a What's new paragraph in the middle of Team Files "Beyond the product", and the Team Files "Company" heading renamed "From TOPDOX to ikuTeam".** No case study has a "Company" section anymore. A follow-up commit (`dd99992`, also live, checked with curl) added serial commas to the About paragraph. Build clean. Details in the session 35 entry below.
 
@@ -17,6 +19,38 @@ Last updated: 2026-10-27 (session 36)
 **Previous status (session 32): case study header outcomes, the "active installations" copy fix, an iPhone fix for closing the zoom dialog, and a TF-05 re-export were committed straight to `main` and pushed, at Miguel's request.** GitHub Pages deploys on push. Details in the session 32 entry below.
 
 **Earlier status (session 31): [PR #10](https://github.com/Dgigiu/mj-portfolio/pull/10) (`zoom-tall-images`) merged to `main` as `1794a7d` and live on migueljss.com.** It makes the zoom dialog readable for tall figures (details below). Deploy succeeded; the live Team Files page carries the new markup, size attributes, inline script and CSS (checked with curl, not the browser, to keep the visit out of Umami). The `zoom-tall-images` branch was deleted locally and on origin after the merge. Earlier in session 29, [PR #8](https://github.com/Dgigiu/mj-portfolio/pull/8) (shared folder authentication and narrow views) and [PR #9](https://github.com/Dgigiu/mj-portfolio/pull/9) (TF renumbering) were merged and are live, and their branches deleted. Still open for Miguel: whether TF-05 and TF-06 need larger text inline (readability notes below); this PR addresses the zoomed view, not the inline one.
+
+## What changed in this session (2026-10-27, session 37: October 26 review, Phase 3, and the jump list)
+
+Miguel's approved copy verbatim, with typographic apostrophes. Commits, in order:
+
+1. **`e487292` Team Files headings.** H2s rewritten as claims, the Strategy heading dropped (its paragraph now closes "Download, edit, re-upload, repeat"), a new H2 "A design system engineers built from" before the design system paragraph, and six H3s inside "What long tenure lets you notice" (the first sits right under the H2 on purpose). The 2023 UX review has a new goal sentence ("The goal was to find what could be clearer, easier to use, and more accessible.") and a paragraph break before "It’s also when I started pulling more of Atlassian’s own design system". The "Key learnings" list is gone; "Most design work is measured in sprints." follows the Decadis quote.
+2. **`a6f8b86` Jump list** ([JumpList.astro](src/components/JumpList.astro), wired in [CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro) and [`[slug].astro`](src/pages/work/[slug].astro), which now passes depth-2 `headings` from `entry.render()`). Documented in DESIGN.md (Components, Motion) and the CLAUDE.md motion list.
+3. **`c644f51` Team Files:** first H2 is "Everyone sees the latest version"; "Beyond the product" restored (it had briefly been "From Jira panel to conference booth").
+4. **`3691eb5` MyFoodways:** new H2s; Solution strategy merged into "Making the mission practical" without its "My strategy:" list; "Four lessons" for the learnings H3; a shorter Accessibility advocacy bullet.
+5. **`e1e0827` Food Save:** new H2s, "Four lessons", and the "These conclusions reinforced..." sentence cut so the research section ends on the findings list.
+6. **`864dd89` Food Save:** closing H2 shortened to "Smaller, and better for it" (one line in the rail).
+7. **`ff519cd` Tokens:** the `#6f6f6f` contrast note corrected from 4.96:1 to 4.81:1 on `#fbfaf6` (measured; still AA). DESIGN.md carried the same figure and was corrected too.
+
+No links anywhere in `src/` or `public/` pointed at the old anchors.
+
+**Current H2s** (the jump list shows these word for word):
+- Team Files (11): Everyone sees the latest version · From TOPDOX to ikuTeam · Role · Download, edit, re-upload, repeat · The 2023 UX review · What long tenure lets you notice · Layouts, automation and admin settings · A design system engineers built from · Limits surfaced before build · Beyond the product · Keeping it coherent while it grows
+- MyFoodways (8): Cooking from what’s in the fridge · Role · Recipes that don’t fit real life · Making the mission practical · Search, profile, recipes and challenges · Contrast versus a fixed brand · Scoping honestly across time zones · Good design isn’t enough on its own
+- Food Save (9): Ready-to-use measures for busy kitchens · Role · Food waste in a low-margin business · Designing for the decision-makers · From competition to practical tool · A library kitchens could act on · Stepping in as interim PM · Part of a pair · Smaller, and better for it
+
+**Jump list, as approved:**
+- **Rail from 1024px:** `.case-body` becomes a grid (720 prose column, 40px gap, rail in the remaining ~184px). The rail spans both grid rows, so it sticks at 96px (same as the h2 `scroll-margin-top`, so a jumped-to heading lines up with the rail label) and stops where the prose ends, 64px above "More case studies". On short windows it scrolls itself (`max-height` + `overflow-y: auto`, padded so the hung marker and focus rings aren't clipped).
+- **Look:** "On this page" in `.mj-label`; links Geist 14px `--fg-secondary`, `--fg-primary` on hover, `text-wrap: balance`, hyphenated words kept whole in a `.nobreak` span (otherwise balance broke "re- / upload"). Current section: `--accent` text plus the prose lists' cobalt en-dash hung in the gutter, easing in over 120ms (opacity and a 4px slide).
+- **Current section logic:** IntersectionObserver whose root runs from 100000px above the viewport down to a line 40% down it, so a heading flips state exactly when it crosses the line, even on a long instant scroll (a plain band missed those). The rects pick the last h2 above the line; it gets `aria-current="location"`. Rail mode only.
+- **Below 1024px:** a collapsed "On this page" row between hairlines at the top of the body (`aria-expanded` button, chevron rotates), 44.3px tap rows (14px at `--leading-normal` + `--space-3` padding), toggle row 48px. No current-state styling. Without JS (no `html.js`) the label shows and the list is always open.
+- **Analytics:** each link has `data-umami-event="Jump link"`, `data-umami-event-case`, `data-umami-event-section` (heading slug).
+- **Side changes:** `.figure.bleed` extends left only while the rail shows (no case uses bleed today; tested on a temporary figure); h3 anchors get the same 96px `scroll-margin-top` as h2s.
+- **Contrast on the canvas:** items `#555` 7.14:1, label and toggle `#6f6f6f` 4.81:1, current `--accent` 5.24:1 (the tokens comment still says 5.21:1 for the accent; left as is).
+
+**Checks (dev, headless Chrome over DevTools at 2x):** active state correct at 1440, 1280, 1100 and 1024; collapsed at 1023 and below; a click lands the heading at 96px with the rail label at 100px; keyboard focus rings whole in the rail and on the toggle; zoom dialog backdrop covers the rail; `data-read-marker` still sits at the end of the prose (grid row 2); reduced motion zeroes the transitions; no horizontal overflow at any width tested. Miguel reviewed screenshots before push. Method for next time: launch Chrome with `--headless=new --remote-debugging-port`, drive it with Node's built-in WebSocket (`Emulation.setDeviceMetricsOverride`, `Page.navigate`, `Runtime.evaluate` to scroll, `Page.captureScreenshot`), and remove `astro-dev-toolbar` before capturing. The in-app browser pane doesn't run IntersectionObserver callbacks while hidden, so it's unreliable for this.
+
+**Live check (curl, not the browser, to keep Umami clean):** deploy succeeded. All three case pages return 200; on each, the built H2 order matches the lists above and the jump list links match the H2s with correct Umami attributes (11, 8, 9). New copy present and old copy absent (Key learnings, My strategy, Solution strategy, the old accessibility bullet, the cut Food Save sentence, the replaced headings). All referenced `/_astro` CSS and JS return 200; the jump list CSS ships in the stylesheet and its script is inlined as a module on each page, including the observer fix.
 
 ## What changed in this session (2026-10-27, session 36, continued: CV update)
 
@@ -589,11 +623,11 @@ Per-session detail beyond this lives in the git log; commit messages carry the s
 - **Stack**: Astro 5 + MDX + sitemap, TypeScript strict, plain CSS with design system tokens, self-hosted Aleo + Geist + Geist Mono (variable woff2 in `src/assets/fonts/`)
 - **Routes**: `/`, `/about`, `/contact`, `/work/team-files`, `/work/myfoodways`, `/work/food-save`
 - **Design system**: Claude Design handoff v1 + v2 delta both applied. Paper/ink/single-accent palette (accent `#155fe8` after the AA darkening). Aleo serif for prose, Geist sans for all UI/display. Tokens in [src/styles/tokens.css](src/styles/tokens.css).
-- **Components**: Nav, Footer, CaseStudyCard (`compact` variant), Figure, CompareImages, Quote, Stat
+- **Components**: Nav, Footer, CaseStudyCard (`compact` variant), Figure, CompareImages, Quote, Stat, JumpList (case study "On this page", session 37)
 - **Layouts**: BaseLayout (head, OG meta, font preloads, zoom dialog, staging noindex), CaseStudyLayout (header block + cover image + body + "More case studies")
 - **Pages**: Home (full-bleed cobalt hero with color portrait cutout + card stack), About (portrait + intro, prose below), Contact (channels list)
 - **Assets**: wide color portrait cutout at `src/assets/brand/miguel-portrait-color-wide.png` (Home hero), b&w landscape portrait at `src/assets/brand/miguel-portrait.png` (About), case study images under `src/assets/case-studies/`, design system bundle at `docs/design_handoff_design_system/` (gitignored staging)
-- **Motion** (session 9, + hero exit veil session 12): hero portrait scroll parallax, hero scroll exit veil, faint card reveals, zoom dialog scale, card hover lift, nav underline ease-in. Policy in the design brief's Motion section.
+- **Motion** (session 9, + hero exit veil session 12): hero portrait scroll parallax, hero scroll exit veil, faint card reveals, zoom dialog scale, card hover lift, nav underline ease-in, jump list current-section marker ease-in (session 37). Policy in the design brief's Motion section.
 
 ## Open items / look at these next
 
