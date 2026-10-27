@@ -2,7 +2,7 @@
 
 Last updated: 2026-10-27 (session 36)
 
-**Status at session close (session 36): one commit on `main`, pushed (`ad62ba2`) and live on migueljss.com: Phase 1 copy from the October 26 portfolio review (home hero subtitle, MyFoodways and Food Save summaries and role, MyFoodways outcomes, About "How I work", a Team Files Role sentence) and eager, high-priority case study covers.** Build clean. The hero subtitle went through two versions; the first collided with the portrait between 1101 and 1229 px wide, so Miguel shortened the text instead of changing hero layout values (details in the session 36 entry below).
+**Status at session close (session 36): one commit on `main`, pushed (`ad62ba2`) and live on migueljss.com: Phase 1 copy from the October 26 portfolio review (home hero subtitle, MyFoodways and Food Save summaries and role, MyFoodways outcomes, About "How I work", a Team Files Role sentence) and eager, high-priority case study covers.** Build clean. The hero subtitle went through two versions; the first collided with the portrait between 1101 and 1229 px wide, so Miguel shortened the text instead of changing hero layout values (details in the session 36 entry below). **Then, also live (`c0f3246`):** a new CV export on the site, stamped with `?ref=cv` (see "session 36, continued" below).
 
 **Previous status (session 35): one commit on `main`, pushed (`48336a3`) and live on migueljss.com: a new brand paragraph closing About's "How I work", a What's new paragraph in the middle of Team Files "Beyond the product", and the Team Files "Company" heading renamed "From TOPDOX to ikuTeam".** No case study has a "Company" section anymore. A follow-up commit (`dd99992`, also live, checked with curl) added serial commas to the About paragraph. Build clean. Details in the session 35 entry below.
 
@@ -17,6 +17,16 @@ Last updated: 2026-10-27 (session 36)
 **Previous status (session 32): case study header outcomes, the "active installations" copy fix, an iPhone fix for closing the zoom dialog, and a TF-05 re-export were committed straight to `main` and pushed, at Miguel's request.** GitHub Pages deploys on push. Details in the session 32 entry below.
 
 **Earlier status (session 31): [PR #10](https://github.com/Dgigiu/mj-portfolio/pull/10) (`zoom-tall-images`) merged to `main` as `1794a7d` and live on migueljss.com.** It makes the zoom dialog readable for tall figures (details below). Deploy succeeded; the live Team Files page carries the new markup, size attributes, inline script and CSS (checked with curl, not the browser, to keep the visit out of Umami). The `zoom-tall-images` branch was deleted locally and on origin after the merge. Earlier in session 29, [PR #8](https://github.com/Dgigiu/mj-portfolio/pull/8) (shared folder authentication and narrow views) and [PR #9](https://github.com/Dgigiu/mj-portfolio/pull/9) (TF renumbering) were merged and are live, and their branches deleted. Still open for Miguel: whether TF-05 and TF-06 need larger text inline (readability notes below); this PR addresses the zoomed view, not the inline one.
+
+## What changed in this session (2026-10-27, session 36, continued: CV update)
+
+- **CV PDF replaced** with Miguel's new Pages export (Dropbox, "2026-01 Portfolio MJ + AI"), re-stamped with `npm run cv -- cv --in-place`, committed as `c0f3246` and live. The deploy succeeded, and a curl fetch of `/miguel-jesus-cv.pdf` returns 200 `application/pdf`, byte-identical to the local file (same SHA-256).
+- **Text changes against the previous site copy** (extracted with PDFKit and diffed):
+  - The summary says "with over 9,000 active installations" (was "used by over 9,000 companies"), matching the site rule.
+  - "full-time" is now hyphenated in the ikuTeam and Foodways entries.
+  - Nothing else changed: still 2 pages, and the email, LinkedIn and portfolio links are intact.
+- After stamping, the only difference from the export is the portfolio link target (`https://migueljss.com/?ref=cv`).
+- Per-application copies in `docs/Applications/` were not regenerated (the most recent are duckduckgo and synthesia, 2026-10-26); new `/cv-stamp` runs use this version.
 
 ## What changed in this session (2026-10-27, session 36: October 26 review, Phase 1 copy)
 
