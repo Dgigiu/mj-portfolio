@@ -139,7 +139,7 @@ A warm-neutral field in two families (paper and ink) with one chromatic voice.
 - **Paper Sunken** (#ebe9e2) and **Paper Edge** (#dcd9d0): deeper wells and subtle borders.
 - **Ink** (#181818): primary text. Near-black, never pure black.
 - **Ink Secondary** (#555555): supporting text, card summaries.
-- **Ink Tertiary** (#6f6f6f): captions, meta lines, labels. The lightest gray allowed to carry readable text (4.96:1).
+- **Ink Tertiary** (#6f6f6f): captions, meta lines, labels. The lightest gray allowed to carry readable text (4.81:1 on the canvas).
 - **Ink Muted** (#8d8d8d): decorative only. Hairlines, hover underlines, ornament.
 - **Border Strong** (#b8b8b8): emphasized rules and disabled text.
 
