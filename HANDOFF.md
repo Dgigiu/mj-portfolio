@@ -1,6 +1,8 @@
 # Handoff
 
-Last updated: 2026-10-27 (session 37)
+Last updated: 2026-10-27 (session 38, hero copy)
+
+**Latest (`de07729`, live): home hero copy.** `.hero-title-body` is now "Senior Product Designer for SaaS and mobile" (no full stop) and the subtitle starts "I design products from first sketch to first release and beyond, working day to day with engineering and product." followed by the unchanged Team Files sentence. No layout changes. Measured in dev: H1 second line 2 lines at 375, 1101 and 1440 px; subtitle 4 lines at 1101 and 1440 (6 at 375); chevron 56 px from the hero's bottom edge at 375. The portrait clearance (24 px closest) was not re-measured here, since the portrait is a full-bleed image; subtitle text right edge is 581 px at 1101 and 755 px at 1440. Build clean, deploy succeeded, live copy confirmed with curl (not the browser).
 
 **Status at session close (session 37): seven commits on `main`, pushed (`746aed7..ff519cd`) and live on migueljss.com: Phase 3 of the October 26 review (new section headings on all three case studies) and an "On this page" jump list on every case study.** Build clean, deploy succeeded, live pages checked with curl. Details in the session 37 entry below.
 
