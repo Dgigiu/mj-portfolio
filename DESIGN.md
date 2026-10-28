@@ -167,6 +167,7 @@ A warm-neutral field in two families (paper and ink) with one chromatic voice.
 - **Headline** (600, 2.5rem, 1.1): page h1 (case study titles, About, Contact).
 - **Title** (600, 1.625rem, 1.25): section h2 and card titles. Sub-titles drop to 500 at 1.375rem.
 - **Body** (400, 1.0625rem, 1.7): all prose in Aleo, on a 720px measure (about 70ch). `text-wrap: pretty`.
+- **Prose rhythm:** blocks sit 24px apart. Headings take 48px above an h2 and 40px above an h3, and 12px below either, so each heading belongs to the text it introduces. An h3 directly under its h2 sits 12px below it.
 - **Label** (500, 0.75 to 0.8125rem, 0.08em, uppercase): eyebrows and meta labels in Ink Tertiary; the accent version is reserved for the case study header block.
 
 ### Named Rules

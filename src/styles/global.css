@@ -110,6 +110,21 @@ hr {
   margin-top: var(--space-6);
 }
 
+/* Headings sit closer to the text they introduce than to the section
+   before, so each reads as the start of what follows. An h3 right under
+   its h2 stays tight too (the last rule wins on equal specificity). */
+.prose > * + h2 {
+  margin-top: var(--space-12);
+}
+
+.prose > * + h3 {
+  margin-top: var(--space-10);
+}
+
+.prose > :is(h2, h3) + * {
+  margin-top: var(--space-3);
+}
+
 .prose p {
   line-height: var(--leading-prose);
 }
