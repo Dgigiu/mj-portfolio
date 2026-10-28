@@ -224,7 +224,8 @@ Flat by default. The canvas, text, and most surfaces share one plane; depth is r
 - Screenshots sit in 8px-radius frames on Paper Subtle with the resting shadow, full prose width or full bleed. Captions in Geist 0.8125rem Ink Tertiary. Click opens the zoom dialog (fade + scale from 0.97).
 
 ### Blockquote / Quote
-- Aleo at 1.1875rem, Ink, with a 2px Working Cobalt left rule and 20px inset. One of only two places the accent forms a line (the other is the active nav underline).
+- The `Quote` component (figure, blockquote, figcaption). Aleo at 1.375rem (1.1875rem up to 720px wide), 1.6 leading, Ink, with a 2px Working Cobalt left rule and 24px inset. The opening quotation mark hangs, so the first words line up with the lines below. 40px above and below, a step apart from the 24px prose rhythm. One of only two places the accent forms a line (the other is the active nav underline).
+- Attribution in Geist 0.875rem: the person in Ink 500, then a center dot and the source or role in Ink Secondary, aligned with the quote text.
 
 ### Inline Code
 - Geist Mono at 0.92em on a Paper Subtle chip, 4px radius. Code blocks invert: Ink background, Warm Paper text.

@@ -1,39 +1,72 @@
 ---
 interface Props {
+  /** Who said it, e.g. "Frank Leclerc, Decadis". Set in Ink. */
   attribution?: string;
+  /** Where or in what role, e.g. "Atlassian Marketplace review, 2023". */
+  source?: string;
 }
 
-const { attribution } = Astro.props;
+const { attribution, source } = Astro.props;
 ---
 
 <figure class="quote">
   <blockquote>
     <slot />
   </blockquote>
-  {attribution && <figcaption>{attribution}</figcaption>}
+  {attribution && (
+    <figcaption>
+      <span class="who">{attribution}</span>
+      {source && <span class="sep" aria-hidden="true"> · </span>}
+      {source && <span class="source">{source}</span>}
+    </figcaption>
+  )}
 </figure>
 
 <style>
   .quote {
-    margin: var(--space-8) 0;
+    margin: var(--space-10) 0;
   }
 
+  /* A step up from body text, so a quote reads as someone else's voice
+     inside the case. The cobalt rule is one of the accent's two lines. */
   blockquote {
     border-left: var(--rule-bold) solid var(--accent);
-    padding-left: var(--space-5);
-    font-size: var(--text-lg);
-    line-height: var(--leading-relaxed);
+    padding-left: var(--space-6);
     color: var(--fg-primary);
   }
 
+  /* Overrides the global p size, which otherwise pins quotes to body size. */
+  blockquote :global(p) {
+    font-size: var(--text-xl);
+    line-height: var(--leading-relaxed);
+    text-wrap: pretty;
+  }
+
+  /* One step smaller on phones, so a long quote doesn't fill the screen. */
+  @media (max-width: 720px) {
+    blockquote :global(p) {
+      font-size: var(--text-lg);
+    }
+  }
+
+  /* Hang the opening quotation mark so the first words line up with the
+     lines below (quotes in the cases open with “). 0.4em is the mark's
+     advance width in Aleo. */
+  blockquote :global(p:first-child) {
+    text-indent: -0.4em;
+  }
+
   figcaption {
+    margin-top: var(--space-4);
+    padding-left: calc(var(--rule-bold) + var(--space-6));
     font-family: var(--font-sans);
-    font-size: var(--text-2xs);
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+    color: var(--fg-secondary);
+  }
+
+  .who {
+    color: var(--fg-primary);
     font-weight: var(--weight-medium);
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-label);
-    color: var(--fg-tertiary);
-    margin-top: var(--space-3);
-    padding-left: var(--space-5);
   }
 </style>
