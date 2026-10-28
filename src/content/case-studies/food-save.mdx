@@ -40,7 +40,7 @@ Kitchen managers knew they should reduce waste, but didn’t know how to do it p
 
 ## Designing for the decision-makers
 
-The primary users we designed for were head chefs and kitchen managers. They decided which measures to adopt and communicated them to their teams. The goal was not to put another app in everyone’s hands in the kitchen, but to support decision-makers with clear, usable guidance they could translate into procedures.
+We designed for head chefs and kitchen managers, not the whole kitchen: they decided which measures to adopt and communicated them to their teams. The goal was not to put another app in everyone’s hands in the kitchen, but to support decision-makers with clear, usable guidance they could translate into procedures.
 
 In interviews and informal conversations, a few patterns stood out:
 
@@ -50,7 +50,7 @@ In interviews and informal conversations, a few patterns stood out:
 
 ## From competition to practical tool
 
-Early on, the idea was to create a competition between kitchens, where teams would implement measures and publicly share their results. On paper, this sounded engaging. In practice, feedback from kitchen managers suggested the opposite: they did not see themselves using a competitive app or spending time publishing results. They wanted knowledge and concrete suggestions, not the social layer.
+We dropped the competition between kitchens that the concept started with, because the managers we talked to didn’t want it. The original idea had teams implement measures and publicly share their results. On paper, this sounded engaging. In practice, managers did not see themselves using a competitive app or spending time publishing results. They wanted knowledge and concrete suggestions, not the social layer.
 
 Given our limited budget, investing in social and competitive features would have meant less time and money for the core experience. I shared these insights with the Swiss team, and together we shifted the concept from a “food challenge” app to a Food Save app focused on:
 
@@ -64,9 +64,9 @@ It was a clearer, smaller product, and a better fit for what managers actually t
 
 ### Measure library
 
-The Swiss team provided the content: a structured set of measures and categories grounded in their expertise and the Food Save methodology. My role was to design how this information would work on a phone and be navigated in a busy work context.
+I designed the measure library around familiar mobile patterns, so it would feel natural on both iOS and Android from a single shared build. The Swiss team provided the content: a structured set of measures and categories grounded in their expertise and the Food Save methodology. My role was to design how this information would work on a phone and be navigated in a busy work context.
 
-I created a measure library that followed familiar mobile patterns so it would feel natural on both iOS and Android from a single shared build. Users could browse by category and quickly see which measures might be relevant to their kitchen type. Each measure was presented in a compact, scannable way, focusing on what to do, how to do it, and, where relevant, extra details such as examples or recipe ideas to use up specific ingredients. Each measure could also be shared directly with a colleague, so an idea worth trying wasn’t stuck with whoever happened to find it first.
+Users could browse by category and quickly see which measures might be relevant to their kitchen type. Each measure was presented in a compact, scannable way, focusing on what to do, how to do it, and, where relevant, extra details such as examples or recipe ideas to use up specific ingredients. Each measure could also be shared directly with a colleague, so an idea worth trying wasn’t stuck with whoever happened to find it first.
 
 <Figure
   src={library}
@@ -82,7 +82,7 @@ I created a measure library that followed familiar mobile patterns so it would f
 
 ### To-do list for implementation
 
-Once we dropped the competition and social features, we had some development budget left. I proposed using it to support implementation directly with a checklist.
+I proposed spending the development budget that dropping the competition freed up on a checklist that supported implementation directly.
 
 Instead of just reading measures and hoping to remember them, kitchen managers could:
 
@@ -100,7 +100,7 @@ This small addition turned the app from a static library into a light planning t
 
 ### Home
 
-Home was the app’s entry point from the first release. It combined two kinds of content: measures suggested from what a manager had already completed, and collections the content team curated by hand for timely or seasonal ideas. It gave the app somewhere live to open to, instead of sending returning users straight back to a huge list of measures.
+Home gave returning users somewhere live to open to, instead of sending them straight back to a huge list of measures. From the first release, it combined two kinds of content: measures suggested from what a manager had already completed, and collections the content team curated by hand for timely or seasonal ideas.
 
 <Figure
   src={home}
@@ -114,21 +114,15 @@ I followed United Against Waste’s branding, as defined in the primary color, t
 
 ## Stepping in as interim PM
 
-I worked asynchronously with the Swiss team and with João, using annotated Sketch files and written specs for handoff.
+While covering for João, I recommended a single shared build over native iOS and Android apps. I had sent the same brief to several studios to pressure-test our options. One made a strong case for native builds, and as a designer I wanted to push for it, since native usually gives the better feel: speed, system integration, the small things users notice. But the performance gain was too small to justify the cost and timeline, and a single shared build was the only way to ship on time and on budget. I brought my recommendation to the Swiss team and we decided together: Brief, the studio that had built MyFoodways, where our shared understanding of the Swiss and multi-platform requirements still made them the right fit.
 
-While covering for João, I sent the same brief to several studios to pressure-test our options. One made a strong case for native iOS and Android builds, and as a designer I wanted to push for it, since native usually gives the better feel: speed, system integration, the small things users notice. But the performance gain was too small to justify the cost and timeline, and a single shared build was the only way to ship on time and on budget. I brought my recommendation to the Swiss team and we decided together: Brief, the studio that had built MyFoodways, where our shared understanding of the Swiss and multi-platform requirements still made them the right fit.
-
-The same user conversations that reshaped Food Save also pointed me to the implementation that kept the project within budget. I kept the developers moving, reported to stakeholders, and held my design work in parallel. It worked because João and I got on well, and because I put in the effort to keep everyone in the loop rather than treating the cover as someone else’s job.
+I kept the developers moving, reported to stakeholders, and held my design work in parallel, working asynchronously with the Swiss team and with João through annotated Sketch files and written specs. It worked because João and I got on well, and because I put in the effort to keep everyone in the loop rather than treating the cover as someone else’s job.
 
 ## Part of a pair
 
-Food Save did not ship alone. Alongside it, I designed the Waste Tracker, a companion app where kitchen staff logged the weight of the food they threw out at the end of each day. United Against Waste launched the two together in June 2019 as the Food Save Starter Kit: one app for ideas, the other for accountability. Food Save suggested measures to adopt; the Waste Tracker showed whether waste actually dropped after putting them in place.
+Alongside Food Save, I designed the Waste Tracker, a companion app where kitchen staff logged the weight of the food they threw out at the end of each day. United Against Waste launched the two together in June 2019 as the Food Save Starter Kit: one app for ideas, the other for accountability. Food Save suggested measures to adopt; the Waste Tracker showed whether waste actually dropped after putting them in place.
 
-Where Food Save and MyFoodways were text and image driven, the Waste Tracker was a data product, which made it a different design problem. Most of the setup happened off the screen. Each kitchen had a Waste Tracker Lead who set up one consistent container per category it chose to track and labeled each one clearly. We provided printable A4 labels that reused the app’s colors and icons so the link between bin and screen was obvious, though kitchens were free to label their own way as long as the categories were unmistakable.
-
-The labels were one part of a setup kit, in German, French, and English. An equipment guide covered containers and scales, a briefing walked the lead through preparing the kitchen and the first measurement, and a shorter one told the rest of the team why waste mattered and what their role was. Kitchen logistics didn’t always allow a dedicated device by the bins, so each briefing came in two versions: one for logging in the app, and one for a paper form the lead entered into the app at the end of the period. Before the first measurement, the app asked for a one-off check: labeled containers, a set of scales, and a briefed team.
-
-From there, staff entered weights on mobile and saw their own visualizations, and a password-protected web report let them share the same views with managers. I also designed the Insights tab to point back to Food Save, recommending measures for the categories a kitchen wasted most. I owned the full flows, the data visualizations, and the design of the setup kit, working within Foodways branding while pushing it where the context called for it.
+Where Food Save and MyFoodways were text and image driven, the Waste Tracker was a data product, and most of its setup happened off the screen. Printable labels reused the app’s colors and icons, so the link between each bin and its category on screen was obvious. A setup kit in German, French, and English briefed each kitchen’s Waste Tracker Lead and the rest of the team, and because kitchen logistics didn’t always allow a device by the bins, each briefing also came in a version for a paper form the lead entered into the app later. In the app, a one-off check came first: labeled containers, a set of scales, and a briefed team. From there, staff entered weights and saw their own visualizations, a password-protected web report let them share the same views with managers, and the Insights tab pointed back to Food Save, recommending measures for the categories a kitchen wasted most. I owned the full flows, the data visualizations, and the design of the setup kit.
 
 <Figure
   src={wasteTracker}
@@ -149,13 +143,6 @@ That was exactly the point of making waste visible enough to act on.
 Once Food Save was running in real kitchens, the feedback confirmed the core bet. A bakery professional who used it, Jens Jung, put it plainly: the information and suggestions were “clear and easy to understand.” That was the whole aim, to turn a broad sustainability goal into steps a busy kitchen could grasp and act on.
 
 Food Save was eventually discontinued. Like a lot of commissioned sustainability work, its lifespan was tied to the program behind it rather than its own usage.
-
-### Four lessons
-
-- **User research reshapes concepts:** Kitchen managers rejected competition, leading to a more practical product;
-- **Simple features have impact:** The checklist turned a library into an actionable planning tool;
-- **Budget constraints improve focus:** Limited resources forced prioritization of what really mattered to users;
-- **Cross-role flexibility:** Covering product during the PM’s leave, from vendor selection to a native-versus-unified build decision, sharpened how I weigh design ideals against real constraints.
 
 ### Reflections
 
