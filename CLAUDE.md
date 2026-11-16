@@ -1,10 +1,10 @@
 # Project instructions
 
-This is Miguel Jesus's personal portfolio site. It's a small Astro site whose purpose is showcasing product case studies for a senior in-house design job search. It currently deploys to `https://dgigiu.github.io/mj-portfolio/`; the move to the final domain (`migueljss.com`) happens once content settles (steps in HANDOFF.md).
+This is Miguel Jesus's personal portfolio site. It's a small Astro site whose purpose is showcasing product case studies for a senior in-house design job search. It is live at `https://migueljss.com`.
 
 ## Start every session by reading
 
-1. **[HANDOFF.md](HANDOFF.md)** — what landed in the last session and what's open. Always read first.
+1. **[HANDOFF.md](HANDOFF.md)** — what landed in the last session and what's open. Always read first. Older session notes live in [docs/handoff-archive.md](docs/handoff-archive.md); read them only when needed.
 2. **[docs/portfolio-brief-claude-code.md](docs/portfolio-brief-claude-code.md)** — implementation brief (stack, structure, deploy)
 3. **[docs/portfolio-brief-claude-design.md](docs/portfolio-brief-claude-design.md)** — visual direction brief
 
@@ -20,7 +20,7 @@ When the work in the current session changes the state of the project meaningful
 - Astro 5 + MDX + sitemap, TypeScript strict
 - Plain CSS with custom-property tokens: no Tailwind, no CSS-in-JS
 - Self-hosted variable fonts (Aleo, Geist, Geist Mono) as woff2 in `src/assets/fonts/`, declared in `tokens.css`
-- GitHub Pages on push to `main`, currently under the `/mj-portfolio` base path (no CNAME yet; final domain pending)
+- GitHub Pages on push to `main`, served at `migueljss.com` (`public/CNAME`, `site` in `astro.config.mjs`, no base path)
 
 ## Where things live
 

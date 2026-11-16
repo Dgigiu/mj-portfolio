@@ -1,0 +1,685 @@
+# Handoff archive
+
+Older session notes moved out of `HANDOFF.md` on 2026-11-16 (session 42), unchanged. Read only when you need the detail behind something. The first three paragraphs were the top entries of `HANDOFF.md` at the time; everything after them is the old body from the session 40 entry down to just above "Open items".
+
+**Latest (session 41): a third `/pd-portfolio-review` of migueljss.com, 88/100, "ready to send". No code changed.** Independent pass, browsed in the in-app browser with Umami opted out, at 1440 and 375 px (no overflow on any page). No red flags counted; length marked borderline, not present (Team Files about 2,285 prose words, 20.7 phone screens; MyFoodways 1,924, 18.3; Food Save 1,559, 15.5). Ranked fixes, all open: (1) CV and cases disagree: CV says ikuTeam changes were "validated through interviews, usability tests, and internal beta releases" but Team Files shows only internal testing; CV says "Designed MyFoodways end to end" but the case says the prototype and visual style predated Miguel; (2) say who ran the MyFoodways research and focus groups and the Food Save interviews, and how many; (3) outcome gaps: Food Save has no kitchen count or Waste Tracker result, Team Files CTA experiments have no result; (4) split the 170-word Waste Tracker paragraph and the interim PM sentence that merges the build and studio decisions; (5) optional: a short miPlay case from `docs/Case Studies/cs-board-game-app.md`. LinkedIn was behind the auth wall again.
+
+**Then (session 41, uncommitted): the approved fixes are applied on `main`, not committed or pushed.** Answers were collected in a Claude Docs doc, "Portfolio fixes: what I need from you" (https://claude.ai/artifact/7xpo3gXXFmFCdrJEnr3Qz7). Site edits: About says "refreshed Doist’s own brand" (was "rebranded Doist itself", to match the CV); MyFoodways research paragraph credits Laura's focus groups and Miguel's part (session materials, turning findings into UI and UX updates); Food Save opens its findings with "I interviewed three people from hotel and restaurant kitchens, starting with paper mockups", the interim PM sentence is now "I brought the Swiss team my plan: a shared build by Brief… They approved it.", the Waste Tracker paragraph is split in two (96 and 73 words), and the closing section adds "I didn’t see usage or waste data after launch…"; Team Files "Beyond the product" adds "We tracked clicks from each button to the Marketplace. Saying it was free to start seemed to help." Build clean; checked in dev at 375 px (no overflow). The Food Save interim PM paragraph is still 128 words. **CV (new Pages export, stamped with `npm run cv -- cv --in-place`, 2 pages, link `https://migueljss.com/?ref=cv`):** summary drops "validate changes with real users"; ikuTeam bullet ends "validated changes through internal testing and beta releases."; Foodways bullet drops "end to end"; interim PM bullet ends "to the Swiss team, who approved it." A first export had double full stops after "beta releases" and "already had" and was re-exported. Per-application copies in `docs/Applications/` were not regenerated. Fix 5 (miPlay case) is deferred as its own piece of work. Miguel prefers minimal wording: no added detail, no "sole designer" framing.
+
+**Latest (session 40, continued: five commits on `main`, pushed `2a80c6a..40ff2b9`): fixes from a follow-up `/pd-portfolio-review` (90/100), prose heading spacing, a Quote component restyle, and a shorter About "Outside of work".** Team Files now has 8 H2s (was 11) and MyFoodways 7 (was 8), so their jump lists are shorter; the Umami jump-link section slugs for the removed headings no longer fire. Build clean, deploy succeeded (build and deploy jobs green). Live check with curl (not the browser): About and all three case pages return 200; jump lists carry 8, 7 and 9 links; the new copy is present and the removed sections, lessons and About lines are gone; the quotes render as `figure.quote` with their attributions; the built stylesheet carries `.prose>*+h2{margin-top:var(--space-12)}`. Details in "session 40, continued" below.
+
+## What changed in this session (2026-10-28, session 40, continued: follow-up review, spacing, quotes)
+
+**Follow-up review** (same day, after the first fixes went live): 90/100. A first look works now; a full read was still long (Team Files about 2,450 words, roughly 21 phone screens). New findings: facts repeated between About and Team Files, four Team Files sections with no decision of their own, Food Save without the decision-first pass, and double recaps ("Four lessons" plus "Reflections") in MyFoodways and Food Save. All three fixes are done:
+- **`5429b80` Team Files and About.** The TOPDOX origin closes the opening section (no heading; "mobile, single-user" dropped, which also removes a mismatch with About's "document collaboration tool"). The CTO lines moved into Role. "Limits surfaced before build" is gone. "Layouts, automation and admin settings" is an H3 at the end of "What long tenure lets you notice". "Beyond the product" keeps the CTA experiments and the What's new paragraph. About replaces its CTO and product owner sentence with a link to the case (`data-umami-event="Case study link"`, location `about`) and its brand paragraph gains "the assets we brought to Atlassian events like Team ’23". "CTO" and "pushed back" now appear only on Team Files.
+- **`38b5f92` Food Save and MyFoodways.** Food Save decision sections open on the decision (decision-makers, dropping the competition, the library, the checklist, Home, the shared-build recommendation as interim PM). "Part of a pair" is two paragraphs before its figure (was four). Both cases drop "Four lessons" and close on Reflections.
+- **`40ff2b9` (copy part).** Team Files: the browser paragraph now says what the limit was ("Opening a file’s folder in its cloud storage couldn’t use a new tab, so it replaced the Jira or Confluence page…", ending "the alternative was not having that option at all"); editing files did open in a new tab, so it's only the folder case. Role is two paragraphs: Miguel's role and scope first, then the product owner and CTO. MyFoodways: "Scoping honestly across time zones" folded into Role (working with Laura and the Lisbon team, handoffs) and the scope sentence ("the recipe library and the “Favourites cookbook”"). Food Save: the quote lead-in starts at "Jungfraubahnen, a development partner…" so Reto Mettler appears once.
+- **Considered and dropped:** leading the MyFoodways card with the 6,000 downloads (decided earlier in chat sessions that it isn't strong enough to lead), and adding the June 2019 launch to Food Save's outcomes (the summary already says it since `ad62ba2`).
+
+**Current H2s** (supersedes the session 37 list):
+- Team Files (8): Everyone sees the latest version · Role · Download, edit, re-upload, repeat · The 2023 UX review · What long tenure lets you notice · A design system engineers built from · Beyond the product · Keeping it coherent while it grows
+- MyFoodways (7): Cooking from what’s in the fridge · Role · Recipes that don’t fit real life · Making the mission practical · Search, profile, recipes and challenges · Contrast versus a fixed brand · Good design isn’t enough on its own
+- Food Save (9, unchanged): Ready-to-use measures for busy kitchens · Role · Food waste in a low-margin business · Designing for the decision-makers · From competition to practical tool · A library kitchens could act on · Stepping in as interim PM · Part of a pair · Smaller, and better for it
+
+**`0eb4732` Prose heading spacing** ([global.css](src/styles/global.css)): headings used to sit 24px from both neighbours. Now `.prose > * + h2` gets `--space-12` (48px), `.prose > * + h3` gets `--space-10` (40px), and `.prose > :is(h2, h3) + *` gets `--space-3` (12px), which also keeps an h3 tight under its h2. Applies to every `.prose` page (case studies, About, Privacy, lab). Measured in dev on Team Files at 1440 and About at 375. A jumped-to heading still lands at 96px (scroll-margin unchanged). DESIGN.md Typography has a "Prose rhythm" line.
+
+**`40ff2b9` (quote part) [Quote.astro](src/components/Quote.astro):** the three case quotes were markdown blockquotes that rendered at 17px (the global `p` rule beat the blockquote's 19px) with the attribution as a second serif paragraph. They now use the `Quote` component, which nothing used before. Aleo at `--text-xl` (22px), `--text-lg` (19px) up to 720px wide, `--leading-relaxed`, `text-wrap: pretty`; the opening “ hangs via `text-indent: -0.4em` (measured 0.409em in Aleo; the first letter lands exactly on the text edge); 40px above and below; the cobalt left rule stays. New `source` prop: the figcaption is Geist `--text-sm`, the person (`attribution`) in Ink 500, a center dot, then `source` in Ink Secondary, aligned with the quote text. Team Files: "Frank Leclerc, Decadis" · "Atlassian Marketplace review, 2023". Food Save: "Reto Mettler" · "Head of Catering, Jungfraubahnen". MyFoodways has no attribution (its lead-in says "One five-star review"). The quotes are figures with figcaptions now. The bare `blockquote` style in typography.css is unchanged (only the lab uses it). DESIGN.md Blockquote / Quote section rewritten. Checked in dev at 1440 and 375 on all three cases, no overflow or console errors.
+
+**`14025aa` About "Outside of work":** five paragraphs to four (281 to 205 words). Kept the opening, the food rescue and self-defense class (one paragraph), the cats, and friends with board games and the recipe system (one paragraph, still ending on the systems thinking line). Cut the health line ("gym regularly, eating seasonally…") and the cooking preamble.
+
+**Latest (session 40, two commits on `main`, pushed `3bfc75a..ebf3338`): fixes from a `/pd-portfolio-review` of migueljss.com (85/100, "ready to send"), plus a new CV export.** `dd3b806` trims Team Files and MyFoodways so sections open on the decision, and carries Team Files fixes worked out in side chats (churn index figures, senior role title, Atlassian Ventures funding line, internal testing line, shorter AI paragraph). `ebf3338` is the new CV, stamped with `?ref=cv`. Headings unchanged on both cases, so the jump lists and their Umami section slugs are unchanged. Build clean, deploy succeeded (build and deploy jobs green). Live check with curl (not the browser): home and both case pages return 200; the new Team Files and MyFoodways lines are present and the cut ones gone; jump lists carry 11 and 8 links; `/miguel-jesus-cv.pdf` returns 200 `application/pdf`, byte-identical to the local file (same SHA-256). Details in the session 40 entry below.
+
+## What changed in this session (2026-10-28, session 40: October 28 portfolio review)
+
+**The review** (`/pd-portfolio-review https://migueljss.com`, role assumed senior in-house product designer for B2B SaaS and mobile): 85/100. Strengths: website with no access friction, three cases with the most relevant first, cards with context, outcomes in the case headers, decisions with reasons, clear ownership, honest about bets that didn't land. One red flag present: overly long or dense (Team Files was about 2,800 words). Ranked fixes: (1) decision-first trims, (2) Team Files outcomes, (3) name the validation method, (4) align CV and site. All four are now done. Browsing the live site was done in the in-app browser with Umami opted out (`localStorage.umami.disabled = "1"`, set from `/robots.txt` before loading any page; the flag persists in the pane for that origin).
+
+**Team Files** (prose 2,612 to 2,445 words, counted without figures and frontmatter):
+- Sections open on the decision: the 2023 review, attach flow, connect folder, folder log, empty states, shared folders, narrow panels. The two problem paragraphs under "Download, edit, re-upload, repeat" are one.
+- Cut: "One small redesign captures the approach", the permissions sentence under connect folder (the caption carries it), "Accessibility ran through all of it…", the "We bootstrapped the project…" sentences and the brand paragraph in "Limits surfaced before build" (About covers brand).
+- From side chats: `outcomes` second item is "Churn index down from close to 3 to around 1, the Marketplace average." and the closing section explains Atlassian's churn index (1 = Marketplace average, close to 3 when tracking started, a yearly KPI, around 1 by the time Miguel left). `role` is "Senior product designer and co-founder" (matches the CV). Origin paragraph ends "bootstrapped at first and later backed by Atlassian Ventures" (a LinkedIn post Miguel shared called Team Files an Atlassian Ventures portfolio company). Connect folder ends "It held up in our internal testing, and once it was live, it didn’t draw complaints." The old tooling paragraph is now a handoff sentence plus a short AI paragraph (ChatGPT for first drafts of UI messages, image generation for blog illustrations).
+- The 2023 review keeps its usability goal and its "No single change was dramatic" close: there's no proof of a conversion lift, so the CV was softened instead of the site.
+
+**MyFoodways** (prose 2,222 to about 2,056 words): sections open on the decision (scope cut for the June 2018 launch, research priorities, the profile as the place the app goes back to, the no-gos reword, the cohort challenge, "Wherever the fixed brand left me room, I fixed contrast, and where it didn’t, I flagged it."). "Prompted by user feedback" moved from "Scoping honestly across time zones" into the no-gos paragraph; that section is now one paragraph. The soy example was cut in the draft and restored by Miguel, so it stays. Cut: the day-three lentils detail (now "like working lentils into dinner"), "Hard-to-find ingredients, large portions, tricky substitutions.", and the contrast section's closing lesson lines. Honesty passages and Reflections unchanged. List punctuation intact.
+
+**CV** (new Pages export, `npm run cv -- cv --in-place`, 2 pages, text identical to the export, links: email, LinkedIn, `https://migueljss.com/?ref=cv`): summary says "trial starts" (was "trial-to-paid conversion"); the review bullet says "to make it clearer, easier to use, and more accessible" (was "to improve trial-to-paid conversion"); churn bullet uses the index figures; ikuTeam intro reads "bootstrapped at first and later backed by Atlassian Ventures. The team grew to seven…"; the interim PM bullet moved to page 1. A first export had a visible gap after "grew to seven" and was re-exported. Per-application copies in `docs/Applications/` were not regenerated (justmarkets, orange-uni, spate, duckduckgo, synthesia and critical keep the older wording).
+
+**Still open from the review** (no points lost, for later):
+- LinkedIn Experience is hidden when signed out; compare it signed in against the CV dates.
+- MyFoodways, Food Save and Contact were read from HTML, not checked rendered at 375 px in this session.
+- Food Save "Used in professional kitchens": a count would strengthen it, if known.
+- Team Files "so we carefully designed around those limits" could name what was chosen for the open-in-new-tab case.
+- At 1440×900 the project list starts below the first screen; left as is by preference (large hero).
+
+**Latest (session 39, branch `copy/about-strategy-ai`, merged to `main`): two About copy edits.** Strategy and planning now reads "Day to day, I helped decide what to build next based on user feedback, usage data, and engineering reality." (was "As the only designer on small teams, I prioritized..."). The second "Working with AI" paragraph now introduces miPlay (combined board game collections, first version built by Claude Code from a Claude Design prototype, now rebuilt natively in SwiftUI with Claude Code as Swift guide); the rest of the paragraph, from "I’ve also been using Claude Design...", is unchanged. Only [about.astro](src/pages/about.astro) changed. Build clean. Checked in dev at 1280 and 375 px: no horizontal overflow, paragraph fits the column. Greps: "only designer" appears once in `src/pages/` (About, "How I work"); "BoardGameGeek" appears nowhere in `src/pages/`. "BoardGameGeek" also appears nowhere else in `src/` or `public/`.
+
+**Previous (`de07729`, live): home hero copy.** `.hero-title-body` is now "Senior Product Designer for SaaS and mobile" (no full stop) and the subtitle starts "I design products from first sketch to first release and beyond, working day to day with engineering and product." followed by the unchanged Team Files sentence. No layout changes. Measured in dev: H1 second line 2 lines at 375, 1101 and 1440 px; subtitle 4 lines at 1101 and 1440 (6 at 375); chevron 56 px from the hero's bottom edge at 375. The portrait clearance (24 px closest) was not re-measured here, since the portrait is a full-bleed image; subtitle text right edge is 581 px at 1101 and 755 px at 1440. Build clean, deploy succeeded, live copy confirmed with curl (not the browser).
+
+**Status at session close (session 37): seven commits on `main`, pushed (`746aed7..ff519cd`) and live on migueljss.com: Phase 3 of the October 26 review (new section headings on all three case studies) and an "On this page" jump list on every case study.** Build clean, deploy succeeded, live pages checked with curl. Details in the session 37 entry below.
+
+**Then, also live (`503392c`):** the Team Files "Empty states as onboarding" paragraph split in two, the second starting at "The ones who went looking for the app itself"; no wording changes. Build clean, deploy succeeded (build and deploy jobs both green). Curl check: Team Files returns 200, the two paragraphs are separate on the live page (the first ends "...with no Team Files account needed."), the merged version is gone, and the 11 jump links are intact.
+
+**Previous status (session 36): one commit on `main`, pushed (`ad62ba2`) and live on migueljss.com: Phase 1 copy from the October 26 portfolio review (home hero subtitle, MyFoodways and Food Save summaries and role, MyFoodways outcomes, About "How I work", a Team Files Role sentence) and eager, high-priority case study covers.** Build clean. The hero subtitle went through two versions; the first collided with the portrait between 1101 and 1229 px wide, so Miguel shortened the text instead of changing hero layout values (details in the session 36 entry below). **Then, also live (`c0f3246`):** a new CV export on the site, stamped with `?ref=cv` (see "session 36, continued" below).
+
+**Previous status (session 35): one commit on `main`, pushed (`48336a3`) and live on migueljss.com: a new brand paragraph closing About's "How I work", a What's new paragraph in the middle of Team Files "Beyond the product", and the Team Files "Company" heading renamed "From TOPDOX to ikuTeam".** No case study has a "Company" section anymore. A follow-up commit (`dd99992`, also live, checked with curl) added serial commas to the About paragraph. Build clean. Details in the session 35 entry below.
+
+**Then, also pushed and live (`f2ec15d`):** the Food Save cover `FS-00-cover.jpg` re-exported from Figma (a desaturated version of the same frame); see "session 35, continued" below.
+
+**Previous status (session 34): one commit on `main`, pushed (`ae6aa16`) and live on migueljss.com: the Team Files Design execution list replaced by one paragraph, and MFW-03, MFW-04 and MFW-05 re-exported with the "Favourites" tab label.** Miguel approved the faint differences the pixel diff found outside the label boxes. Build clean. Live check with curl (not the browser, to keep Umami clean): both pages return 200, Team Files Design execution has no list markup and goes paragraph then figures, and the MyFoodways page references the new image hashes (`D-6Viy__`, `CUi-0NSz`, `Ddoncsj6`), all 12 of which return 200 with the same sizes as the local build. Details in the session 34 entry below.
+
+**Previous status (session 33): three commits on `main`, pushed (`bdb056e..aba96a1`); GitHub Pages deploys on push: the Food Save "Part of a pair" rewrite with the new FS-06 Waste Tracker figure (`d618cd3`), then copy edits to Food Save and MyFoodways (role line, Company sections removed, new Role paragraphs, Food Save Reflections).** Build clean. Details in the session 33 entries below.
+
+**Then, also pushed:** one more commit on `main` with MyFoodways and Team Files copy edits and a re-exported MFW-06 (see "session 33, continued again" below).
+
+**Previous status (session 32): case study header outcomes, the "active installations" copy fix, an iPhone fix for closing the zoom dialog, and a TF-05 re-export were committed straight to `main` and pushed, at Miguel's request.** GitHub Pages deploys on push. Details in the session 32 entry below.
+
+**Earlier status (session 31): [PR #10](https://github.com/Dgigiu/mj-portfolio/pull/10) (`zoom-tall-images`) merged to `main` as `1794a7d` and live on migueljss.com.** It makes the zoom dialog readable for tall figures (details below). Deploy succeeded; the live Team Files page carries the new markup, size attributes, inline script and CSS (checked with curl, not the browser, to keep the visit out of Umami). The `zoom-tall-images` branch was deleted locally and on origin after the merge. Earlier in session 29, [PR #8](https://github.com/Dgigiu/mj-portfolio/pull/8) (shared folder authentication and narrow views) and [PR #9](https://github.com/Dgigiu/mj-portfolio/pull/9) (TF renumbering) were merged and are live, and their branches deleted. Still open for Miguel: whether TF-05 and TF-06 need larger text inline (readability notes below); this PR addresses the zoomed view, not the inline one.
+
+## What changed in this session (2026-10-27, session 37: October 26 review, Phase 3, and the jump list)
+
+Miguel's approved copy verbatim, with typographic apostrophes. Commits, in order:
+
+1. **`e487292` Team Files headings.** H2s rewritten as claims, the Strategy heading dropped (its paragraph now closes "Download, edit, re-upload, repeat"), a new H2 "A design system engineers built from" before the design system paragraph, and six H3s inside "What long tenure lets you notice" (the first sits right under the H2 on purpose). The 2023 UX review has a new goal sentence ("The goal was to find what could be clearer, easier to use, and more accessible.") and a paragraph break before "It’s also when I started pulling more of Atlassian’s own design system". The "Key learnings" list is gone; "Most design work is measured in sprints." follows the Decadis quote.
+2. **`a6f8b86` Jump list** ([JumpList.astro](src/components/JumpList.astro), wired in [CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro) and [`[slug].astro`](src/pages/work/[slug].astro), which now passes depth-2 `headings` from `entry.render()`). Documented in DESIGN.md (Components, Motion) and the CLAUDE.md motion list.
+3. **`c644f51` Team Files:** first H2 is "Everyone sees the latest version"; "Beyond the product" restored (it had briefly been "From Jira panel to conference booth").
+4. **`3691eb5` MyFoodways:** new H2s; Solution strategy merged into "Making the mission practical" without its "My strategy:" list; "Four lessons" for the learnings H3; a shorter Accessibility advocacy bullet.
+5. **`e1e0827` Food Save:** new H2s, "Four lessons", and the "These conclusions reinforced..." sentence cut so the research section ends on the findings list.
+6. **`864dd89` Food Save:** closing H2 shortened to "Smaller, and better for it" (one line in the rail).
+7. **`ff519cd` Tokens:** the `#6f6f6f` contrast note corrected from 4.96:1 to 4.81:1 on `#fbfaf6` (measured; still AA). DESIGN.md carried the same figure and was corrected too.
+
+No links anywhere in `src/` or `public/` pointed at the old anchors.
+
+**Current H2s** (the jump list shows these word for word):
+- Team Files (11): Everyone sees the latest version · From TOPDOX to ikuTeam · Role · Download, edit, re-upload, repeat · The 2023 UX review · What long tenure lets you notice · Layouts, automation and admin settings · A design system engineers built from · Limits surfaced before build · Beyond the product · Keeping it coherent while it grows
+- MyFoodways (8): Cooking from what’s in the fridge · Role · Recipes that don’t fit real life · Making the mission practical · Search, profile, recipes and challenges · Contrast versus a fixed brand · Scoping honestly across time zones · Good design isn’t enough on its own
+- Food Save (9): Ready-to-use measures for busy kitchens · Role · Food waste in a low-margin business · Designing for the decision-makers · From competition to practical tool · A library kitchens could act on · Stepping in as interim PM · Part of a pair · Smaller, and better for it
+
+**Jump list, as approved:**
+- **Rail from 1024px:** `.case-body` becomes a grid (720 prose column, 40px gap, rail in the remaining ~184px). The rail spans both grid rows, so it sticks at 96px (same as the h2 `scroll-margin-top`, so a jumped-to heading lines up with the rail label) and stops where the prose ends, 64px above "More case studies". On short windows it scrolls itself (`max-height` + `overflow-y: auto`, padded so the hung marker and focus rings aren't clipped).
+- **Look:** "On this page" in `.mj-label`; links Geist 14px `--fg-secondary`, `--fg-primary` on hover, `text-wrap: balance`, hyphenated words kept whole in a `.nobreak` span (otherwise balance broke "re- / upload"). Current section: `--accent` text plus the prose lists' cobalt en-dash hung in the gutter, easing in over 120ms (opacity and a 4px slide).
+- **Current section logic:** IntersectionObserver whose root runs from 100000px above the viewport down to a line 40% down it, so a heading flips state exactly when it crosses the line, even on a long instant scroll (a plain band missed those). The rects pick the last h2 above the line; it gets `aria-current="location"`. Rail mode only.
+- **Below 1024px:** a collapsed "On this page" row between hairlines at the top of the body (`aria-expanded` button, chevron rotates), 44.3px tap rows (14px at `--leading-normal` + `--space-3` padding), toggle row 48px. No current-state styling. Without JS (no `html.js`) the label shows and the list is always open.
+- **Analytics:** each link has `data-umami-event="Jump link"`, `data-umami-event-case`, `data-umami-event-section` (heading slug).
+- **Side changes:** `.figure.bleed` extends left only while the rail shows (no case uses bleed today; tested on a temporary figure); h3 anchors get the same 96px `scroll-margin-top` as h2s.
+- **Contrast on the canvas:** items `#555` 7.14:1, label and toggle `#6f6f6f` 4.81:1, current `--accent` 5.24:1 (the tokens comment still says 5.21:1 for the accent; left as is).
+
+**Checks (dev, headless Chrome over DevTools at 2x):** active state correct at 1440, 1280, 1100 and 1024; collapsed at 1023 and below; a click lands the heading at 96px with the rail label at 100px; keyboard focus rings whole in the rail and on the toggle; zoom dialog backdrop covers the rail; `data-read-marker` still sits at the end of the prose (grid row 2); reduced motion zeroes the transitions; no horizontal overflow at any width tested. Miguel reviewed screenshots before push. Method for next time: launch Chrome with `--headless=new --remote-debugging-port`, drive it with Node's built-in WebSocket (`Emulation.setDeviceMetricsOverride`, `Page.navigate`, `Runtime.evaluate` to scroll, `Page.captureScreenshot`), and remove `astro-dev-toolbar` before capturing. The in-app browser pane doesn't run IntersectionObserver callbacks while hidden, so it's unreliable for this.
+
+**Live check (curl, not the browser, to keep Umami clean):** deploy succeeded. All three case pages return 200; on each, the built H2 order matches the lists above and the jump list links match the H2s with correct Umami attributes (11, 8, 9). New copy present and old copy absent (Key learnings, My strategy, Solution strategy, the old accessibility bullet, the cut Food Save sentence, the replaced headings). All referenced `/_astro` CSS and JS return 200; the jump list CSS ships in the stylesheet and its script is inlined as a module on each page, including the observer fix.
+
+## What changed in this session (2026-10-27, session 36, continued: CV update)
+
+- **CV PDF replaced** with Miguel's new Pages export (Dropbox, "2026-01 Portfolio MJ + AI"), re-stamped with `npm run cv -- cv --in-place`, committed as `c0f3246` and live. The deploy succeeded, and a curl fetch of `/miguel-jesus-cv.pdf` returns 200 `application/pdf`, byte-identical to the local file (same SHA-256).
+- **Text changes against the previous site copy** (extracted with PDFKit and diffed):
+  - The summary says "with over 9,000 active installations" (was "used by over 9,000 companies"), matching the site rule.
+  - "full-time" is now hyphenated in the ikuTeam and Foodways entries.
+  - Nothing else changed: still 2 pages, and the email, LinkedIn and portfolio links are intact.
+- After stamping, the only difference from the export is the portfolio link target (`https://migueljss.com/?ref=cv`).
+- Per-application copies in `docs/Applications/` were not regenerated (the most recent are duckduckgo and synthesia, 2026-10-26); new `/cv-stamp` runs use this version.
+
+## What changed in this session (2026-10-27, session 36: October 26 review, Phase 1 copy)
+
+Miguel's approved text verbatim, with typographic apostrophes. Committed straight to `main` as `ad62ba2` and pushed.
+
+- **Home hero subtitle** (`.hero-subtitle` in [index.astro](src/pages/index.astro)): now "I'm a senior product designer for SaaS and mobile, working day to day with engineering and product. The main story here: seven years on Team Files, with over 9,000 active installations." No hero layout values changed (`max-width` stays 520px).
+- **MyFoodways:** new `summary` (reviews praised the two ideas it was built on); `benefit` unchanged, so the card still strips it. `outcomes` replaced: "First public release in June 2018, three months after I joined;" then the 6,000 downloads item. The reviews outcome was dropped on purpose because the summary now carries it. `role` is "Product designer".
+- **Food Save:** new `summary` (interviews showed kitchen managers wanted practical measures, not a competition, launched with United Against Waste in June 2019). `benefit` and `outcomes` unchanged. `role` is "Product designer".
+- **About, "How I work":** the "For most of my career I've been the only designer on small teams" paragraph is replaced by one that opens "I've always worked closely with engineering and product" (the ikuTeam CTO and product owner, Doist, mentoring at TOPDOX, ownership where he was the only designer). The brand paragraph after it is unchanged.
+- **Team Files, Role:** new sentence after "...pushed back on my work when it needed it.": "Until 2020 I was at ikuTeam part-time, alongside my work at Foodways, and full-time from 2021."
+- **Case study covers** ([CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro)): `loading="eager"` and `fetchpriority="high"` on the `.cover-img` `<Image>`. It used to be lazy, so it could show up after the text. Dev check on Food Save at 1440×900, no scroll: the cover request started at 148 ms, before DOMContentLoaded (164 ms), and was the page's first image request.
+
+**Hero measurement method** (reuse it for any future subtitle change): sweep an iframe of `/` across 1101 to 1441 px wide in 4 px steps at 768, 800 and 900 px tall. Above 1100px the portrait sits above the vignette. For each subtitle line, compare the right edge of its word boxes with the leftmost portrait pixel with alpha above 128 in the same rows. A negative gap means the line runs into the figure.
+
+- **First version** ("...SaaS and mobile products... The longest story here is Team Files: seven years, over 9,000 active installations, and a design system its engineers built from."): 5 lines on desktop. Line 4 ("...its engineers") ran up to 27 px into the shirt sleeve at 63 of 123 sizes between 1101 and 1229 px wide. At 1440 it was clear (98 px).
+- **Alternatives tested:** a 440px `max-width` fixed it (closest 5 px), 480px only just cleared (0 px), and `text-wrap: pretty` changed nothing. Miguel chose to shorten the text instead of changing hero layout values.
+- **Shipped version:**
+  - 4 lines on desktop, no overlap at any of the 258 sizes. Closest is 11 px (1125×800, line 3). It's 97 px at 1441×900, and the h1's closest is 95 px.
+  - The old subtitle got to 3 px by this method. Miguel's own browser measurement read 16 px for the new text and 8 px for the old one, the same 5 px offset on both, so the difference is the method.
+  - 375×812: 5 lines, hero stays 600 tall, chevron 57 px above the hero's bottom edge (71 with the old text).
+  - 360×780: 6 lines, chevron 42 px from the bottom.
+  - 720 and 1100: 4 lines, with the figure dimmed under the vignette as designed.
+  - No horizontal overflow at any width.
+
+**Checks:**
+- Build clean (0/0/0, 8 pages).
+- At 1440 all three home card descriptions wrap to three lines.
+- The MyFoodways and Food Save headers and meta descriptions carry the new summaries. The MyFoodways outcomes are in the new order, and both role lines read "Product designer · ...".
+- No em or en dashes and no straight apostrophes in any changed line.
+
+**Live check:** the deploy succeeded. Checked with curl, not the browser, to keep Umami clean:
+- Home, About and all three case pages return 200.
+- Home carries the new subtitle, with no trace of the old one.
+- About has the new "How I work" paragraph and no "For most of my career".
+- Team Files has the "part-time ... full-time" sentence.
+- MyFoodways and Food Save carry the new summaries in the meta description, "Product designer" with no "UX/UI designer" left, and the expected outcomes (MyFoodways in the new order).
+- All three covers are `loading="eager"` `fetchpriority="high"`, and the MyFoodways and Food Save cover files return 200 as webp with the same hashes as the local build.
+
+## What changed in this session (2026-10-22, session 35, continued: Food Save cover)
+
+- **`FS-00-cover.jpg` re-exported** (1920×1008, JPG at scale 1, sRGB, 1.0 MB; Figma `RqT7cSB5meoG2VQu7ggWNo`, page "version 2", frame `FS-00-cover-banner`, node `2026:597`, via the Figma MCP's `download_assets`), overwritten in place in `src/assets/case-studies/food-save/`. The frame holds one image layer (`uaw-food-save-promo2 1`, 2206×1241, offset y −25).
+- **Diff against the previous file (from August 31):** same framing and layout; the phone UI text lines up exactly (near-zero difference on the text edges). The whole image is desaturated: mean saturation 0.295 to 0.224, mean luma 180.4 to 181.1. The change is strongest on the blurred produce in the background (oranges and yellows read more muted) and on the in-app illustrations (crate, cutting board, tomato, bottle); the white screen areas are unchanged. Read as an intentional adjustment in Figma, not a crop or export issue.
+- **Built asset hash changed** (`DP-7bZAt` to `BCVhcpjJ`), so production browsers won't serve a stale copy. No mdx or alt change (alt stays "Food Save project cover").
+- **Surfaces checked:**
+  - Case header: 960w/1440w/1920w srcset, renders at 944×496 at 1440×900.
+  - Home card: 480w/800w/1200w srcset, renders at 456×239 with the 1200w file.
+  - Share image: `og:image` is the 1200×630 webp, the full frame scaled with nothing cropped (byte-identical to the card's 1200w variant).
+  - The "More case studies" grids on Team Files and MyFoodways reference the same new files.
+  - Build clean (0/0/0, 8 pages), no console errors on the dev server.
+- Committed as `f2ec15d`; deploy succeeded. Live check with curl (not the browser): home, Food Save, Team Files and MyFoodways reference only `BCVhcpjJ` cover files (no `DP-7bZAt` left), the Food Save `og:image` is the new 1200×630 webp, and all seven variants return 200 as webp with the same byte sizes as the local build.
+
+## What changed in this session (2026-10-22, session 35: About brand paragraph, Team Files What's new and origin heading)
+
+Copy only, Miguel's text verbatim (with typographic apostrophes). Committed straight to `main` and pushed.
+
+- **About, "How I work":** new third paragraph after "For most of my career I've been the only designer on small teams", before "Working with AI": ikuTeam brand identity and voice across UI copy, marketing site, Marketplace listing and documentation; the app following Atlassian's guidelines while the brand came through in the onboarding, empty state and What's new illustrations; brand and product as one design language. Nothing else on the page changed. Follow-up commit at Miguel's request: serial commas added ("the Marketplace listing, and the documentation", "empty states, and the What's new screen") to match the paragraph above.
+- **Team Files, "Beyond the product":** new middle paragraph about the What's new screen (no user email addresses, so no newsletter; each feature linked to its blog post). The first and closing paragraphs are unchanged.
+- **Team Files: "## Company" is now "## From TOPDOX to ikuTeam"** (anchor `#from-topdox-to-ikuteam`), paragraph unchanged. Nothing in `src/` or `public/` linked to `#company`. Matches Food Save's "From competition to practical tool".
+- Build clean (0/0/0, 8 pages). Built HTML check: About "How I work" has three paragraphs in the expected order; Team Files headings run Product, From TOPDOX to ikuTeam, Role, Problem and context, and on; "Beyond the product" has three paragraphs with the What's new one in the middle. No em or en dashes in the added lines.
+- Deploy succeeded. Live check with curl (not the browser, to keep Umami clean): both pages return 200 and show the same structure as the build, and the Team Files page has no `id="company"` and carries `id="from-topdox-to-ikuteam"`.
+
+## What changed in this session (2026-10-22, session 34: Team Files Design execution, MyFoodways "Favourites")
+
+- **Team Files, Design execution:** the opening sentence and the three-item list (Search, Layout options, Automation and admin settings) are replaced by one paragraph, Miguel's text verbatim. The Search bullet is dropped on purpose, and no Search figure is planned. The layout and automation figures, the design system paragraph and figure, and the process paragraph are unchanged. `docs/Case Studies/cs-team-files.md` not touched.
+- **MyFoodways: `MFW-03-solution.png`, `MFW-04-Personalization.png` and `MFW-05-flexible-recipe.png` re-exported** (Figma `m1vVaKCwVkvG4AtieNx7NW` page "v2", nodes `18:26`, `50:108`, `51:81`, PNG at scale 1 via the Figma MCP's `download_assets`), overwritten in place, all still 1600×1055. Miguel changed the tab bar label from "Favorites" to "Favourites" in Figma (1, 2 and 3 labels). Alts and captions unchanged.
+- **Pixel diff against the previous files (from August 31):**
+  - Real changes (channel difference above 16) sit on the tab labels and the heart icons above them. "Favourites" is one letter wider than "Favorites", so each label spills 1px past the left edge and 1px past the bottom of the approximate boxes in the brief (for example MFW-03 x 850 to 895, y 937 to 971).
+  - The rest of each frame differs by 1 to 4 levels out of 255 (about 300,000 to 425,000 pixels per image, averaging +0.4, slightly lighter; no alpha changes). Nothing is visible at 4x. It looks like Figma's renderer output changed since the August export, not a content change.
+  - A few isolated pixels outside the boxes differ by up to 30 levels: 1 to 4 px specks on anti-aliased phone bezel edges (x 973 and 1253, y 216 to 218 and 807 to 810) and on the tab bar row (x 369 and 869, y 969). MFW-05 has none above 4. Enlarged crops of the old and new files look identical.
+- Build clean (0/0/0, 8 pages). Dev server check: Team Files Design execution goes h2, the new paragraph, then the layout figure (no `ul`/`li` in the section). MyFoodways: all 12 srcset variants (480 to 1600) of the three figures return 200 as webp. The built 1600w webps, cropped on each tab label, read "Favourites" in all six places.
+
+## What changed in this session (2026-10-21, session 33, continued again: MyFoodways and Team Files copy, MFW-06)
+
+Miguel's text. Committed and pushed to `main`.
+
+- **`MFW-06-challenges.png` re-exported** (1600×1055, PNG at scale 1, Figma `m1vVaKCwVkvG4AtieNx7NW` page "v2", node `56:119`), overwritten in place. The annotation now reads "A new action every day". A pixel diff against the previous file finds changes only in a 47×21 px box on the word "day" (x 872 to 918, y 655 to 675). The built 1600w webp, cropped there, shows "every day".
+- **MyFoodways:** "Accessibility over time" is now "Contrast versus a fixed brand"; "4. Challenges (2020)" is now "4. Seven-day challenges (2020)"; the MFW-06 caption now describes the daily themes, the warm gray completion label on white, and yellow for done days. Alt text unchanged.
+- **Team Files:** Problem and context opens on the download, edit, re-upload cycle, with the audience sentence second. The Product paragraph drops the "Instead of downloading..." clause. **New "## The 2023 UX review" section** after Strategy's first paragraph; it takes the next two paragraphs and the TF-02 figure, unchanged (no image renumbering). "Constraints and collaboration" is now "Collaboration and constraints", reordered: engineering, technical constraints, brand guidelines (wording unchanged). "Beyond the product" opens on "If something had a visual or written side". Design execution opens with "Besides" instead of "Beyond".
+- Nothing in `src/` or `public/` linked to the old heading anchors. Build clean (0/0/0, 8 pages). Dev server check of both pages' HTML: headings in the expected order, Strategy has one paragraph, the review section has two paragraphs and the figure, Collaboration and constraints is in the new order, and MFW-06 sits under "4. Seven-day challenges (2020)" with the new caption and its image returns 200.
+
+## What changed in this session (2026-10-21, session 33, continued: Food Save and MyFoodways copy)
+
+Copy only, Miguel's text. No layout, schema or image changes.
+
+- **Both cases:** `role` is now "UX/UI designer" (was "Sole UX/UI designer"); "only designer on the project" moved into the Role paragraphs instead. The "## Company" sections are gone; the company context now sits in the Role paragraph (MyFoodways also lost the UN Sustainable Development Goals line, and its "public service and a behavior-change experiment" phrase moved into the first sentence of Problem and context).
+- **Food Save:** new Role paragraph (Foodways for United Against Waste, Moritz and **Markus**, about three months covering João's paternity leave). Headings renamed: "Research and insights" to "Research insights" (matches MyFoodways), "Strategy and concept shift" to "From competition to practical tool". Collaboration and delivery trimmed so it doesn't repeat the Role paragraph. "Part of a pair" now says United Against Waste launched both apps in June 2019 as the Food Save Starter Kit. Impact paragraphs reordered (feedback first, discontinuation second), and a new "### Reflections" subsection closes the page, like MyFoodways.
+- **"Mark" is "Markus"** everywhere he's named: the mdx and `docs/Case Studies/cs-food-save-app.md` (gitignored, so that one isn't in the commit). The bullet "Mark them as completed" is the verb and was left alone.
+- Build clean (0/0/0, 8 pages). Dev server check of both pages' HTML: header meta reads "UX/UI designer · …", no Company heading, headings in the expected order, Food Save ends with Reflections before "More case studies". No visual or mobile check this time (copy only).
+
+## What changed in this session (2026-10-21, session 33: Waste Tracker figure)
+
+- **New figure `FS-06-waste-tracker.png`** (1600×1055, PNG at scale 1), exported from Figma `RqT7cSB5meoG2VQu7ggWNo`, page "version 2", frame node `2087:149`, via the Figma MCP's `download_assets`. Three Android screens with callouts: the one-off setup check, daily data input by category with sales and guests, and a one-week report by category and by day. Imported as `wasteTracker` in [food-save.mdx](src/content/case-studies/food-save.mdx), placed after the "From there, staff entered weights" paragraph and before the Reto Mettler quote.
+- **"Part of a pair" rewritten** with Miguel's text: the Waste Tracker Lead, the trilingual setup kit (equipment guide, lead briefing, team briefing, app and paper-form versions), the one-off setup check, the password-protected web report (replaces "connected web app ... monthly reports"), and the Insights tab pointing back to Food Save. The opening paragraph, the quote and the closing line are unchanged. No other section touched.
+- Build clean (0/0/0, 8 pages). Dev server check: the figure sits under "Part of a pair" at 718×473 in the prose column, all four srcset widths (480 to 1600) decode, the zoom button is present, no console errors. The Browser pane was hidden, so no screenshot of the painted figure.
+
+## What changed in this session (2026-10-20, session 32: outcome-led case headers)
+
+Outcomes used to appear only near the end of each case study. Two changes bring them into the header.
+
+- **New summaries** for all three cases (second sentence only; the first still matches `benefit` exactly, so the home cards still strip it). The summary feeds the case header, the home card and the meta description.
+- **New optional `outcomes` field** in [config.ts](src/content/config.ts): an array of strings, passed through [[slug].astro](src/pages/work/[slug].astro) to [CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro). It renders as a `<ul class="case-outcomes" aria-label="Outcomes">` under `.case-meta`: Geist at `--text-sm`, `--fg-secondary`, `--leading-normal`, a hairline `--border-subtle` top rule like Stat, and the prose lists' accent en-dash marker. No new tokens. Cards and the "More case studies" grid don't show outcomes.
+- **Two outcomes per case**, with the list punctuation as supplied (semicolon, then a full stop on the last item).
+- **"over 9,000 companies" is now "over 9,000 active installations"** in the Team Files Impact paragraph, the About bio and the "Decisions that must not regress" rule. The lab pages ([components.astro](src/lab/pages/components.astro), [playground.astro](src/lab/pages/playground.astro)) still show a `9,000+` / `Companies` Stat as sample content; dev only, left alone.
+- **Team Files design system paragraph**: the "outgrew the design side" sentence now describes the Storybook engineers built from the Figma library ahead of the Forge rebuild.
+- Build clean (0/0/0). Browser check: the home cards show benefit plus the new second sentence with no repeat; all three case headers render summary, meta and outcomes at 1440×900 and 375×812 (the container gutter is 20px at 375, unchanged; no horizontal overflow). About shows the new wording. No console errors besides the dev server's HMR websocket.
+- Not done: DESIGN.md doesn't document the outcomes list yet (regenerate with `/impeccable document` when convenient).
+- **Zoom dialog: tapping the backdrop now closes it on iPhone** ([ZoomDialog.astro](src/components/ZoomDialog.astro)). Miguel reported that tapping outside the image did nothing on mobile. Cause, confirmed with on-screen event logging in the iOS 27 Simulator (iPhone 17, Safari): a tap on the backdrop does fire `click` on the dialog, but its `pointerdown` never reaches a listener on the dialog itself, so the "press started on the backdrop" flag (session 29's drag guard) stayed false and the click was ignored. Taps inside the dialog box (the close button) do get `pointerdown`. With any `pointerdown` listener on the window, the backdrop tap's `pointerdown` arrives with the dialog as target. Matches WebKit bug 267688 (popover light dismiss on iOS). Fix: the `pointerdown` listener moved from the dialog to `document` (passive); nothing else changed. Verified in the Simulator: taps above and below the panel close it, a tap on the caption inside the panel doesn't. Verified on desktop (Chromium, 1440×900): backdrop click closes, panel click and a drag from the image onto the backdrop don't, focus returns to the figure. Not tested on a physical iPhone or on Android.
+- **`TF-05-authentication.png` re-exported** (1600×1452, PNG at 1x from the frame's own export settings, Figma `oIt1mAagsb5rIThaLCjvFt` node `4194:3276`), overwritten in place. Miguel fixed a small visual issue in the frame. A pixel diff against the previous export shows one real change: the blue return arrow's starting circle used to float just above the top-right corner of the "Try another account" button and now sits on the middle of the button's right edge. About 250 pixels changed in total, plus a few anti-aliasing pixels elsewhere. No mdx change (alt and caption still hold). The built file hash changed (`COwA8FJC` to `BMCeMzeP`), so production browsers won't serve a stale copy.
+
+## What changed in this session (2026-10-12, session 30: CV update)
+
+- **CV PDF replaced** with Miguel's new Pages export (new summary, current role, Skills moved below experience; title line "Senior Product Designer · B2B SaaS and mobile"), re-stamped with `?ref=cv`, committed as `a4d92e6` and live (2 pages; email, LinkedIn and portfolio links intact). Replaced again the same day (`6404b28`, live): the contact line now reads "Portfolio: migueljss.com", with the link still on the URL. Per-application copies in `docs/Applications/` were not regenerated.
+- **2026-10-13: CV replaced again** (`d4ca7f8`, live): new summary and current role, earlier roles merged into an "Earlier experience" entry, Skills below experience; re-stamped with `?ref=cv` (2 pages; email, LinkedIn and portfolio links intact). Per-application copies in `docs/Applications/` were not regenerated (they keep the older CV for the visit-rate comparison); new `/cv-stamp` runs use this version.
+
+## What changed in this session (2026-10-07, session 29, continued: zoom for tall figures)
+
+On branch **`zoom-tall-images`**, off `main` after PR #9. Changes in [ZoomDialog.astro](src/components/ZoomDialog.astro), plus two data attributes in [Figure.astro](src/components/Figure.astro) and [CompareImages.astro](src/components/CompareImages.astro).
+
+**The rule** (one helper, `shouldScroll`, and one constant, `MIN_FIT_SHARE = 0.7`):
+
+- Work out two widths: the width if the whole image fits on screen (today's behavior), and the width if only the width is fitted (capped at the natural width, so no upscaling).
+- If the whole-image width would be less than 70% of the width-fit width, the dialog switches to tall mode: the image fills the width and scrolls vertically inside the dialog, opening at the top. Otherwise nothing changes.
+- The available width and height are read from the dialog's computed CSS (`max-width`, padding, border, and the image's `max-height`), so the CSS stays the only source for sizes. The rule runs again on resize while the dialog is open.
+- Why 0.7: on laptop viewports, 1600×1055 figures land at about 0.77 to 0.89 and stay contained, while TF-05 (1600×1452) lands at about 0.56 to 0.66 and scrolls. When tall mode does apply, the image is always at least 43% taller than the available space, so a figure that would only overflow by a few pixels never gets a small scroll.
+- Triggers now pass `data-zoom-width` and `data-zoom-height`, so the decision happens before the image loads and nothing jumps.
+
+**Measurements** (layout sizes, Team Files, Chrome):
+
+| Figure | 1440×900 before | 1440×900 after | 1280×800 before | 1280×800 after |
+| --- | --- | --- | --- | --- |
+| TF-05 (1600×1452) | 833×756, fits | 1283×1164, scrolls (749px visible) | 732×664, fits | 1136×1031, scrolls (657px visible) |
+| TF-01 to TF-04, TF-07, TF-08 (1600×1055) | 1147×756 | same, no scroll | 1007×664 | same, no scroll |
+| TF-06 (1600×758) | 1283×608 | same, no scroll | 1136×538 | same, no scroll |
+| TF-09 (1600×720) | 1283×577 | same, no scroll | 1136×511 | same, no scroll |
+
+- **TF-05 readability when zoomed:** the image now shows at about 80% of the frame at 1440×900 (was 52%) and 71% at 1280×800 (was 46%). The failure modal's body text is about 9.5px at 1440 and 8.5px at 1280 (was about 6px), clearly readable at 1:1. Modal titles are about 13px and 12px. Account emails are about 7px and 6px.
+- **MyFoodways and Food Save:** all 12 figures measure identically on this branch and on `main` at 1440×900 (checked by stashing the change), with no scroll. MFW-02 (1600×940) and MFW-07 (1600×740) are wide and stay contained.
+- **Phone, 375×812:** every Team Files figure opens and closes normally, and none scroll. TF-05 included: on a portrait phone the width is the limit, so it already fills the full width (303×275). **Phone landscape, 812×375:** the 1600×1055 figures and TF-05 switch to scrolling, because there is so little height; the two wide figures stay contained. Worth a look in review; raising or lowering `MIN_FIT_SHARE` is the one place to tune it.
+- `/lab/components`: the Figure and CompareImages zooms open and close normally (CompareImages passes its sizes too).
+
+**Behavior fixed or added along the way:**
+
+- **Page scroll lock.** The page behind was not actually locked before: wheeling over the backdrop scrolled it (3000 to 3500px in a test). Now `html:has(.zoom-dialog[open])` sets `overflow: hidden` with `scrollbar-gutter: stable`, so the page doesn't move or shift. Verified with real wheel events over the image and the backdrop.
+- **Backdrop click is stricter.** It now closes only when both the press and the release land outside the dialog's box. A drag that starts on the image or scrollbar and ends on the backdrop no longer closes it (verified), and clicking the dialog's own padding no longer closes it either (before, it did).
+- **Focus.** In tall mode the scroll area gets `tabindex="0"` and focus on open, with the site's focus ring when opened by keyboard. Arrow keys and Space scroll it (verified with real key events). Shift+Tab reaches the close button; Esc and the close button work; focus returns to the figure on close. PageUp and PageDown couldn't be exercised: the test tool's synthetic PageDown doesn't scroll even a plain page. If a resize switches the dialog back to contained while the scroll area has focus, focus moves to the close button.
+- Unchanged: caption, alt, open and close transitions, reduced motion. `scrollbar-gutter: stable` and `overscroll-behavior: contain` apply only in tall mode, so contained figures don't get a gutter.
+- The design hook flags the dialog's empty `<img>` as a broken image. That's a false positive and predates this change: the script sets `src` before the dialog opens.
+- Build clean (0/0/0). No console errors from this change; two stale 500s in the dev log date from the renumbering, between the file renames and the import update.
+
+## What changed in this session (2026-10-07, session 29, continued: TF figure renumbering)
+
+Team Files figure files now follow render order, TF-01 to TF-09. The cover stays `TF-00-cover.jpg` (Figma frame `TF-00-cover-banner`). On branch **`tf-renumber-figures`**, off `main` after PR #8.
+
+| Old | New | Figma node |
+| --- | --- | --- |
+| TF-06-value-proposition | TF-01-value-proposition | `4070:4503` |
+| TF-07-ux-improvements | TF-02-ux-improvements | `4120:4227` |
+| TF-03-attach-files | TF-03-attach-files (unchanged) | `4070:4533` |
+| TF-02-connect-folder | TF-04-connect-folder | `4070:4475` |
+| TF-09-authentication | TF-05-authentication | `4194:3276` |
+| TF-10-narrow-views | TF-06-narrow-views | `4210:5062` |
+| TF-04-layout | TF-07-layout | `4070:4559` |
+| TF-05-automation-settings | TF-08-automation-settings | `4070:4581` |
+| TF-08-design-system | TF-09-design-system | `4178:3610` |
+
+- **Figma** (`oIt1mAagsb5rIThaLCjvFt`, page "Version 2"): the eight frames were renamed to the new names. Their export settings (PNG at 1x, no suffix) take the filename from the frame name, so a fresh export now lands on the right repo filename. Canvas positions and layer order were not touched. The "Version 1" page was not looked at or changed.
+- **Repo:** `git mv` for the eight files, so git records them as pure renames with unchanged bytes. The import block in [team-files.mdx](src/content/case-studies/team-files.mdx) was rewritten in render order; the variable names, alts and captions are unchanged. The two lab pages that use the layout figure ([components.astro](src/lab/pages/components.astro), [playground.astro](src/lab/pages/playground.astro)) now import `TF-07-layout.png`.
+- **Older HANDOFF entries keep the old names**, since they record what happened at the time. Use the table above to translate them.
+- Build clean (0/0/0). Browser check: the Team Files page renders TF-01 to TF-09 in order, each at its usual size, with no failed requests; `/lab/components` and `/lab/playground` load the layout figure.
+
+## What changed in this session (2026-10-07, session 29, Team Files shared folder authentication and narrow views)
+
+Copy plus two figures in [team-files.mdx](src/content/case-studies/team-files.mdx). The brief asked for a new branch off `main`, but most of its edits already sat on the unmerged `copy/team-files-shared-auth` (session 28, rooted on current `main`). So **`tf-auth-narrow-views`** was cut from that branch's tip: it keeps the session 28 copy and the TF-04 and TF-08 re-exports, and adds this session's work on top.
+
+- **Copy, checked against the brief word for word** (curly apostrophes kept, per the file's convention): Edit A (onboarding opener "dropping the separate Team Files sign-up"), Edit B (two shared folder paragraphs plus the TF-09 figure), Edit C (narrow views sentence at the end of the narrow spaces paragraph) and Edit D ("**Layout options.**" bullet) were already on the branch from session 28 and match. New this session: the TF-09 alt text was replaced with the brief's wording, and the TF-10 figure was added after the narrow spaces paragraph, before "Design execution".
+- **`TF-10-narrow-views.png`**, new: 1600×758, PNG at 1x, Figma `oIt1mAagsb5rIThaLCjvFt` ("Team-Files-app"), page "Version 2", frame node `4210:5062`. Imported as `narrowViews`. It shows the full-width file manager with folder actions in a right-hand column, and the narrow panel with the same actions under one "..." button, shown open, with a "Folder actions: grouped under one button" callout.
+- **`TF-09-authentication.png`**, re-exported: 1600×1452, node `4194:3276`, overwritten in place. The frame changed in Figma after session 28's export: modal text and buttons are larger, and the failure modal body now wraps to three lines. Callouts and arrows are unchanged.
+- Neither figure was resized, cropped or padded. Both render at their natural ratio: 718×652 and 718×340 in the 720px column at 1440.
+- **Not renumbered, on purpose.** Figures in render order (file, section):
+  1. TF-06-value-proposition, Product
+  2. TF-07-ux-improvements, Strategy
+  3. TF-03-attach-files, Core UX challenges
+  4. TF-02-connect-folder, Core UX challenges
+  5. TF-09-authentication, Core UX challenges
+  6. TF-10-narrow-views, Core UX challenges
+  7. TF-04-layout, Design execution
+  8. TF-05-automation-settings, Design execution
+  9. TF-08-design-system, Design execution
+
+  The cover (`TF-00-cover.jpg`) comes before all of them and isn't a Figure. Note that TF-03 also renders before TF-02, not only the new ones.
+- Build clean (0/0/0). Browser check at 1440: both figures are in the right spots with their captions; all 9 figures load; no 4xx responses, no console errors; the old onboarding sentence and old layout bullet are gone. No em or en dashes added.
+
+### Readability at the rendered width (reported, images unchanged)
+
+Sizes are CSS px at the 718px inline width (the frame is scaled to about 45%). Estimated from pixel crops at 1x and 2x and checked against 1:1 browser captures.
+
+- **TF-09:** callouts (Connected accounts, Access granted, Locked folders, Failed attempt) and "Account has no access" are about 11 to 13px and read easily. Modal titles ("Authenticate", "Authentication failed") are about 7.5px and readable. "Connected places", the Google Drive names, the "Access granted" toast title and the button labels are about 5.5 to 6px: readable if you look for them, sharper on retina. The failure modal body is also about 5.5px; it can be made out on retina with effort but not comfortably on a 1x display. It is clearer than session 28's export, where it was about 4 to 5px. Account emails, quota lines and folder subtitles are about 4px and unreadable, which is fine because they're texture. Zoom only gets the image to 833px wide at 1440×900, because the frame is tall, so the modal body is still about 6px there.
+- **TF-10:** the callout is about 12px and reads easily; the "Documentation Sample Folder" title is about 8px. File names (Images, Blue balance sheet.xlsx, DataJournalismHandbook.pdf, Geometric presentation.pptx, Report.docx) and the menu items (New folder, New document, Upload file, Ordering) are about 5.5px: legible on retina, soft on 1x. File size and date lines are about 4px. Zoom helps a lot here: the frame is wide, so the dialog shows it at 1283px and file names reach about 10px.
+- The story reads from the callouts and the overall shape in both figures, so neither depends on the small text.
+- Side note: in the Browser pane the `srcset` picked the 800w variant at 2x DPR. That is most likely the pane's scaled-down emulation, since `sizes` is `(min-width: 800px) 800px` and a real 2x browser should pick 1600w. It's unrelated to this change and was left alone.
+
+## What changed in this session (2026-10-02, session 28, continued: TF-04 and TF-08 re-exports)
+
+Images only, no copy or code changes. Second commit on branch **`copy/team-files-shared-auth`** (unmerged at the time, so it was reused instead of a new branch).
+
+- **`TF-04-layout.png`** re-exported (1600×1055, node `4070:4559`), overwritten in place. Callouts restyled: all three now have the check icon and a bold label with a colon ("Per issue or page: set layout options", "Preview: reflects the selected settings", "Admin: set default layout options"). The numbered "1" marker and the all-bold "Visualization of selected settings" callout are gone. Alt and caption left as they were; neither mentions a numbered step or "visualization".
+- **`TF-08-design-system.png`** re-exported (1600×720, node `4178:3610`), overwritten in place. The mdx already imported this file. The change is a hand cursor on the hover row.
+- Build clean (8 pages, 0/0/0). Both figures render at the same size and position as before (718×473 and 718×323 in the 720px column at 1440).
+- **Dev cache gotcha:** `astro dev` serves `/_image` URLs with a one-year `max-age` and the URL doesn't change when a file is overwritten in place, so a browser that already loaded the page keeps showing the old image. Hard-reload (or use a fresh profile) to see a re-export locally. Production isn't affected: the built file names carry a content hash, and both changed.
+
+## What changed in this session (2026-10-02, session 28, Team Files shared-folder authentication)
+
+Copy plus one new figure in [team-files.mdx](src/content/case-studies/team-files.mdx). On branch **`copy/team-files-shared-auth`** (off `main`), pushed at session close, **not merged** (see status above).
+
+- **New figure `TF-09-authentication.png`** (1600×1452, PNG at 1x), exported from Figma `oIt1mAagsb5rIThaLCjvFt` ("Team-Files-app"), page "Version 2", frame node `4194:3276`. Export checked against the frame: all four callouts (Connected accounts, Access granted, Locked folders, Failed attempt), the red "Account has no access" label, and all four arrows (blue to the account picker, green to Access granted, red down to the failure modal, blue return from "Try another account") are in.
+- **Core UX challenges copy:**
+  - Onboarding paragraph opener is now "Another turning point was dropping the separate Team Files sign-up that the app's first version required." (was "removing mandatory authentication").
+  - Two new paragraphs after "...every default state has to teach.": shared folders at larger companies (security and accountability), then the admin choice between simple sharing and per-person sign-in. The TF-09 figure follows them, before the narrow spaces paragraph.
+  - Narrow spaces paragraph gained a closing sentence ("In narrow views, attachments dropped secondary metadata first..."). Its own figure comes later; no placeholder added.
+- **Design execution:** the layout bullet is now "**Layout options.**" and no longer mentions responsive or mobile behavior.
+- **Not renumbered, on purpose.** TF-09 sits between TF-02 and TF-04 in page order. File names stay as they are until all new figures are placed.
+- Build clean (8 pages, 0/0/0). Browser-checked at 1440 and 375: figure in the right spot, no horizontal overflow, zoom dialog opens, no console errors. No em or en dashes, curly apostrophes throughout.
+
+### Flagged for Miguel (reported, nothing changed)
+
+- **TF-09 is only partly readable at the desktop figure width.** The prose column renders it at 718px, so the 1600px frame is scaled to about 45%. The four callouts and "Account has no access" land around 11px and read fine. Modal titles ("Authenticate", "Authentication failed") land around 6px: recognizable, not comfortable. The failure modal's body text, the button labels, and the folder and account names land around 4 to 5px and can't be read on a 1x display; on retina they are sharp but still too small to read without leaning in. The callouts carry the story on their own.
+- **Zoom helps less than on other figures.** The frame is taller than the other TF figures (1452 vs 1055), so in a 1440×900 window the zoom dialog is height-limited to 833px wide, only about 16% larger than inline. Modal body text is still around 5px there.
+- **At 375px** the figure is 333px wide; even the callouts drop to about 5px, so mobile readers depend on zoom.
+- Small thing in the frame itself: the blue return arrow runs up through the right edge of the failure screen, over the row behind the modal.
+
+## What changed in this session (2026-09-29, session 27, MyFoodways image)
+
+- Re-exported `MFW-01-product.png` (1600×1055) from Figma `m1vVaKCwVkvG4AtieNx7NW` ("MyFoodways"), node `193:4558`, overwriting the file in place. Miguel updated the left phone: now an Android device showing the "Just for you" suggestions screen (pasta salad with courgette), was an iPhone with "Your handpicked recipes". The right phone (search screen) is unchanged.
+- No mdx change: the figure's alt and caption describe only the search screen, so they still hold.
+- On branch `mfw-product-image`, merged via PR. Build clean (8 pages, 0/0/0).
+
+## What changed in this session (2026-09-29, session 27, continued)
+
+**Status: `tf-image-updates` merged to `main` via PR #6 (`606faca`) and live on migueljss.com.** Deploy succeeded; the live Team Files page shows the new design system figure and the corrected onboarding paragraph. The batch was merged before the remaining Team Files images were in, at Miguel's call; any further TF images go in a new branch. The `tf-image-updates` branch still exists locally and on origin.
+
+Third change in the `tf-image-updates` batch: text only.
+
+- Factual correction to the onboarding paragraph ("Another turning point...") in Core UX challenges of [team-files.mdx](src/content/case-studies/team-files.mdx). Inside issues, the app only appears once something is shared: users usually first met it as a file attached to an issue, which they could open or unlock by connecting their own cloud account. People who opened the app from the Jira apps menu landed in an empty file manager, and that's where the tour lived (was "a short in-app tour"). The following paragraph ("That call was strategic...") is unchanged.
+- Build clean (0/0/0), no em or en dashes added. Browser check done later in the session: new paragraph renders, old wording gone, next paragraph unchanged, no failed requests or console errors from the page.
+
+**Merge order (resolved):** `feat/design-lab` landed on `main` first (PR #5). `main` was then merged into `tf-image-updates` to open its PR; the only conflict was `HANDOFF.md`, resolved by keeping every session entry (the lab entry is relabeled "design lab session" since it was also numbered 27).
+
+## What changed in this session (2026-09-29, session 27)
+
+Second change in the open Team Files image batch on branch **`tf-image-updates`**. Merged via PR #6 (see status above).
+
+- New design system figure `TF-08-design-system.png`, exported from Figma `oIt1mAagsb5rIThaLCjvFt` ("Team-Files-app"), page "Version 2", frame node `4178:3610`, at **1600×720**. Intentionally wider than the other TF figures (1600×1055); not resized or padded. It shows the item component: content types with their own actions; normal, hover, and disabled states; and selection and nesting options.
+- In [team-files.mdx](src/content/case-studies/team-files.mdx), the `designSystem` import now points to it; the Figure (Design execution, after the design system paragraph) keeps its position, with new alt and caption. Surrounding text unchanged.
+- Deleted `tf-getting-started-system.png`, now unreferenced (session 20 had kept it because the Figma file had no matching frame; this frame replaces it).
+- Build clean (0/0/0). Rendered page resolves the figure to the new image in the same spot; renders at a 2.22 ratio with the frame matching the image (no cropping or letterboxing); no 404s or console errors. No em or en dashes added.
+- Session 26's uncommitted paragraph (below) was committed separately on the same branch in this session.
+
+## What changed in this session (2026-09-29, design lab session)
+
+Built a **design lab**, a Storybook-style workbench for Miguel to play with the system. On branch **`feat/design-lab`** (off `main`), merged to `main` via PR #5. Real Storybook was ruled out: its Astro support is experimental, and it would need React wrappers that drift from the shipped components.
+
+- **Dev only.** Lives in [src/lab/](src/lab/). [integration.mjs](src/lab/integration.mjs) injects the `/lab/*` routes only when `command === "dev"`, so nothing reaches `dist/` or the sitemap (verified after a build).
+- **Pages:** `/lab` overview; `/lab/tokens` (parses `tokens.css` as text on every request, so it can't drift: swatches with dark values and live WCAG contrast against the canvas, type scale, leading, tracking, weights, spacing, layout, radii, borders, shadows, hoverable motion tracks); `/lab/type` (element defaults, `mj-*` utilities, prose specimen); `/lab/components` (every component with variants and edge cases on real case study content, props tables, reveal replay); `/lab/playground` (retune semantic colors, fonts, type scale, spacing density, radius, motion speed across the whole lab, persisted in localStorage, with a copyable `:root` diff; never writes to `tokens.css`); `/lab/viewports` (any page in 375/768/1280 iframes, so media queries fire for real).
+- **Dark theme toggle** in the lab sidebar sets `data-theme="dark"`, exercising the dark token set that the site doesn't wire up yet.
+- **One production refactor:** the image zoom dialog (markup, script, styles) moved out of [BaseLayout.astro](src/layouts/BaseLayout.astro) into [ZoomDialog.astro](src/components/ZoomDialog.astro) so the lab can reuse it. No behavior change; zoom and Esc-to-close verified on the Team Files page.
+- Sample copy in lab stories (quotes, stat labels, the placeholder card) is marked as sample; no invented claims.
+- Build clean (8 pages, 0/0/0).
+- **Merge note:** sessions 25 and 26 are on `tf-image-updates` (session 26 uncommitted and stashed when this branch was cut: `git stash pop` after switching back). Expect a small HANDOFF.md conflict when both branches land; keep all three entries.
+
+## What changed in this session (2026-09-29, session 26)
+
+Copy-only, on branch `tf-image-updates` (committed in session 27).
+
+- New paragraph in [team-files.mdx](src/content/case-studies/team-files.mdx) "Core UX challenges": the connected-folder log story ("Support was one of the best places to do that noticing..."), placed after "On its own this is a small thing..." and before "Another turning point...". No figure, no other text changes.
+- Same paragraph also inserted in the gitignored `docs/Case Studies/cs-team-files.md` at Miguel's request, even though that doc is otherwise obsolete for published cases (see session 25).
+- Build clean (8 pages, 0/0/0); paragraph order confirmed in the built Team Files page.
+
+## What changed in this session (2026-09-28, session 25)
+
+First of several Team Files image updates, batched on branch **`tf-image-updates`**. Committed, **not pushed, PR still pending** until the remaining images are in.
+
+- New figure `TF-07-ux-improvements.png` (1600×1055, exported from Figma `oIt1mAagsb5rIThaLCjvFt`, node `4120:4227`) placed after the 2023 UX review paragraph, before "Core UX challenges", in [team-files.mdx](src/content/case-studies/team-files.mdx).
+- Same paragraph gained: "I also gave every file and folder action its own icon, so they could be scanned at a glance."
+- **Workflow change:** the mdx is now the source of truth for published case studies; the `docs/Case Studies/*.md` docs are obsolete for them (Claude Chat reads the mdx from the repo). CLAUDE.md updated. Surfaced because `cs-team-files.md` had drifted: its UX review paragraph has an extra sentence (Atlassian design system, larger metadata labels, revised contrast) that was never in the mdx. Miguel approved adding it to the mdx (after the error messages sentence), and the accessibility sentence after it was shortened to "...as it did through every release, from clear system feedback to error tolerance." to avoid repeating contrast and legibility.
+
+## What changed in this session (2026-09-28, session 24)
+
+Added cookieless analytics via **Umami Cloud** (free Hobby tier). Merged via PR #3 and live; confirmed a live pageview reaches `gateway.umami.is/api/send` (200). Chosen over Plausible (paid) and GA4 (needs cookies and a consent banner). No cookies or device storage, so no banner; disclosed on a new `/privacy` page linked from the footer.
+
+- **Config** in [src/lib/analytics.ts](src/lib/analytics.ts): script URL, website ID (`ae146c72-...`, public by design), `data-domains="migueljss.com"`. Also holds the `track()` / `tagReferral()` client helpers, which no-op quietly when the tracker is missing (dev, ad blockers).
+- **Tracker tag** rendered by [BaseLayout.astro](src/layouts/BaseLayout.astro) only in production builds with a non-empty ID. `data-domains` keeps `npm run preview` on localhost out of the stats.
+- **Events**: `Case study read` (end-of-article marker in [CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro), prop `case`); `Case study card` (props `case`, `from`: home/more); `Email click`, `LinkedIn click`, `CV open` (prop `location`: footer/outro/contact/about). Click events use Umami's `data-umami-event` attributes, no extra JS.
+- **Application links**: `?ref=<company>` (letters, digits, `-`, `_`; max 40) tags the Umami session via `umami.identify({ ref })`, so every page in that visit can be filtered by company. Company-level tags only, never a person's name (the privacy page says so).
+- **Miguel's side**: exclude own visits by running `localStorage.setItem("umami.disabled", 1)` in the console on migueljss.com in each browser used.
+- Verified: build 8 pages, 0/0/0; tracker renders only with an ID; read event fires once per view with the right slug; `ref` tagging lowercases and rejects junk values. Note for browser testing: when the Browser pane is hidden, IntersectionObserver doesn't fire, so front the pane before testing scroll events.
+- **CV stamper** for per-application tags: `npm run cv -- <tag>` ([scripts/stamp-cv.mjs](scripts/stamp-cv.mjs), uses `pdf-lib`, dev dependency) rewrites only the CV's clickable migueljss.com link to `?ref=<tag>` and saves to `docs/Applications/<tag>/Miguel Jesus - CV - Senior Product Designer.pdf` (gitignored; the company is never in the filename). Render is pixel-identical to the source, metadata untouched. Wrapped in a local project skill, `/cv-stamp <company>` (`.claude/skills/cv-stamp/`, not in git since `.claude/` is ignored), which also slugifies the name, logs `date,company,tag` to `docs/Applications/log.csv`, and reveals the file in Finder.
+- **Site CV now carries `?ref=cv`** (stamped in place). **When a new Pages export replaces `public/miguel-jesus-cv.pdf`, run `npm run cv -- cv --in-place` before committing**, or the tag is lost.
+
+## What changed in this session (2026-09-28, session 23)
+
+Copy-only pass on [team-files.mdx](src/content/case-studies/team-files.mdx) to align with Miguel's revised CV and LinkedIn. On branch `copy/team-files-cv-alignment`, **not merged or pushed** pending Miguel's review.
+
+- Applied: TOPDOX pivot sentence ("valued it but wouldn't pay, companies would"), Role opener (only one working as a designer; design-literate PO co-founder), Strategy sentence on trial-to-paid and retention after the 2023 UX review, design system paragraph sentence on developer time and consistency as product quality, Beyond the product sentence on site/listing experiments, Impact churn paragraph plus new quote lead-in, last Learnings bullet.
+- Skipped: the "Project Summary" Role and Impact lines (the case has no such block, only the `role`/`period` frontmatter shown in the meta line, and no impact field), and the Constraints "Instead of finalizing..." replacement (that sentence doesn't exist in the current MDX). Both need Miguel's call.
+- Leftovers flagged, not changed: "sole designer" still in team-files.mdx Role paragraph and on the About page (two spots); "around 3.7 stars" in the Impact sentence; `role: "Co-founder and founding designer"` frontmatter.
+- Follow-up (same session, same branch): `role` frontmatter is now "Product designer and co-founder"; Impact sentence now "used by over 9,000 companies and rated 3.7 out of 4 on the Atlassian Marketplace during my tenure"; dropped "As the sole designer," from the Role paragraph; Constraints paragraph's second sentence replaced with the CTO spec review wording (the old trailing clause "while still keeping core user experience principles intact" went with it).
+- **Done:** About page "sole designer" rewrites, confirmed by Miguel and applied to [about.astro](src/pages/about.astro) and mirrored in `docs/about-page.md`: intro now "For most of my career I've been the only designer on small teams, working directly with engineering and product."; Strategy paragraph now "As the only designer on small teams, I prioritized...". Constraints paragraph opener trimmed to "I worked closely with engineering from the start."
+- Branch `copy/team-files-cv-alignment` merged to `main` via PR #2.
+- Follow-up on `main`: Team Files "Beyond the product" opener trimmed to "My work didn't stop at the product." (dropped "As a founder and the only designer,").
+
+## What changed in this session (2026-09-25, session 22)
+
+- **CV PDF updated** ([public/miguel-jesus-cv.pdf](public/miguel-jesus-cv.pdf)) with Miguel's latest version. The site filename stays `miguel-jesus-cv.pdf` so existing links keep working. The Dropbox source was renamed: it's now `2026-01 Portfolio MJ + AI/Miguel Jesus - CV - Senior Product Designer.pdf` (was `CV Miguel Jesus - Senior Product Designer.pdf`).
+
+## What changed in this session (2026-09-14, session 21)
+
+Copy-only pass, Miguel's request: drop the "20+ years" / "since 2005" framing from headline copy on age-bias grounds, while keeping full work history and dates everywhere they already appear (case study role dates, about page timeline).
+
+- **Home hero subhead** ([index.astro](src/pages/index.astro)): "For 20+ years I've designed SaaS and mobile products..." → "I've spent the last decade designing SaaS and mobile products...".
+- **About H1 + opening paragraph** ([about.astro](src/pages/about.astro)): "Twenty years of designing clear experiences..." → "Designing clear experiences for complex products."; the lede's "I've been designing for over 20 years, starting in..." → "I started in graphic and web design, and have spent the last decade focused on...".
+- **Footer tagline** ([Footer.astro](src/components/Footer.astro)): "Designing with clarity and calm purpose since 2005." → "...for complex products."
+- **CV PDF swapped** ([public/miguel-jesus-cv.pdf](public/miguel-jesus-cv.pdf)), Miguel replaced the file directly, same filename so existing links keep working.
+- Repo-wide search also turned up "20+ years" in three internal docs (`PRODUCT.md`, `docs/portfolio-brief-claude-design.md`, `docs/about-page.md`) and the gitignored `docs/old md versions/about-page-mj.md`. Flagged rather than auto-changed, since they're not rendered site copy; Miguel chose to leave them as-is (historical/working docs, not corrected).
+- Build clean (7 pages, 0/0/0). Browser-verified hero, about, and footer render the new copy; case study role dates (2013, 2014, 2018 to 2025, etc.) untouched.
+- Shipped as commit `de02358`, pushed to `main`.
+
+## What changed in this session (2026-09-07, session 20)
+
+Fixed the default OG/share image (`public/og/default.png`, home/about/contact only, per-case-study images untouched) so it survives iOS's share-sheet square crop. Miguel spotted the bug live: sharing `migueljss.com` via the iOS Share Sheet showed a preview icon with "el Jesus" / "duct Designer", the tail ends of "Miguel Jesus" / "Senior Product Designer" cut off. Root cause: iOS crops a centered 630×630 square out of the 1200×630 `og:image` for that icon slot (x: 285–915); the old layout was left-aligned starting at x=96, so the crop landed mid-word. The `apple-touch-icon.png` itself was already correct, this was purely the OG image's design.
+
+- **Prototyped the fix in Figma first** (Miguel's request), on the "share assets" page of the [MJ Design System](https://www.figma.com/design/rUbsiKyYr0xITgTGVXJjJT/MJ-Design-System) file (new page, was empty), frame **"OG - Default (crop-safe)"** (`94:2`). Centered composition: a white rounded "MJ" badge (echoes `apple-touch-icon.png`, inverted for the cobalt field) above "Miguel Jesus" / "Senior Product Designer", a thin rule, then the tagline, all centered horizontally. Verified via bounding boxes that name (x 412–789) and tagline (x 390–811) both sit inside the 285–915 crop window with 100px+ margin. Miguel approved as-is, no refinements made.
+- **Ported to [scripts/build-og-image.mjs](scripts/build-og-image.mjs)**: replaced the left-aligned SVG layout with the centered one (badge rect + text, centered name/subtitle, centered divider + tagline). Also dropped the top-left radial vignette, the approved Figma frame is flat cobalt, matching the `apple-touch-icon` treatment more directly.
+- Regenerated `public/og/default.png`. Build clean (7 pages, 0/0/0).
+- This only touches the fallback OG image (home/about/contact). Per-case-study OG images are generated from each case's `banner` (a screenshot/product photo, not text), so they aren't subject to the same failure mode and weren't touched.
+
+## Where we are
+
+**Domain switch happened this session.** The portfolio now lives at **https://migueljss.com**, deployed via GitHub Actions to GitHub Pages, HTTPS enforced. Repo at **https://github.com/Dgigiu/mj-portfolio**. The old staging URL `https://dgigiu.github.io/mj-portfolio/...` redirects (301) to the matching path on the new domain, GitHub Pages handles this automatically now that the custom domain is registered.
+
+Astro is configured with `site: 'https://migueljss.com'` and no `base` (removed). All internal links use the normalized base exported from [src/lib/paths.ts](src/lib/paths.ts), which now just collapses to `/`.
+
+The staging-only `noindex` guard (added session 10) is gone automatically: it was keyed off the github.io host in `Astro.site`, which is no longer that host. Nothing to undo, this was the designed behavior.
+
+Build is clean (`npm run build` → 7 pages, 0 errors / 0 warnings). PageSpeed Insights on the live domain (mobile): 97 Performance / 95 Accessibility / 100 Best Practices / 100 SEO. The lone accessibility point is a known non-issue, see the session 19 changelog entry.
+
+## What changed in this session (2026-08-31, session 19)
+
+Miguel updated the background on the Figma frames for Food Save and MyFoodways; re-exported every frame already wired into the site for both cases and overwrote the existing files in place (same filenames, same node IDs as prior sessions, no mdx changes needed). Build clean (7 pages, 0/0/0), all images verified 200 with correct dimensions via the dev server.
+
+- **Food Save** (`RqT7cSB5meoG2VQu7ggWNo`, page "version 2"): re-exported `FS-02-library`, `FS-03-measure-detail`, `FS-04-tasklist`, `FS-05-home` (PNG, 1600×1055). `FS-00-cover-banner.jpg` and `FS-00-cover-thumb.jpg` also re-exported but came back byte-identical to the existing files, the cover frames weren't touched by this background update.
+- **MyFoodways** (`m1vVaKCwVkvG4AtieNx7NW`, page "v2", file key newly recorded here since it wasn't in HANDOFF before): re-exported all nine frames, `MFW-00-cover-banner.jpg`/`MFW-00-cover-thumb.jpg` (JPG, 1920×960 / 1200×900) and `MFW-01-product` through `MFW-08-post-launch-changes` (PNG, native frame sizes). All changed.
+- Also resolved the myfoodways `recipe2` open item from session 17/18 and cleaned the stale "Let's cook" second-screen paragraph out of `docs/Case Studies/cs-myfoodways-app.md` (gitignored staging doc, doc tidiness only, no code change).
+- **Home hero copy swapped** ([index.astro](src/pages/index.astro)), Miguel's revision, more conversational than the old "Calm products for complex work.": headline is now "Hi! I'm Miguel. I design products from first sketch to first release and beyond.", subhead "For 20+ years I've designed SaaS and mobile products, connecting user needs with business goals. A few of those stories are below." The old headline was short enough to need a manual two-line break (`.hero-break`, session 12); the new one is long enough to wrap naturally, so the forced break and its CSS (including the now-mobile-only override) were removed as dead code. Same `clamp(44px, 5.3vw, 72px)` font ceiling and 600px column, no other hero CSS touched. Browser-verified at 375/1024/1200/1440px: wraps to 3 to 5 lines depending on width, stays clear of the portrait at every size checked (the known session-12 overlap risk), no console errors. Build clean (7 pages, 0/0/0). Resolves the "Hero copy" item that was open since session 11.
+- **Team Files got its real images**, closing the last open placeholder-cover item from session 16. Figma file `oIt1mAagsb5rIThaLCjvFt` ("Team-Files-app"), page "Version 2" (node `4070:4347`, from the URL Miguel gave): exported `TF-00-cover-banner`/`TF-00-cover-thumb` (JPG, 1920×960 / 1200×900) and `TF-02-connect-folder`, `TF-03-attach-files`, `TF-04-layout`, `TF-05-automation-settings`, `TF-06-value-proposition` (PNG, 1600×1055), matching every frame the mdx already imports. Frontmatter `thumbnail`/`banner` repointed from the old single `TF-01-hero-cover.png` to the new two-image pair, giving Team Files the same cover treatment as the other two cases. Deleted the now-unused `TF-01-hero-cover.png` and `TF-01-hero.png` (the latter was already unused since session 11). `tf-getting-started-system.png` left alone, it's a real product screenshot, not a Figma export, and nothing in the Figma file corresponds to it. Build clean (7 pages, 0/0/0), verified via rendered HTML that both the case page and the home card resolve to the new files, no console errors.
+- **Team Files also got a whole-body text resync**, from Miguel's freshly updated **[docs/Case Studies/cs-team-files.md](docs/Case Studies/cs-team-files.md)** (the images landing prompted him to also update the doc, same day). Real content changes: a new paragraph and figure in Product contrasting a frozen Confluence attachment with Team Files' live preview (the `TF-06-value-proposition` figure moved here from "Beyond the product," which now has no figure); a new closing sentence on permissions settings in the connect-folder flow, with its figure caption updated to match; a new sentence on the attach flow's live preview, ditto; minor bullet rewording in Design execution. All five newly-real figure alt/captions were rewritten from the doc since the old ones were written blind against placeholders before any real image existed. One conflict surfaced and was resolved with Miguel: his first doc pass had softened the Impact stat to "used by thousands of teams" and dropped the 3.7-star rating from that sentence, which would have regressed the "over 9,000 companies" figure standardized in session 7 (see "Decisions that must not regress"). Flagged it before writing; Miguel fixed the doc itself to restore "over 9,000 companies" (specifically "companies," not "teams") with the rating, so the shipped text matches the doc exactly, no override needed. Dropped the unused `CompareImages` import. Headings normalized to the site's sentence-case/no-ampersand convention as usual (`Problem & Context` → `Problem and context`, etc.), doc's `FIGMA:` placeholders left as-is (this doc wasn't asked to have them replaced with real paths, unlike food-save's). Build clean (7 pages, 0/0/0), all 8 figures verified rendering in order with 200s, no console errors.
+- **Collapsed thumbnail + banner into a single cover image**, discussed and greenlit by Miguel after noticing the OG image (1200×630, 1.905:1) is nearly the same ratio as the banner (was 1920×960, 2:1). One export now covers the case page hero, the home + "more case studies" cards, and the per-case OG/share image, replacing the two-image-per-case system from session 16.
+  - **Schema** ([config.ts](src/content/config.ts)): `thumbnail` field removed. `banner` is now the only cover field, documented as 1200:630, export 1920×1008 (previously 1920×960 for banner, 1200×900 for thumbnail).
+  - **New unified ratio, 1200:630, everywhere a cover shows**: [CaseStudyCard.astro](src/components/CaseStudyCard.astro)'s `.card-media` (both the home-grid and the compact "more case studies" variant, which was `16:10`) and [CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro)'s `.cover-img` (was locked to `2:1`) all changed from their old ratios to `aspect-ratio: 1200 / 630`. `object-fit: cover` still guards against an export that isn't exact.
+  - **Per-case OG image generated at build time from `banner`**, no more per-case static files needed: `CaseStudyLayout.astro` calls `getImage({ src: banner, width: 1200, height: 630, fit: "cover", format: "webp" })` and passes the result's `.src` straight to `BaseLayout`'s `ogImage` prop. `fit: "cover"` matters: without it, `getImage` preserved the source's own ratio and ignored the requested height (produced 1200×600 from the still-2:1 interim source, not 1200×630) rather than cropping to the requested box. The generic `og/default.png` (home/about/contact, [scripts/build-og-image.mjs](scripts/build-og-image.mjs)) is untouched, it's just the fallback now for pages with no `banner`.
+  - **`BaseLayout.astro`'s `ogImage` prop simplified**: used to be a bare filename the layout concatenated with `base` (`"og/default.png"` → `${base}${ogImage}`), which can't accept an `astro:assets` result since `getImage()`'s `.src` already includes `base` itself. Now `ogImage` is a full site-root-relative path end to end (default value computed the same way, `` `${base}og/default.png` ``), and `BaseLayout` just does `new URL(ogImage, Astro.site)`.
+  - **Assets renamed and unused files dropped**: `<PREFIX>-00-cover-banner.jpg` → `<PREFIX>-00-cover.jpg` for all three cases (`git mv`, history preserved); the three now-unused `<PREFIX>-00-cover-thumb.jpg` files deleted. All three mdx frontmatters updated to the single `banner:` field pointing at the renamed file.
+  - **New 1920×1008 exports landed same session**: Miguel updated all three Figma covers in place (same node IDs, `FS-00-cover-banner`/`MFW-00-cover-banner`/`TF-00-cover-banner` frames resized from 1920×960 to 1920×1008, the separate thumb frames deleted from all three files). Re-exported and swapped in at the renamed paths. The `fit: "cover"` transitional crop mentioned above is no longer doing any real work now that the source matches the target ratio exactly, confirmed by the generated OG webp coming out at precisely 1200×630 (no longer 1200×600 short of target, which is what an unmatched ratio without `fit: "cover"` would have produced).
+  - Build clean (7 pages, 0/0/0), browser-verified: OG meta tag resolves to a real `1200×630` webp per case study (verified pixel dimensions with the new sources, not just the URL), home cards and case-page hero both render at the new ratio with the actual new compositions, no console errors, no leftover `thumbnail` references anywhere in `src/`.
+- **Home hero headline split into two visual beats** ([index.astro](src/pages/index.astro)), Miguel's follow-up once the single-block headline was live: "Hi! I'm Miguel." reads as its own line at the full size, then a gap, then "I design products from first sketch to first release and beyond." wraps on its own at a smaller size for hierarchy (Miguel supplied a reference screenshot of the target look). Markup: the `<h1>` now wraps two `<span>`s (`.hero-title-lead`, `.hero-title-body`) instead of one text node, still a single `<h1>` landmark. `.hero-title-body` is `font-size: 0.65em` (relative to the h1's own responsive `clamp(44px, 5.3vw, 72px)`, so it scales at every breakpoint without its own clamp) with slightly tighter `letter-spacing: -0.02em`. Both spans are `display: block` with `text-wrap: balance` set directly on each, since making them block-level splits the h1 into two separate wrapping contexts and balance doesn't inherit across that split. The `margin-bottom: 0.25em` gap between them is on `.hero-title-lead`, also em-based off its own (full) size. Browser-verified at 375/1440/1920px against Miguel's reference, no console errors, build clean (7 pages, 0/0/0).
+- **Domain switch to migueljss.com, executed.** Miguel added DNS at his registrar (Namecheap): 4× A records on `@` to the GitHub Pages IPs (`185.199.108.153`–`.111.153`) and a CNAME on `www` → `dgigiu.github.io`. First pass had two of the four A records mistakenly on `www` instead of `@`; caught and corrected before proceeding. Once DNS was confirmed:
+  - **astro.config.mjs**: `site` → `https://migueljss.com`, `base` removed entirely.
+  - **public/robots.txt**: sitemap URL updated to `https://migueljss.com/sitemap-index.xml`.
+  - **public/CNAME** created with `migueljss.com` (new file, wasn't in the repo before).
+  - **Custom domain registered on GitHub Pages** via `gh api -X PUT repos/Dgigiu/mj-portfolio/pages -f cname=migueljss.com`. Confirmed via `gh api repos/Dgigiu/mj-portfolio/pages`: `html_url` now `http://migueljss.com/`, DNS already showing verified (`pending_domain_unverified_at: null`) since the records were in place first, HTTPS cert in progress (`https_certificate.state: "authorization_created"`, `https_enforced: false` until that finishes).
+  - No other code changes needed: both `src/lib/paths.ts`'s `base` export and `BaseLayout.astro`'s staging-`noindex` guard were written back in sessions 10–11 specifically to self-resolve at this exact moment (base collapses to `/`, noindex clears because `Astro.site.hostname` no longer ends in `github.io`), and did.
+  - Build clean (7 pages, 0/0/0), verified in the built output: all internal links root-relative (no `/mj-portfolio/` prefix), zero `noindex` occurrences, canonical/`og:image`/sitemap all point to `migueljss.com`, `CNAME` file present in `dist/`. Browser-verified the dev server serves correctly at `/` with no base prefix.
+  - **Fully verified live, same session**: cert reached `"approved"` for both `migueljss.com` and `www.migueljss.com` within a couple minutes (DNS was already correct going in, so no waiting on propagation). Enabled `https_enforced` via `gh api -X PUT repos/Dgigiu/mj-portfolio/pages -F https_enforced=true` (note `-F` not `-f`, the endpoint rejects a string `"true"` for a boolean field). Confirmed live: `https://migueljss.com/` and sub-paths serve 200 with the correct content; `https://www.migueljss.com/` 301s to the apex; **old staging URLs redirect to the matching path on the new domain**, not just the homepage (`https://dgigiu.github.io/mj-portfolio/work/team-files/` → `https://migueljss.com/work/team-files/`, 301), better than the flat "path breaks" HANDOFF originally expected. Plain `http://migueljss.com/` returned 200 instead of redirecting right after flipping `https_enforced`; confirmed minutes later it was just edge-cache propagation lag, `http://` now correctly 301s to `https://migueljss.com/`. Domain switch is fully done, nothing left open.
+- **PageSpeed Insights run on the live domain** (mobile): Performance 97, Accessibility 95, Best Practices 100, SEO 100. FCP 1.5s, LCP 1.8s, TBT 0ms, CLS 0, Speed Index 3.8s. The one accessibility deduction is a contrast finding on the home cards' `.card-summary`/`.card-meta`/`.card-cta`, traced to the `[data-reveal]` scroll animation's 0.75 pre-reveal opacity (Lighthouse snapshots off-screen cards mid-animation; the underlying colors pass AA at full opacity). Miguel confirmed this isn't a real issue and it should stay as-is, not a code fix; see [[project_lighthouse_contrast_false_positive]] in memory so a future audit doesn't re-flag it as new. Two minor performance insights noted but not acted on: cache lifetimes (~272 KiB, largely outside our control on GitHub Pages' CDN) and render-blocking requests (~1,170ms).
+
+## What changed in this session (2026-08-29, session 18)
+
+Full resync of [food-save.mdx](src/content/case-studies/food-save.mdx) from **[docs/Case Studies/cs-food-save-app.md](docs/Case Studies/cs-food-save-app.md)**, plus the first real image set for this case (previously all placeholders). Build clean (7 pages, 0/0/0), all 5 new images verified 200 in-browser and correctly wired into both the case page and the home card.
+
+- **Images exported from Figma** (`RqT7cSB5meoG2VQu7ggWNo`, page "version 2") via the Figma MCP: `FS-02-library`, `FS-03-measure-detail`, `FS-04-tasklist`, `FS-05-home` (all PNG, 1600×1055, matching the existing UI-screen convention) and the cover, exported as **both** `FS-00-cover-banner.jpg` (1920×960) and `FS-00-cover-thumb.jpg` (1200×900). Only the banner frame was asked for, but a matching `FS-00-cover-thumb` frame already existed in the Figma page at exactly the 1200×900 target from the session-16 spec, so I exported it too rather than reusing the banner for both slots. This finally gives food-save the same two-image cover treatment myfoodways got in session 17 (the open item from that session). Format followed the established pattern exactly: jpg for the photographic cover (hand holding a phone), png for the UI-screen frames, scale 1, filenames matching frame names verbatim.
+- **Old placeholder images deleted**: `FS-01-hero-cover.png`, `FS-01-hero.png`, `FS-03-tasklist.png` (content now `FS-04-tasklist.png`), `FS-04-home.png` (content now `FS-05-home.png`).
+- **Whole-body rewrite from the doc**, same approach as session 17's myfoodways pass. New content folded in: a "Home" subsection under Design execution (previously the home screen had no dedicated write-up), a sentence about sharing a measure directly with a colleague in Measure library, and a closing Collaboration paragraph tying the user research back to the budget-saving implementation choice. Measure library and Measure detail are now two sequential `<Figure>`s instead of a `<CompareImages>` side-by-side, matching how the doc presents them as full multi-panel screens rather than single-screen comparisons; `CompareImages` import dropped since nothing uses it anymore in this file.
+- **Bullet-list semicolons restored to match the doc**, consistent with [[feedback_bullet_list_punctuation]] and the immediately preceding commit that did the same for myfoodways: the UX design learnings list (previously plain periods, a leftover from session 6 before that convention was established) now uses semicolons with a final full stop, like every other list in this file.
+- **Minor editorial smoothing kept from the pre-existing text over the doc's raw phrasing** in two spots, both same-meaning, not content changes: the Role section's "Moritz and Mark (Swiss Foodways team → United Against Waste)" stayed as flowing prose rather than the doc's arrow shorthand; the Part of a pair section's "Food Save suggested measures to adopt; the Waste Tracker showed..." kept its semicolon over the doc's comma splice.
+- **Doc file itself updated too**: replaced all five `FIGMA:name` placeholders in `cs-food-save-app.md` with real relative paths to the exported assets, per this session's explicit request (the myfoodways doc was left with its placeholders after its session-17 resync; this is a deliberate difference this time, not an inconsistency to fix).
+
+## What changed in this session (2026-08-28, session 17)
+
+Full resync of [myfoodways.mdx](src/content/case-studies/myfoodways.mdx) from Miguel's **[docs/Case Studies/cs-myfoodways-app.md](docs/Case Studies/cs-myfoodways-app.md)** (edited with Claude Chat). First pass in this session had only folded in the images + accessibility section and left the rest of the older prose alone; Miguel flagged that his broader text edits weren't showing up, so this pass rewrote the whole body from the doc, not just the diff. Build clean (0/0), all images verified 200 + decoding in-browser, 8 figures render in the right order.
+
+- **Whole-body rewrite from the doc.** Every section (Product, Problem and context, Research, Solution strategy, Key features, Accessibility, Collaboration, Impact and reflections) now matches the doc's current text. Only normalized two established, pre-existing site conventions that predate this case: sentence-case headings ("Problem and context" not "Problem & Context" — matches food-save.mdx/team-files.mdx) and curly quotes/apostrophes (per the "use typographic apostrophes and quotes" commit). Also US-spelled "Favorites" (doc had UK "Favourites") per the site's US English rule, and dropped bullets' trailing semicolons to match the site's no-trailing-punctuation list style.
+- **Structural change carried over from the doc:** Problem and context now runs as two sequential single figures (problem image → paragraph → solution image) rather than the old side-by-side `<CompareImages>`. `CompareImages` import removed from this file since nothing uses it anymore.
+- **Accessibility is its own top-level section** (`## Accessibility over time`), after Key features, before Collaboration. Two new figures in it: `MFW-07-accessibility.png` and `MFW-08-post-launch-changes.png`.
+- **Covers switched to jpg.** Miguel exported both `.jpg` and `.png` versions of the covers on purpose (jpg for compression, since they're photographic). Switched `thumbnail`/`banner` to the `.jpg` sources and deleted the now-unused `.png` duplicates. Both jpgs confirmed exact target dimensions: thumb 1200×900 (4:3), banner 1920×960 (2:1).
+- **Renamed on disk:** `MFW-01-hero.png` → `MFW-01-product.png`; `MFW-08-post launch changes.png` → `MFW-08-post-launch-changes.png` (spaces break JS imports).
+
+### Open item for Miguel
+
+- ~~`MFW-05-flexible-recipe2.png` still doesn't exist~~ — resolved (session 19, 2026-08-31): recipe2 was never a second screen, it was a newer version of the same recipe image. `MFW-05-flexible-recipe.png` is the current, correct file; no second figure needed. The doc's `cs-myfoodways-app.md` still has a stale "Let's cook" second-screen paragraph and `FIGMA:MFW-05-flexible-recipe2` placeholder left over from before this was resolved (gitignored staging file, not cleaned up).
+- ~~The other two case studies (food-save, team-files) still point `thumbnail`/`banner` at their old single hero-cover placeholder~~ — food-save got its real images and two-image cover treatment in session 18; team-files got the same in session 19. All three case studies now have real, two-image covers.
+
+## What changed in this session (2026-08-28, session 16)
+
+Split the single case-study `cover` image into **two independent images per case** so Miguel can compose and crop the home card and the case-page hero separately. Miguel is producing the new images; this session was the code side. Build clean (`npm run build` → astro check + 7 pages, 0 errors).
+
+- **Schema ([src/content/config.ts](src/content/config.ts)):** `cover` removed; replaced by two optional fields, `thumbnail` and `banner`. Each falls back to the other in code, so a case with only one image still renders everywhere.
+- **Wiring:** [CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro) hero now uses `banner ?? thumbnail`; home cards ([index.astro](src/pages/index.astro)) and the "More case studies" list use `thumbnail ?? banner`. [work/[slug].astro](src/pages/work/[slug].astro) passes both through. `CaseStudyCard`'s prop stayed the generic `cover` (caller decides which image to feed it).
+- **All three MDX files** (food-save, myfoodways, team-files) now set both `thumbnail` and `banner` to the existing `*-hero-cover.png` as a placeholder, so nothing breaks until the new images land.
+
+### Image target sizes (for the new images)
+
+- **Thumbnail (home + "more case studies" cards):** hard **4:3** crop, `object-fit: cover` trims overflow. Max on-screen width 456px; Astro emits 480/800/1200 variants. **Export 1200 × 900 px.** Keep key content off the edges (center-cropped) and clear of the rounded corners.
+- **Banner (case study page hero):** locked to **2:1** (illustrative strip), enforced via `aspect-ratio: 2 / 1` + `object-fit: cover` on `.cover-img` so it reserves space (no layout shift) and crops any off-ratio export instead of distorting. Max on-screen width 960px (`--content-wide`); Astro emits 960/1440/1920 variants. **Export 1920 × 960 px.** Miguel chose 2:1 since the banner is now more illustrative than the old cover.
+
+**When new images land:** drop files into `src/assets/case-studies/<slug>/`, point `thumbnail:` and `banner:` at them in each MDX frontmatter (currently both point at the same placeholder), then `npm run build`.
+
+## What changed in this session (2026-07-01, session 14)
+
+Design-system work, mostly in the **Figma** file (MJ Design System, `rUbsiKyYr0xITgTGVXJjJT`), plus a token wire-up in code. No site UI changed; the new accents have no consumer in the Astro site yet (there is no badge/annotation component), so this is design-system-only until those ship. Not yet browser-relevant, so no build/preview run.
+
+- **Spacing + radius variables added to Figma** (Primitives collection): `spacing/0…40` (8pt grid, mirrors `tokens.css`, scoped WIDTH_HEIGHT + GAP) and `radius/none…pill` (scoped CORNER_RADIUS). Code already had these; this brought Figma to parity.
+- **Second accent = gold `#e89e15`** ("accent 2"). Context: Miguel needs annotation badges (warning triangle, etc.) that read over case study screenshots; the old `status/warning` amber washed out. Gold is cobalt's near-complement. In Figma: new `gold/*` primitive ramp; the existing `accent2/*` semantic tokens were **repointed** from sienna to gold (they already backed the warning badge, so it flipped automatically).
+- **Decoupled connector from badge.** Key finding: no gold can be both "gold" and dark enough to stay legible over the grey Figma board (a thin dashed line needs luminance contrast; gold is intrinsically light). So the badge carries the color and the **connector line goes neutral ink**. The Step Connector component's `Color=Warning` variant became `Color=Ink` (rebound to `ink/700`). `Color=Cobalt` left as-is. **Caveat for next session:** if the Step Connector is consumed as a library component in the case-study working file, those instances may need reattaching after the variant rename.
+- **Icon contrast fix (AA).** White over gold is only ~2.3:1 (fails). The warning glyph now uses a new `accent2/on-accent2` token → `ink/900` (`#181818`, ~7.8:1). The cobalt star glyph keeps white `fg/on-accent`. So "on-accent" is per-accent now: white on cobalt, ink on gold.
+- **Sienna `#b8420a` kept as "accent 3"** (optional, minimal details, nothing uses it yet). New `accent3/*` tokens aliased to the `sienna/*` primitives. Figma colors page reorganized: sections now Cobalt · accent → **Gold · accent 2** → Sienna · accent 3.
+- **Wired into [tokens.css](src/styles/tokens.css):** added `--accent2*` (+ `--accent2-on: var(--ink-900)`) and `--accent3*` blocks after the cobalt accent, with matching dark-mode overrides. `--accent2-on` intentionally stays `--ink-900` in dark mode too (gold badge stays light in dark, so its glyph stays dark).
+- **DESIGN.md not regenerated** — its color frontmatter/prose still describes only cobalt. Regenerate with `/impeccable document` when convenient, or leave until the accents actually appear in the UI.
+
+## What changed in this session (2026-07-01, session 15)
+
+Ran `/impeccable document` (refresh mode) to bring [DESIGN.md](DESIGN.md) and its sidecar [.impeccable/design.json](.impeccable/design.json) up to date with what's actually shipped and tokenized; no site code changed. Also updated the impeccable skill itself, v3.5.0 → v3.9.0 (`npx impeccable skills update`).
+
+- **Gold/sienna documented as reserved, not live.** Added Secondary (gold `#e89e15`) and Tertiary (sienna `#b8420a`) color groups to DESIGN.md, both marked token-only with a new **Reserved Accent Rule**: neither has a consumer in the shipped site (the annotation-badge component they were built for hasn't been built), so nothing should reference `--accent2`/`--accent3` yet.
+- **Fixed a real inaccuracy, not just an omission.** The prior DESIGN.md's "One Blue Note Rule" claimed cobalt appears only at interaction points, which the shipped site has contradicted since session 12 (full-bleed hero panel, hero glow, contact band, footer strip are all non-interactive cobalt). Added a **Sanctioned Surfaces Rule** naming the four approved uses explicitly, so the doc now matches HANDOFF's "Decisions that must not regress" instead of silently disagreeing with it.
+- **Documented two components that existed in code but not in the doc:** the Case Study Card's benefit standfirst line (serif, primary ink, deliberately not cobalt) and a new "Cobalt Band" signature component covering the ContactOutro/Footer pairing (two-tone full-bleed cobalt, shared hover-to-Cobalt-Line pattern).
+- **Do's and Don'ts** gained matching entries: gold-on-white AA failure (2.3:1, use Gold-On-Ink `#181818` instead), and a guard against adding a fifth full-bleed cobalt surface without the same sign-off the original four got.
+- Sidecar `.impeccable/design.json`: added `colorMeta` tonal ramps for gold/sienna, a new "Cobalt Band" component snippet, and synced `narrative` (rules/dos/donts) verbatim with the DESIGN.md prose.
+
+## What changed in this session (2026-06-15, session 13)
+
+Two mobile fixes Miguel spotted on his phone. Both shipped to `main` (deploy green); browser-verified at zero-inset for no regression, build clean (7 pages, 0/0/0). The dynamic-island fix was confirmed on-device (landscape, Brave).
+
+- **Nav baseline alignment** ([Nav.astro](src/components/Nav.astro)): `.nav-inner` went `align-items: center` → `align-items: baseline`. The wordmark is `--text-lg` and the links `--text-md`; centering two sizes left their text baselines offset (the larger wordmark sat lower). Baseline alignment sits them on the same line.
+- **Safe-area insets / dynamic island** ([BaseLayout.astro](src/layouts/BaseLayout.astro), [global.css](src/styles/global.css)): in landscape on Brave, container text slid under the dynamic island; Safari looked fine. Cause: no `viewport-fit=cover` on the viewport meta, so `env(safe-area-inset-*)` resolved to 0 and only Safari silently inset the layout. Fix: added `viewport-fit=cover`, and `.container` now pads with `max(var(--container-pad), env(safe-area-inset-left/right))`. Insets are 0 in portrait and on non-notched devices, so padding falls back to `--container-pad` unchanged (verified: 33.76px at 844px wide, identical to before). Side effect to know: with `viewport-fit=cover` the full-bleed bands (hero, contact, footer) now extend under the island area too, which is correct since they're meant to be edge-to-edge color/image. `Figure.bleed` still breaks out by `--container-pad` only, so a bleed figure stays just inside the island inset in landscape (acceptable, landscape-only edge case).
+
+## What changed in this session (2026-06-12, session 12)
+
+A "more impactful home page" pass that started as a `/ui-ux-pro-max` exploration (three directions mocked: refined, full-cobalt poster, hybrid; Miguel picked the **hybrid**) and grew into a full home-page rework plus a case-page cleanup. Shipped across several commits, each browser-verified and `astro check` / `npm run build` clean (7 pages, 0/0/0). Headline sizing and the exit veil were tuned live with Miguel. Several changes deliberately widen where cobalt is allowed (see the note in "Decisions that must not regress"). Everything below is live on `main`.
+
+- **Louder, more graphic hero** ([index.astro](src/pages/index.astro)): added a single `.hero-glow` element, a deeper-cobalt bloom (`--accent-press` radial via `color-mix`) anchored to the top edge (`at 80% -12%`, `opacity: 0.9`), behind the portrait and vignette (`z-index: 0`). First pass sat it in the top-right corner at 0.55 and was invisible (hidden behind the portrait, and `--accent-press` is close to the panel value); moving it to the top edge where bare cobalt shows and raising the opacity made it read as a tonal field (deep cobalt up top, brand cobalt lower). Same hue family, so it's depth, not a second color. Hero copy and structure are otherwise unchanged (the minimal-hero decision still holds: no eyebrow, no meta line, chevron only).
+- **Outcome-led work cards** ([CaseStudyCard.astro](src/components/CaseStudyCard.astro)): reordered to **title → benefit → description → meta → CTA** (was meta → title → summary → CTA). The benefit is a new serif standfirst in primary ink at `--text-lg`; the description follows in `--text-md` secondary. Benefit is intentionally **not** cobalt (it is static, not interactive) so the only blue on a card stays the "Read the case study" CTA. Compact variant (the "More case studies" grid) is untouched: still meta-above-title, no benefit/description.
+- **New `benefit` field** ([config.ts](src/content/config.ts), optional string) added to all three case studies, authored as the summary's first sentence. The card strips it from `summary` (`startsWith` slice) to form the description, so nothing is printed twice. The full `summary` is unchanged and still single-sources the case-page lead and SEO/OG description.
+- **Cobalt contact band** ([ContactOutro.astro](src/components/ContactOutro.astro)): the shared outro is now a full-bleed `--accent` band with white text (matching the hero's white-on-accent contrast treatment, `rgba(255,255,255,0.92)` for body). Content is unchanged (Get in touch, availability line, email at title scale, LinkedIn/CV secondary); the email and secondary links went white with an `--accent-line` hover. Applies on home and every case page (about/contact do not use it).
+- **Darker-cobalt footer** ([Footer.astro](src/components/Footer.astro)): the legal/copyright strip is now an `--accent-press` band with white-ish text (`rgba(255,255,255,0.78)`), replacing the paper strip with the hairline top border. Its old `margin-top: --space-24` gap was removed, so on home/case pages it sits flush under the `--accent` contact band as a two-tone cobalt foot; on about/contact (no band above) it's a self-contained end-cap below the paper content, which keeps its own bottom padding. This is a fourth sanctioned non-interactive cobalt surface.
+- **Two-line headline** ([index.astro](src/pages/index.astro)): "Calm products for complex work." is forced to two lines via a responsive `<br class="hero-break">` (dropped below 480px, where it wraps naturally). Font ceiling is `clamp(44px, 5.3vw, 72px)` and the text column went 560 → 600px. The 5.3vw rate (not steeper) is deliberate: it holds 72px down to ~1360px then eases the title smaller through the laptop range so the second line clears the portrait, which sits closer to the text as the viewport narrows. A fixed 72px overlapped the figure by ~50px at 1200px. Pixel-verified clear (glyph edge vs. the figure's opaque pixels) 1100–1440px. The whole block is nudged down `--space-12` via `transform: translateY`.
+- **Hero scroll exit veil** ([index.astro](src/pages/index.astro)): a `.hero-veil` curtain (gradient transparent → translucent `--accent-press` at 70% via `color-mix` → solid deep navy `#080e20`, the vignette's navy; opacity ramps across the stops so the mid band stays readable and only the bottom edge fully covers) parked one panel height below the hero (`top: 100%`), so it's invisible at rest, without JS, and under reduced motion. The existing rAF scroll handler raises it via `--veil-shift` at `VEIL_RATE = 0.8` of scrollY (capped at 1.25× panel height); added to the panel's own scroll travel it climbs at ~1.8× and washes the portrait in cobalt-to-navy as the hero exits. Sits above the portrait but below the text (`z-index: 3`), so the headline stays legible. Rate was tuned with Miguel live: tried 1.0 and 0.9, both read too fast; landed on 0.8.
+- **Removed the case-page skim layer** ([CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro), [[slug].astro](src/pages/work/[slug].astro)): the "On this page" anchor row (added session 11) is gone, Miguel found it unnecessary for these short case studies. Dropped the `.case-toc` markup and styles, the `tocEntries`/`headings` prop, and the `headings` pass from `[slug].astro`. Kept `scroll-margin-top` on prose h2s (still useful for any deep-link anchor). Do not re-add the TOC.
+- Parked idea saved to memory (`project_featured_case_idea`): a larger "featured" case row, revisit at 4+ case studies. Miguel declined it now as over-emphasizing one of three.
+
+## What changed in this session (2026-06-11, session 11)
+
+Installed the **impeccable** design skill (`npx impeccable skills install` → `.claude/skills/impeccable/`, plus a `.github/` copy) and ran its `init` flow. No site code changed.
+
+- **PRODUCT.md** (new, project root): strategic design context. Register: brand. Captures audience, purpose (incl. Porto remote/hybrid constraint), personality, anti-references, five design principles, accessibility commitments. Miguel's note: Linear/Vercel are a calibration for restraint, not a look to copy; "tech-minimal mimicry" is now a named anti-reference.
+- **DESIGN.md** (new, project root): visual system spec in the Stitch DESIGN.md format, generated from `tokens.css` and the shipped components. North Star: "One Blue Note". Accent named "Working Cobalt". Descriptive only: `src/styles/tokens.css` remains the canonical token source.
+- **`.impeccable/design.json`**: sidecar with shadow/motion/breakpoint tokens and rendered component snippets for impeccable's live panel.
+- **`.impeccable/live/config.json`**: live mode preconfigured (inject into BaseLayout.astro before `</body>`; no CSP in the project).
+- **CLAUDE.md**: added a "Design context" section pointing at PRODUCT.md and DESIGN.md.
+- Note: future impeccable commands (`/impeccable critique <page>`, `audit`, `polish`, ...) read PRODUCT.md and DESIGN.md first. The skill's scripts were blocked by the permission classifier this session; the init flow was executed manually from the skill's reference docs.
+
+Later in the session: ran `/impeccable critique` (site-wide, scored 34/40, snapshot in `.impeccable/critique/`), and Miguel approved fixing everything it raised. Changes shipped:
+
+- **Custom 404** ([src/pages/404.astro](src/pages/404.astro)): wordmark voice, links to Work and Contact. Built `404.html` confirmed in dist; excluded from the sitemap. Matters for the domain switch (old `/mj-portfolio/...` URLs will 404 on the new domain).
+- **Shared contact outro** ([src/components/ContactOutro.astro](src/components/ContactOutro.astro)): home and case study pages now end on the same beat; the email address is the one line at title scale (cobalt, clamps xl to 3xl). Replaced the old inline outro on the home page; case pages gained it after "More case studies".
+- **Case study skim layer**: `[slug].astro` passes `headings` from `entry.render()` into CaseStudyLayout, which renders a quiet "On this page" anchor row (h2s only) under the header meta. Prose h2s carry `scroll-margin-top: var(--space-24)` to clear the sticky nav (verified: anchor lands at 96px, nav is 81px).
+- **Section h2 parity**: home "Selected work" / outro / "More case studies" headings dropped their `--text-xl` overrides and now sit at the default `--text-2xl` (26px), matching card titles.
+- **About portrait reframed, not shrunk**: full prose-column width (720, was capped at 320) on an `--ink-900` field with `--radius-md`. The PNG is a transparent cutout; the ink field restores the original photo's dark strip so the figure sits in a composition. `widths` raised to [720, 1080, 1440].
+- **Nav tap targets**: invisible `::before` hit-area expansion on `.nav-link` (44px floor met); TOC links got `padding-block: var(--space-1)`.
+- **Team Files content**: removed the Product-section figure that nearly duplicated the page cover (TF-01-hero.png, import dropped; **Miguel should veto if he wants it back**, git has it). Rating copy now reads "average Atlassian Marketplace rating around 3.7 stars out of a possible 4".
+- **tokens.css**: header comment em dash replaced with a colon (the site's no-em-dash rule).
+- **Retina finding withdrawn**: the critique flagged possible figure softness on retina; verified the srcset serves up to 1600w for the 800px slot, the preview browser was just emulating DPR 1 selection. No change needed.
+
+Verification: `npm run build` clean (7 pages, 0 errors / 0 warnings); browser-checked home, Team Files (anchors, TOC, outro), About, 404 at 1280 and 375; console clean.
+
+**CV wired in** (same session, after Miguel provided the PDF): the CV lives at [public/miguel-jesus-cv.pdf](public/miguel-jesus-cv.pdf) (served at `/miguel-jesus-cv.pdf` under the base). Linked from the contact page channels list (CV row, "Open the PDF") and from the shared outro's secondary line on home and case pages. Links use the `base` helper and open in a new tab. Verified: HEAD request returns 200 `application/pdf`; build clean. **When the CV changes, replace the file in `public/` and keep the same filename** so shared links keep working; the Dropbox source is now `2026-01 Portfolio MJ + AI/Miguel Jesus - CV - Senior Product Designer.pdf` (renamed in session 22).
+
+**Still open from the critique**: hero headline swap (Miguel to drive, pre-dates the critique).
+
+## What changed in session 10 (2026-06-10)
+
+Maintenance pass from a second "what would you have done differently" review. No visual or copy changes.
+
+- **Staging noindex** ([BaseLayout.astro](src/layouts/BaseLayout.astro)). GitHub redirects the github.io host to the custom domain at switch time but keeps the path, so any indexed `/mj-portfolio/work/...` URL would 404 on `migueljss.com`. All pages now carry `noindex` while `site` is a github.io host; nothing to undo at switch time.
+- **Brief status banners.** Both briefs in `docs/` now open with a note that the shipped design system (handoff bundle + tokens.css) supersedes their visual sections. They had drifted badly (old `#F0F0F0` background, Aeonik/Inter type, HeroGradient, card blue hover wash) and CLAUDE.md tells every cold session to read them as authority.
+- **HANDOFF.md restructured** (this file). Sessions 1 to 8 compacted into a history section; durable review-driven decisions moved to "Decisions that must not regress." Fixed two stale claims: two sections both titled "this session," and fonts still described as variable `.ttf` after the session 8 woff2 conversion.
+- **gitignore**: now ignores all of `.claude/` (was only `settings.local.json`) and `.obsidian/` (Miguel opens the repo as an Obsidian vault; its workspace state was sitting untracked).
+- **Shared base helper** ([src/lib/paths.ts](src/lib/paths.ts)). The `BASE_URL` normalization was copy-pasted in four files (BaseLayout, Nav, index, CaseStudyLayout); now a single import, and one place to simplify when the base path goes away.
+- **Slug passed as a prop.** [src/pages/work/[slug].astro](src/pages/work/[slug].astro) passes `entry.slug` into CaseStudyLayout for the "More case studies" exclusion; the layout no longer reverse-engineers the slug from the pathname with a base-path regex.
+- **Card image `sizes`** ([CaseStudyCard.astro](src/components/CaseStudyCard.astro)): added `(min-width: 1040px) 456px`. The card media column never exceeds 456px inside the 1040 border-box container (minus padding and gap), so wide and retina screens stop requesting oversized sources.
+- **@font-face cleanup** ([tokens.css](src/styles/tokens.css)): each face listed the same woff2 URL twice (`woff2-variations` plus `woff2`); now a single `format("woff2")`.
+
+**Left alone on purpose**: the dark-theme token block in tokens.css stays as testing scaffolding (unreachable without `data-theme="dark"`).
+
+**Verification**: `npm run build` clean (6 pages, 0 errors / 0 warnings). Built HTML checked: `noindex` present on all six pages, new `sizes` attribute rendered, and the team-files page's "More" section links only to the other two studies.
+
+## What changed in session 9 (2026-06-10)
+
+Subtle motion across the site. Miguel asked for ideas, picked the "starter set," and confirmed the brief's blanket motion ban should be relaxed. The policy lives in [docs/portfolio-brief-claude-design.md](docs/portfolio-brief-claude-design.md) ("Motion" section), with pointers in the code brief and CLAUDE.md: transform/opacity only, under ~400ms or scroll-driven, text never animates, everything respects `prefers-reduced-motion` and works without JS.
+
+**Hero parallax** ([index.astro](src/pages/index.astro))
+- `.hero-portrait` lags the scroll at 12% (capped at 48px) via a `--parallax-y` custom property fed by a rAF-throttled scroll handler. Text stays static. Uses the individual `translate` CSS property.
+- A one-time scale "settle" on load shipped alongside it but Miguel rejected it on review (too theatrical); removed same session.
+
+**Scroll reveals** ([global.css](src/styles/global.css), [BaseLayout.astro](src/layouts/BaseLayout.astro), [index.astro](src/pages/index.astro), [CaseStudyLayout.astro](src/layouts/CaseStudyLayout.astro))
+- Generic `[data-reveal]` mechanism on the home card list and the "More case studies" grid, revealed once by an IntersectionObserver.
+- Tuned per Miguel's review: deliberately faint. Opacity starts at 0.75 (never alpha 0; Miguel raised it from 0.6 after seeing it live), travel is 8px (`--space-2`), 450ms ease-out, no stagger, observer fires at threshold 0 so the ease finishes before the card is far into view. First version (alpha 0, 12px, 60ms stagger, threshold 0.1) read as chunky.
+- The pre-reveal state is double-gated: `html.js` (set by an inline script in BaseLayout head, so no-JS users always see content) and `prefers-reduced-motion: no-preference` (reduced-motion users never get dimmed content either).
+- New token: `--duration-reveal` (450ms).
+
+**Micro-interactions** ([CaseStudyCard.astro](src/components/CaseStudyCard.astro), [Nav.astro](src/components/Nav.astro))
+- Card hover lift: the cover frame rises 2px alongside the existing shadow deepen, and the image scales to 1.01 inside it. Media only, card text never moves. Reduced-motion resets both.
+- Nav underline ease-in: the hover underline rises in from 3px below with a fade over `--duration-fast` (Miguel preferred bottom-up over the left-to-right grow shipped first). The `border-bottom` became a `::after` pseudo-element (same 2px, same position); active state is unchanged visually (full accent underline), hover is the muted grey one.
+
+**Zoom dialog scale** ([BaseLayout.astro](src/layouts/BaseLayout.astro))
+- The existing fade (via `@starting-style` + `allow-discrete`) now pairs with `scale` 0.97 → 1 on open and back down on close. Same durations as the fade (400ms open, 200ms close); the existing reduced-motion override covers it.
+
+**Verification**: build clean; DOM checks for parallax cap, reveal settle states, and dialog open/close path; hero screenshot confirmed no visual regression at rest.
+
+## Decisions that must not regress
+
+Review-driven calls from past sessions. Future sessions should not "fix" these back.
+
+- **No hero entrance animations.** A load-time settle was tried in session 9 and rejected as too theatrical.
+- **Reveals stay faint**: opacity from 0.75 (never alpha 0), 8px travel, no stagger, observer threshold 0.
+- **Hero content is deliberately minimal**: no "Portfolio · 2026" eyebrow, no Porto/availability/email meta line (both removed on purpose; do not restore). Scroll affordance is the left-aligned chevron only.
+- **Cobalt now has four sanctioned non-interactive uses** (session 12, Miguel-approved, widening the old "links/focus/current only, never decorative" rule): the full-bleed hero panel (pre-existing), the `.hero-glow` tonal bloom, the full-bleed `--accent` contact band, and the `--accent-press` footer strip. All stay within the cobalt hue family (`--accent` / `--accent-press`); the rule still holds everywhere else, and per-card the only blue is the CTA. Do not "restore" calm by stripping the glow, the band, or the cobalt footer.
+- **Work-card order is title → benefit → description → meta → CTA** with the benefit a serif standfirst in primary ink (not cobalt). The compact "More case studies" variant intentionally keeps the old meta-above-title layout.
+- **Hero portrait has no width cap** (capping shrank the figure; Miguel rejected shrinking). The right anchor freezes at 1440 and centers beyond it. The mobile framing shift is a fixed-pixel `right: -220px` because the image width is panel-height-driven, so a percentage would vary the framing across phone widths.
+- **Accent is `#155fe8`**, darkened in session 5 from the v2 delta's `#1a6bff`, which failed WCAG AA at 4.31:1 on the canvas.
+- **`--fg-muted` (#8d8d8d) is decorative-only.** Text that needs to be readable uses `--fg-tertiary` or darker (session 5 contrast pass).
+- **On `.container` sections, use `padding-block`, never the `padding` shorthand.** The shorthand zeroes the container's safe-zone `padding-inline`. This bug shipped twice (about/contact fixed in session 3, "More case studies" in session 8).
+- **Team Files reach figure is "over 9,000 active installations"** everywhere it appears (changed from "companies" in October 2026, since Jira and Confluence installs can overlap).
+- **Geist italic faces are intentionally absent**: nothing uses italic sans or mono; browsers synthesize if ever needed.
+- **No em dashes anywhere** (design strings, docs, alt text, error messages). Use a period, colon, parentheses, or rewrite.
+
+## Session history (condensed)
+
+Per-session detail beyond this lives in the git log; commit messages carry the same narrative.
+
+- **Session 8 (2026-06-10)**: corrections pass from the first "what would you have done differently" review. Default OG image generated ([scripts/build-og-image.mjs](scripts/build-og-image.mjs); it had 404ed since session 1). Fonts converted to woff2 (~1MB → ~270KB, [scripts/convert-fonts.mjs](scripts/convert-fonts.mjs)). Dead code deleted (HeroGradient, old square portrait, tokens compat aliases; `--container-pad` promoted to a real token). Type scale moved from px to rem. CLAUDE.md corrected to match reality. "More case studies" container padding fixed.
+- **Session 7 (2026-06-09)**: nav polish (snug tracking on links; muted grey hover underline after trying pill, accent, and heavier greys) and a copy refresh (hero blurb, Team Files and Food Save summaries, about bio). Confirmed the `summary` frontmatter single-sources three surfaces: homepage card, case page hero blurb, and meta/og description.
+- **Session 6 (2026-06-09)**: case study content refresh from updated source docs in `docs/Case Studies/`. All three rewritten: Team Files gained the TOPDOX origin story, NN/g heuristic review, "Beyond the product" section; MyFoodways gained the three-screen onboarding structure and the "Accessibility inside a fixed brand" white-on-yellow story, with the period corrected to March 2018 to December 2020; Food Save gained the Waste Tracker "Part of a pair" section and an honest discontinued-with-the-program reflection. Content only.
+- **Session 5 (2026-05-30)**: hero polish (mobile portrait anchored right; desktop portrait lifted above the vignette), `apple-touch-icon` + favicon refresh ([scripts/build-app-icon.mjs](scripts/build-app-icon.mjs)), WCAG AA contrast pass (accent and `--ink-400` darkened; text uses of `--fg-muted` moved to `--fg-tertiary`), responsive hero LCP preload via a named head slot. Lighthouse mobile reached 100/100/100/100 on the live site.
+- **Session 4 (2026-05-29)**: hero portrait rework. New wide transparent cutout (`miguel-portrait-color-wide.png`, figure offset right), layered full-bleed composition: portrait sized by panel height, navy radial vignette for text legibility, bottom hairline, text column capped at 560, frozen 1440 right anchor. Prose list markers moved from `::marker` to positioned `::before`.
+- **Session 3 (2026-05-29)**: v3 polish from a structured critique. Page container 1200 → 1040, prose 640 → 720, case-study spine unified on one left edge, about header rebuilt as a single 720 column with inline portrait, `padding-block` fix on `.about`/`.contact`, hero vignette softened at desktop, contact page expanded with response-time and open-to rows.
+- **Session 2 (2026-05-28)**: Claude Design v2 delta applied. Cobalt accent, neutralised paper scale (`#fbfaf6` canvas), full-bleed cobalt hero with the color portrait cutout (after fixing text overlap and crop issues with the b&w original), en-dash list bullets.
+- **Session 1 (2026-05-28)**: full design system implementation. Paper/ink/accent tokens, self-hosted Aleo + Geist + Geist Mono, all components and pages restyled (wordmark nav, borderless cards, case-study header block, zoom dialog token cleanup).
+
+## What's live
+
+- **Stack**: Astro 5 + MDX + sitemap, TypeScript strict, plain CSS with design system tokens, self-hosted Aleo + Geist + Geist Mono (variable woff2 in `src/assets/fonts/`)
+- **Routes**: `/`, `/about`, `/contact`, `/work/team-files`, `/work/myfoodways`, `/work/food-save`
+- **Design system**: Claude Design handoff v1 + v2 delta both applied. Paper/ink/single-accent palette (accent `#155fe8` after the AA darkening). Aleo serif for prose, Geist sans for all UI/display. Tokens in [src/styles/tokens.css](src/styles/tokens.css).
+- **Components**: Nav, Footer, CaseStudyCard (`compact` variant), Figure, CompareImages, Quote, Stat, JumpList (case study "On this page", session 37)
+- **Layouts**: BaseLayout (head, OG meta, font preloads, zoom dialog, staging noindex), CaseStudyLayout (header block + cover image + body + "More case studies")
+- **Pages**: Home (full-bleed cobalt hero with color portrait cutout + card stack), About (portrait + intro, prose below), Contact (channels list)
+- **Assets**: wide color portrait cutout at `src/assets/brand/miguel-portrait-color-wide.png` (Home hero), b&w landscape portrait at `src/assets/brand/miguel-portrait.png` (About), case study images under `src/assets/case-studies/`, design system bundle at `docs/design_handoff_design_system/` (gitignored staging)
+- **Motion** (session 9, + hero exit veil session 12): hero portrait scroll parallax, hero scroll exit veil, faint card reveals, zoom dialog scale, card hover lift, nav underline ease-in, jump list current-section marker ease-in (session 37). Policy in the design brief's Motion section.
+

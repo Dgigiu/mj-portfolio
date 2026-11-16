@@ -7,7 +7,7 @@ Personal portfolio site for Miguel Jesus, Senior Product Designer. Live at [migu
 - [Astro](https://astro.build) with MDX and sitemap
 - TypeScript (strict)
 - Plain CSS with custom-property tokens
-- Self-hosted fonts via `@fontsource`
+- Self-hosted variable fonts (Aleo, Geist, Geist Mono) as woff2 in `src/assets/fonts/`
 - Deployed to GitHub Pages on push to `main`
 
 ## Local development
