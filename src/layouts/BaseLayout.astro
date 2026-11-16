@@ -13,12 +13,16 @@ interface Props {
   // Full site-root-relative path (already including `base`), e.g. the
   // default below or a getImage() result's .src for a per-page image.
   ogImage?: string;
+  ogImageAlt?: string;
+  ogType?: "website" | "article";
 }
 
 const {
   title,
   description = "Miguel Jesus, Senior Product Designer based in Porto. Portfolio of product case studies across SaaS and mobile.",
   ogImage = `${base}og/default.png`,
+  ogImageAlt = "Miguel Jesus, Senior Product Designer",
+  ogType = "website",
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
@@ -42,11 +46,15 @@ const loadAnalytics = import.meta.env.PROD && UMAMI_WEBSITE_ID !== "";
     {isStaging && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="Miguel Jesus" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />

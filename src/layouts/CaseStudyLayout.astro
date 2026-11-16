@@ -27,7 +27,7 @@ const { title, summary, outcomes, role, period, client, domain, banner, slug, he
 // and cards. getImage()'s .src already includes `base`, so it can be passed
 // straight through to BaseLayout without any extra path handling.
 const ogImage = banner
-  ? (await getImage({ src: banner, width: 1200, height: 630, fit: "cover", format: "webp" })).src
+  ? (await getImage({ src: banner, width: 1200, height: 630, fit: "cover", format: "jpg", quality: 80 })).src
   : undefined;
 
 const more = (
@@ -37,7 +37,13 @@ const more = (
   .sort((a, b) => a.data.order - b.data.order);
 ---
 
-<BaseLayout title={title} description={summary} ogImage={ogImage}>
+<BaseLayout
+  title={title}
+  description={summary}
+  ogImage={ogImage}
+  ogImageAlt={banner ? `${title} project cover` : undefined}
+  ogType="article"
+>
   <header class="case-header">
     <div class="container">
       <div class="case-header-inner">

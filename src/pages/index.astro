@@ -19,6 +19,16 @@ const heroPortraitPreload = await getImage({
   widths: [720, 1080, 1440, 1920],
   format: "webp",
 });
+
+const person = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Miguel Jesus",
+  jobTitle: "Senior Product Designer",
+  url: Astro.site?.toString(),
+  sameAs: ["https://www.linkedin.com/in/migueljss/"],
+  address: { "@type": "PostalAddress", addressLocality: "Porto" },
+};
 ---
 
 <BaseLayout title="Miguel Jesus" description="Senior Product Designer in Porto. Case studies across B2B SaaS and mobile products.">
@@ -31,6 +41,7 @@ const heroPortraitPreload = await getImage({
       imagesizes="1400px"
       fetchpriority="high"
     />
+    <script type="application/ld+json" set:html={JSON.stringify(person)} />
   </Fragment>
 
   <section class="hero" aria-labelledby="hero-title">
