@@ -4,9 +4,14 @@ import { base } from "../lib/paths";
 const path = Astro.url.pathname;
 const norm = (p: string) => (p.endsWith("/") ? p : p + "/");
 
-const isActive = (href: string) => {
-  if (href === base) return norm(path) === norm(base);
-  return path.startsWith(href);
+// "Work" is the linked page on home and the current section on case
+// studies, so case pages get aria-current="true" rather than "page".
+const current = (href: string): "page" | "true" | undefined => {
+  if (href === base) {
+    if (norm(path) === norm(base)) return "page";
+    return path.startsWith(`${base}work/`) ? "true" : undefined;
+  }
+  return path.startsWith(href) ? "page" : undefined;
 };
 
 const links = [
@@ -26,8 +31,8 @@ const links = [
             <li>
               <a
                 href={link.href}
-                class:list={["nav-link", { "is-active": isActive(link.href) }]}
-                aria-current={isActive(link.href) ? "page" : undefined}
+                class:list={["nav-link", { "is-active": current(link.href) }]}
+                aria-current={current(link.href)}
               >
                 {link.label}
               </a>
