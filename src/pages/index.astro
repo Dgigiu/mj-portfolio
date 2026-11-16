@@ -111,7 +111,7 @@ const person = {
     width: 100%;
     min-height: min(720px, 88vh);
     background: var(--accent);
-    color: #fff;
+    color: var(--fg-on-accent);
     overflow: hidden;
     isolation: isolate;
     display: flex;
@@ -176,9 +176,9 @@ const person = {
     inset: 0;
     background: radial-gradient(
       130% 100% at 0% 0%,
-      rgba(8, 14, 32, 0.88) 0%,
-      rgba(8, 14, 32, 0.6) 38%,
-      rgba(8, 14, 32, 0) 70%
+      rgba(var(--hero-shade-rgb), 0.88) 0%,
+      rgba(var(--hero-shade-rgb), 0.6) 38%,
+      rgba(var(--hero-shade-rgb), 0) 70%
     );
     z-index: 1;
     pointer-events: none;
@@ -190,7 +190,7 @@ const person = {
     right: 0;
     bottom: 0;
     height: 1px;
-    background: rgba(255, 255, 255, 0.18);
+    background: var(--border-on-accent);
     z-index: 3;
   }
 
@@ -209,7 +209,7 @@ const person = {
     z-index: 3;
     pointer-events: none;
     /* Transparent at the top, through translucent pressed cobalt, to the deep
-       navy the vignette uses (rgb 8 14 32), solid at the very bottom edge. The
+       navy the vignette uses (--hero-shade), solid at the very bottom edge. The
        opacity ramps across the stops so the portrait stays readable through the
        mid band and only the bottom edge fully covers. Two dials: the 70% sets
        how strongly the middle tints, the bottom stop how deep it lands. */
@@ -217,7 +217,7 @@ const person = {
       180deg,
       transparent 0%,
       color-mix(in srgb, var(--accent-press) 70%, transparent) 45%,
-      #080e20 100%
+      var(--hero-shade) 100%
     );
     translate: 0 calc(-1 * var(--veil-shift, 0px));
   }
@@ -254,7 +254,7 @@ const person = {
     font-size: clamp(44px, 5.3vw, 72px);
     line-height: 1;
     letter-spacing: -0.035em;
-    color: #fff;
+    color: var(--fg-on-accent);
     margin: 0 0 var(--space-6);
   }
 
@@ -284,7 +284,7 @@ const person = {
     font-family: var(--font-serif);
     font-size: var(--text-lg);
     line-height: 1.55;
-    color: rgba(255, 255, 255, 0.92);
+    color: var(--fg-on-accent-soft);
     max-width: 520px;
     margin: 0 0 var(--space-8);
   }
@@ -293,7 +293,7 @@ const person = {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--fg-on-accent-faint);
     text-decoration: none;
     margin-top: var(--space-2);
     margin-left: -10px;
@@ -302,7 +302,7 @@ const person = {
   }
 
   .hero-scroll:hover {
-    color: #fff;
+    color: var(--fg-on-accent);
     transform: translateY(2px);
   }
 
@@ -318,10 +318,10 @@ const person = {
       z-index: 2;
       background: radial-gradient(
         150% 110% at 0% 0%,
-        rgba(8, 14, 32, 0.9) 0%,
-        rgba(8, 14, 32, 0.7) 42%,
-        rgba(8, 14, 32, 0.25) 75%,
-        rgba(8, 14, 32, 0) 100%
+        rgba(var(--hero-shade-rgb), 0.9) 0%,
+        rgba(var(--hero-shade-rgb), 0.7) 42%,
+        rgba(var(--hero-shade-rgb), 0.25) 75%,
+        rgba(var(--hero-shade-rgb), 0) 100%
       );
     }
 
@@ -350,10 +350,10 @@ const person = {
     .hero-vignette {
       background: radial-gradient(
         160% 130% at 0% 0%,
-        rgba(8, 14, 32, 0.92) 0%,
-        rgba(8, 14, 32, 0.78) 50%,
-        rgba(8, 14, 32, 0.35) 85%,
-        rgba(8, 14, 32, 0) 100%
+        rgba(var(--hero-shade-rgb), 0.92) 0%,
+        rgba(var(--hero-shade-rgb), 0.78) 50%,
+        rgba(var(--hero-shade-rgb), 0.35) 85%,
+        rgba(var(--hero-shade-rgb), 0) 100%
       );
     }
 

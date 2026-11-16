@@ -105,6 +105,18 @@
   --fg-disabled:   var(--ink-200);
   --fg-on-accent:  #ffffff;
 
+  /* Text and lines on the cobalt surfaces (hero, contact band, footer
+     strip). The triplet feeds the translucent steps. */
+  --on-accent-rgb:       255, 255, 255;
+  --fg-on-accent-soft:   rgba(var(--on-accent-rgb), 0.92);  /* supporting copy */
+  --fg-on-accent-quiet:  rgba(var(--on-accent-rgb), 0.78);  /* footer meta and links */
+  --fg-on-accent-faint:  rgba(var(--on-accent-rgb), 0.7);   /* hero scroll chevron at rest */
+  --border-on-accent:    rgba(var(--on-accent-rgb), 0.18);  /* hero bottom hairline */
+
+  /* Deep navy under the hero text: vignette and scroll veil stops. */
+  --hero-shade-rgb:      8, 14, 32;
+  --hero-shade:          rgb(var(--hero-shade-rgb));
+
   --border-subtle: var(--paper-400);
   --border-strong: var(--ink-200);
   --border-focus:  var(--accent);

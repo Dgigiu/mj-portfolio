@@ -143,6 +143,9 @@ A warm-neutral field in two families (paper and ink) with one chromatic voice.
 - **Ink Muted** (#8d8d8d): decorative only. Hairlines, hover underlines, ornament.
 - **Border Strong** (#b8b8b8): emphasized rules and disabled text.
 
+### On Accent
+Text and lines on the cobalt surfaces, from the `--on-accent-rgb` triplet (white) in `tokens.css`: **On Accent** (`--fg-on-accent`, #ffffff) for the primary line, **Soft** (`--fg-on-accent-soft`, 92%) for supporting copy, **Quiet** (`--fg-on-accent-quiet`, 78%) for the footer's meta and links, **Faint** (`--fg-on-accent-faint`, 70%) for the hero scroll chevron at rest, and **Border On Accent** (`--border-on-accent`, 18%) for the hero's bottom hairline. **Hero Shade** (`--hero-shade`, #080e20, with the `--hero-shade-rgb` triplet) is the deep navy of the hero vignette and the floor of the scroll veil. These are for text and lines on cobalt only, never page backgrounds.
+
 ### Named Rules
 **The One Blue Note Rule.** Within any card, block, or piece of prose, Working Cobalt appears only where the reader acts or the system points: links, focus, current state, markers. Never as decoration inside content, never in gradients.
 
@@ -217,7 +220,7 @@ Flat by default. The canvas, text, and most surfaces share one plane; depth is r
 
 ### Cobalt Band (signature)
 - **Character:** a full-bleed accent panel that closes a page instead of fading it out on paper. Two instances share the pattern: the **Contact Outro** (`--accent`, white text, the email address at title scale as the one line that steps forward) and the **Footer strip** (`--accent-press`, one shade darker, meta-scale text at reduced opacity) that sits flush beneath it with no seam margin, reading as one two-tone cobalt foot on pages that carry both.
-- **Text on band:** white at full opacity for the primary line, `rgba(255,255,255,0.92)` for supporting copy, `rgba(255,255,255,0.78)` for the footer's quieter meta and social links.
+- **Text on band:** On Accent (white) at full opacity for the primary line, On Accent Soft (92%) for supporting copy, On Accent Quiet (78%) for the footer's quieter meta and social links.
 - **Hover:** band links lift to Cobalt Line (#bccfff) rather than a darker blue, since the surface is already the accent.
 
 ### Figures / Media
