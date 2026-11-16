@@ -42,6 +42,8 @@ docs/Applications/
 # and its local working artifacts (critique snapshots, live config)
 .github/skills/
 .impeccable/
+# Lock file written by the skills installer; local only
+skills-lock.json
 
 # Misc
 *.tsbuildinfo
