@@ -32,7 +32,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 // becomes migueljss.com.
 const isStaging = Astro.site?.hostname.endsWith("github.io") ?? false;
 const ogImageUrl = new URL(ogImage, Astro.site).toString();
-const fullTitle = title === "Miguel Jesus" ? title : `${title} · Miguel Jesus`;
+// The home title already leads with the name, so it skips the suffix.
+const fullTitle = title.startsWith("Miguel Jesus") ? title : `${title} · Miguel Jesus`;
 const loadAnalytics = import.meta.env.PROD && UMAMI_WEBSITE_ID !== "";
 ---
 
