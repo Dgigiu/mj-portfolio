@@ -187,7 +187,7 @@ Flat by default. The canvas, text, and most surfaces share one plane; depth is r
 - **Resting media** (`box-shadow: 0 1px 2px rgba(24, 24, 24, 0.06), 0 1px 1px rgba(24, 24, 24, 0.03)`): default state of card covers and figures.
 - **Hover lift** (`box-shadow: 0 4px 14px rgba(24, 24, 24, 0.06), 0 1px 2px rgba(24, 24, 24, 0.04)`): the engaged card state, paired with a 2px rise.
 - **Dialog** (`box-shadow: 0 12px 32px rgba(24, 24, 24, 0.08), 0 2px 4px rgba(24, 24, 24, 0.04)`): zoomed images only.
-- **Focus** (`box-shadow: 0 0 0 3px #e6edff`): the keyboard focus ring, in Cobalt Wash.
+- **Focus** (`box-shadow: 0 0 0 3px #e6edff`): the keyboard focus ring, in Cobalt Wash. Every `:focus-visible` rule pairs it with a 2px transparent outline, invisible normally and repainted in a system color under forced colors, where box shadows are dropped.
 
 ### Named Rules
 **The Lift-On-Intent Rule.** Surfaces are flat at rest. Shadows deepen and frames rise only in response to state: hover, focus, or an open dialog. Nothing floats for decoration.
@@ -201,8 +201,9 @@ Flat by default. The canvas, text, and most surfaces share one plane; depth is r
 
 ### Navigation
 - Wordmark left, three text links right, set in Geist at 0.875rem with snug tracking. No icons, no pills, no background.
-- **Hover:** a 2px muted-gray underline rises in from 3px below with a fade (120ms). **Active page:** a full Working Cobalt underline, static.
-- **Mobile:** same row, tighter gaps. No hamburger; three links fit.
+- **Hover:** a 2px muted-gray underline rises in from 3px below with a fade (120ms). **Active page:** a full Working Cobalt underline, static. On case study pages "Work" carries it too, as the current section (`aria-current="true"`; home uses `"page"`).
+- **Mobile:** same row, tighter gaps, and 16px block padding under 720px (24px above), so the bar is 66px tall instead of 82px. No hamburger; three links fit.
+- **Skip link:** the first focusable element on every page. Hidden at rest; on keyboard focus it shows at the top left above the nav, Geist 0.875rem in Ink on Warm Paper with the focus ring.
 
 ### Jump List ("On this page")
 - **Content:** the case study's h2s, word for word, as native anchor links. h3s stay out.

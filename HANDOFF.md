@@ -18,16 +18,23 @@ Older session notes live in [docs/handoff-archive.md](docs/handoff-archive.md), 
 
 ## Session 42 (2026-11-16): build audit, branch `improve/nov-audit`
 
-Plan: [docs/improvement-plan-2026-11.md](docs/improvement-plan-2026-11.md). Each item below is one commit; the build is clean after each (0 errors, 0 warnings, 8 pages).
+Plan: [docs/improvement-plan-2026-11.md](docs/improvement-plan-2026-11.md) (commit `7e45a4f`). Each item below is one commit; the build is clean after each (0 errors, 0 warnings, 8 pages). Visual checks ran on `npm run preview` in headless Chrome and the in-app browser pane, never on the live site.
 
-1. **Skip link** shows on keyboard focus: `.skip-link` in `global.css`, fixed top left above the nav, canvas fill, Geist `--text-sm`, focus ring. Enter moves the next Tab into `main`.
-2. **Forced colors:** every `:focus-visible` rule uses `outline: var(--rule-bold) solid transparent` instead of `outline: none`, so high contrast mode repaints a ring. Checked in headless Chrome with `forced-colors: active` emulated: before, 59 of 59 focusables across home, Team Files, About and Contact had no outline; after, none lacked one. The zoom dialog close button too.
-3. **Nav:** "Work" is current on case pages (`is-active`, `aria-current="true"`); home keeps `aria-current="page"`. Privacy and 404 have none.
-4. **Share previews:** case `og:image` is a 1200×630 JPG (q80; cards and covers stay WebP). Added `og:site_name`, `og:image:width`/`height`/`alt`, `og:type` (`article` on cases via the new `ogType` prop) and a `Person` JSON-LD block on home only. After deploy, paste a case URL into LinkedIn's Post Inspector to confirm the preview.
+1. `7b4b41f` **Skip link** shows on keyboard focus: `.skip-link` in `global.css`, fixed top left above the nav, canvas fill, Geist `--text-sm`, focus ring. Enter moves the next Tab into `main`.
+2. `b3c16f9` **Forced colors:** every `:focus-visible` rule uses `outline: var(--rule-bold) solid transparent` instead of `outline: none`, so high contrast mode repaints a ring. Checked in headless Chrome with `forced-colors: active` emulated: before, 59 of 59 focusables across home, Team Files, About and Contact had no outline; after, none lacked one. The zoom dialog close button too.
+3. `e73b73f` **Nav:** "Work" is current on case pages (`is-active`, `aria-current="true"`); home keeps `aria-current="page"`. Privacy and 404 have none.
+4. `e9cae70` **Share previews:** case `og:image` is a 1200×630 JPG (q80; cards and covers stay WebP). Added `og:site_name`, `og:image:width`/`height`/`alt`, `og:type` (`article` on cases via the new `ogType` prop) and a `Person` JSON-LD block on home only. After deploy, paste a case URL into LinkedIn's Post Inspector to confirm the preview.
 5. **Font preload: dropped, not committed.** Measured on `npm run preview` in headless Chrome (cache off, 9 Mbps down, 165 ms latency, 9 runs each, 1440 and 375, home and Team Files). With Geist and Aleo preloaded the fonts finished about 160 ms sooner (about 510 ms vs 670 ms), but first paint and LCP moved about 80 ms later (LCP medians 492 to 512 ms vs 416 to 428 ms) because the fonts compete with the CSS and hero image for bandwidth. Layout shift was about 0 either way (max 0.0003). No gain on the plan's measures, so the preload is not in the build. The hashed URLs did match the CSS, so the fonts would not have downloaded twice.
-6. **Docs:** this file cut down (the rest moved to the archive); `CLAUDE.md` and `README.md` corrected (live domain, self-hosted fonts).
+6. `4281397` **Docs:** this file cut down (the rest moved to the archive); `CLAUDE.md` and `README.md` corrected (live domain, self-hosted fonts).
 
-Later items (7 and on) are recorded here as they land.
+7. `b59f060` **Cobalt surface tokens:** new `--fg-on-accent-soft` (92%), `-quiet` (78%), `-faint` (70%), `--border-on-accent` (18%) from `--on-accent-rgb`, and `--hero-shade` / `--hero-shade-rgb` (#080e20) for the vignette and veil. `index.astro`, `ContactOutro` and `Footer` now carry no color literals. Pure refactor: home top, home at 400 px scroll, home bottom and Team Files bottom at 1440 and 375 are byte-identical PNGs before and after, and computed colors match. `theme-color` stays a literal (a meta tag cannot read tokens). The zoom dialog backdrop `rgba(14, 14, 16, 0.78)` is still a literal (outside the cobalt surfaces).
+8. `49ee646` **Prune originals:** `scripts/prune-originals.mjs` runs after `astro build` and deletes PNG and JPG files in `dist/_astro` that nothing in `dist` references (25 files, 15 MB; `dist` 23 to 7 MB). The three JPG share images stay. Every `/_astro/` URL in the built HTML, CSS and JS resolves, and every image on home, About and the three cases returns 200 from preview.
+9 and 12. `2ac1d84` **About:** LinkedIn link is now `https://www.linkedin.com/in/migueljss/` with `rel="me noopener noreferrer"`; the closing sentence ends "…on LinkedIn at linkedin.com/in/migueljss, or open the CV (PDF)." with "CV" linking the PDF (`data-umami-event="CV open"`, location `about`). Checked rendered at 1440 and 375, no overflow; the PDF returns 200.
+10. `fea44a4` **Home title:** "Miguel Jesus · Senior Product Designer" in `<title>` and `og:title`. The suffix check is now `title.startsWith("Miguel Jesus")`; the other seven titles are unchanged.
+11. `d616811` **Nav on phones:** block padding `--space-4` under 720 px. Measured in headless Chrome: 82 px tall at 1440 and 721, 66 px at 720, 375 and 360; links on one row; hit areas 55 px; a heading reached from the collapsed jump list lands at 96 px, 30 px clear of the nav (Team Files and Food Save, 720, 375, 360).
+13. `4bb6b27` **`skills-lock.json`** is ignored (next to the Impeccable entries), not deleted, not committed.
+
+`DESIGN.md` now covers the on-accent tokens, the forced-colors outline, "Work" as current on case pages, the phone nav padding and the skip link.
 
 ## Open items
 
@@ -41,10 +48,12 @@ Later items (7 and on) are recorded here as they land.
 
 **Checks**
 - MyFoodways, Food Save and Contact were read from HTML in session 40, not checked rendered at 375 px.
-- After the audit branch deploys: LinkedIn Post Inspector on a case URL (item 4).
+- After the audit branch deploys: LinkedIn Post Inspector on a case URL (item 4). Forced colors was checked by emulation only, not on Windows High Contrast.
+- **iCloud duplicates:** the repo sits in a synced Documents folder, and files named `* 2.*` keep appearing (`dist/index 2.html` and 24 more in `dist`, and `.git/index 2` dated 2026-11-16 17:44, during session 42). `dist` is rebuilt on CI so the deploy is unaffected, and git works normally. Worth moving the repo out of the synced folder or excluding it; nothing was deleted.
 
 **Design system**
 - `DESIGN.md` does not document the case header outcomes list yet.
+- The zoom dialog backdrop color is a literal in `ZoomDialog.astro`; `README.md` still lists the deleted `HeroGradient` component.
 - Card hover (whole-card blue wash) is a placeholder until the revised design system lands (memory).
 - Dark-mode tokens exist in `tokens.css` but are not wired; out of scope during the job search.
 
