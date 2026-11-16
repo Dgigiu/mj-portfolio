@@ -84,7 +84,7 @@ const rightZoom = await getImage({ src: right, format: "webp" });
   }
 
   .frame.zoomable:focus-visible {
-    outline: none;
+    outline: var(--rule-bold) solid transparent;
     box-shadow: var(--shadow-focus);
   }
 

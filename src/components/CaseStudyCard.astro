@@ -73,7 +73,7 @@ const slug = href.split("/").filter(Boolean).pop() ?? "";
   }
 
   .card:focus-visible {
-    outline: none;
+    outline: var(--rule-bold) solid transparent;
     box-shadow: var(--shadow-focus);
     border-radius: var(--radius-sm);
   }
