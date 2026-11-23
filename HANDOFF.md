@@ -1,13 +1,13 @@
 # Handoff
 
-Last updated: 2026-11-16 (session 42, build audit fixes on branch `improve/nov-audit`, not pushed)
+Last updated: 2026-11-23 (session 43, status check: the session 42 build audit is merged to `main` and live)
 
 Older session notes live in [docs/handoff-archive.md](docs/handoff-archive.md), unchanged. Read them only when you need the detail behind a decision; the git log carries the same narrative per commit.
 
 ## Current state
 
-- **Live:** https://migueljss.com, deployed by GitHub Actions to GitHub Pages on every push to `main` (`public/CNAME`, `site` in `astro.config.mjs`, no `base`). `origin/main` is `f6df688` (session 41 copy fixes, the new CV and the Food Save paragraph split are all live).
-- **Branch `improve/nov-audit`** (session 42): the November build audit, one commit per item, not pushed or merged. Pushing or merging to `main` deploys, so wait for Miguel. Details in "Session 42" below.
+- **Live:** https://migueljss.com, deployed by GitHub Actions to GitHub Pages on every push to `main` (`public/CNAME`, `site` in `astro.config.mjs`, no `base`). `origin/main` is `4ce9307`, deployed 2026-11-16 18:19 UTC (Actions run succeeded). Everything from sessions 41 and 42 is live.
+- **Branch `improve/nov-audit`** (session 42): the November build audit, one commit per item. Fast-forwarded into `main` and pushed on 2026-11-16, so it now matches `main` and `origin/improve/nov-audit` with nothing left to merge. Details in "Session 42" below.
 - **Routes (8 built pages):** `/`, `/about/`, `/contact/`, `/privacy/`, `/404`, and `/work/team-files/`, `/work/myfoodways/`, `/work/food-save/`.
 - **Case study H2s** (the jump list and its Umami section slugs follow these word for word):
   - Team Files (8): Everyone sees the latest version; Role; Download, edit, re-upload, repeat; The 2023 UX review; What long tenure lets you notice; A design system engineers built from; Beyond the product; Keeping it coherent while it grows.
@@ -33,6 +33,7 @@ Plan: [docs/improvement-plan-2026-11.md](docs/improvement-plan-2026-11.md) (comm
 10. `fea44a4` **Home title:** "Miguel Jesus · Senior Product Designer" in `<title>` and `og:title`. The suffix check is now `title.startsWith("Miguel Jesus")`; the other seven titles are unchanged.
 11. `d616811` **Nav on phones:** block padding `--space-4` under 720 px. Measured in headless Chrome: 82 px tall at 1440 and 721, 66 px at 720, 375 and 360; links on one row; hit areas 55 px; a heading reached from the collapsed jump list lands at 96 px, 30 px clear of the nav (Team Files and Food Save, 720, 375, 360).
 13. `4bb6b27` **`skills-lock.json`** is ignored (next to the Impeccable entries), not deleted, not committed.
+14. `4ce9307` **JSON-LD script** on home is marked `is:inline` to clear the Astro build hint (landed after the session 42 HANDOFF commit).
 
 `DESIGN.md` now covers the on-accent tokens, the forced-colors outline, "Work" as current on case pages, the phone nav padding and the skip link.
 
@@ -48,7 +49,7 @@ Plan: [docs/improvement-plan-2026-11.md](docs/improvement-plan-2026-11.md) (comm
 
 **Checks**
 - MyFoodways, Food Save and Contact were read from HTML in session 40, not checked rendered at 375 px.
-- After the audit branch deploys: LinkedIn Post Inspector on a case URL (item 4). Forced colors was checked by emulation only, not on Windows High Contrast.
+- Due now (the audit is live): LinkedIn Post Inspector on a case URL to confirm the new share preview (item 4). Forced colors was checked by emulation only, not on Windows High Contrast.
 - **iCloud duplicates:** the repo sits in a synced Documents folder, and files named `* 2.*` keep appearing (`dist/index 2.html` and 24 more in `dist`, and `.git/index 2` dated 2026-11-16 17:44, during session 42). `dist` is rebuilt on CI so the deploy is unaffected, and git works normally. Worth moving the repo out of the synced folder or excluding it; nothing was deleted.
 
 **Design system**
