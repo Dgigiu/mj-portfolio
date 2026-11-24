@@ -1,12 +1,12 @@
 # Handoff
 
-Last updated: 2026-11-24 (session 44: the miPlay case is live as an unlisted page; working figures from Figma added, MP-04 still open)
+Last updated: 2026-11-24 (session 44: the miPlay case is live as an unlisted page, with all nine figures from Figma)
 
 Older session notes live in [docs/handoff-archive.md](docs/handoff-archive.md), unchanged. Read them only when you need the detail behind a decision; the git log carries the same narrative per commit.
 
 ## Current state
 
-- **Live:** https://migueljss.com, deployed by GitHub Actions to GitHub Pages on every push to `main` (`public/CNAME`, `site` in `astro.config.mjs`, no `base`). Session 44 (miPlay, unlisted) was fast-forwarded into `main` and pushed on 2026-11-24. Everything from sessions 41, 42 and 44 is live, the miPlay figures included.
+- **Live:** https://migueljss.com, deployed by GitHub Actions to GitHub Pages on every push to `main` (`public/CNAME`, `site` in `astro.config.mjs`, no `base`). Session 44 (miPlay, unlisted) was fast-forwarded into `main` and pushed on 2026-11-24. Everything from sessions 41, 42 and 44 is live, except the third miPlay commit (reworked figures), which is on `content/miplay` until Miguel says to push.
 - **Branches:** `improve/nov-audit` (session 42) and `content/miplay` (session 44) are both merged into `main`, nothing left to merge.
 - **Routes (9 built pages):** `/`, `/about/`, `/contact/`, `/privacy/`, `/404`, and `/work/team-files/`, `/work/myfoodways/`, `/work/food-save/`, plus `/work/miplay/` (unlisted: reachable by URL only, see "Session 44").
 - **Case study H2s** (the jump list and its Umami section slugs follow these word for word):
@@ -29,8 +29,9 @@ The miPlay text approved in the Claude Doc review (November 19 to 24) is now `sr
 **Figures (same day, second commit).** Exported from the Figma file "miPlay case study figures" (`i1r8rHYTJUB3AhOPcfUqE1`, page "Figures"), one frame per figure, at 1x like the other cases (1600 wide), into `src/assets/case-studies/miplay/`:
 - MP-00 cover: the frame's photo (`IMG_2751`, a shelf with Carcassonne, Ticket to Ride and Wingspan), 1920×1008, converted to JPG (q82, 560 KB). It is now the banner and the share image. It is not the Wingspan-on-a-table idea from the review.
 - MP-01, MP-02, MP-03, MP-05, MP-06, MP-08: the whole frames as PNG, each replacing its `FIGURE` comment.
-- MP-07: the Figma frame clips its "after" screen and its note (they sit past the frame's 1600 px edge), so the page uses `CompareImages` (first use on a live case) with the two screens' source images (680×1478 each) and the callouts as captions. On phones it stacks the two screens, about 1,590 px tall.
-- MP-04: left out, its `FIGURE` comment stays. The Figma frame clips the same way, and both screens still show only the controls, not Play's results.
+- MP-07 and MP-04 were first a `CompareImages` pair and left out, because their Figma frames clipped the "after".
+
+**Reworked figures (same day, third commit).** Miguel reworked the frames in Figma; all nine were exported again. MP-00, MP-01 and MP-08 came out byte-identical; MP-02, 03, 05 and 06 changed slightly (same content, so alt text kept). MP-04 and MP-07 now fit their frames and are single images like the rest (`MP-04-play-picker-before-after.png`, `MP-07-shelf-before-after.png`); the split MP-07 files and the `CompareImages` import are gone, so the case uses only `Figure`. MP-04 shows the top of Play (the controls), before and now. No `FIGURE` comments are left. Build clean, 8 figures plus the cover, none broken, no overflow.
 - Captions and alt text are Claude's drafts from the review's caption ideas and the Figma callouts; Miguel to review.
 - Checked: build clean, 9 pages; 13 images on the page, none broken; no overflow at 375; `og:image` is the cover JPG; still noindex and off home.
 
@@ -58,7 +59,7 @@ Plan: [docs/improvement-plan-2026-11.md](docs/improvement-plan-2026-11.md) (comm
 ## Open items
 
 **Content (needs Miguel)**
-- **miPlay figures**, then list it (session 44). In: MP-00 to MP-03 and MP-05 to MP-08 (working versions). Open: MP-04 needs full screens that show Play's results, and its Figma frame needs widening or re-laying (it clips the "after"); MP-07's frame clips the same way. Splendor Duel still reads "med-lt" in MP-01 and MP-07; retake once the weight labels are fixed. Review the drafted captions and alt text. The cover is a shelf photo, not the Wingspan-on-a-table idea, if that one is still planned. In the app, the game page's contrast needs measuring again now that it follows light and dark.
+- **miPlay figures**, then list it (session 44). All nine are in (working versions, re-export from the Figma file when they change). The review asked for MP-04 as full screens that show Play's results; it still shows the controls only, if that's still wanted. Splendor Duel still reads "med-lt" in MP-01 and MP-07; retake once the weight labels are fixed. Review the drafted captions and alt text. The cover is a shelf photo, not the Wingspan-on-a-table idea, if that one is still planned. In the app, the game page's contrast needs measuring again now that it follows light and dark.
 - The office editor draft (`docs/Case Studies/cs-office-editor.md`) is on hold. It needs images in `src/assets/case-studies/<slug>/`, a new mdx and an `order` value.
 - Food Save "Used in professional kitchens": a kitchen count would strengthen it, if known.
 - Team Files "so we carefully designed around those limits" could name what was chosen for the open-in-new-tab case.
