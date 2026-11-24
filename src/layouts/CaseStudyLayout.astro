@@ -19,9 +19,22 @@ interface Props {
   banner?: ImageMetadata;
   slug: string;
   headings?: MarkdownHeading[];
+  unlisted?: boolean;
 }
 
-const { title, summary, outcomes, role, period, client, domain, banner, slug, headings = [] } = Astro.props;
+const {
+  title,
+  summary,
+  outcomes,
+  role,
+  period,
+  client,
+  domain,
+  banner,
+  slug,
+  headings = [],
+  unlisted = false,
+} = Astro.props;
 
 // Per-case OG/share image, derived from the same cover used for the hero
 // and cards. getImage()'s .src already includes `base`, so it can be passed
@@ -31,7 +44,7 @@ const ogImage = banner
   : undefined;
 
 const more = (
-  await getCollection("case-studies", ({ data }) => !data.draft)
+  await getCollection("case-studies", ({ data }) => !data.draft && !data.unlisted)
 )
   .filter((entry) => entry.slug !== slug)
   .sort((a, b) => a.data.order - b.data.order);
@@ -43,6 +56,7 @@ const more = (
   ogImage={ogImage}
   ogImageAlt={banner ? `${title} project cover` : undefined}
   ogType="article"
+  noindex={unlisted}
 >
   <header class="case-header">
     <div class="container">

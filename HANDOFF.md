@@ -1,20 +1,30 @@
 # Handoff
 
-Last updated: 2026-11-23 (session 43, status check: the session 42 build audit is merged to `main` and live)
+Last updated: 2026-11-24 (session 44: the miPlay case is live as an unlisted page while its images are made)
 
 Older session notes live in [docs/handoff-archive.md](docs/handoff-archive.md), unchanged. Read them only when you need the detail behind a decision; the git log carries the same narrative per commit.
 
 ## Current state
 
-- **Live:** https://migueljss.com, deployed by GitHub Actions to GitHub Pages on every push to `main` (`public/CNAME`, `site` in `astro.config.mjs`, no `base`). `origin/main` is `4ce9307`, deployed 2026-11-16 18:19 UTC (Actions run succeeded). Everything from sessions 41 and 42 is live.
-- **Branch `improve/nov-audit`** (session 42): the November build audit, one commit per item. Fast-forwarded into `main` and pushed on 2026-11-16, so it now matches `main` and `origin/improve/nov-audit` with nothing left to merge. Details in "Session 42" below.
-- **Routes (8 built pages):** `/`, `/about/`, `/contact/`, `/privacy/`, `/404`, and `/work/team-files/`, `/work/myfoodways/`, `/work/food-save/`.
+- **Live:** https://migueljss.com, deployed by GitHub Actions to GitHub Pages on every push to `main` (`public/CNAME`, `site` in `astro.config.mjs`, no `base`). Session 44 (miPlay, unlisted) was fast-forwarded into `main` and pushed on 2026-11-24. Everything from sessions 41, 42 and 44 is live.
+- **Branches:** `improve/nov-audit` (session 42) and `content/miplay` (session 44) are both merged into `main`, nothing left to merge.
+- **Routes (9 built pages):** `/`, `/about/`, `/contact/`, `/privacy/`, `/404`, and `/work/team-files/`, `/work/myfoodways/`, `/work/food-save/`, plus `/work/miplay/` (unlisted: reachable by URL only, see "Session 44").
 - **Case study H2s** (the jump list and its Umami section slugs follow these word for word):
   - Team Files (8): Everyone sees the latest version; Role; Download, edit, re-upload, repeat; The 2023 UX review; What long tenure lets you notice; A design system engineers built from; Beyond the product; Keeping it coherent while it grows.
   - MyFoodways (7): Cooking from what’s in the fridge; Role; Recipes that don’t fit real life; Making the mission practical; Search, profile, recipes and challenges; Contrast versus a fixed brand; Good design isn’t enough on its own.
   - Food Save (9): Ready-to-use measures for busy kitchens; Role; Food waste in a low-margin business; Designing for the decision-makers; From competition to practical tool; A library kitchens could act on; Stepping in as interim PM; Part of a pair; Smaller, and better for it.
+  - miPlay (8): Tonight’s game, from everyone’s shelves; Role; Ranking by player count; Designing the Play tab; A friend who never made an account; Verifying AI claims on my iPhone; Designing inside Apple’s rules; Where it stands.
 - **CV:** `public/miguel-jesus-cv.pdf`, stamped `?ref=cv` (session 41 export). Per-application copies in `docs/Applications/` predate it and were not regenerated.
-- **Reviews:** three `/pd-portfolio-review` passes (85, 90, 88 out of 100, all "ready to send"). The session 41 ranked fixes 1 to 4 landed and are live; fix 5 (a miPlay case) is open below.
+- **Reviews:** three `/pd-portfolio-review` passes (85, 90, 88 out of 100, all "ready to send"). The session 41 ranked fixes 1 to 4 landed and are live; fix 5 (a miPlay case) is live unlisted, with its images open below.
+
+## Session 44 (2026-11-24): miPlay case, unlisted
+
+The miPlay text approved in the Claude Doc review (November 19 to 24) is now `src/content/case-studies/miplay.mdx`, copied from Miguel's reviewed draft as is. The two `REVIEW` blockquotes at its top were dropped (they would have rendered); what they still asked for is under "Open items". The `{/* FIGURE MP-0x */}` comments stay in place as placeholders and don't render.
+
+- **New `unlisted` frontmatter flag** (`src/content/config.ts`, default `false`). An unlisted case builds at `/work/<slug>/` but is left off the home list and every "More case studies" list, carries `<meta name="robots" content="noindex">` (new `noindex` prop on `BaseLayout`) and is filtered out of the sitemap (`astro.config.mjs` reads the frontmatter of each case mdx). Its own page still shows the other three cases under "More case studies".
+- **Order:** miPlay is `order: 2`; MyFoodways moved to 3 and Food Save to 4 (as the review asked), so home order is unchanged today.
+- **To list it:** add the `banner` (MP-00) and delete the `unlisted: true` line. Nothing else changes.
+- Checked: build 0 errors, 0 warnings, 0 hints, 9 pages; sitemap has 7 URLs and no miPlay; home and the three other case pages have no link to miPlay; the page renders without a cover at 1440 and 375 with no overflow; the jump list shows the 8 H2s.
 
 ## Session 42 (2026-11-16): build audit, branch `improve/nov-audit`
 
@@ -40,7 +50,8 @@ Plan: [docs/improvement-plan-2026-11.md](docs/improvement-plan-2026-11.md) (comm
 ## Open items
 
 **Content (needs Miguel)**
-- A short miPlay case from `docs/Case Studies/cs-board-game-app.md` (fix 5 of the session 41 review). The office editor draft (`cs-office-editor.md`) is also on hold. Each needs images in `src/assets/case-studies/<slug>/`, a new mdx and an `order` value.
+- **miPlay images**, then list it (session 44). Figures MP-00 to MP-08 don't exist yet; each is described in a `FIGURE` comment in `miplay.mdx` with its source captures. MP-00 cover idea: Wingspan set up on a light table, with the Play tab open on five players. MP-04 needs full screens that show Play's results (recapture if the existing ones show only the controls). In the app, the game page's contrast needs measuring again now that it follows light and dark. Images go in `src/assets/case-studies/miplay/`.
+- The office editor draft (`docs/Case Studies/cs-office-editor.md`) is on hold. It needs images in `src/assets/case-studies/<slug>/`, a new mdx and an `order` value.
 - Food Save "Used in professional kitchens": a kitchen count would strengthen it, if known.
 - Team Files "so we carefully designed around those limits" could name what was chosen for the open-in-new-tab case.
 - Whether TF-05 and TF-06 need larger text inline (the zoom dialog already handles the zoomed view).

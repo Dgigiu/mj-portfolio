@@ -26,6 +26,10 @@ const caseStudies = defineCollection({
       banner: image().optional(),
       order: z.number(),
       draft: z.boolean().default(false),
+      // Built and reachable by its URL, but left off the home list, every
+      // "More case studies" list and the sitemap, and marked noindex. For a
+      // case that's live to share while its images are still in progress.
+      unlisted: z.boolean().default(false),
     }),
 });
 

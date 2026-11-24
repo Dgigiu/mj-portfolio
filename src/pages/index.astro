@@ -7,7 +7,9 @@ import ContactOutro from "../components/ContactOutro.astro";
 import portrait from "../assets/brand/miguel-portrait-color-wide.png";
 import { base } from "../lib/paths";
 
-const studies = (await getCollection("case-studies", ({ data }) => !data.draft)).sort(
+const studies = (
+  await getCollection("case-studies", ({ data }) => !data.draft && !data.unlisted)
+).sort(
   (a, b) => a.data.order - b.data.order
 );
 

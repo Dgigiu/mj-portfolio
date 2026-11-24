@@ -15,6 +15,8 @@ interface Props {
   ogImage?: string;
   ogImageAlt?: string;
   ogType?: "website" | "article";
+  // Keeps the page out of search results (an unlisted case study).
+  noindex?: boolean;
 }
 
 const {
@@ -23,6 +25,7 @@ const {
   ogImage = `${base}og/default.png`,
   ogImageAlt = "Miguel Jesus, Senior Product Designer",
   ogType = "website",
+  noindex = false,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
@@ -44,7 +47,7 @@ const loadAnalytics = import.meta.env.PROD && UMAMI_WEBSITE_ID !== "";
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    {isStaging && <meta name="robots" content="noindex" />}
+    {(isStaging || noindex) && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
 
     <meta property="og:type" content={ogType} />
