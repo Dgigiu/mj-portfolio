@@ -106,7 +106,9 @@ const heroPortraitPreload = await getImage({
   .hero {
     position: relative;
     width: 100%;
-    min-height: min(720px, 88vh);
+    /* Shorter than home's min(720px, 88vh), so the first case study shows
+       above the fold. The photo is sized by this height, so it shrinks too. */
+    min-height: min(480px, 64vh);
     background: var(--accent);
     color: var(--fg-on-accent);
     overflow: hidden;
@@ -117,14 +119,13 @@ const heroPortraitPreload = await getImage({
 
   /* Mirrored layout: the figure sits in the right half of the source image,
      facing right, so the image is pulled left until the figure lands on the
-     left, looking toward the text. Its right edge is tied to the text column,
-     which starts at 50% - 128px (centered 1040px container, 600px text), so
-     50% + 144px leaves a small gap. min() stops the head from leaving the
-     screen on narrower windows (555px keeps it in view at the full 720px hero
-     height); from there the shoulder runs under the text, which the 1100px
-     rules dim. Phones use --portrait-shift instead (see 720px below). The
-     vignette and glow are mirrored too: dark at the top right, bloom at the
-     top left. */
+     left, looking toward the text. The text column starts 16px right of the
+     center (see .hero-content), so ending the image 16px left of the center
+     leaves about 40px between the shoulder and the text. min() stops the head
+     from leaving the screen just above 720px (370px keeps it in view at the
+     480px hero height). Phones use --portrait-shift instead (see 720px
+     below). The vignette and glow are mirrored too: dark at the top right,
+     bloom at the top left. */
   /* On wide viewports the portrait sits ABOVE the vignette so the figure
      keeps its full color. The portrait is a transparent cutout, so the
      vignette still darkens the cobalt under the text column where the
@@ -132,7 +133,7 @@ const heroPortraitPreload = await getImage({
      figure body and that dim-the-figure behavior is restored below. */
   .hero-portrait {
     position: absolute;
-    right: min(calc(50% + 144px), calc(100% - 555px));
+    right: min(calc(50% + var(--space-4)), calc(100% - 370px));
     bottom: 0;
     height: 100%;
     width: auto;
@@ -231,28 +232,22 @@ const heroPortraitPreload = await getImage({
   .hero-inner {
     position: relative;
     z-index: 4;
-    padding-top: var(--space-24);
-    padding-bottom: var(--space-20);
+    padding-block: var(--space-12);
   }
 
-  /* Hard cap on the text column so it never bleeds into the portrait area, and
-     a small downward nudge so the block sits just below the panel's vertical
-     center. 600px seats the headline's longer line at the 72px ceiling. */
+  /* The text column lines up with the text of the case study cards below:
+     CaseStudyCard is two equal columns with a --space-8 gap in the same
+     container, so its text starts at 50% + half the gap. */
   .hero-content {
-    max-width: 600px;
-    margin-left: auto;
-    transform: translateY(var(--space-12));
+    margin-left: calc(50% + var(--space-8) / 2);
   }
 
   .hero h1 {
     font-family: var(--font-sans);
     font-weight: var(--weight-bold);
-    /* Tops out at 72px on wide screens. The 5.3vw rate (rather than a steeper
-       one) is deliberate: it holds 72px down to ~1360px, then eases the title
-       smaller through the laptop range so the second line clears the portrait
-       figure, which sits closer to the text as the viewport narrows. Verified
-       clear (glyph edge vs. the figure's opaque pixels) at 1100 to 1440. */
-    font-size: clamp(44px, 5.3vw, 72px);
+    /* Smaller than home's 72px ceiling: the column is half the container
+       (456px at full width) and the hero is shorter. */
+    font-size: clamp(40px, 4vw, 56px);
     line-height: 1;
     letter-spacing: -0.035em;
     color: var(--fg-on-accent);
@@ -286,8 +281,7 @@ const heroPortraitPreload = await getImage({
     font-size: var(--text-lg);
     line-height: 1.55;
     color: var(--fg-on-accent-soft);
-    max-width: 520px;
-    margin: 0 0 var(--space-8);
+    margin: 0 0 var(--space-4);
   }
 
   .hero-scroll {
@@ -296,7 +290,6 @@ const heroPortraitPreload = await getImage({
     justify-content: center;
     color: var(--fg-on-accent-faint);
     text-decoration: none;
-    margin-top: var(--space-2);
     margin-left: -10px;
     transition: color var(--duration-fast) var(--ease-out),
                 transform var(--duration-fast) var(--ease-out);
@@ -307,16 +300,10 @@ const heroPortraitPreload = await getImage({
     transform: translateY(2px);
   }
 
-  /* Laptop / tablet: extend the vignette so the text column stays legible
-     where it overlaps the photo's left fade. Restore vignette-above-portrait
-     so the figure dims and recedes behind text at these widths. */
+  /* Laptop / tablet: a wider vignette behind the text. The photo stays left of
+     the text column here, so it keeps its place above the vignette. */
   @media (max-width: 1100px) {
-    .hero-portrait {
-      z-index: 1;
-    }
-
     .hero-vignette {
-      z-index: 2;
       background: radial-gradient(
         150% 110% at 100% 0%,
         rgba(var(--hero-shade-rgb), 0.9) 0%,
@@ -325,32 +312,25 @@ const heroPortraitPreload = await getImage({
         rgba(var(--hero-shade-rgb), 0) 100%
       );
     }
-
-    .hero-inner {
-      padding-top: var(--space-20);
-    }
   }
 
+  /* Phones: the cards stack into one column, so the text takes the full
+     width, over the photo, which is faded and pulled to the left. */
   @media (max-width: 720px) {
-    .hero {
-      min-height: 600px;
+    .hero-content {
+      margin-left: 0;
     }
 
-    /* Push the figure into the right half of the viewport on phones.
-       The source has the figure roughly centered, so a right:0 anchor
-       leaves the face sitting near horizontal center. A fixed-pixel
-       shift past the right edge keeps the figure consistently anchored
-       to the right across 360–414px phone widths (the image width is
-       driven by the panel height, not the viewport, so a % shift would
-       vary the framing). */
     .hero-portrait {
+      z-index: 1;
       right: auto;
       left: 0;
-      --portrait-shift: -68%;
+      --portrait-shift: -58%;
       opacity: 0.55;
     }
 
     .hero-vignette {
+      z-index: 2;
       background: radial-gradient(
         160% 130% at 100% 0%,
         rgba(var(--hero-shade-rgb), 0.92) 0%,
@@ -358,11 +338,6 @@ const heroPortraitPreload = await getImage({
         rgba(var(--hero-shade-rgb), 0.35) 85%,
         rgba(var(--hero-shade-rgb), 0) 100%
       );
-    }
-
-    .hero-inner {
-      padding-top: var(--space-16);
-      padding-bottom: var(--space-16);
     }
   }
 
