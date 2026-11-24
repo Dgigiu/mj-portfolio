@@ -10,7 +10,7 @@ role: "Product designer"
 period: "2026, in progress"
 client: "Personal project"
 domain: "Consumer mobile, iOS"
-# banner: "../../assets/case-studies/miplay/MP-00-cover.jpg"
+banner: "../../assets/case-studies/miplay/MP-00-cover.jpg"
 order: 2
 draft: false
 unlisted: true
@@ -18,6 +18,15 @@ unlisted: true
 
 import Figure from "../../components/Figure.astro";
 import CompareImages from "../../components/CompareImages.astro";
+
+import threeScreens from "../../assets/case-studies/miplay/MP-01-three-screens.png";
+import whoWritesWhat from "../../assets/case-studies/miplay/MP-02-who-writes-what.png";
+import playCanvas from "../../assets/case-studies/miplay/MP-03-play-canvas.png";
+import swipeSequence from "../../assets/case-studies/miplay/MP-05-swipe-sequence.png";
+import signInSwitch from "../../assets/case-studies/miplay/MP-06-sign-in-switch.png";
+import shelfBefore from "../../assets/case-studies/miplay/MP-07-shelf-before.png";
+import shelfAfter from "../../assets/case-studies/miplay/MP-07-shelf-after.png";
+import lentLook from "../../assets/case-studies/miplay/MP-08-lent-look.png";
 
 ## Tonight’s game, from everyone’s shelves
 
@@ -29,7 +38,11 @@ The ranking comes from BoardGameGeek (BGG), the hobby’s big catalog, where pla
 
 Before any code, I listed the riskiest assumptions, from whether people keep their collections up to date to whether this belongs in an app at all. The biggest was getting enough of a group to adopt it. I drafted interview guides, but went straight to building: the project was also about learning the tools, and the app already solves my own problem. Before I invite the group, I’ll run three to five interviews, and what they turn up may still change the app.
 
-{/* FIGURE MP-01: three iPhone screens side by side: the Shelf, Game Detail (tinted), and Play's controls. Light appearance. Caption idea: "The Shelf, a game's page tinted from its box art, and Play's picker." */}
+<Figure
+  src={threeScreens}
+  alt="Three miPlay screens on iPhone: the Shelf, listing games with their player counts, play time, weight and rating; Wingspan’s page, tinted from its box art; and Play for four players, with the games best for four ranked first."
+  caption="The Shelf, a game’s page tinted from its box art, and Play’s results."
+/>
 
 ## Role
 
@@ -39,7 +52,11 @@ I like designing in code. I started in print, and as my work moved to interfaces
 
 The first version took three steps with Claude: a brief in chat, a prototype in Claude Design and a React Native app built with Claude Code. Rebuilding it natively also brought my mobile design skills up to date, since my work at Foodways is a few years old and wasn’t native. Claude Code’s first plan had it writing all the Swift while I reviewed, but with no release date to hit, I wrote each view myself and checked which of Apple’s guidelines it rests on. The rule since then: if Apple’s Human Interface Guidelines have a page about it, I write it; if it talks to the network or the database, Claude Code does.
 
-{/* FIGURE MP-02: "Who writes what" as a simple two-column table set as a figure: what I write with Claude Code guiding (views and layouts, how things are presented, interaction details) and what Claude Code writes (data, networking, backend, ranking logic and tests). Source: ios-plan.md section 5. */}
+<Figure
+  src={whoWritesWhat}
+  alt="Two columns. I write, with Claude Code guiding each step: screens and layouts; lists, rows and sheets; type, color and spacing; toolbars, menus and swipe actions; motion and interaction details. Claude Code writes, and reviews every view I write: data models and networking; the Supabase backend and its rules; Play’s ranking logic and its tests; caching and project setup; builds, tests and simulator checks before each handover. Rule of thumb: if Apple’s Human Interface Guidelines have a page about it, I write it; if it talks to the network or the database, Claude Code does."
+  caption="Who writes what in miPlay’s code."
+/>
 
 ## Ranking by player count
 
@@ -51,7 +68,11 @@ The Play tab is the reason miPlay exists, and the one screen I designed before w
 
 The canvas came with its own recommendations, and I went against them twice. Its note recommended a large numeral with chips for the player count; I chose a stepper, because you always tap in the same place and a group rarely jumps from two to seven in one night. The canvas also hid the games that work but aren’t ideal by default; I kept them visible, with less emphasis. Wingspan with five isn’t ideal, but with people who love it, a longer game won’t bother anyone. My rule: don’t leave out what people have; rank it lower.
 
-{/* FIGURE MP-03: the canvas section with its sticky note ("Recommendation: A") next to the locked direction. Sources: design/design_handoff_play_time/renders/canvas-03-count-picker.png and canvas-07-not-ideal-tier.png against final-states.png. Needs a composed figure. */}
+<Figure
+  src={playCanvas}
+  alt="Two sections of the Play canvas in Claude Design. For the player count, the canvas note recommends A, a large numeral with chips, and B, the stepper, is marked as chosen. For the games that work but aren’t ideal, the canvas default is A, collapsed, and C, shown with less emphasis, is marked as chosen."
+  caption="The Play canvas in Claude Design, and the two calls where I went against it."
+/>
 
 Rebuilding Play natively, I started with the same two modes as the React Native app, “by count” and “by who’s coming.” Building the who’s-coming part made me question them: with each friend as a row, the games ended up below the fold. I proposed joining the two to remove a step, and Claude Code agreed: a count is just who’s coming with nobody named yet. Play now has one picker: a stepper for how many, and a row that opens a sheet with a switch for each friend. Claude Code suggested that picking a friend should name one of the players rather than add one, so four players with Ana picked reads “You, Ana + 2,” the way people say it. The mode picker I’d written that afternoon came out a few hours later.
 
@@ -65,7 +86,11 @@ So BGG became optional. You sign in with a code sent by email; linking a BGG acc
 
 Email came first because it’s free, needs no other account, and lets people use an address that reveals nothing about them. Sign in with Apple and Google can follow if the app reaches the stores.
 
-{/* FIGURE MP-06: Welcome before and after the switch (design/native/2026-10-21-welcome-before-switch-light.png, 2026-10-21-welcome-after-switch-light.png), with the link sheet (2026-10-21-link-sheet-after-light.png). */}
+<Figure
+  src={signInSwitch}
+  alt="Three miPlay screens. Before: the Welcome screen with a single Sign in with BoardGameGeek button. Now: the Welcome screen with Continue with email and a Powered by BGG mark. The sheet for linking a BoardGameGeek account, with username and password fields."
+  caption="Signing in with BoardGameGeek before, with an email code now, and linking BGG as an option."
+/>
 
 ## Verifying AI claims on my iPhone
 
@@ -73,7 +98,11 @@ Early on the Shelf, Claude Code told me iOS left no choice: with a label and an 
 
 So the swipe actions follow Mail: Lend and Return, each a gold circle with a dark icon and its label underneath. The lesson became a rule in Claude Code’s project instructions: before saying iOS won’t allow something, test every variant against the Apple app in question. Every mistake becomes a dated rule there.
 
-{/* FIGURE MP-05: the swipe sequence, cropped to the swiped row: Mail (design/reference/2026-10-10-mail-swipe-actions-light.png), then the white label Claude Code said was the only option (design/native/2026-10-10-shelf-swipe-white-label-light-recreated.png, labeled as a recreation), then today (2026-10-14-shelf-swipe-lend-light.png). */}
+<Figure
+  src={swipeSequence}
+  alt="Three swiped rows. Mail: More, Flag and Archive, each a colored circle with its label underneath. miPlay on October 10, recreated: a brown rounded button with Mark on loan in white inside it. miPlay today: a gold Lend circle with a dark arrow icon and its label underneath."
+  caption="Mail, the white label Claude Code called the only option (recreated), and Lend today, in Mail’s style."
+/>
 
 ## Designing inside Apple’s rules
 
@@ -81,11 +110,22 @@ Apple’s guidelines are my starting point: the system font with Dynamic Type, c
 
 The brand gives way where the platform does something better. I wanted the Lend and Return swipe to lift the row into a rounded card, as Mail does, and iOS only draws that on its own row background. So the cream canvas I’d carried over from the React Native app came off the lists. The brand didn’t disappear, it just stopped living in the background: it shows up in the gold, and in the way Game Detail takes its color from each game’s box art, as Apple Music does with album covers.
 
-{/* FIGURE MP-07: CompareImages, the Shelf before and after: design/native/2026-10-07-shelf-option-plain-light.png (cropped art, cream canvas, nine "Available" pills) and a fresh "after" once the weight labels are fixed (the 2026-10-10 system-background shot still shows "med-lt"). Caption idea: "Box art shown whole, since only about a third of BGG's thumbnails are square, and a status only when a game is on loan." */}
+<CompareImages
+  left={shelfBefore}
+  leftAlt="The Shelf before: cropped box art on a cream background, with an Available or On loan status under every game."
+  leftCaption="Before: cropped box art on the cream canvas, a status on every game."
+  right={shelfAfter}
+  rightAlt="The Shelf after: whole box art on the system background, with a status only under Ticket to Ride, lent to Rui."
+  rightCaption="After: box art shown whole, since only about a third of BGG’s thumbnails are square, and a status only when a game is on loan."
+/>
 
 Where iOS has nothing to say, I make the call. When I first lent a game on my phone, almost nothing seemed to happen: a small label changed its text, which would have been hard to notice on a static Figma screen. I wanted the change to be felt, so a lent game’s box now shrinks to three quarters and goes gray, with a small bounce, and springs back on Return. Claude Code recommended redrawing the cover as line art; I didn’t like its preview and kept the cover itself, half see-through so the page’s color shows through. On the Shelf’s rows, where see-through vanished as I’d expected, the gray box stays nearly solid. With Reduce Motion on, the box fades instead.
 
-{/* FIGURE MP-08: the lent look on Game Detail: Claude Code's line-art preview (design/native/2026-10-22-game-detail-lend-option-line-art-preview-wingspan.png) next to the effect as built, which sits better in a figure than in words. Stills only: the site's Figure component takes images, not video. */}
+<Figure
+  src={lentLook}
+  alt="Left: Claude Code’s proposal, Wingspan’s cover redrawn as line art in two styles. Right: Wingspan’s page as built while the game is lent, its cover half see-through on the page’s color, with a Return button."
+  caption="Claude Code’s line-art proposal, and the lent look as built: the cover, half see-through."
+/>
 
 ## Where it stands
 
