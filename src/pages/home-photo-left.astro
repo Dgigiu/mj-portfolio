@@ -1,0 +1,458 @@
+---
+// TEST PAGE: a copy of index.astro with the hero mirrored, portrait on the
+// left and text on the right. Unlisted: noindex, left out of the sitemap
+// (astro.config.mjs) and linked from nowhere. Everything below the hero is
+// the same as home. Delete it when the test is over, or fold the winner
+// into index.astro.
+import { getCollection } from "astro:content";
+import { Image, getImage } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CaseStudyCard from "../components/CaseStudyCard.astro";
+import ContactOutro from "../components/ContactOutro.astro";
+import portrait from "../assets/brand/miguel-portrait-color-wide.png";
+import { base } from "../lib/paths";
+
+const studies = (
+  await getCollection("case-studies", ({ data }) => !data.draft && !data.unlisted)
+).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+// Generate a responsive preload for the hero portrait so the browser's
+// preload scanner starts fetching it before parsing the body. Widths and
+// format must match the <Image> below so the srcset URLs line up.
+const heroPortraitPreload = await getImage({
+  src: portrait,
+  widths: [720, 1080, 1440, 1920],
+  format: "webp",
+});
+
+---
+
+<BaseLayout title="Home test: photo left" description="Senior Product Designer in Porto. Case studies across B2B SaaS and mobile products." noindex>
+  <Fragment slot="head">
+    <link
+      rel="preload"
+      as="image"
+      href={heroPortraitPreload.src}
+      imagesrcset={heroPortraitPreload.srcSet.attribute}
+      imagesizes="1400px"
+      fetchpriority="high"
+    />
+  </Fragment>
+
+  <section class="hero" aria-labelledby="hero-title">
+    <Image
+      src={portrait}
+      alt=""
+      aria-hidden="true"
+      class="hero-portrait"
+      loading="eager"
+      widths={[720, 1080, 1440, 1920]}
+      sizes="1400px"
+    />
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-vignette" aria-hidden="true"></div>
+    <div class="hero-veil" aria-hidden="true"></div>
+    <div class="hero-hairline" aria-hidden="true"></div>
+
+    <div class="container hero-inner">
+      <div class="hero-content">
+        <h1 id="hero-title">
+          <span class="hero-title-lead">Hi! I’m Miguel.</span>
+          <span class="hero-title-body">Senior Product Designer for SaaS and mobile</span>
+        </h1>
+        <p class="hero-subtitle">
+          I design products from first sketch to first release and beyond, working day to day with engineering and product. The main story here: seven years on Team Files, with over 9,000 active installations.
+        </p>
+        <a href="#work" class="hero-scroll" aria-label="Jump to selected work">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="work" class="work container">
+    <header class="work-head">
+      <h2>Selected work</h2>
+      <span class="work-count mj-caption">{studies.length} case {studies.length === 1 ? "study" : "studies"}</span>
+    </header>
+    <ul class="card-list">
+      {
+        studies.map((s) => (
+          <li data-reveal>
+            <CaseStudyCard
+              href={`${base}work/${s.slug}/`}
+              title={s.data.title}
+              summary={s.data.summary}
+              benefit={s.data.benefit}
+              client={s.data.client}
+              domain={s.data.domain}
+              period={s.data.period}
+              cover={s.data.banner}
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <ContactOutro />
+</BaseLayout>
+
+<style>
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: min(720px, 88vh);
+    background: var(--accent);
+    color: var(--fg-on-accent);
+    overflow: hidden;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Mirrored layout: the figure sits in the right half of the source image,
+     facing right, so the image is pulled left until the figure lands on the
+     left, looking toward the text. Its right edge is tied to the text column,
+     which starts at 50% - 128px (centered 1040px container, 600px text), so
+     50% + 144px leaves a small gap. min() stops the head from leaving the
+     screen on narrower windows (555px keeps it in view at the full 720px hero
+     height); from there the shoulder runs under the text, which the 1100px
+     rules dim. Phones use --portrait-shift instead (see 720px below). The
+     vignette and glow are mirrored too: dark at the top right, bloom at the
+     top left. */
+  /* On wide viewports the portrait sits ABOVE the vignette so the figure
+     keeps its full color. The portrait is a transparent cutout, so the
+     vignette still darkens the cobalt under the text column where the
+     image is transparent. At narrower widths the text overlaps the
+     figure body and that dim-the-figure behavior is restored below. */
+  .hero-portrait {
+    position: absolute;
+    right: min(calc(50% + 144px), calc(100% - 555px));
+    bottom: 0;
+    height: 100%;
+    width: auto;
+    max-width: none;
+    z-index: 2;
+    pointer-events: none;
+    user-select: none;
+    /* Scroll parallax: the script below feeds --parallax-y so the figure
+       lags the scroll slightly and reads as a layer behind the text.
+       translate/scale are individual properties so the settle animation
+       and the parallax compose without fighting over transform. */
+    translate: var(--portrait-shift, 0px) var(--parallax-y, 0px);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-portrait {
+      will-change: transform;
+    }
+  }
+
+  /* Graphic depth: a single deeper-cobalt bloom in the top-right, behind the
+     portrait and the vignette. Same hue family as the panel (accent-press),
+     so it reads as tonal weight rather than a second color. This is the one
+     graphic flourish the louder hero earns; everything else stays type. */
+  .hero-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      95% 75% at 20% -12%,
+      var(--accent-press) 0%,
+      color-mix(in srgb, var(--accent-press) 55%, transparent) 42%,
+      transparent 72%
+    );
+    opacity: 0.9;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .hero-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      130% 100% at 100% 0%,
+      rgba(var(--hero-shade-rgb), 0.88) 0%,
+      rgba(var(--hero-shade-rgb), 0.6) 38%,
+      rgba(var(--hero-shade-rgb), 0) 70%
+    );
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .hero-hairline {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: var(--border-on-accent);
+    z-index: 3;
+  }
+
+  /* Scroll exit veil: a transparent-to-dark-cobalt curtain parked one panel
+     height below the hero, so it's invisible at rest (and without JS, and
+     under reduced motion). The scroll handler raises it faster than the page
+     scrolls (see --veil-shift below), so it climbs up over the portrait and
+     washes it in cobalt as the hero leaves. Sits above the portrait but below
+     the text (z 3), so the headline stays fully legible. */
+  .hero-veil {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+    /* Transparent at the top, through translucent pressed cobalt, to the deep
+       navy the vignette uses (--hero-shade), solid at the very bottom edge. The
+       opacity ramps across the stops so the portrait stays readable through the
+       mid band and only the bottom edge fully covers. Two dials: the 70% sets
+       how strongly the middle tints, the bottom stop how deep it lands. */
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      color-mix(in srgb, var(--accent-press) 70%, transparent) 45%,
+      var(--hero-shade) 100%
+    );
+    translate: 0 calc(-1 * var(--veil-shift, 0px));
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-veil {
+      will-change: transform;
+    }
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 4;
+    padding-top: var(--space-24);
+    padding-bottom: var(--space-20);
+  }
+
+  /* Hard cap on the text column so it never bleeds into the portrait area, and
+     a small downward nudge so the block sits just below the panel's vertical
+     center. 600px seats the headline's longer line at the 72px ceiling. */
+  .hero-content {
+    max-width: 600px;
+    margin-left: auto;
+    transform: translateY(var(--space-12));
+  }
+
+  .hero h1 {
+    font-family: var(--font-sans);
+    font-weight: var(--weight-bold);
+    /* Tops out at 72px on wide screens. The 5.3vw rate (rather than a steeper
+       one) is deliberate: it holds 72px down to ~1360px, then eases the title
+       smaller through the laptop range so the second line clears the portrait
+       figure, which sits closer to the text as the viewport narrows. Verified
+       clear (glyph edge vs. the figure's opaque pixels) at 1100 to 1440. */
+    font-size: clamp(44px, 5.3vw, 72px);
+    line-height: 1;
+    letter-spacing: -0.035em;
+    color: var(--fg-on-accent);
+    margin: 0 0 var(--space-6);
+  }
+
+  /* Two visual beats: the greeting stays at the h1's full size, then a
+     smaller second line for hierarchy before the longer description wraps
+     on its own. Both spans get text-wrap: balance directly since setting
+     display: block on them splits the h1 into two separate wrapping
+     contexts. The gap and the body size are both em-based off the h1's own
+     font-size (not the body's smaller one) so they scale with the h1's
+     responsive clamp() instead of needing their own breakpoints. */
+  .hero-title-lead,
+  .hero-title-body {
+    display: block;
+    text-wrap: balance;
+  }
+
+  .hero-title-lead {
+    margin-bottom: 0.25em;
+  }
+
+  .hero-title-body {
+    font-size: 0.65em;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-subtitle {
+    font-family: var(--font-serif);
+    font-size: var(--text-lg);
+    line-height: 1.55;
+    color: var(--fg-on-accent-soft);
+    max-width: 520px;
+    margin: 0 0 var(--space-8);
+  }
+
+  .hero-scroll {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fg-on-accent-faint);
+    text-decoration: none;
+    margin-top: var(--space-2);
+    margin-left: -10px;
+    transition: color var(--duration-fast) var(--ease-out),
+                transform var(--duration-fast) var(--ease-out);
+  }
+
+  .hero-scroll:hover {
+    color: var(--fg-on-accent);
+    transform: translateY(2px);
+  }
+
+  /* Laptop / tablet: extend the vignette so the text column stays legible
+     where it overlaps the photo's left fade. Restore vignette-above-portrait
+     so the figure dims and recedes behind text at these widths. */
+  @media (max-width: 1100px) {
+    .hero-portrait {
+      z-index: 1;
+    }
+
+    .hero-vignette {
+      z-index: 2;
+      background: radial-gradient(
+        150% 110% at 100% 0%,
+        rgba(var(--hero-shade-rgb), 0.9) 0%,
+        rgba(var(--hero-shade-rgb), 0.7) 42%,
+        rgba(var(--hero-shade-rgb), 0.25) 75%,
+        rgba(var(--hero-shade-rgb), 0) 100%
+      );
+    }
+
+    .hero-inner {
+      padding-top: var(--space-20);
+    }
+  }
+
+  @media (max-width: 720px) {
+    .hero {
+      min-height: 600px;
+    }
+
+    /* Push the figure into the right half of the viewport on phones.
+       The source has the figure roughly centered, so a right:0 anchor
+       leaves the face sitting near horizontal center. A fixed-pixel
+       shift past the right edge keeps the figure consistently anchored
+       to the right across 360–414px phone widths (the image width is
+       driven by the panel height, not the viewport, so a % shift would
+       vary the framing). */
+    .hero-portrait {
+      right: auto;
+      left: 0;
+      --portrait-shift: -68%;
+      opacity: 0.55;
+    }
+
+    .hero-vignette {
+      background: radial-gradient(
+        160% 130% at 100% 0%,
+        rgba(var(--hero-shade-rgb), 0.92) 0%,
+        rgba(var(--hero-shade-rgb), 0.78) 50%,
+        rgba(var(--hero-shade-rgb), 0.35) 85%,
+        rgba(var(--hero-shade-rgb), 0) 100%
+      );
+    }
+
+    .hero-inner {
+      padding-top: var(--space-16);
+      padding-bottom: var(--space-16);
+    }
+  }
+
+  /* Work index */
+  .work {
+    scroll-margin-top: var(--space-6);
+    padding-top: var(--space-20);
+    padding-bottom: var(--space-16);
+  }
+
+  .work-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-5);
+    padding-bottom: var(--space-6);
+    border-bottom: var(--hairline) solid var(--border-subtle);
+    margin-bottom: var(--space-8);
+  }
+
+  .work-head h2 {
+    letter-spacing: var(--tracking-snug);
+  }
+
+  .work-count {
+    flex-shrink: 0;
+  }
+
+  .card-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+  }
+
+</style>
+
+<script>
+  // Hero scroll motion, all driven off one rAF-throttled scroll handler:
+  //  - Portrait parallax: the portrait lags the scroll at ~12% so it reads as
+  //    a layer behind the cobalt plane and the (static) text. Capped so the
+  //    bottom crop never opens a gap once the hero is scrolled past.
+  //  - Exit veil: a cobalt-to-navy curtain parked one panel height below the
+  //    hero is raised at ~80% of the scroll. Added to the panel height it
+  //    travels (the hero scrolls away at 100%), it climbs faster than
+  //    everything else and washes the portrait as the hero leaves. Capped so it
+  //    stops once it has fully covered the panel.
+  const hero = document.querySelector<HTMLElement>(".hero");
+  const portrait = document.querySelector<HTMLElement>(".hero-portrait");
+  const veil = document.querySelector<HTMLElement>(".hero-veil");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  if (hero && (portrait || veil) && !reduceMotion.matches) {
+    const VEIL_RATE = 0.8;
+    let heroHeight = hero.offsetHeight;
+    let ticking = false;
+
+    const update = () => {
+      ticking = false;
+      const s = window.scrollY;
+      if (portrait) {
+        const y = Math.min(s * 0.12, 48);
+        portrait.style.setProperty("--parallax-y", `${y.toFixed(1)}px`);
+      }
+      if (veil) {
+        // Cap a touch past full coverage so the dark crests over the top edge,
+        // then holds while the rest of the hero scrolls off.
+        const shift = Math.min(s * VEIL_RATE, heroHeight * 1.25);
+        veil.style.setProperty("--veil-shift", `${shift.toFixed(1)}px`);
+      }
+    };
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(update);
+      },
+      { passive: true }
+    );
+    window.addEventListener(
+      "resize",
+      () => {
+        heroHeight = hero.offsetHeight;
+      },
+      { passive: true }
+    );
+    update();
+  }
+</script>

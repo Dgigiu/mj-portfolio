@@ -6,9 +6,9 @@ Older session notes live in [docs/handoff-archive.md](docs/handoff-archive.md), 
 
 ## Current state
 
-- **Live:** https://migueljss.com, deployed by GitHub Actions to GitHub Pages on every push to `main` (`public/CNAME`, `site` in `astro.config.mjs`, no `base`). Session 44 (miPlay, unlisted) was fast-forwarded into `main` and pushed on 2026-11-24. Everything from sessions 41, 42 and 44 is live, except the third miPlay commit (reworked figures), which is on `content/miplay` until Miguel says to push.
+- **Live:** https://migueljss.com, deployed by GitHub Actions to GitHub Pages on every push to `main` (`public/CNAME`, `site` in `astro.config.mjs`, no `base`). Session 44 (miPlay, unlisted) was fast-forwarded into `main` and pushed on 2026-11-24. Everything from sessions 41, 42 and 44 is live, the reworked miPlay figures and the hero test page included (branches `content/miplay` and `test/home-photo-left`, both merged into `main`).
 - **Branches:** `improve/nov-audit` (session 42) and `content/miplay` (session 44) are both merged into `main`, nothing left to merge.
-- **Routes (9 built pages):** `/`, `/about/`, `/contact/`, `/privacy/`, `/404`, and `/work/team-files/`, `/work/myfoodways/`, `/work/food-save/`, plus `/work/miplay/` (unlisted: reachable by URL only, see "Session 44").
+- **Routes (10 built pages):** `/`, `/about/`, `/contact/`, `/privacy/`, `/404`, and `/work/team-files/`, `/work/myfoodways/`, `/work/food-save/`, plus two unlisted pages, reachable by URL only (see "Session 44"): `/work/miplay/` and `/home-photo-left/` (a hero layout test).
 - **Case study H2s** (the jump list and its Umami section slugs follow these word for word):
   - Team Files (8): Everyone sees the latest version; Role; Download, edit, re-upload, repeat; The 2023 UX review; What long tenure lets you notice; A design system engineers built from; Beyond the product; Keeping it coherent while it grows.
   - MyFoodways (7): Cooking from what’s in the fridge; Role; Recipes that don’t fit real life; Making the mission practical; Search, profile, recipes and challenges; Contrast versus a fixed brand; Good design isn’t enough on its own.
@@ -35,6 +35,8 @@ The miPlay text approved in the Claude Doc review (November 19 to 24) is now `sr
 - Captions and alt text are Claude's drafts from the review's caption ideas and the Figma callouts; Miguel to review.
 - Checked: build clean, 9 pages; 13 images on the page, none broken; no overflow at 375; `og:image` is the cover JPG; still noindex and off home.
 
+**Hero test page (same day).** `src/pages/home-photo-left.astro` is a copy of `index.astro` with the hero mirrored: portrait on the left, text column on the right (text still left-aligned). `index.astro` is untouched. The photo is not flipped (the figure faces right, so on the left he looks toward the text); its right edge is tied to the text column with `right: min(calc(50% + 144px), calc(100% - 555px))`, vignette and glow mirrored, and phones use a `--portrait-shift` of -68%. No JSON-LD; `noindex`; excluded from the sitemap by a list of test paths in `astro.config.mjs`; linked from nowhere. Checked in the preview: clear of the text at 1440×900 (photo ends at 562, text starts at 592), the shoulder just touches the subtitle at 1280×800, runs under it dimmed at 1100, figure on the left behind the text at 375; no overflow. When the test is over, delete the page and its sitemap entry, or fold the winner into `index.astro`.
+
 ## Session 42 (2026-11-16): build audit, branch `improve/nov-audit`
 
 Plan: [docs/improvement-plan-2026-11.md](docs/improvement-plan-2026-11.md) (commit `7e45a4f`). Each item below is one commit; the build is clean after each (0 errors, 0 warnings, 8 pages). Visual checks ran on `npm run preview` in headless Chrome and the in-app browser pane, never on the live site.
@@ -59,6 +61,7 @@ Plan: [docs/improvement-plan-2026-11.md](docs/improvement-plan-2026-11.md) (comm
 ## Open items
 
 **Content (needs Miguel)**
+- **Hero layout test** (session 44): decide between the live hero and `/home-photo-left/`, then delete the loser (see "Hero test page").
 - **miPlay figures**, then list it (session 44). All nine are in (working versions, re-export from the Figma file when they change). The review asked for MP-04 as full screens that show Play's results; it still shows the controls only, if that's still wanted. Splendor Duel still reads "med-lt" in MP-01 and MP-07; retake once the weight labels are fixed. Review the drafted captions and alt text. The cover is a shelf photo, not the Wingspan-on-a-table idea, if that one is still planned. In the app, the game page's contrast needs measuring again now that it follows light and dark.
 - The office editor draft (`docs/Case Studies/cs-office-editor.md`) is on hold. It needs images in `src/assets/case-studies/<slug>/`, a new mdx and an `order` value.
 - Food Save "Used in professional kitchens": a kitchen count would strengthen it, if known.
