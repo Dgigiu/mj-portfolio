@@ -1,12 +1,12 @@
 # Handoff
 
-Last updated: 2026-11-24 (session 44: the miPlay case is live as an unlisted page, with all nine figures from Figma)
+Last updated: 2026-11-25 (session 45: miPlay text from the November 25 review)
 
 Older session notes live in [docs/handoff-archive.md](docs/handoff-archive.md), unchanged. Read them only when you need the detail behind a decision; the git log carries the same narrative per commit.
 
 ## Current state
 
-- **Live:** https://migueljss.com, deployed by GitHub Actions to GitHub Pages on every push to `main` (`public/CNAME`, `site` in `astro.config.mjs`, no `base`). Session 44 (miPlay, unlisted) was fast-forwarded into `main` and pushed on 2026-11-24. Everything from sessions 41, 42 and 44 is live, the reworked miPlay figures and the hero test page included (branches `content/miplay` and `test/home-photo-left`, both merged into `main`). The second pass on the test hero (shorter, text aligned with the cards) is live too.
+- **Live:** https://migueljss.com, deployed by GitHub Actions to GitHub Pages on every push to `main` (`public/CNAME`, `site` in `astro.config.mjs`, no `base`). Session 44 (miPlay, unlisted) was fast-forwarded into `main` and pushed on 2026-11-24. Everything from sessions 41, 42 and 44 is live, the reworked miPlay figures and the hero test page included (branches `content/miplay` and `test/home-photo-left`, both merged into `main`). The second pass on the test hero (shorter, text aligned with the cards) is live too. Session 45 (miPlay text from the November 25 review) was pushed to `main` on 2026-11-25.
 - **Branches:** `improve/nov-audit` (session 42) and `content/miplay` (session 44) are both merged into `main`, nothing left to merge.
 - **Routes (10 built pages):** `/`, `/about/`, `/contact/`, `/privacy/`, `/404`, and `/work/team-files/`, `/work/myfoodways/`, `/work/food-save/`, plus two unlisted pages, reachable by URL only (see "Session 44"): `/work/miplay/` and `/home-photo-left/` (a hero layout test).
 - **Case study H2s** (the jump list and its Umami section slugs follow these word for word):
@@ -16,6 +16,13 @@ Older session notes live in [docs/handoff-archive.md](docs/handoff-archive.md), 
   - miPlay (8): Tonight’s game, from everyone’s shelves; Role; Ranking by player count; Designing the Play tab; A friend who never made an account; Verifying AI claims on my iPhone; Designing inside Apple’s rules; Where it stands.
 - **CV:** `public/miguel-jesus-cv.pdf`, stamped `?ref=cv` (session 41 export). Per-application copies in `docs/Applications/` predate it and were not regenerated.
 - **Reviews:** three `/pd-portfolio-review` passes (85, 90, 88 out of 100, all "ready to send"). The session 41 ranked fixes 1 to 4 landed and are live; fix 5 (a miPlay case) is live unlisted, with its images open below.
+
+## Session 45 (2026-11-25): miPlay text from the November 25 review
+
+`src/content/case-studies/miplay.mdx` is now Miguel's version from the Claude Doc review of November 25 (every change accepted), built from the file as of `a953040`. Text only: framework and Apple jargon in plain words, a new paragraph on miPlay's look in Role (after MP-02), "Designing inside Apple's rules" reworked (an intro line, a three-item list, a sentence on the log, then new paragraphs on iPad and the iPhone Duo and on Android; the show-password story is gone), and a shorter "Where it stands" and Reflections. Outcomes now say "on my iPhone and iPad" and "traced to Apple's guidelines". H2s, imports, figures, alt text and the other captions are unchanged.
+- MP-03 caption now ends "the two calls where I chose differently" (was "where I went against it").
+- MP-09 (the Duo, closed and open) is a `{/* FIGURE MP-09 */}` comment after the iPad and Duo paragraph, with its caption inside; no image yet (see "Open items").
+- Checked: build 0 errors, 0 warnings, 0 hints, 10 pages; the list renders as a `<ul>` of three in `.prose`, styled like Food Save's (dash marker, same indent); no "MP-09" on the page; no em or en dashes in the file; no overflow at 1440 or 375 in `npm run preview`.
 
 ## Session 44 (2026-11-24): miPlay case, unlisted
 
@@ -62,7 +69,8 @@ Plan: [docs/improvement-plan-2026-11.md](docs/improvement-plan-2026-11.md) (comm
 
 **Content (needs Miguel)**
 - **Hero layout test** (session 44): decide between the live hero and `/home-photo-left/`, then delete the loser (see "Hero test page").
-- **miPlay figures**, then list it (session 44). All nine are in (working versions, re-export from the Figma file when they change). The review asked for MP-04 as full screens that show Play's results; it still shows the controls only, if that's still wanted. Splendor Duel still reads "med-lt" in MP-01 and MP-07; retake once the weight labels are fixed. Review the drafted captions and alt text. The cover is a shelf photo, not the Wingspan-on-a-table idea, if that one is still planned. In the app, the game page's contrast needs measuring again now that it follows light and dark.
+- **miPlay MP-09** (session 45): the iPhone Duo in the simulator, closed and open, side by side, in place of the `{/* FIGURE MP-09 */}` comment in "Designing inside Apple's rules" (caption drafted in the comment). The closed shot can come from `miplay-docs/design/native/2026-11-20-play-duo-closed-light.png`. The open one needs a retake: `2026-11-07-play-duo-landscape-after-light.png` predates the November 12 tab bar change.
+- **miPlay figures**, then list it (session 44). The original nine are in (working versions, re-export from the Figma file when they change); MP-09 is the item above. The review asked for MP-04 as full screens that show Play's results; it still shows the controls only, if that's still wanted. Splendor Duel still reads "med-lt" in MP-01 and MP-07; retake once the weight labels are fixed. Review the drafted captions and alt text. The cover is a shelf photo, not the Wingspan-on-a-table idea, if that one is still planned. In the app, the game page's contrast needs measuring again now that it follows light and dark.
 - The office editor draft (`docs/Case Studies/cs-office-editor.md`) is on hold. It needs images in `src/assets/case-studies/<slug>/`, a new mdx and an `order` value.
 - Food Save "Used in professional kitchens": a kitchen count would strengthen it, if known.
 - Team Files "so we carefully designed around those limits" could name what was chosen for the open-in-new-tab case.

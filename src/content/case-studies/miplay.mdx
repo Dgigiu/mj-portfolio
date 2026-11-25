@@ -3,9 +3,9 @@ title: "miPlay"
 summary: "Picking tonight’s game from your friends’ combined shelves. A native iOS app I design directly in SwiftUI, with Claude Code guiding me through the code while the product and design calls stay mine."
 benefit: "Picking tonight’s game from your friends’ combined shelves."
 outcomes:
-  - "Running on my iPhone with my own collection, from email sign-in to lending a game;"
+  - "Running on my iPhone and iPad with my own collection, from email sign-in to lending a game;"
   - "33 decisions logged, each with the alternatives considered;"
-  - "62 design calls checked against Apple’s guidelines and logged, and every screen tested at the largest text size."
+  - "62 design calls traced to Apple’s guidelines and logged, and every screen tested at the largest text size."
 role: "Product designer"
 period: "2026, in progress"
 client: "Personal project"
@@ -45,11 +45,11 @@ Before any code, I listed the riskiest assumptions, from whether people keep the
 
 ## Role
 
-I’m the product designer on miPlay, and I write its iOS screens in SwiftUI with Claude Code as my coding partner. It writes everything underneath, while product and design decisions remain mine. The project log records who made each decision, and why, so someone else could pick up the work.
+I’m the product designer on miPlay, and I write its iOS screens in SwiftUI with Claude Code as my coding partner. Product and design decisions are mine. The project log records who made each decision, and why, so someone else could pick up the work.
 
 I like designing in code. I started in print, and as my work moved to interfaces, I grew tired of waiting for someone else to bring my designs to life, so I learned HTML and CSS. For me, code is a creative medium, just like Figma.
 
-The first version took three steps with Claude: a brief in chat, a prototype in Claude Design and a React Native app built with Claude Code. Rebuilding it natively also brought my mobile design skills up to date, since my work at Foodways is a few years old and wasn’t native. Claude Code’s first plan had it writing all the Swift while I reviewed, but with no release date to hit, I wrote each view myself and checked which of Apple’s guidelines it rests on. The rule since then: if Apple’s Human Interface Guidelines have a page about it, I write it; if it talks to the network or the database, Claude Code does.
+The first version took three steps with Claude: a brief in chat, a prototype in Claude Design and a cross-platform app built with Claude Code. Rebuilding it natively also brought my mobile design skills up to date, since my work at Foodways is a few years old and wasn’t native. Claude Code’s first plan had it writing all the code while I reviewed, but with no release date to hit, I wrote each view myself and checked which of Apple’s guidelines it rests on. The rule since then: if Apple’s Human Interface Guidelines have a page about it, I write it; if it talks to the network or the database, Claude Code does.
 
 <Figure
   src={whoWritesWhat}
@@ -57,23 +57,25 @@ The first version took three steps with Claude: a brief in chat, a prototype in 
   caption="Who writes what in miPlay’s code."
 />
 
+The first version also set miPlay’s look: game night at home, dark and warm, with the box art bringing the color. One gold accent works like a lamp, falling only on the main action and the current selection. The iOS app keeps all of that and adds a light appearance, on a cream canvas.
+
 ## Ranking by player count
 
-The first brief asked for filters on player count, play time and difficulty, and Claude Design put a filter bar on the Shelf. BGG already does filters well, but I was looking for something different. For example, Wingspan takes up to five players, but BGG’s voters say it’s best with three: with more, you mostly wait for your turn. I wanted that information in people’s hands, so the Play tab ranks games instead of filtering them, and the filter bar came off the Shelf.
+The first brief asked for filters on player count, play time and difficulty, and Claude Design put a filter bar on the Shelf. BGG already does filters well, so I went another way. Wingspan takes up to five players, but BGG’s voters say it’s best with three: with more, you mostly wait for your turn. I wanted that information in people’s hands, so the Play tab ranks games instead of filtering them, and the filter bar came off the Shelf.
 
 ## Designing the Play tab
 
 The Play tab is the reason miPlay exists, and the one screen I designed before writing any code. In Claude Design, I prototyped two to four variants for each part of the screen, with every state drawn, from no friends yet to a group of seven.
 
-The canvas came with its own recommendations, and I went against them twice. Its note recommended a large numeral with chips for the player count; I chose a stepper, because you always tap in the same place and a group rarely jumps from two to seven in one night. The canvas also hid the games that work but aren’t ideal by default; I kept them visible, with less emphasis. Wingspan with five isn’t ideal, but with people who love it, a longer game won’t bother anyone. My rule: don’t leave out what people have; rank it lower.
+The canvas came with its own recommendations, and twice I chose differently. Its note recommended a large numeral with chips for the player count; I chose a stepper, because you always tap in the same place and a group rarely jumps from two to seven in one night. The canvas also hid the games that work but aren’t ideal by default; I kept them visible, with less emphasis. Wingspan with five isn’t ideal, but with people who love it, a longer game won’t bother anyone. My rule: don’t leave out what people have; rank it lower.
 
 <Figure
   src={playCanvas}
   alt="Two sections of the Play canvas in Claude Design. For the player count, the canvas note recommends A, a large numeral with chips, and B, the stepper, is marked as chosen. For the games that work but aren’t ideal, the canvas default is A, collapsed, and C, shown with less emphasis, is marked as chosen."
-  caption="The Play canvas in Claude Design, and the two calls where I went against it."
+  caption="The Play canvas in Claude Design, and the two calls where I chose differently."
 />
 
-Rebuilding Play natively, I started with the same two modes as the React Native app, “by count” and “by who’s coming.” Building the who’s-coming part made me question them: with each friend as a row, the games ended up below the fold. I proposed joining the two to remove a step, and Claude Code agreed: a count is just who’s coming with nobody named yet. Play now has one picker: a stepper for how many, and a row that opens a sheet with a switch for each friend. Claude Code suggested that picking a friend should name one of the players rather than add one, so four players with Ana picked reads “You, Ana + 2,” the way people say it. The mode picker I’d written that afternoon came out a few hours later.
+Rebuilding Play natively, I started with the same two modes as the first version, “by count” and “by who’s coming.” Building the who’s-coming part made me question them: with each friend as a row, the games ended up below the fold. I proposed joining the two to remove a step, and Claude Code agreed: a count is just who’s coming with nobody named yet. Play now has one picker: a stepper for how many, and a list of friends to pick who’s coming. Claude Code suggested that picking a friend should name one of the players rather than add one, so four players with Ana picked reads “You, Ana + 2,” the way people say it. The mode picker I’d written that afternoon came out a few hours later.
 
 <Figure
   src={playPicker}
@@ -83,7 +85,7 @@ Rebuilding Play natively, I started with the same two modes as the React Native 
 
 ## A friend who never made an account
 
-The React Native app used your BGG account as your miPlay account and imported your whole collection from it. Then a friend who’d offered to help never created one, even after I’d asked more than once. If someone willing to help didn’t, others might not either. miPlay shouldn’t depend on an account somewhere else.
+The first version used your BGG account as your miPlay account and imported your whole collection from it. Then a friend who’d offered to help never created one, even after I’d asked more than once. If someone willing to help didn’t, others might not either. miPlay shouldn’t depend on an account somewhere else.
 
 So BGG became optional. You sign in with a code sent by email; linking a BGG account imports your collection and keeps it in sync. Friends find each other by a miPlay username or an invite code. People without a BGG account add games from its catalog.
 
@@ -97,9 +99,9 @@ Email came first because it’s free, needs no other account, and lets people us
 
 ## Verifying AI claims on my iPhone
 
-Early on the Shelf, Claude Code told me iOS left no choice: with a label and an icon, the label still sits on the color in white, without enough contrast on our gold. I can’t take what Claude tells me on trust. I know where these models run out, from what they remember in a long session to what they know about newer things, and that tells me where to look. I use iOS every day, my instinct said otherwise, and checking took a minute: Mail keeps the label outside the colored circle, underneath the icon.
+Early on, Claude Code told me iOS left no choice for the Shelf’s swipe actions: their labels would sit in white on our gold, without enough contrast. I can’t take what Claude tells me on trust. I know where these models run out, from what they remember in a long session to what they know about newer things, and that tells me where to look. I use iOS every day, my instinct said otherwise, and checking took a minute: Mail keeps the label outside the colored circle, underneath the icon.
 
-So the swipe actions follow Mail: Lend and Return, each a gold circle with a dark icon and its label underneath. The lesson became a rule in Claude Code’s project instructions: before saying iOS won’t allow something, test every variant against the Apple app in question. Every mistake becomes a dated rule there.
+So the swipe actions follow Mail: Lend and Return, each a gold circle with a dark icon and its label underneath. The lesson became a rule in Claude Code’s project instructions: before saying iOS won’t allow something, try every variant and see how Apple’s own app does it. Every mistake becomes a dated rule there.
 
 <Figure
   src={swipeSequence}
@@ -109,9 +111,21 @@ So the swipe actions follow Mail: Lend and Return, each a gold circle with a dar
 
 ## Designing inside Apple’s rules
 
-Apple’s guidelines are my starting point: the system font with Dynamic Type, checked on every screen at the largest text size; light and dark following the phone’s setting; and system components instead of custom ones. Every call that wasn’t obvious is logged against the page it follows: 62 so far, 48 followed and 14 in part. When I asked for a show-password button on the BGG form, Claude Code built it before I noticed iOS has no native control for it. Until people show they need one, it stays out; most will use the keychain anyway.
+Apple’s guidelines are my starting point:
 
-The brand gives way where the platform does something better. I wanted the Lend and Return swipe to lift the row into a rounded card, as Mail does, and iOS only draws that on its own row background. So the cream canvas I’d carried over from the React Native app came off the lists. The brand didn’t disappear, it just stopped living in the background: it shows up in the gold, and in the way Game Detail takes its color from each game’s box art, as Apple Music does with album covers.
+- the system font, at whatever text size people choose, checked on every screen at the largest;
+- light and dark modes that follow the phone’s setting;
+- system components instead of custom ones.
+
+Every call that wasn’t obvious is logged with a link to the page it follows: 62 so far, 48 followed and 14 in part.
+
+Following the system also lets miPlay fit more than my phone. Apple’s guidelines say to lay out each screen for the space it gets, not for a particular device or how it’s held. On iPad, Play and the Shelf put the list beside the game and fold back into the phone’s layout when a window narrows. With that in place, the foldable iPhone Duo came almost for free.
+
+{/* FIGURE MP-09 (no image yet): miPlay on the iPhone Duo in the simulator, closed and open, side by side. Caption: "Open, the Duo gets the iPad layout, and the system moves the tab bar and back button to the side on its own." Closed: miplay-docs design/native/2026-11-20-play-duo-closed-light.png. Open: retake, since 2026-11-07-play-duo-landscape-after-light.png predates the November 12 tab bar change. */}
+
+Most of this carries over to Android, which comes after iOS. Android handles screen and text sizes in a similar way, so the same layout rules apply. The colors and type are documented for both platforms. What happens behind the screens, like the ranking, is on the server or written down for the Android app to match. Any choice that would make Android harder comes to me to decide.
+
+The brand gives way where the platform does something better. I wanted the Lend and Return swipe to lift the row into a rounded card, as Mail does, and iOS only does that on its standard list background. So the cream canvas came off the lists. The brand didn’t disappear, it just stopped living in the background. The gold still lights what you’re about to do, and Game Detail takes its color from each game’s box art, as Apple Music does with album covers.
 
 <Figure
   src={shelfBeforeAfter}
@@ -119,7 +133,7 @@ The brand gives way where the platform does something better. I wanted the Lend 
   caption="Box art shown whole, since only about a third of BGG’s thumbnails are square, and a status only when a game is on loan."
 />
 
-Where iOS has nothing to say, I make the call. When I first lent a game on my phone, almost nothing seemed to happen: a small label changed its text, which would have been hard to notice on a static Figma screen. I wanted the change to be felt, so a lent game’s box now shrinks to three quarters and goes gray, with a small bounce, and springs back on Return. Claude Code recommended redrawing the cover as line art; I didn’t like its preview and kept the cover itself, half see-through so the page’s color shows through. On the Shelf’s rows, where see-through vanished as I’d expected, the gray box stays nearly solid. With Reduce Motion on, the box fades instead.
+Where iOS has nothing to say, I make the call. When I first lent a game on my phone, almost nothing seemed to happen: a small label changed its text, which would have been hard to notice on a static Figma screen. I wanted the change to be felt, so a lent game’s box now shrinks to three quarters and goes gray, with a small bounce, and springs back on Return. Claude Code recommended redrawing the cover as line art; I didn’t like its preview and kept the cover itself, half see-through so the page’s color shows through. For people who turn off motion effects in their settings, the box fades instead.
 
 <Figure
   src={lentLook}
@@ -129,10 +143,10 @@ Where iOS has nothing to say, I make the call. When I first lent a game on my ph
 
 ## Where it stands
 
-As of November 2026, miPlay runs with my own collection on my iPhone and iPad, and on a friend’s larger iPhone, where I can check views I can’t see on mine. I’m in the polish phase now. Still to come are the final app icon, art for the Welcome screen, a VoiceOver pass and the interviews, and then TestFlight for my group. After that, the first feature I want to add is a play diary: I play a lot of games at a local board game association, and a few months later I can’t remember which ones I’ve tried.
+As of November 2026, miPlay runs with my own collection on my iPhone and iPad. I’m in the polish phase now. Still to come are the final app icon, art for the Welcome screen, a VoiceOver pass and the interviews, and then a test release for my group. After that, the first feature I want to add is a play diary: I play a lot of games at a local board game association, and a few months later I can’t remember which ones I’ve tried.
 
 ### Reflections
 
 What surprised me most is how fast I can see and test an idea. In Figma, even a prototype took a long time to get close to the real experience. Now I watch a proposal take shape, notice it could work differently, we talk it through, and a few minutes later I’m trying the new version.
 
-The hard part is what I can’t judge. I understand how the views are put together, but I can’t vouch for the code underneath: the backend, security, and laws like the GDPR are beyond what I know well enough to say it’s all correct, and sometimes I depend more than I’d like on Claude Code’s understanding of them. I’ve tried to be careful. I read Apple’s rules, and had Claude Code check the app against security warnings I came across and against the GDPR, but that isn’t an expert review.
+The hard part is what I can’t judge. I understand how the views are put together, but the backend, security and laws like the GDPR are beyond what I can vouch for. Claude Code checking its own work isn’t an expert review. On a team, that’s where an engineer comes in, and it’s how I’d like to work: designing in the real material, at this speed, with someone beside me who can vouch for what I can’t.
